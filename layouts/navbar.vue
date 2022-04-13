@@ -5,7 +5,7 @@
                 <div class="row align-center">
                     <div @click="$router.push('/')" class="xs3">
                         <img
-                            src="~/assets/images/logo.svg"
+                            src="/logo.svg"
                             alt=""
                             width="100px"
                             height="100%"

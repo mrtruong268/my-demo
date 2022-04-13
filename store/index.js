@@ -32,7 +32,7 @@ export const state = () => ({
             to: '',
             color: '#157787',
             icon: '',
-            image: require('~/assets/images/1office.svg'),
+            image: '/1office.svg',
         },
         {
             id: uuidv4(),

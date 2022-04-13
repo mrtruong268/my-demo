@@ -5,7 +5,7 @@
                 <div class="login-image xs7 pa-4">
                     <div class="row">
                         <div class="describe xs7">
-                            <img src="~/assets/images/robot1.svg" alt="" />
+                            <img src="/robot1.svg" alt="" />
                             <h3 class="pt-5 pb-4 font-16">
                                 PHẦN MỀM ĐƯỢC PHÁT TRIỂN BỞI VNAS GROUP
                             </h3>
@@ -19,7 +19,7 @@
                             <div class="column justify-space-between">
                                 <div>
                                     <img
-                                        src="~/assets/images/logo.svg"
+                                        src="/logo.svg"
                                         alt=""
                                     />
                                     <h3 class="py-5">

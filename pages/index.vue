@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="xs4 text-xs-center right-content ml-3">
-                    <img src="~/assets/images/robot1.svg" alt="" />
+                    <img src="/robot1.svg" alt="" />
                 </div>
             </div>
         </transition>
