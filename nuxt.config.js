@@ -3,7 +3,7 @@ import i18n from './config/i18n'
 export default {
     target: 'static',
     router: {
-        base: '/my-demo/',
+        base: '/my-demo',
     },
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
