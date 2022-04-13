@@ -5,8 +5,7 @@
                 <div class="row align-center">
                     <div @click="$router.push('/')" class="xs3">
                         <img
-                            src="~/assets/images/logo.svg"
-                            alt=""
+                            :src="`${$config.BASE_URL}/images/logo.svg`"
                             width="100px"
                             height="100%"
                             class="header-image py-2"

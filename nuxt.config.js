@@ -1,7 +1,7 @@
 import i18n from './config/i18n'
 
 export default {
-    target: 'static',
+    mode: 'static',
     router: {
         base: '/my-demo',
     },
