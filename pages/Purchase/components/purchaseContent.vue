@@ -1,14 +1,14 @@
 <template>
     <div class="container">
         <div class="main">
-            <h2 class="text-xs-center mb-4">{{ $t('Purchasing') }}</h2>
+            <h2 class="text-xs-center mb-3">{{ $t('Purchasing') }}</h2>
             <transition name="fade" appear>
                 <div>
                     <div
                         class="project row align-center mb-3"
                         v-for="item in listPurchase"
                         :key="item.id"
-                        :style="`border-left: 8px solid ${item.color}`"
+                        :style="`border-left: 6px solid ${item.color}`"
                     >
                         <div style="border-right: 1px solid #cccccc">
                             <img :src="item.image" class="pa-3" />
@@ -19,8 +19,8 @@
                                 <div
                                     v-for="sub in item.subTitle"
                                     :key="sub.id"
-                                    class="chip mb-2 mr-2"
-                                    @click="$router.push(sub.to)"
+                                    class="chip mr-2"
+                                    @click="clickRouter(sub.to, routeParams)"
                                 >
                                     {{ $t(sub.des) }}
                                 </div>
@@ -34,38 +34,40 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     data() {
         return {
             listPurchase: [
                 {
                     id: 1,
-                    title: 'PurchaseProjects',
+                    title: 'Purchasing for projects',
                     image: '/purchasingForProjects.svg',
                     color: '#0986c5',
                     subTitle: [
                         {
                             id: 1,
-                            des: 'PurchaseRequisition',
+                            des: 'Purchase requisition',
                             to: '/Purchase/PurchaseRequisition',
                         },
                         {
                             id: 2,
-                            des: 'ProductionRequisition',
+                            des: 'Production requisition',
                             to: '/Purchase/PurchaseRequisition',
                         },
                     ],
                 },
                 {
                     id: 2,
-                    title: 'PurchasingNonProjects',
+                    title: 'Purchasing for non-projects',
                     image: '/purchasingNoneProjects.svg',
                     color: '#b5222d',
                     subTitle: [],
                 },
                 {
                     id: 3,
-                    title: 'PurchasingApproval',
+                    title: 'Purchasing approval',
                     image: '/purchasingApprove.svg',
                     color: '#87a248',
                     subTitle: [],
@@ -73,12 +75,13 @@ export default {
             ],
         }
     },
+    computed: mapState(['routeParams']),
 }
 </script>
 
 <style scoped>
 .main {
-    margin-top: 110px;
+    margin-top: 90px;
 }
 .main h2 {
     color: #0986c5;
@@ -105,7 +108,13 @@ export default {
     font-size: 16px;
     border-radius: 25px;
     background-color: #f1f1f1;
+    transition: all 0.2s linear 0s;
     cursor: pointer;
+}
+.chip:hover {
+    background-color: #0986c5;
+    transition: all 0.2s linear 0s;
+    color: #f1f1f1;
 }
 .fade-enter-active,
 .fade-leave-active {

@@ -1,33 +1,54 @@
 <template>
     <form @submit.prevent="submit">
+        <div class="row justify-end align-center">
+            <div class="mr-2">{{ $t('Select language') }} :</div>
+            <DxSelectBox
+                v-model="selectedValue"
+                :data-source="$i18n.locales"
+                display-expr="name"
+                value-expr="code"
+                width="80"
+                @selectionChanged="onChange(selectedValue)"
+                field-template="field"
+            >
+                <template #field="{ data }">
+                    <div class="row align-center pa-1">
+                        <img
+                            :src="data.icon"
+                            style="width: 28px; height: 21px"
+                        />
+                        <DxTextBox :read-only="true" style="display: none" />
+                    </div>
+                </template>
+            </DxSelectBox>
+        </div>
         <div class="container">
             <div class="row justify-center align-center">
                 <div class="login-image xs7 pa-4">
                     <div class="row">
                         <div class="describe xs7">
                             <img src="/robot1.svg" alt="" />
-                            <h3 class="pt-5 pb-4 font-16">
-                                PHẦN MỀM ĐƯỢC PHÁT TRIỂN BỞI VNAS GROUP
+                            <h3 class="pt-5 pb-4">
+                                {{ $t('Software developed by Vnas Group') }}
                             </h3>
                             <div class="font-14">
-                                <p class="mb-1">Các kênh hỗ trợ :</p>
-                                <p class="mb-1">Email: info@vnas.com.vn</p>
-                                <p>Hotline: +(84) 904 576 993</p>
+                                <p class="mb-1">{{ $t('Contact') + ' :' }}</p>
+                                <p class="mb-1">
+                                    {{ $t('Email') }}: info@vnas.com.vn
+                                </p>
+                                <p>{{ $t('Hotline') }}: +(84) 904 576 993</p>
                             </div>
                         </div>
                         <div class="login-form xs5">
                             <div class="column justify-space-between">
                                 <div>
-                                    <img
-                                        src="/logo.svg"
-                                        alt=""
-                                    />
+                                    <img src="/logo.svg" alt="" />
                                     <h3 class="py-5">
-                                        HỆ THỐNG PHẦN MỀM QUẢN LÝ
+                                        {{ $t('Management Software System') }}
                                     </h3>
                                     <div class="pb-4">
                                         <DxTextBox
-                                            placeholder="Username"
+                                            :placeholder="$t('Username')"
                                             stylingMode="underlined"
                                             :show-clear-button="true"
                                             v-model="login.email"
@@ -37,7 +58,7 @@
                                         <DxTextBox
                                             :show-clear-button="true"
                                             mode="password"
-                                            placeholder="Password"
+                                            :placeholder="$t('Password')"
                                             stylingMode="underlined"
                                             v-model="login.password"
                                         />
@@ -45,15 +66,21 @@
                                     <div class="pt-5">
                                         <div class="captcha pt-3">
                                             <DxTextBox
-                                                placeholder="Type captcha code"
+                                                :placeholder="
+                                                    $t('Type captcha code')
+                                                "
                                                 stylingMode="underlined"
                                             />
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <button class="btn-login" type="submit">
-                                        Login
+                                    <button
+                                        class="btn-login"
+                                        type="submit"
+                                        @click="clickRouter('/', routeParams)"
+                                    >
+                                        {{ $t('Log in') }}
                                     </button>
                                 </div>
                             </div>
@@ -68,12 +95,16 @@
 <script>
 import DxTextBox from 'devextreme-vue/text-box'
 import DxButton from 'devextreme-vue/button'
+import DxSelectBox from 'devextreme-vue/select-box'
+
+import { mapState } from 'vuex'
 
 export default {
     name: 'IndexPage',
     components: {
         DxTextBox,
         DxButton,
+        DxSelectBox,
     },
     data() {
         return {
@@ -81,23 +112,31 @@ export default {
                 email: '',
                 password: '',
             },
+            selectedValue: '',
         }
     },
-
+    computed: mapState(['routeParams']),
     methods: {
-        async submit() {
-            try {
-                let res = await this.$auth.loginWith('local', {
-                    data: {
-                        email: this.login.email,
-                        password: this.login.password,
-                    },
-                })
-                console.log(res.data)
-            } catch (error) {
-                console.log(error)
-            }
+        onChange(e) {
+            this.$store.commit('LANG_SWITCH', e)
+            this.$router.replace(this.switchLocalePath(e))
         },
+        // async submit() {
+        //     try {
+        //         let res = await this.$auth.loginWith('local', {
+        //             data: {
+        //                 email: this.login.email,
+        //                 password: this.login.password,
+        //             },
+        //         })
+        //         console.log(res.data)
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // },
+    },
+    created() {
+        this.selectedValue = this.$i18n.locale
     },
 }
 </script>

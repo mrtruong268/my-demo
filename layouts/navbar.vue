@@ -3,11 +3,11 @@
         <div class="header">
             <div class="container">
                 <div class="row align-center">
-                    <div @click="$router.push('/')" class="xs3">
+                    <div @click="clickRouter('/', routeParams)" class="xs3">
                         <img
                             src="/logo.svg"
                             alt=""
-                            width="100px"
+                            width="80px"
                             height="100%"
                             class="header-image py-2"
                         />
@@ -25,7 +25,7 @@
                     <div class="xs3 row justify-end align-center">
                         <div class="row align-center justify-end">
                             <i class="mdi mdi-information btn-guide"></i>
-                            <p style="color: #00679b">{{ $t('userGuide') }}</p>
+                            <p style="color: #00679b">{{ $t('User guide') }}</p>
                         </div>
                         <div class="dropdown2">
                             <div class="row">
@@ -34,18 +34,18 @@
                                 </div>
                             </div>
                             <div class="dropdown-content2">
-                                <p>{{ $t('updateAvatar') }}</p>
-                                <p>{{ $t('changePassword') }}</p>
-                                <p @click="$router.push('/login')">
-                                    {{ $t('LogOut') }}
+                                <p>{{ $t('Update avatar') }}</p>
+                                <p>{{ $t('Change password') }}</p>
+                                <p @click="clickRouter('/Login', routeParams)">
+                                    {{ $t('Log out') }}
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="nav-bar row">
-                <div class="row align-center">
+            <div class="nav-bar row align-center">
+                <div class="row">
                     <div class="dropdown ml-4 mr-3">
                         <div
                             id="toggle"
@@ -58,7 +58,7 @@
                             <li
                                 v-for="nav in NavBar"
                                 :key="nav.id"
-                                @click="$router.push(nav.to)"
+                                @click="clickRouter(nav.to, routeParams)"
                                 class="color-fff list-mobile px-4 py-2"
                             >
                                 {{ $t(nav.title) }}
@@ -72,10 +72,24 @@
                         :data-source="$i18n.locales"
                         display-expr="name"
                         value-expr="code"
-                        :value="$i18n.locales[0].code"
                         width="80"
                         @selectionChanged="onChange(selectedValue)"
-                    />
+                        field-template="field"
+                        class="mr-4"
+                    >
+                        <template #field="{ data }">
+                            <div class="row align-center pa-1">
+                                <img
+                                    :src="data.icon"
+                                    style="width: 28px; height: 21px"
+                                />
+                                <DxTextBox
+                                    :read-only="true"
+                                    style="display: none"
+                                />
+                            </div>
+                        </template>
+                    </DxSelectBox>
                 </div>
             </div>
         </div>
@@ -84,7 +98,7 @@
                 <li
                     v-for="item in ChucNang"
                     :key="item.id"
-                    @click="$router.push(item.to)"
+                    @click="clickRouter(item.to, routeParams)"
                 >
                     {{ $t(item.title) }}
                 </li>
@@ -103,7 +117,7 @@
                             <li
                                 v-for="item in ChucNang"
                                 :key="item.id"
-                                @click="$router.push(item.to)"
+                                @click="clickRouter(item.to, routeParams)"
                             >
                                 {{ $t(item.title) }}
                             </li>
@@ -116,7 +130,7 @@
                 <div class="py-3">
                     <div
                         class="mdi mdi-home-outline btn-icon"
-                        @click="$router.push('/')"
+                        @click="clickRouter('/', routeParams)"
                     ></div>
                 </div>
                 <div class="py-3">
@@ -134,9 +148,10 @@
 import { mapState } from 'vuex'
 import DxButton from 'devextreme-vue/button'
 import DxSelectBox from 'devextreme-vue/select-box'
+import DxTextBox from 'devextreme-vue/text-box'
 
 export default {
-    components: { DxButton, DxSelectBox },
+    components: { DxButton, DxSelectBox, DxTextBox },
     data() {
         return {
             NavBar: [
@@ -333,7 +348,7 @@ export default {
 }
 #sidebar ul {
     position: relative;
-    margin-top: 18px;
+    margin-top: 4px;
 }
 #sidebar ul li {
     border-bottom: 1px solid #cccccc;

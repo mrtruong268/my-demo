@@ -4,7 +4,7 @@ export const state = () => ({
     ChucNang: [
         {
             id: uuidv4(),
-            title: 'ProjectManagement',
+            title: 'Project management',
             to: '/ProjectManagement',
             color: '#940726',
             icon: 'mdi mdi-account-details',
@@ -12,7 +12,7 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: 'DistributionList',
+            title: 'Distribution list',
             to: '',
             color: '#008AC1',
             icon: 'mdi mdi-clipboard-list',
@@ -20,7 +20,7 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: 'WorkPlace',
+            title: 'Work place',
             to: '',
             color: '#2B585F',
             icon: 'mdi mdi-domain',
@@ -28,7 +28,7 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: '1Office',
+            title: '1 Office',
             to: '',
             color: '#157787',
             icon: '',
@@ -36,7 +36,7 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: 'CashFlowAnalysis',
+            title: 'Cash flow analysis',
             to: '',
             color: '#C83213',
             icon: 'mdi mdi-cash',
@@ -79,7 +79,7 @@ export const state = () => ({
     DanhSachYeuCau: [
         {
             id: uuidv4(),
-            title: 'ListPurchase',
+            title: 'List of purchase requests',
             loaiDanhSach: 'muahang',
             dataMuahang: [
                 {
@@ -149,7 +149,7 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: 'ListProduction',
+            title: 'List of production requirements',
             loaiDanhSach: 'sanxuat',
             dataSanXuat: [
                 {
@@ -180,7 +180,7 @@ export const state = () => ({
     DanhSachDuAn: [
         {
             id: uuidv4(),
-            title: 'ListProjects',
+            title: 'List of projects',
             loaiDanhSach: 'project',
             dataProject: [
                 {
@@ -191,31 +191,31 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: 'ListPartners',
+            title: 'List of partners',
             loaiDanhSach: 'partner',
             dataPartner: ['partner'],
         },
         {
             id: uuidv4(),
-            title: 'ListCustomers',
+            title: 'List of customers',
             loaiDanhSach: 'customer',
             dataCustomer: ['customer'],
         },
         {
             id: uuidv4(),
-            title: 'ListCategories',
+            title: 'List of categories',
             loaiDanhSach: 'category',
             dataCategory: ['category'],
         },
         {
             id: uuidv4(),
-            title: 'ListCompanies',
+            title: 'List of companies',
             loaiDanhSach: 'company',
             dataCompany: ['company'],
         },
         {
             id: uuidv4(),
-            title: 'ListViews',
+            title: 'List of views',
             loaiDanhSach: 'view',
             dataView: ['view'],
         },

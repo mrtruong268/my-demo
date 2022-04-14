@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        <h3 class="mb-2">Requested information</h3>
         <div class="row">
             <div class="xs9">
                 <div class="row mb-2">
@@ -9,7 +8,7 @@
                             display-expr="title"
                             value-expr="id"
                             styling-mode="outlined"
-                            label="Purchase form"
+                            :label="$t('Purchase form')"
                             label-mode="floating"
                             class="pa-1"
                         />
@@ -104,18 +103,20 @@
                 class="pa-1"
             />
         </div>
-        <div class="pb-5">
+        <div class="mb-3">
             <h3>Add goods, services</h3>
             <DxDataGrid
                 id="gridContainer"
-                :show-borders="true"
                 :data-source="HangHoa"
+                :show-borders="true"
                 height="100%"
             >
                 <DxEditing
-                    :allow-updating="false"
+                    :allow-updating="true"
                     :allow-adding="true"
-                    :allow-deleting="false"
+                    :allow-deleting="true"
+                    :confirmDelete="false"
+                    :useIcons="true"
                     mode="cell"
                 />
                 <DxPaging :enabled="false" />
@@ -136,12 +137,7 @@
             </DxDataGrid>
         </div>
         <div class="row justify-end align-center footer">
-            <DxButton
-                text="Lưu"
-                type="default"
-                styling-mode="contained"
-                class="popup-btn"
-            />
+            <DxButton text="Lưu" type="default" styling-mode="contained" />
         </div>
     </div>
 </template>
@@ -198,7 +194,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.footer {
-}
-</style>
+<style scoped></style>

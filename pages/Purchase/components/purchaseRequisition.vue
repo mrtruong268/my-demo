@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="container">
-            <h2 class="text-xs-center mb-3">{{ $t('PurchaseRequisition') }}</h2>
+            <h3 class="text-xs-center mb-2">{{ $t('Purchase requisition') }}</h3>
             <div class="row align-center toolbar">
                 <DxList
                     :data-source="ListYeuCau"
@@ -16,17 +16,17 @@
             </div>
             <div class="row align-center">
                 <DxButton
-                    :text="$t('CreatePurchase')"
+                    :text="$t('Create purchase requisition')"
                     type="normal"
-                    styling-mode="text"
+                    styling-mode="outlined"
                     icon="mdi mdi-plus"
                     @click="addPurchase"
                     class="xs6"
                 />
                 <DxButton
-                    :text="$t('CreateProduction')"
+                    :text="$t('Create production requisition')"
                     type="normal"
-                    styling-mode="text"
+                    styling-mode="outlined"
                     icon="mdi mdi-plus"
                     @click="addProduct"
                     class="xs6"
@@ -35,7 +35,7 @@
             <div>
                 <div class="row justify-end" v-show="List.length > 0">
                     <DxButton
-                        text="Clear"
+                        :text="$t('Clear')"
                         type="normal"
                         styling-mode="text"
                         icon="mdi mdi-close"
@@ -44,18 +44,18 @@
                 </div>
                 <DxTabPanel
                     :data-source="List"
-                    height="100%"
+                    height="443px"
                     :defer-rendering="false"
                     :show-nav-buttons="true"
                     :repaint-changes-only="true"
                     :selectedItem="selectedItem"
-                    noDataText="No data to display"
+                    :noDataText="$t('No data to display')"
                     item-title-template="title"
                     item-template="itemTemplate"
                 >
                     <template #title="{ data: listItem }">
                         <div>
-                            <span>{{ listItem.title }} </span
+                            <span>{{ $t(listItem.title) }} </span
                             ><i
                                 v-show="showCloseButton()"
                                 class="mdi mdi-close"
@@ -106,12 +106,12 @@ import DxTabPanel from 'devextreme-vue/tab-panel'
 import DxButton from 'devextreme-vue/button'
 import DxList from 'devextreme-vue/list'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+import { v4 as uuidv4 } from 'uuid'
 
-import addRequisition from './addRequisition.vue'
 import ListPurchase from './listPurchase.vue'
 import ListProduct from './listProduct.vue'
-import { v4 as uuidv4 } from 'uuid'
+import addRequisition from './addRequisition.vue'
 import addProduction from './addProduction.vue'
 
 export default {
@@ -119,10 +119,10 @@ export default {
         DxTabPanel,
         DxButton,
         DxList,
-        addRequisition,
+        DxScrollView,
         ListPurchase,
         ListProduct,
-        DxScrollView,
+        addRequisition,
         addProduction,
     },
     data() {
@@ -154,9 +154,8 @@ export default {
     },
     methods: {
         addItem(data) {
-            if (!this.List.find((i) => i.id === data.id)) {
+            if (!this.List.find((i) => i.id === data.id))
                 this.$store.commit('ADD_LIST', data)
-            }
             this.selectedItem = data
         },
         addPurchase(e) {
@@ -166,7 +165,8 @@ export default {
                 loaiDanhSach: 'tmh',
                 dataMuahang: [],
             }
-            this.addItem(ObjMua)
+            if (!this.List.find((i) => i.loaiDanhSach === ObjMua.loaiDanhSach))
+                this.addItem(ObjMua)
         },
         addProduct(e) {
             let ObjSx = {
@@ -175,7 +175,8 @@ export default {
                 loaiDanhSach: 'tsx',
                 dataSanXuat: [],
             }
-            this.addItem(ObjSx)
+            if (!this.List.find((i) => i.loaiDanhSach === ObjSx.loaiDanhSach))
+                this.addItem(ObjSx)
         },
         onItemClick(e) {
             this.addItem(e.itemData)
@@ -200,10 +201,10 @@ export default {
 
 <style scoped>
 .main {
-    margin-top: 110px;
+    margin-top: 90px;
     margin-bottom: 40px;
 }
-.container h2 {
+.container h3 {
     color: #0986c5;
 }
 >>> .dx-scrollview-content {

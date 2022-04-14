@@ -48,10 +48,12 @@ export default {
             {
                 code: 'en',
                 name: 'Eng',
+                icon: '/gb.svg',
             },
             {
                 code: 'vi',
                 name: 'Vie',
+                icon: '/vn.svg',
             },
         ],
         defaultLocale: 'en',

@@ -8,11 +8,7 @@
                             class="btn-chucnang"
                             v-for="item in ChucNang"
                             :key="item.id"
-                            @click="
-                                routeParams === 'vi'
-                                    ? $router.push(`/${routeParams}` + item.to)
-                                    : $router.push(item.to)
-                            "
+                            @click="clickRouter(item.to, routeParams)"
                             :style="`border-left: 6px solid ${item.color}`"
                         >
                             <div class="row align-center justify-center">
@@ -45,11 +41,7 @@
                     >
                         <div
                             class="icon-mobile"
-                            @click="
-                                routeParams === 'vi'
-                                    ? $router.push(`/${routeParams}` + item.to)
-                                    : $router.push(item.to)
-                            "
+                            @click="clickRouter(item.to, routeParams)"
                             :style="`background-color: ${item.color}`"
                         >
                             <span
