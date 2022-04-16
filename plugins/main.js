@@ -1,4 +1,4 @@
-import 'devextreme/dist/css/dx.light.css'
+import 'devextreme/dist/css/dx.material.blue.light.css'
 import Vue from 'vue'
 
 const mixin = {

@@ -1,49 +1,46 @@
 <template>
-    <div>
-        <div>
-            <DxDataGrid
-                id="gridContainer"
-                :data-source="dataPurchase"
-                :show-borders="true"
-                height="100%"
-            >
-                <DxHeaderFilter :visible="true" />
-                <DxEditing
-                    :allow-updating="true"
-                    :allow-adding="false"
-                    :allow-deleting="true"
-                    mode="cell"
-                />
-                <DxPaging :enabled="false" />
-                <DxSelection mode="multiple" />
-                <DxColumn
-                    data-field="id"
-                    caption="Id"
-                    :allow-header-filtering="false"
-                />
-                <DxColumn
-                    data-field="tenYeuCau"
-                    caption="Request name"
-                    :allow-header-filtering="false"
-                />
-                <DxColumn
-                    data-field="soLuong"
-                    caption="Amount"
-                    :allow-header-filtering="false"
-                />
-                <DxColumn
-                    data-field="thoiGian"
-                    caption="Time"
-                    :allow-header-filtering="false"
-                />
-                <DxColumn
-                    data-field="loaiMuaHang"
-                    caption="Purchase form"
-                    :allow-header-filtering="true"
-                />
-            </DxDataGrid>
-        </div>
-    </div>
+    <DxDataGrid
+        id="gridContainer"
+        :data-source="dataProp"
+        :show-borders="true"
+        height="100%"
+    >
+        <DxHeaderFilter :visible="true" />
+        <DxEditing
+            :allow-updating="true"
+            :confirmDelete="false"
+            :useIcons="true"
+            :allow-deleting="true"
+            mode="cell"
+        />
+        <DxPaging :enabled="false" />
+        <DxSelection mode="multiple" />
+        <DxColumn
+            data-field="id"
+            caption="Id"
+            :allow-header-filtering="false"
+        />
+        <DxColumn
+            data-field="tenYeuCau"
+            caption="Request name"
+            :allow-header-filtering="false"
+        />
+        <DxColumn
+            data-field="soLuong"
+            caption="Amount"
+            :allow-header-filtering="false"
+        />
+        <DxColumn
+            data-field="thoiGian"
+            caption="Time"
+            :allow-header-filtering="false"
+        />
+        <DxColumn
+            data-field="loaiMuaHang"
+            caption="Purchase form"
+            :allow-header-filtering="true"
+        />
+    </DxDataGrid>
 </template>
 
 <script>
@@ -65,7 +62,7 @@ export default {
         DxSelection,
         DxHeaderFilter,
     },
-    props: ['dataPurchase'],
+    props: ['dataProp'],
 }
 </script>
 

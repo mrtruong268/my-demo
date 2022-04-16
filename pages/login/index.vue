@@ -29,7 +29,7 @@
                         <div class="describe xs7">
                             <img src="/robot1.svg" alt="" />
                             <h3 class="pt-5 pb-4">
-                                {{ $t('Software developed by Vnas Group') }}
+                                {{ $t('SOFTWARE DEVELOPED BY VNAS GROUP') }}
                             </h3>
                             <div class="font-14">
                                 <p class="mb-1">{{ $t('Contact') + ' :' }}</p>
@@ -44,7 +44,7 @@
                                 <div>
                                     <img src="/logo.svg" alt="" />
                                     <h3 class="py-5">
-                                        {{ $t('Management Software System') }}
+                                        {{ $t('MANAGEMENT SOFTWARE SYSTEM') }}
                                     </h3>
                                     <div class="pb-4">
                                         <DxTextBox
@@ -78,7 +78,7 @@
                                     <button
                                         class="btn-login"
                                         type="submit"
-                                        @click="clickRouter('/', routeParams)"
+                                        @click="submit(login)"
                                     >
                                         {{ $t('Log in') }}
                                     </button>
@@ -109,8 +109,8 @@ export default {
     data() {
         return {
             login: {
-                email: '',
-                password: '',
+                email: 'Truong',
+                password: '1234',
             },
             selectedValue: '',
         }
@@ -121,19 +121,9 @@ export default {
             this.$store.commit('LANG_SWITCH', e)
             this.$router.replace(this.switchLocalePath(e))
         },
-        // async submit() {
-        //     try {
-        //         let res = await this.$auth.loginWith('local', {
-        //             data: {
-        //                 email: this.login.email,
-        //                 password: this.login.password,
-        //             },
-        //         })
-        //         console.log(res.data)
-        //     } catch (error) {
-        //         console.log(error)
-        //     }
-        // },
+        async submit(logininfo) {
+            this.clickRouter('/', this.routeParams)
+        },
     },
     created() {
         this.selectedValue = this.$i18n.locale

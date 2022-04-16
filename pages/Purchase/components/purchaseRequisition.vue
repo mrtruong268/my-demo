@@ -1,50 +1,52 @@
 <template>
-    <div class="main">
-        <div class="container">
-            <h3 class="text-xs-center mb-2">{{ $t('Purchase requisition') }}</h3>
-            <div class="row align-center toolbar">
-                <DxList
-                    :data-source="ListYeuCau"
-                    height="100%"
-                    class="xs12 text-xs-center"
-                    @itemClick="onItemClick"
-                >
-                    <template #item="{ data: item }">
-                        {{ $t(item.title) }}
-                    </template>
-                </DxList>
-            </div>
-            <div class="row align-center">
+    <div class="container">
+        <h3 class="text-xs-center mb-2">
+            {{ $t('Purchase requisition') }}
+        </h3>
+        <div class="row align-center toolbar">
+            <DxList
+                :data-source="ListYeuCau"
+                height="100%"
+                class="xs12 text-xs-center"
+                @itemClick="onItemClick"
+            >
+                <template #item="{ data: item }">
+                    {{ $t(item.title) }}
+                </template>
+            </DxList>
+        </div>
+        <div class="row align-center">
+            <DxButton
+                :text="$t('Create purchase requisition')"
+                type="normal"
+                styling-mode="outlined"
+                icon="mdi mdi-plus"
+                @click="addPurchase"
+                class="xs6"
+            />
+            <DxButton
+                :text="$t('Create production requisition')"
+                type="normal"
+                styling-mode="outlined"
+                icon="mdi mdi-plus"
+                @click="addProduct"
+                class="xs6"
+            />
+        </div>
+        <div>
+            <div class="row justify-end" v-show="List.length > 0">
                 <DxButton
-                    :text="$t('Create purchase requisition')"
+                    :text="$t('Clear')"
                     type="normal"
-                    styling-mode="outlined"
-                    icon="mdi mdi-plus"
-                    @click="addPurchase"
-                    class="xs6"
-                />
-                <DxButton
-                    :text="$t('Create production requisition')"
-                    type="normal"
-                    styling-mode="outlined"
-                    icon="mdi mdi-plus"
-                    @click="addProduct"
-                    class="xs6"
+                    styling-mode="text"
+                    icon="mdi mdi-close"
+                    @click="clearTab"
                 />
             </div>
-            <div>
-                <div class="row justify-end" v-show="List.length > 0">
-                    <DxButton
-                        :text="$t('Clear')"
-                        type="normal"
-                        styling-mode="text"
-                        icon="mdi mdi-close"
-                        @click="clearTab"
-                    />
-                </div>
+            <div class="tabPanel">
                 <DxTabPanel
                     :data-source="List"
-                    height="443px"
+                    height="calc(78vh - 200px)"
                     :defer-rendering="false"
                     :show-nav-buttons="true"
                     :repaint-changes-only="true"
@@ -67,29 +69,25 @@
                         <DxScrollView>
                             <div>
                                 <div v-if="listItem.loaiDanhSach === 'muahang'">
-                                    <listPurchase
-                                        :dataPurchase="listItem.dataMuahang"
-                                    />
+                                    <listPurchase :dataProp="listItem.data" />
                                 </div>
                                 <div
                                     v-else-if="
                                         listItem.loaiDanhSach === 'sanxuat'
                                     "
                                 >
-                                    <listProduct
-                                        :dataProduct="listItem.dataSanXuat"
-                                    />
+                                    <listProduct :dataProp="listItem.data" />
                                 </div>
                                 <div v-else>
                                     <addRequisition
                                         v-if="listItem.loaiDanhSach === 'tmh'"
-                                        :dataPurchase="listItem.dataMuahang"
+                                        :dataProp="listItem.data"
                                     />
                                     <addProduction
                                         v-else-if="
                                             listItem.loaiDanhSach === 'tsx'
                                         "
-                                        :dataProduct="listItem.dataSanXuat"
+                                        :dataProp="listItem.data"
                                     />
                                 </div>
                             </div>
@@ -161,7 +159,7 @@ export default {
         addPurchase(e) {
             let ObjMua = {
                 id: uuidv4(),
-                title: e.element.ariaLabel,
+                title: this.$t(e.element.ariaLabel),
                 loaiDanhSach: 'tmh',
                 dataMuahang: [],
             }
@@ -171,7 +169,7 @@ export default {
         addProduct(e) {
             let ObjSx = {
                 id: uuidv4(),
-                title: e.element.ariaLabel,
+                title: this.$t(e.element.ariaLabel),
                 loaiDanhSach: 'tsx',
                 dataSanXuat: [],
             }
@@ -200,9 +198,10 @@ export default {
 </script>
 
 <style scoped>
-.main {
-    margin-top: 90px;
-    margin-bottom: 40px;
+.container {
+    height: 100%;
+    overflow: hidden;
+    margin: 80px 0;
 }
 .container h3 {
     color: #0986c5;
@@ -212,6 +211,7 @@ export default {
 }
 >>> .dx-list-item {
     border: none;
+    margin: 0;
 }
 .toolbar {
     background-color: #ebebeb;

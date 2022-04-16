@@ -39,7 +39,7 @@ export default {
     modules: [
         // https://go.nuxtjs.dev/axios
         '@nuxtjs/axios',
-        '@nuxtjs/auth-next',
+        '@nuxtjs/auth',
         'nuxtjs-mdi-font',
         'nuxt-i18n',
     ],
@@ -76,40 +76,40 @@ export default {
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
         // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-        baseURL: '',
+        baseURL: 'http://localhost:3000/api',
     },
     auth: {
         strategies: {
-            local: {
+            social: {
+                scheme: 'oauth2',
                 endpoints: {
-                    login: {
-                        url: 'https://reqres.in/api/login',
-                        method: 'post',
-                    },
-                    logout: { url: '/api/auth/logout', method: 'post' },
-                    user: {
-                        url: 'https://reqres.in/api/users',
-                        method: 'get',
-                    },
+                    authorization: '',
+                    token: undefined,
+                    userInfo: '',
+                    logout: '',
                 },
                 token: {
-                    property: 'token',
-                    global: true,
-                    // required: true,
-                    // type: 'Bearer'
+                    property: 'access_token',
+                    type: 'Bearer',
+                    maxAge: 1800,
                 },
-                user: {
-                    // property: 'user',
-                    property: false,
-                    autoFetch: true,
+                refreshToken: {
+                    property: 'refresh_token',
+                    maxAge: 60 * 60 * 24 * 30,
                 },
+                responseType: 'token',
+                grantType: 'authorization_code',
+                accessType: undefined,
+                redirectUri: undefined,
+                logoutRedirectUri: undefined,
+                clientId: 'SET_ME',
+                scope: ['openid', 'profile', 'email'],
+                state: 'UNIQUE_AND_NON_GUESSABLE',
+                codeChallengeMethod: '',
+                responseMode: '',
+                acrValues: '',
+                // autoLogout: false
             },
-        },
-        redirect: {
-            login: '/login',
-            logout: '/login',
-            callback: '/login',
-            home: '/',
         },
     },
     // Build Configuration: https://go.nuxtjs.dev/config-build

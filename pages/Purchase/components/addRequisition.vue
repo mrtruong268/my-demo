@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="main">
         <div class="row">
             <div class="xs9">
                 <div class="row mb-2">
@@ -16,7 +16,7 @@
                     <div class="xs6 mr-3">
                         <DxTextBox
                             styling-mode="outlined"
-                            label="Name"
+                            :label="$t('Name')"
                             label-mode="floating"
                             class="pa-1"
                         />
@@ -26,7 +26,7 @@
                     <div class="xs4 mr-3">
                         <DxTextBox
                             styling-mode="outlined"
-                            label="Employee id"
+                            :label="$t('Employee code')"
                             label-mode="floating"
                             class="pa-1"
                         />
@@ -34,7 +34,7 @@
                     <div class="xs4 mr-3">
                         <DxTextBox
                             styling-mode="outlined"
-                            label="Position"
+                            :label="$t('Position')"
                             label-mode="floating"
                             class="pa-1"
                         />
@@ -42,7 +42,7 @@
                     <div class="xs4 mr-3">
                         <DxTextBox
                             styling-mode="outlined"
-                            label="Department"
+                            :label="$t('Department')"
                             label-mode="floating"
                             class="pa-1"
                         />
@@ -52,7 +52,7 @@
                     <div class="xs6 mr-3">
                         <DxDateBox
                             styling-mode="outlined"
-                            label="Submission date"
+                            :label="$t('Submission date')"
                             label-mode="floating"
                             class="pa-1"
                         />
@@ -60,7 +60,7 @@
                     <div class="xs6 mr-3">
                         <DxDateBox
                             styling-mode="outlined"
-                            label="Delivery date"
+                            :label="$t('Delivery date')"
                             label-mode="floating"
                             class="pa-1"
                         />
@@ -72,7 +72,7 @@
                 <div class="pb-2">
                     <DxTextBox
                         styling-mode="outlined"
-                        label="Surcharge"
+                        :label="$t('Surcharge')"
                         label-mode="floating"
                         class="pa-1"
                     />
@@ -80,7 +80,7 @@
                 <div class="pb-2">
                     <DxTextBox
                         styling-mode="outlined"
-                        label="Expense code"
+                        :label="$t('Expense code')"
                         label-mode="floating"
                         class="pa-1"
                     />
@@ -88,7 +88,7 @@
                 <div class="pb-2">
                     <DxTextBox
                         styling-mode="outlined"
-                        label="Reference number"
+                        :label="$t('Reference number')"
                         label-mode="floating"
                         class="pa-1"
                     />
@@ -98,42 +98,73 @@
         <div class="mb-3">
             <DxTextBox
                 styling-mode="outlined"
-                label="Work location"
+                :label="$t('Work location')"
                 label-mode="floating"
                 class="pa-1"
             />
         </div>
         <div class="mb-3">
-            <h3>Add goods, services</h3>
+            <div class="row justify-space-between">
+                <h3>{{ $t('Add goods, services') }}</h3>
+                <DxButton icon="mdi mdi-plus" class="mb-2" @click="addRow" />
+            </div>
             <DxDataGrid
                 id="gridContainer"
                 :data-source="HangHoa"
                 :show-borders="true"
                 height="100%"
+                :ref="dataGridRefKey"
             >
                 <DxEditing
                     :allow-updating="true"
-                    :allow-adding="true"
                     :allow-deleting="true"
                     :confirmDelete="false"
                     :useIcons="true"
                     mode="cell"
                 />
                 <DxPaging :enabled="false" />
-                <DxColumn data-field="idHangHoa" caption="Id" width="30" />
-                <DxColumn data-field="tenHangHoa" caption="Goods, services" />
-                <DxColumn data-field="soluong" caption="Quantity" width="70" />
-                <DxColumn data-field="donVi" caption="Unit" width="50" />
-                <DxColumn data-field="hangMuc" caption="Categories" />
-                <DxColumn data-field="xuatXu" caption="Origin" />
-                <DxColumn data-field="maHieu" caption="Model" />
-                <DxColumn data-field="tongCong" caption="Total" width="60" />
                 <DxColumn
-                    data-field="soTien"
-                    caption="Amount of money"
+                    data-field="idHangHoa"
+                    :caption="$t('Id')"
+                    width="60"
+                />
+                <DxColumn
+                    data-field="tenHangHoa"
+                    width="200"
+                    :caption="$t('Goods, services')"
+                />
+                <DxColumn
+                    data-field="soluong"
+                    :caption="$t('Quantity')"
+                    width="90"
+                />
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80" />
+                <DxColumn
+                    data-field="hangMuc"
+                    :caption="$t('Categories')"
                     width="100"
                 />
-                <DxColumn data-field="ghiChu" caption="Note" />
+                <DxColumn
+                    data-field="xuatXu"
+                    :caption="$t('Origin')"
+                    width="100"
+                />
+                <DxColumn
+                    data-field="maHieu"
+                    :caption="$t('Model')"
+                    width="100"
+                />
+                <DxColumn
+                    data-field="tongCong"
+                    :caption="$t('Total')"
+                    width="100"
+                />
+                <DxColumn
+                    data-field="soTien"
+                    width="100"
+                    :caption="$t('Amount of money')"
+                />
+                <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
         </div>
         <div class="row justify-end align-center footer">
@@ -153,6 +184,7 @@ import {
     DxPaging,
     DxEditing,
 } from 'devextreme-vue/data-grid'
+const dataGridRefKey = 'my-data-grid'
 
 export default {
     components: {
@@ -174,24 +206,24 @@ export default {
                     soluong: 10,
                     ghiChu: 'sadsadsadasdad',
                 },
-                {
-                    idHangHoa: 2,
-                    tenHangHoa: 'hang hoa 2',
-                    soluong: 20,
-                    ghiChu: 'wqewqewqewe',
-                },
-                {
-                    idHangHoa: 2,
-                    tenHangHoa: 'hang hoa 2',
-                    soluong: 20,
-                    ghiChu: 'wqewqewqewe',
-                },
             ],
-            methods: {},
+            dataGridRefKey,
         }
     },
-    mounted() {},
+    methods: {
+        addRow() {
+            return this.$refs[dataGridRefKey].instance.addRow()
+        },
+    },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.main {
+    padding: 16px;
+    margin: 0 auto;
+}
+.btn-add {
+    font-size: 28px;
+}
+</style>

@@ -2,28 +2,26 @@
     <div>
         <div class="header">
             <div class="container">
-                <div class="row align-center">
-                    <div @click="clickRouter('/', routeParams)" class="xs3">
+                <div class="row align-center justify-space-between">
+                    <div @click="clickRouter('/', routeParams)">
                         <img
-                            src="/logo.svg"
+                            src="/logo2.png"
                             alt=""
                             width="80px"
                             height="100%"
                             class="header-image py-2"
                         />
                     </div>
-                    <div class="xs6 row">
-                        <input
-                            type="search"
-                            :placeholder="$t('Search')"
-                            class="search-box"
-                        />
-                        <div class="btn-search">
-                            <span class="mdi mdi-magnify"></span>
+                    <div class="row justify-end align-center">
+                        <div class="search">
+                            <input
+                                type="search"
+                                :placeholder="$t('Search')"
+                                class="search-box"
+                            />
+                            <i class="mdi mdi-magnify btn-search"></i>
                         </div>
-                    </div>
-                    <div class="xs3 row justify-end align-center">
-                        <div class="row align-center justify-end">
+                        <div class="user-guide">
                             <i class="mdi mdi-information btn-guide"></i>
                             <p style="color: #00679b">{{ $t('User guide') }}</p>
                         </div>
@@ -45,23 +43,27 @@
                 </div>
             </div>
             <div class="nav-bar row align-center">
-                <div class="row">
-                    <div class="dropdown ml-4 mr-3">
-                        <div
+                <div class="row align-center">
+                    <div class="dropdown ml-4">
+                        <span
                             id="toggle"
-                            class="mdi mdi-menu btn-nav"
+                            class="mdi mdi-menu"
                             @click="openNav"
-                        ></div>
+                        ></span>
                     </div>
                     <div>
                         <ul class="row list-nav">
+                            <li class="color-fff list-mobile px-4 py-2">
+                                {{ $t('Home') }}
+                            </li>
                             <li
-                                v-for="nav in NavBar"
-                                :key="nav.id"
-                                @click="clickRouter(nav.to, routeParams)"
                                 class="color-fff list-mobile px-4 py-2"
+                                @click="goCategory"
                             >
-                                {{ $t(nav.title) }}
+                                {{ $t('Category') }}
+                            </li>
+                            <li class="color-fff list-mobile px-4 py-2">
+                                {{ $t('Dashboard') }}
                             </li>
                         </ul>
                     </div>
@@ -72,10 +74,10 @@
                         :data-source="$i18n.locales"
                         display-expr="name"
                         value-expr="code"
-                        width="80"
                         @selectionChanged="onChange(selectedValue)"
                         field-template="field"
                         class="mr-4"
+                        stylingMode="underlined"
                     >
                         <template #field="{ data }">
                             <div class="row align-center pa-1">
@@ -83,10 +85,10 @@
                                     :src="data.icon"
                                     style="width: 28px; height: 21px"
                                 />
-                                <DxTextBox
-                                    :read-only="true"
-                                    style="display: none"
-                                />
+                                <p class="ml-3">
+                                    {{ data.name }}
+                                </p>
+                                <DxTextBox style="display: none" />
                             </div>
                         </template>
                     </DxSelectBox>
@@ -110,7 +112,7 @@
                     <div class="dropdown">
                         <div
                             id="toggle"
-                            class="mdi mdi-menu btn-nav"
+                            class="mdi mdi-menu btn-nav-mobile"
                             @click="openNav"
                         ></div>
                         <ul class="dropdown-content">
@@ -154,28 +156,6 @@ export default {
     components: { DxButton, DxSelectBox, DxTextBox },
     data() {
         return {
-            NavBar: [
-                {
-                    id: 1,
-                    title: 'Home',
-                    to: '/',
-                },
-                {
-                    id: 2,
-                    title: 'Category',
-                    to: '/',
-                },
-                {
-                    id: 3,
-                    title: 'User',
-                    to: '/',
-                },
-                {
-                    id: 4,
-                    title: 'Dashboard',
-                    to: '/',
-                },
-            ],
             selectedValue: '',
         }
     },
@@ -199,6 +179,10 @@ export default {
             this.$store.commit('LANG_SWITCH', e)
             this.$router.replace(this.switchLocalePath(e))
         },
+        goCategory() {
+            this.$store.commit('IS_SELECTED', 'category')
+            this.clickRouter('/ProjectManagement', this.routeParams)
+        },
     },
     created() {
         this.selectedValue = this.$i18n.locale
@@ -220,20 +204,23 @@ export default {
 .header img {
     cursor: pointer;
 }
-.search-box {
-    width: 100%;
-    border: none;
-    border-radius: 6px;
-    padding: 12px 16px;
+.search {
+    margin-right: 24px;
     position: relative;
 }
+.search-box {
+    width: 400px;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 16px;
+}
 .btn-search {
-    background-color: #0e8096;
     border-radius: 6px;
     position: absolute;
-    padding: 8px 10px;
-    top: 3px;
-    right: 3px;
+    font-size: 22px;
+    top: 8px;
+    right: 12px;
+    color: #cccccc;
 }
 .icon {
     background-color: white;
@@ -246,10 +233,12 @@ export default {
 }
 #toggle {
     cursor: pointer;
+    color: white;
+    font-size: 24px;
 }
 .btn-guide {
     color: white;
-    margin-right: 8px;
+    margin-right: 4px;
     font-size: 28px;
 }
 .btn-search span {
@@ -258,7 +247,7 @@ export default {
 .nav-bar {
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
 }
-.btn-nav {
+.btn-nav-mobile {
     color: white;
     font-size: 30px;
 }
@@ -278,7 +267,7 @@ export default {
 }
 .dropdown-content li {
     color: white;
-    padding: 10px 16px;
+    padding: 12px 16px;
     text-decoration: none;
     display: block;
     cursor: pointer;
@@ -292,7 +281,6 @@ export default {
 .dropdown:hover .dropdown-content {
     display: none;
 }
-
 .list-nav li {
     cursor: pointer;
     transition: all 0.2s linear 0s;
@@ -317,6 +305,10 @@ export default {
     right: 0;
     z-index: 2;
 }
+.user-guide {
+    display: flex;
+    align-items: center;
+}
 .dropdown-content2 p {
     color: white;
     padding: 20px 16px;
@@ -338,7 +330,7 @@ export default {
     top: 0;
     left: -240px;
     width: 240px;
-    max-height: calc(100vh - 9rem);
+    max-height: calc(100vh - 10rem);
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
     z-index: 1;
     transition: 0.5s;
@@ -348,7 +340,6 @@ export default {
 }
 #sidebar ul {
     position: relative;
-    margin-top: 4px;
 }
 #sidebar ul li {
     border-bottom: 1px solid #cccccc;

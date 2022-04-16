@@ -4,4 +4,5 @@ export default {
     locale: 'en',
     fallbackLocale: 'en',
     messages: { en, vi },
+    silentTranslationWarn: true,
 }

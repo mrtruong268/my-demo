@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="main">
-            <h2 class="text-xs-center mb-3">{{ $t('Purchasing') }}</h2>
+            <h3 class="text-xs-center mb-3">{{ $t('Purchasing') }}</h3>
             <transition name="fade" appear>
                 <div>
                     <div
@@ -83,11 +83,8 @@ export default {
 .main {
     margin-top: 90px;
 }
-.main h2 {
-    color: #0986c5;
-    font-size: 30px;
-}
 .main h3 {
+    color: #0986c5;
     font-size: 20px;
 }
 .project {

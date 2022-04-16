@@ -1,38 +1,36 @@
 <template>
-    <div class="container">
-        <transition name="fade-in" appear :duration="999">
-            <div class="main-content row">
-                <div class="xs8 left-content">
-                    <div class="text-xs-center grid-container">
+    <div>
+        <div class="main-content row">
+            <div class="left-content xs8">
+                <div class="container">
+                    <div class="grid-container">
                         <div
                             class="btn-chucnang"
                             v-for="item in ChucNang"
                             :key="item.id"
                             @click="clickRouter(item.to, routeParams)"
-                            :style="`border-left: 6px solid ${item.color}`"
+                            :style="`border-left: 4px solid ${item.color}`"
                         >
-                            <div class="row align-center justify-center">
+                            <div class="row align-center">
                                 <div class="info-btn">
-                                    <span
-                                        v-if="item.image == ''"
-                                        :class="item.icon"
-                                    ></span>
-                                    <img v-else :src="item.image" />
+                                    <img :src="item.image" />
                                 </div>
-                                <p class="font-16">
-                                    {{ $t(item.title) }}
-                                </p>
+                                <div>
+                                    <p class="font-16">
+                                        {{ $t(item.title) }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="xs4 text-xs-center right-content ml-3">
-                    <img src="/robot1.svg" alt="" />
-                </div>
             </div>
-        </transition>
-        <transition name="fade-in" appear :duration="999">
-            <div class="main-mobile">
+            <div class="right-content xs4">
+                <img src="/robot1.svg" alt="" />
+            </div>
+        </div>
+        <div class="main-mobile">
+            <div class="container">
                 <div class="text-xs-center menu-mobile">
                     <div
                         v-for="item in ChucNang"
@@ -56,7 +54,7 @@
                     </div>
                 </div>
             </div>
-        </transition>
+        </div>
     </div>
 </template>
 
@@ -77,14 +75,14 @@ export default {
 
 <style scoped>
 .container {
-    margin-top: 140px;
+    margin-top: 100px;
 }
 .left-content {
     background-color: white;
 }
 .btn-chucnang {
-    padding: 20px 0;
     border-radius: 3px;
+    padding: 20px 24px 20px 30px;
     border: 1px solid #0986c5;
     color: #0986c5;
     transition: all 0.2s linear 0s;
@@ -108,27 +106,26 @@ export default {
     font-size: 40px;
 }
 .info-btn img {
-    width: 40px;
-    height: auto;
+    width: auto;
+    height: 60px;
     margin-right: 10px;
+}
+.main-content {
+    position: relative;
+    overflow: hidden;
+    height: 90vh;
+}
+.right-content {
+    position: absolute;
+    overflow: hidden;
+    height: 100%;
+    top: 100px;
+    right: -12%;
 }
 .right-content img {
     transform: scaleX(-1);
     width: 100%;
     height: 100%;
-}
-@keyframes fade {
-    from {
-        opacity: 0;
-    }
-}
-
-.fade-in-enter-active {
-    animation: fade 4s;
-}
-
-.fade-in-leave-active {
-    animation: fade 4s reverse;
 }
 .main-mobile {
     display: none;
