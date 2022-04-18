@@ -7,14 +7,8 @@
                 :show-borders="true"
                 height="100%"
             >
-                <DxEditing
-                    :allow-updating="true"
-                    :allow-adding="false"
-                    :allow-deleting="true"
-                    mode="cell"
-                />
                 <DxPaging :enabled="false" />
-                <!-- <DxSelection mode="multiple" /> -->
+                <DxSelection mode="multiple" />
                 <DxColumn data-field="id" caption="Id" width="100" />
                 <DxColumn data-field="name" caption="Name" />
             </DxDataGrid>

@@ -10,7 +10,6 @@ import DxSelectBox from 'devextreme-vue/select-box'
 import DxTextBox from 'devextreme-vue/text-box'
 import DxDateBox from 'devextreme-vue/date-box'
 import DxButton from 'devextreme-vue/button'
-import { v4 as uuidv4 } from 'uuid'
 import {
     DxDataGrid,
     DxColumn,
@@ -38,7 +37,7 @@ export default {
     methods: {
         logAarr() {
             let tmpObj = {
-                id: uuidv4(),
+                id: this.idv4(),
                 tenYeuCau: 'san xuat 1',
                 dayChuyen: 'san xuat 1',
                 nhanCong: 300,

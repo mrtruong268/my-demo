@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div class="container-md">
         <div class="row">
             <div class="xs9">
                 <div class="row mb-2">
@@ -219,10 +219,6 @@ export default {
 </script>
 
 <style scoped>
-.main {
-    padding: 16px;
-    margin: 0 auto;
-}
 .btn-add {
     font-size: 28px;
 }

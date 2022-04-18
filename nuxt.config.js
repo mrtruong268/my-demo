@@ -58,20 +58,14 @@ export default {
         ],
         defaultLocale: 'en',
         vueI18n: i18n,
-        detectBrowserLanguage: {
-            useCookie: true,
-            cookieKey: 'i18n_redirected',
-            redirectOn: 'root', // recommended
-        },
+        // detectBrowserLanguage: {
+        //     useCookie: true,
+        //     cookieKey: 'i18n_redirected',
+        //     redirectOn: 'root', // recommended
+        // },
     },
     router: {
         // middleware: ['auth'],
-    },
-    fontawesome: {
-        icons: {
-            solid: true,
-            brands: true,
-        },
     },
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {

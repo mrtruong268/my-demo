@@ -8,12 +8,6 @@
                 key-expr="id"
                 height="100%"
             >
-                <DxEditing
-                    :allow-updating="true"
-                    :allow-adding="false"
-                    :allow-deleting="true"
-                    mode="cell"
-                />
                 <DxPaging :enabled="false" />
                 <DxSelection mode="multiple" />
                 <DxColumn data-field="no" caption="no" />
@@ -27,6 +21,7 @@
                 <DxColumn
                     data-field="status"
                     caption="Status"
+                    alignment="center"
                     cell-template="cellTemplate"
                 />
                 <template #cellTemplate="{ data }">
@@ -82,7 +77,7 @@ export default {
     background-color: yellow;
 }
 .close {
-    background-color: orange;
+    background-color: red;
 }
 .ongoing {
     background-color: #f2f2f2;

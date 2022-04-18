@@ -3,20 +3,13 @@
         <div>
             <DxDataGrid
                 id="gridContainer"
-                :data-source="dataCompany"
+                :data-source="dataProp"
                 :show-borders="true"
                 height="100%"
             >
-                <DxEditing
-                    :allow-updating="true"
-                    :allow-adding="false"
-                    :allow-deleting="true"
-                    mode="cell"
-                />
                 <DxPaging :enabled="false" />
                 <DxSelection mode="multiple" />
                 <DxColumn data-field="id" caption="Id" />
-                <DxColumn data-field="ten" caption="Name" />
             </DxDataGrid>
         </div>
     </div>
@@ -39,7 +32,7 @@ export default {
         DxEditing,
         DxSelection,
     },
-    props: ['dataCompany'],
+    props: ['dataProp'],
 }
 </script>
 

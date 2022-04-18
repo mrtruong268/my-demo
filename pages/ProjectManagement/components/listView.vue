@@ -3,19 +3,20 @@
         <div>
             <DxDataGrid
                 id="gridContainer"
-                :data-source="dataView"
+                :data-source="dataProp"
                 :show-borders="true"
                 height="100%"
             >
-                <DxEditing
-                    :allow-updating="true"
-                    :allow-adding="false"
-                    :allow-deleting="true"
-                    mode="cell"
-                />
                 <DxPaging :enabled="false" />
                 <DxSelection mode="multiple" />
-                
+                <DxColumn data-field="Description" caption="Description" />
+                <DxColumn data-field="ViewMaDuAn" caption="ViewMaDuAn" />
+                <DxColumn data-field="ViewDoiTac" caption="ViewDoiTac" />
+                <DxColumn data-field="ViewKhachHang" caption="ViewKhachHang" />
+                <DxColumn data-field="ViewTenDuAn" caption="ViewTenDuAn" />
+                <DxColumn data-field="ViewPhanLoai" caption="ViewPhanLoai" />
+                <DxColumn data-field="ViewNgayTao" caption="ViewNgayTao" />
+                <DxColumn data-field="ViewTinhTrang" caption="ViewTinhTrang" />
             </DxDataGrid>
         </div>
     </div>
@@ -38,7 +39,7 @@ export default {
         DxEditing,
         DxSelection,
     },
-    props: ['dataView'],
+    props: ['dataProp'],
 }
 </script>
 

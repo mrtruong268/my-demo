@@ -53,7 +53,10 @@
                     </div>
                     <div>
                         <ul class="row list-nav">
-                            <li class="color-fff list-mobile px-4 py-2">
+                            <li
+                                class="color-fff list-mobile px-4 py-2"
+                                @click="clickRouter('/', routeParams)"
+                            >
                                 {{ $t('Home') }}
                             </li>
                             <li
@@ -334,7 +337,7 @@ export default {
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
     z-index: 1;
     transition: 0.5s;
-    padding-top: 100px;
+    padding-top: 96px;
     overflow-y: scroll;
     bottom: 0;
 }

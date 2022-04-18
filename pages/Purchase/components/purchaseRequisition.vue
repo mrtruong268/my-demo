@@ -1,37 +1,48 @@
 <template>
     <div class="container">
-        <h3 class="text-xs-center mb-2">
+        <h2 class="text-xs-center mb-3">
             {{ $t('Purchase requisition') }}
-        </h3>
-        <div class="row align-center toolbar">
-            <DxList
-                :data-source="ListYeuCau"
-                height="100%"
-                class="xs12 text-xs-center"
-                @itemClick="onItemClick"
-            >
-                <template #item="{ data: item }">
+        </h2>
+        <div class="toolbar">
+            <div class="row align-center justify-space-around">
+                <div
+                    v-for="item in ListYeuCau"
+                    :key="item.id"
+                    class="xs5 text-xs-center btn-list"
+                    @click="onItemClick(item)"
+                >
+                    <i class="mdi mdi-format-list-numbered mr-1" />
                     {{ $t(item.title) }}
-                </template>
-            </DxList>
-        </div>
-        <div class="row align-center">
-            <DxButton
-                :text="$t('Create purchase requisition')"
-                type="normal"
-                styling-mode="outlined"
-                icon="mdi mdi-plus"
-                @click="addPurchase"
-                class="xs6"
-            />
-            <DxButton
-                :text="$t('Create production requisition')"
-                type="normal"
-                styling-mode="outlined"
-                icon="mdi mdi-plus"
-                @click="addProduct"
-                class="xs6"
-            />
+                </div>
+            </div>
+            <div class="row align-center justify-space-around">
+                <DxButton
+                    :text="$t('Create purchase requisition')"
+                    type="normal"
+                    styling-mode="text"
+                    icon="mdi mdi-plus"
+                    @click="
+                        createNew(
+                            $t('Create purchase requisition'),
+                            'TaoMuaHang'
+                        )
+                    "
+                    class="xs5"
+                />
+                <DxButton
+                    :text="$t('Create production requisition')"
+                    type="normal"
+                    styling-mode="text"
+                    icon="mdi mdi-plus"
+                    @click="
+                        createNew(
+                            $t('Create production requisition'),
+                            'TaoSanXuat'
+                        )
+                    "
+                    class="xs5"
+                />
+            </div>
         </div>
         <div>
             <div class="row justify-end" v-show="List.length > 0">
@@ -60,7 +71,7 @@
                             <span>{{ $t(listItem.title) }} </span
                             ><i
                                 v-show="showCloseButton()"
-                                class="mdi mdi-close"
+                                class="mdi mdi-close-circle"
                                 @click="closeButtonHandler(listItem)"
                             />
                         </div>
@@ -79,13 +90,17 @@
                                     <listProduct :dataProp="listItem.data" />
                                 </div>
                                 <div v-else>
-                                    <addRequisition
-                                        v-if="listItem.loaiDanhSach === 'tmh'"
+                                    <addPurchase
+                                        v-if="
+                                            listItem.loaiDanhSach ===
+                                            'TaoMuaHang'
+                                        "
                                         :dataProp="listItem.data"
                                     />
                                     <addProduction
                                         v-else-if="
-                                            listItem.loaiDanhSach === 'tsx'
+                                            listItem.loaiDanhSach ===
+                                            'TaoSanXuat'
                                         "
                                         :dataProp="listItem.data"
                                     />
@@ -102,25 +117,22 @@
 <script>
 import DxTabPanel from 'devextreme-vue/tab-panel'
 import DxButton from 'devextreme-vue/button'
-import DxList from 'devextreme-vue/list'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
 import { mapGetters } from 'vuex'
-import { v4 as uuidv4 } from 'uuid'
 
 import ListPurchase from './listPurchase.vue'
 import ListProduct from './listProduct.vue'
-import addRequisition from './addRequisition.vue'
+import addPurchase from './addPurchase.vue'
 import addProduction from './addProduction.vue'
 
 export default {
     components: {
         DxTabPanel,
         DxButton,
-        DxList,
         DxScrollView,
         ListPurchase,
         ListProduct,
-        addRequisition,
+        addPurchase,
         addProduction,
     },
     data() {
@@ -156,28 +168,18 @@ export default {
                 this.$store.commit('ADD_LIST', data)
             this.selectedItem = data
         },
-        addPurchase(e) {
-            let ObjMua = {
-                id: uuidv4(),
-                title: this.$t(e.element.ariaLabel),
-                loaiDanhSach: 'tmh',
-                dataMuahang: [],
+        createNew(title, loaiDanhSach) {
+            let tmpObj = {
+                id: this.idv4(),
+                title: title,
+                loaiDanhSach: loaiDanhSach,
+                data: [],
             }
-            if (!this.List.find((i) => i.loaiDanhSach === ObjMua.loaiDanhSach))
-                this.addItem(ObjMua)
-        },
-        addProduct(e) {
-            let ObjSx = {
-                id: uuidv4(),
-                title: this.$t(e.element.ariaLabel),
-                loaiDanhSach: 'tsx',
-                dataSanXuat: [],
-            }
-            if (!this.List.find((i) => i.loaiDanhSach === ObjSx.loaiDanhSach))
-                this.addItem(ObjSx)
+            if (!this.List.find((i) => i.loaiDanhSach === tmpObj.loaiDanhSach))
+                this.addItem(tmpObj)
         },
         onItemClick(e) {
-            this.addItem(e.itemData)
+            this.addItem(e)
         },
         closeButtonHandler(itemDel) {
             let result = confirm('Are you sure to close tab?')
@@ -203,17 +205,22 @@ export default {
     overflow: hidden;
     margin: 80px 0;
 }
-.container h3 {
+.container h2 {
     color: #0986c5;
 }
->>> .dx-scrollview-content {
-    display: flex;
-}
->>> .dx-list-item {
-    border: none;
-    margin: 0;
+>>> .dx-multiview-item-container .dx-empty-message {
+    margin-top: 200px;
 }
 .toolbar {
-    background-color: #ebebeb;
+    border: 1px solid #e7e7e7;
+}
+.btn-list {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 10px 0;
+}
+.btn-list:hover {
+    background-color: #e7e7e7;
 }
 </style>
