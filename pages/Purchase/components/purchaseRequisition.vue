@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2 class="text-xs-center mb-3">
+        <h2 class="text-xs-center mb-2">
             {{ $t('Purchase requisition') }}
         </h2>
         <div class="toolbar">
@@ -163,10 +163,9 @@ export default {
         },
     },
     methods: {
-        addItem(data) {
-            if (!this.List.find((i) => i.id === data.id))
-                this.$store.commit('ADD_LIST', data)
-            this.selectedItem = data
+        onItemClick(e) {
+            this.$store.commit('ADD_LIST', e)
+            this.selectedItem = e
         },
         createNew(title, loaiDanhSach) {
             let tmpObj = {
@@ -175,11 +174,13 @@ export default {
                 loaiDanhSach: loaiDanhSach,
                 data: [],
             }
-            if (!this.List.find((i) => i.loaiDanhSach === tmpObj.loaiDanhSach))
-                this.addItem(tmpObj)
-        },
-        onItemClick(e) {
-            this.addItem(e)
+            if (
+                !this.List.find((i) => i.loaiDanhSach === tmpObj.loaiDanhSach)
+            ) {
+                this.$store.commit('ADD_LIST', tmpObj)
+            } else {
+                this.selectedItem = tmpObj
+            }
         },
         closeButtonHandler(itemDel) {
             let result = confirm('Are you sure to close tab?')
@@ -196,6 +197,9 @@ export default {
             if (result) this.$store.commit('CLEAR_DATA')
         },
     },
+    beforeDestroy() {
+        this.$store.commit('CLEAR_DATA')
+    },
 }
 </script>
 
@@ -203,13 +207,17 @@ export default {
 .container {
     height: 100%;
     overflow: hidden;
-    margin: 80px 0;
+    margin: 90px 0;
 }
 .container h2 {
     color: #0986c5;
 }
 >>> .dx-multiview-item-container .dx-empty-message {
     margin-top: 200px;
+}
+>>> .dx-button-text {
+    text-transform: none;
+    line-height: unset;
 }
 .toolbar {
     border: 1px solid #e7e7e7;

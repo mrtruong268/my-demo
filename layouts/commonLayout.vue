@@ -1,14 +1,8 @@
 <template>
     <div>
-        <header>
-            <navbar />
-        </header>
-        <section>
-            <nuxt />
-        </section>
-        <footer>
-            <footerContent />
-        </footer>
+        <navbar />
+        <nuxt />
+        <footerContent />
     </div>
 </template>
 

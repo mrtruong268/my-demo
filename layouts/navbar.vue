@@ -3,13 +3,13 @@
         <div class="header">
             <div class="container">
                 <div class="row align-center justify-space-between">
-                    <div @click="clickRouter('/', routeParams)">
+                    <div>
                         <img
-                            src="/logo2.png"
-                            alt=""
+                            src="~/assets/logo.svg"
                             width="80px"
-                            height="100%"
-                            class="header-image py-2"
+                            class="py-2"
+                            @click="clickRouter('/', routeParams)"
+                            style="cursor: pointer"
                         />
                     </div>
                     <div class="row justify-end align-center">
@@ -57,15 +57,23 @@
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="clickRouter('/', routeParams)"
                             >
+                                <i class="mdi mdi-home" />
                                 {{ $t('Home') }}
                             </li>
                             <li
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="goCategory"
                             >
+                                <i class="mdi mdi-view-list" />
                                 {{ $t('Category') }}
                             </li>
-                            <li class="color-fff list-mobile px-4 py-2">
+                            <li
+                                class="color-fff list-mobile px-4 py-2"
+                                @click="goDashboard"
+                            >
+                                <i
+                                    class="mdi mdi-file-table-box-multiple-outline"
+                                />
                                 {{ $t('Dashboard') }}
                             </li>
                         </ul>
@@ -150,7 +158,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import DxButton from 'devextreme-vue/button'
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxTextBox from 'devextreme-vue/text-box'
@@ -164,6 +172,17 @@ export default {
     },
     computed: {
         ...mapState(['ChucNang', 'routeParams']),
+        ...mapGetters({
+            DuAn: 'Project',
+        }),
+        Project: {
+            get() {
+                return this.DuAn
+            },
+            set(newItem) {
+                return newItem
+            },
+        },
     },
     methods: {
         openNav() {
@@ -186,6 +205,22 @@ export default {
             this.$store.commit('IS_SELECTED', 'category')
             this.clickRouter('/ProjectManagement', this.routeParams)
         },
+        goDashboard() {
+            this.clickRouter('/ProjectManagement', this.routeParams)
+            let newObj = {
+                id: this.idv4(),
+                title: 'Dashboard',
+                loaiDanhSach: 'dashboard',
+                data: [],
+            }
+            if (
+                !this.Project.find(
+                    (i) => i.loaiDanhSach === newObj.loaiDanhSach
+                )
+            ) {
+                this.$store.commit('ADD_LIST', newObj)
+            }
+        },
     },
     created() {
         this.selectedValue = this.$i18n.locale
@@ -203,9 +238,6 @@ export default {
 }
 .container {
     padding: 0 24px;
-}
-.header img {
-    cursor: pointer;
 }
 .search {
     margin-right: 24px;
@@ -337,7 +369,7 @@ export default {
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
     z-index: 1;
     transition: 0.5s;
-    padding-top: 96px;
+    padding-top: 104px;
     overflow-y: scroll;
     bottom: 0;
 }

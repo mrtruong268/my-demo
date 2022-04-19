@@ -2,7 +2,7 @@
     <div class="container-md">
         <div class="row">
             <div class="xs9">
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="xs6 mr-3">
                         <DxSelectBox
                             display-expr="title"
@@ -22,7 +22,7 @@
                         />
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="xs4 mr-3">
                         <DxTextBox
                             styling-mode="outlined"
@@ -48,7 +48,7 @@
                         />
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="xs6 mr-3">
                         <DxDateBox
                             styling-mode="outlined"
@@ -69,7 +69,7 @@
             </div>
 
             <div class="xs3">
-                <div class="pb-2">
+                <div class="pb-3">
                     <DxTextBox
                         styling-mode="outlined"
                         :label="$t('Surcharge')"
@@ -77,7 +77,7 @@
                         class="pa-1"
                     />
                 </div>
-                <div class="pb-2">
+                <div class="pb-3">
                     <DxTextBox
                         styling-mode="outlined"
                         :label="$t('Expense code')"
@@ -85,7 +85,7 @@
                         class="pa-1"
                     />
                 </div>
-                <div class="pb-2">
+                <div class="pb-3">
                     <DxTextBox
                         styling-mode="outlined"
                         :label="$t('Reference number')"

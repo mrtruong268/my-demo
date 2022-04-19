@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <h2 class="text-xs-center mb-3">Project management</h2>
+        <h2 class="text-xs-center mb-2">Project management</h2>
         <div class="toolbar">
             <div class="row align-center justify-space-around">
                 <div
@@ -177,6 +177,7 @@
                                         "
                                         :dataProp="projectItem.data"
                                     />
+                                    <dashboard v-else />
                                 </div>
                             </div>
                         </DxScrollView>
@@ -203,6 +204,7 @@ import addProject from './components/addNew/addProject.vue'
 import addCustomer from './components/addNew/addCustomer.vue'
 import addCategory from './components/addNew/addCategory.vue'
 import addView from './components/addNew/addView.vue'
+import Dashboard from './components/dashboard.vue'
 
 export default {
     layout: 'commonLayout',
@@ -221,6 +223,7 @@ export default {
         addCustomer,
         addCategory,
         addView,
+        Dashboard,
     },
     data() {
         return {
@@ -251,13 +254,9 @@ export default {
         },
     },
     methods: {
-        addItem(data) {
-            if (!this.Project.find((i) => i.id === data.id))
-                this.$store.commit('ADD_LIST', data)
-            this.selectedItem = data
-        },
         onItemClick(e) {
-            this.addItem(e)
+            this.$store.commit('ADD_LIST', e)
+            this.selectedItem = e
         },
         addButton(title, loaiDanhSach) {
             let tmpObj = {
@@ -271,7 +270,7 @@ export default {
                     (i) => i.loaiDanhSach === tmpObj.loaiDanhSach
                 )
             )
-                this.addItem(tmpObj)
+                this.$store.commit('ADD_LIST', tmpObj)
         },
         closeButtonHandler(itemDel) {
             let result = confirm('Are you sure to close tab?')
@@ -286,7 +285,10 @@ export default {
         },
     },
     created() {
-        if (this.isSelected !== '') this.$store.commit('CATEGORY_ADD')
+        if (this.isSelected !== '') this.$store.commit('ADD_OPTION')
+    },
+    beforeDestroy() {
+        this.$store.commit('CLEAR_DATA')
     },
 }
 </script>
@@ -296,13 +298,17 @@ export default {
     height: 100%;
     overflow: hidden;
     padding: 24px;
-    margin: 80px auto;
+    margin: 90px auto;
 }
 .main h2 {
     color: #0986c5;
 }
 >>> .dx-multiview-item-container .dx-empty-message {
     margin-top: 200px;
+}
+>>> .dx-button-text {
+    text-transform: none;
+    line-height: unset;
 }
 .toolbar {
     border: 1px solid #e7e7e7;

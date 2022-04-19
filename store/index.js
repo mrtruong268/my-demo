@@ -14,14 +14,14 @@ export const state = () => ({
             title: 'Distribution list',
             to: '',
             color: '#008AC1',
-            image: '/list4.png',
+            image: '/list.png',
         },
         {
             id: uuidv4(),
             title: 'Work place',
             to: '',
             color: '#2B585F',
-            image: '/workplace2.png',
+            image: '/workplace.png',
         },
         {
             id: uuidv4(),
@@ -35,14 +35,14 @@ export const state = () => ({
             title: 'Cash flow analysis',
             to: '',
             color: '#C83213',
-            image: '/cash3.png',
+            image: '/cash.png',
         },
         {
             id: uuidv4(),
             title: 'Purchasing',
             to: '/Purchase',
             color: '#90AA1D',
-            image: '/purchase.png',
+            image: '/purchase2.png',
         },
         {
             id: uuidv4(),
@@ -393,10 +393,32 @@ export const state = () => ({
     ],
     routeParams: '',
     isSelected: '',
-    ongoing: [],
-    finish: [],
-    closed: [],
-    pending: [],
+    statusItem: [
+        {
+            id: 'ongoing',
+            title: 'Ongoing Projects',
+            data: [],
+            image: '/ongoingIcon.svg',
+        },
+        {
+            id: 'finish',
+            title: 'Finished Projects',
+            data: [],
+            image: '/finishedIcon.svg',
+        },
+        {
+            id: 'closed',
+            title: 'Closed Projects',
+            data: [],
+            image: '/closedIcon2.svg',
+        },
+        {
+            id: 'pending',
+            title: 'Pending Projects',
+            data: [],
+            image: '/pendingIcon.png',
+        },
+    ],
 })
 export const getters = {
     List: (state) => state.DanhSach,
@@ -406,8 +428,13 @@ export const getters = {
 }
 export const mutations = {
     ADD_LIST(state, newItem) {
-        state.DanhSach.push(newItem)
-        state.DuAn.push(newItem)
+        if (
+            !state.DuAn.find((i) => i.id === newItem.id) &&
+            !state.DanhSach.find((i) => i.id === newItem.id)
+        ) {
+            state.DuAn.push(newItem)
+            state.DanhSach.push(newItem)
+        }
     },
     LANG_SWITCH(state, lang) {
         state.routeParams = lang
@@ -423,28 +450,40 @@ export const mutations = {
         state.DanhSach.splice(0, state.DanhSach.length)
         state.DuAn.splice(0, state.DuAn.length)
     },
-    PROJECT_STATUS(state) {
+    ADD_OPTION(state) {
         state.DanhSachDuAn.forEach((e) => {
-            if (e.loaiDanhSach === 'project') {
-                state.ongoing = e.data.filter((x) => {
-                    return x.status == 'Ongoing'
-                })
-                state.finish = e.data.filter((x) => {
-                    return x.status == 'Finish'
-                })
-                state.closed = e.data.filter((x) => {
-                    return x.status == 'Closed'
-                })
-                state.pending = e.data.filter((x) => {
-                    return x.status == 'Pending'
-                })
+            if (!state.DuAn.find((i) => i.id === e.id)) {
+                if (e.loaiDanhSach === state.isSelected) {
+                    state.DuAn.push(e)
+                }
             }
         })
     },
-    CATEGORY_ADD(state) {
+    PROJECT_STATUS(state) {
         state.DanhSachDuAn.forEach((e) => {
-            if (e.loaiDanhSach === state.isSelected) {
-                state.DuAn.push(e)
+            if (e.loaiDanhSach === 'project') {
+                state.statusItem.forEach((i) => {
+                    if (i.id === 'ongoing') {
+                        i.data = e.data.filter((x) => {
+                            return x.status == 'Ongoing'
+                        })
+                    }
+                    if (i.id === 'finish') {
+                        i.data = e.data.filter((x) => {
+                            return x.status == 'Finish'
+                        })
+                    }
+                    if (i.id === 'closed') {
+                        i.data = e.data.filter((x) => {
+                            return x.status == 'Closed'
+                        })
+                    }
+                    if (i.id === 'pending') {
+                        i.data = e.data.filter((x) => {
+                            return x.status == 'Pending'
+                        })
+                    }
+                })
             }
         })
     },

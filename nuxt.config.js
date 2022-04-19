@@ -1,10 +1,10 @@
 import i18n from './config/i18n'
 
 export default {
-    target: 'static',
-    router: {
-        base: '/my-demo',
-    },
+    // target: 'static',
+    // router: {
+    //     base: '/my-demo',
+    // },
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         title: 'Project manager',
@@ -20,7 +20,7 @@ export default {
             { hid: 'description', name: 'description', content: '' },
             { name: 'format-detection', content: 'telephone=no' },
         ],
-        link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+        link: [{ rel: 'icon', type: 'image/x-icon', href: '/logo2.png' }],
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css

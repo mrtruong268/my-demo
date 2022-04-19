@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="right-content xs4">
-                <img src="/robot1.svg" alt="" />
+                <img src="~assets/robot1.svg" alt="" />
             </div>
         </div>
         <div class="main-mobile">

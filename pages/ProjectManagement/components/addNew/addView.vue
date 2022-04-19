@@ -9,14 +9,11 @@
             class="mb-4"
         />
         <h3 class="mb-3">Chọn thông tin</h3>
-        <div class="mb-5 row justify-space-evenly">
+        <div class="mb-5 row justify-space-between checkbox">
             <DxCheckBox :value="checkItem.ViewMaDuAn" text="ViewMaDuAn" />
             <DxCheckBox :value="checkItem.ViewDoiTac" text="ViewDoiTac" />
             <DxCheckBox :value="checkItem.ViewKhachHang" text="ViewKhachHang" />
-            <DxCheckBox
-                :value="checkItem.ViewProjectName"
-                text="ViewProjectName"
-            />
+            <DxCheckBox :value="checkItem.ViewTenDuAn" text="ViewTenDuAn" />
             <DxCheckBox :value="checkItem.ViewPhanLoai" text="ViewPhanLoai" />
             <DxCheckBox :value="checkItem.ViewNgayTao" text="ViewNgayTao" />
             <DxCheckBox :value="checkItem.ViewTinhTrang" text="ViewTinhTrang" />
@@ -41,7 +38,7 @@ export default {
                 ViewMaDuAn: true,
                 ViewDoiTac: true,
                 ViewKhachHang: false,
-                ViewProjectName: false,
+                ViewTenDuAn: false,
                 ViewPhanLoai: false,
                 ViewNgayTao: null,
                 ViewTinhTrang: null,
@@ -51,4 +48,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.checkbox {
+    border: 1px solid #f2f2f2;
+    padding: 16px 24px;
+    border-radius: 6px;
+}
+</style>
