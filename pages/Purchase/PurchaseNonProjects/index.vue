@@ -1,51 +1,34 @@
 <template>
     <div class="container">
         <h2 class="text-xs-center mb-2">
-            {{ $t('Purchase requisition') }}
+            {{ $t('Purchasing for non-projects requisition') }}
         </h2>
         <div class="toolbar">
             <div class="row align-center justify-space-around">
                 <div
-                    v-for="item in ListYeuCau"
+                    v-for="item in listBuyInternal"
                     :key="item.id"
-                    class="xs5 text-xs-center btn-list"
+                    class="xs6 text-xs-center btn-list"
                     @click="onItemClick(item)"
                 >
                     <i class="mdi mdi-format-list-numbered mr-1" />
                     {{ $t(item.title) }}
                 </div>
             </div>
-            <div class="row align-center justify-space-around">
-                <DxButton
-                    :text="$t('Create purchase requisition')"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-plus"
-                    @click="
-                        createNew(
-                            $t('Create purchase requisition'),
-                            'TaoMuaHang'
-                        )
-                    "
-                    class="xs5"
-                />
-                <DxButton
-                    :text="$t('Create production requisition')"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-plus"
-                    @click="
-                        createNew(
-                            $t('Create production requisition'),
-                            'TaoSanXuat'
-                        )
-                    "
-                    class="xs5"
-                />
+            <div class="row align-center justify-space-around text-xs-center">
+                <div
+                    v-for="item in dataNew"
+                    :key="item.id"
+                    class="xs6 btn-list"
+                    @click="onItemClick(item)"
+                >
+                    <i class="mdi mdi-plus-circle mr-1" />
+                    {{ $t(item.title) }}
+                </div>
             </div>
         </div>
         <div>
-            <div class="row justify-end" v-show="List.length > 0">
+            <div class="row justify-end" v-show="buyInternal.length > 0">
                 <DxButton
                     :text="$t('Clear')"
                     type="normal"
@@ -56,7 +39,7 @@
             </div>
             <div class="tabPanel">
                 <DxTabPanel
-                    :data-source="List"
+                    :data-source="buyInternal"
                     height="calc(78vh - 200px)"
                     :defer-rendering="false"
                     :show-nav-buttons="true"
@@ -66,43 +49,38 @@
                     item-title-template="title"
                     item-template="itemTemplate"
                 >
-                    <template #title="{ data: listItem }">
+                    <template #title="{ data: item }">
                         <div>
-                            <span>{{ $t(listItem.title) }} </span
+                            <span>{{ $t(item.title) }} </span
                             ><i
                                 v-show="showCloseButton()"
                                 class="mdi mdi-close-circle"
-                                @click="closeButtonHandler(listItem)"
+                                @click="closeButtonHandler(item)"
                             />
                         </div>
                     </template>
-                    <template #itemTemplate="{ data: listItem }">
+                    <template #itemTemplate="{ data: item }">
                         <DxScrollView>
                             <div>
-                                <div v-if="listItem.loaiDanhSach === 'muahang'">
-                                    <listPurchase :dataProp="listItem.data" />
+                                <div v-if="item.listType === 'muahang'">
+                                    <listPurchase :dataProp="item.data" />
+                                </div>
+                                <div v-else-if="item.listType === 'sanxuat'">
+                                    <listProduct :dataProp="item.data" />
                                 </div>
                                 <div
-                                    v-else-if="
-                                        listItem.loaiDanhSach === 'sanxuat'
-                                    "
-                                >
-                                    <listProduct :dataProp="listItem.data" />
-                                </div>
+                                    v-else-if="item.listType === 'pheduyet'"
+                                ></div>
                                 <div v-else>
                                     <addPurchase
-                                        v-if="
-                                            listItem.loaiDanhSach ===
-                                            'TaoMuaHang'
-                                        "
-                                        :dataProp="listItem.data"
+                                        v-if="item.listType === 'TaoMuaHang'"
+                                        :dataProp="item.data"
                                     />
                                     <addProduction
                                         v-else-if="
-                                            listItem.loaiDanhSach ===
-                                            'TaoSanXuat'
+                                            item.listType === 'TaoSanXuat'
                                         "
-                                        :dataProp="listItem.data"
+                                        :dataProp="item.data"
                                     />
                                 </div>
                             </div>
@@ -120,12 +98,13 @@ import DxButton from 'devextreme-vue/button'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
 import { mapGetters } from 'vuex'
 
-import ListPurchase from './listPurchase.vue'
-import ListProduct from './listProduct.vue'
-import addPurchase from './addPurchase.vue'
-import addProduction from './addProduction.vue'
+import ListPurchase from '../components/listPurchase.vue'
+import ListProduct from '../components/listProduct.vue'
+import addPurchase from '../components/addPurchase.vue'
+import addProduction from '../components/addProduction.vue'
 
 export default {
+    layout: 'commonLayout',
     components: {
         DxTabPanel,
         DxButton,
@@ -138,24 +117,38 @@ export default {
     data() {
         return {
             selectedItem: null,
+            dataNew: [
+                {
+                    id: this.idv4(),
+                    title: 'Create purchase requisition',
+                    listType: 'TaoMuaHang',
+                    data: [],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'Create production requisition',
+                    listType: 'TaoSanXuat',
+                    data: [],
+                },
+            ],
         }
     },
     computed: {
         ...mapGetters({
-            DanhSach: 'List',
-            DanhSachYeuCau: 'ListYeuCau',
+            muaNoiBo: 'buyInternal',
+            danhSachMuaNoiBo: 'listBuyInternal',
         }),
-        List: {
+        buyInternal: {
             get() {
-                return this.DanhSach
+                return this.muaNoiBo
             },
             set(newItem) {
                 return newItem
             },
         },
-        ListYeuCau: {
+        listBuyInternal: {
             get() {
-                return this.DanhSachYeuCau
+                return this.danhSachMuaNoiBo
             },
             set(newItem) {
                 return newItem
@@ -164,33 +157,18 @@ export default {
     },
     methods: {
         onItemClick(e) {
+            if (!this.buyInternal.find((i) => i.listType === e.listType)) {
+                this.$store.commit('ADD_LIST', e)
+            }
             this.$store.commit('ADD_LIST', e)
             this.selectedItem = e
-        },
-        createNew(title, loaiDanhSach) {
-            let tmpObj = {
-                id: this.idv4(),
-                title: title,
-                loaiDanhSach: loaiDanhSach,
-                data: [],
-            }
-            if (
-                !this.List.find((i) => i.loaiDanhSach === tmpObj.loaiDanhSach)
-            ) {
-                this.$store.commit('ADD_LIST', tmpObj)
-            } else {
-                this.selectedItem = tmpObj
-            }
         },
         closeButtonHandler(itemDel) {
             let result = confirm('Are you sure to close tab?')
             if (result) this.$store.commit('CLICK_DELETE', itemDel.id)
         },
         showCloseButton() {
-            return this.List.length > 0
-        },
-        showPopup() {
-            this.popupVisible = !this.popupVisible
+            return this.buyInternal.length > 0
         },
         clearTab() {
             let result = confirm('Are you sure to close all tabs?')
@@ -207,7 +185,7 @@ export default {
 .container {
     height: 100%;
     overflow: hidden;
-    margin: 90px 0;
+    margin: 80px 0;
 }
 .container h2 {
     color: #0986c5;

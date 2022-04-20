@@ -7,21 +7,21 @@ export const state = () => ({
             title: 'Project management',
             to: '/ProjectManagement',
             color: '#940726',
-            image: '/icon-project-management.png',
+            image: '/IGYB.gif',
         },
         {
             id: uuidv4(),
             title: 'Distribution list',
             to: '',
             color: '#008AC1',
-            image: '/list.png',
+            image: '/list2.gif',
         },
         {
             id: uuidv4(),
             title: 'Work place',
             to: '',
             color: '#2B585F',
-            image: '/workplace.png',
+            image: '/programming.gif',
         },
         {
             id: uuidv4(),
@@ -35,14 +35,14 @@ export const state = () => ({
             title: 'Cash flow analysis',
             to: '',
             color: '#C83213',
-            image: '/cash.png',
+            image: '/cash.gif',
         },
         {
             id: uuidv4(),
             title: 'Purchasing',
             to: '/Purchase',
             color: '#90AA1D',
-            image: '/purchase2.png',
+            image: '/buy.gif',
         },
         {
             id: uuidv4(),
@@ -66,113 +66,232 @@ export const state = () => ({
             image: '',
         },
     ],
-    DanhSach: [],
-    DanhSachYeuCau: [
+    muaDuAn: [],
+    danhSachMuaDuAn: [
         {
             id: uuidv4(),
             title: 'List of purchase requests',
-            loaiDanhSach: 'muahang',
+            listType: 'muahang',
             data: [
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Noi bo',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Du an',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Noi bo',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Du an',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Noi bo',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Du an',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Noi bo',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Du an',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'mua hang 1',
                     soLuong: 'mua hang 1',
                     thoiGian: '20/10/2022',
-                    loaiMuaHang: 'Noi bo',
                 },
             ],
         },
         {
             id: uuidv4(),
             title: 'List of production requirements',
-            loaiDanhSach: 'sanxuat',
+            listType: 'sanxuat',
             data: [
                 {
                     id: uuidv4(),
                     tenYeuCau: 'san xuat 1',
                     dayChuyen: 'san xuat 1',
                     nhanCong: 300,
-                    loaiSanXuat: 'Noi bo',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'san xuat 1',
                     dayChuyen: 'san xuat 1',
                     nhanCong: 100,
-                    loaiSanXuat: 'Du an',
                 },
                 {
                     id: uuidv4(),
                     tenYeuCau: 'san xuat 1',
                     dayChuyen: 'san xuat 1',
                     nhanCong: 50,
-                    loaiSanXuat: 'Noi bo',
                 },
             ],
         },
     ],
-    DuAn: [],
-    DanhSachDuAn: [
+    muaNoiBo: [],
+    danhSachMuaNoiBo: [
+        {
+            id: uuidv4(),
+            title: 'List of purchase requests',
+            listType: 'muahang',
+            data: [
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'mua hang 1',
+                    soLuong: 'mua hang 1',
+                    thoiGian: '20/10/2022',
+                },
+            ],
+        },
+        {
+            id: uuidv4(),
+            title: 'List of production requirements',
+            listType: 'sanxuat',
+            data: [
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'san xuat 1',
+                    dayChuyen: 'san xuat 1',
+                    nhanCong: 300,
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'san xuat 1',
+                    dayChuyen: 'san xuat 1',
+                    nhanCong: 100,
+                },
+                {
+                    id: uuidv4(),
+                    tenYeuCau: 'san xuat 1',
+                    dayChuyen: 'san xuat 1',
+                    nhanCong: 50,
+                },
+            ],
+        },
+    ],
+    pheDuyet: [
+        {
+            id: uuidv4(),
+            soThamChieu: 'dnmh',
+            ngayDeTrinh: '20/10/2021',
+            ngayCanHang: '20/10/2021',
+            nguoiTao: 'Nguyễn Duy Cương',
+            phongBan: 'IT',
+            ghiChu: '',
+            trangThai: 'pending',
+        },
+        {
+            id: uuidv4(),
+            soThamChieu: 'dnmh',
+            ngayDeTrinh: '20/10/2021',
+            ngayCanHang: '20/10/2021',
+            nguoiTao: 'Nguyễn Duy Cương',
+            phongBan: 'IT',
+            ghiChu: '',
+            trangThai: 'pending',
+        },
+        {
+            id: uuidv4(),
+            soThamChieu: 'dnmh',
+            ngayDeTrinh: '20/10/2021',
+            ngayCanHang: '20/10/2021',
+            nguoiTao: 'Nguyễn Duy Cương',
+            phongBan: 'IT',
+            ghiChu: '',
+            trangThai: 'approved',
+        },
+        {
+            id: uuidv4(),
+            soThamChieu: 'dnmh',
+            ngayDeTrinh: '20/10/2021',
+            ngayCanHang: '20/10/2021',
+            nguoiTao: 'Nguyễn Duy Cương',
+            phongBan: 'IT',
+            ghiChu: '',
+            trangThai: 'Not approved',
+        },
+    ],
+    QuanLy: [],
+    DanhSachQuanLy: [
         {
             id: uuidv4(),
             title: 'List of projects',
-            loaiDanhSach: 'project',
+            listType: 'project',
             data: [
                 {
                     no: 1,
@@ -277,7 +396,7 @@ export const state = () => ({
         {
             id: uuidv4(),
             title: 'List of partners',
-            loaiDanhSach: 'partner',
+            listType: 'partner',
             data: [
                 {
                     id: 1,
@@ -305,7 +424,7 @@ export const state = () => ({
         {
             id: uuidv4(),
             title: 'List of customers',
-            loaiDanhSach: 'customer',
+            listType: 'customer',
             data: [
                 {
                     id: 1,
@@ -333,7 +452,7 @@ export const state = () => ({
         {
             id: uuidv4(),
             title: 'List of categories',
-            loaiDanhSach: 'category',
+            listType: 'category',
             data: [
                 {
                     id: 1,
@@ -369,13 +488,13 @@ export const state = () => ({
         {
             id: uuidv4(),
             title: 'List of companies',
-            loaiDanhSach: 'company',
+            listType: 'company',
             data: [{}],
         },
         {
             id: uuidv4(),
             title: 'List of project views',
-            loaiDanhSach: 'view',
+            listType: 'view',
             data: [
                 {
                     id: 1,
@@ -397,43 +516,48 @@ export const state = () => ({
         {
             id: 'ongoing',
             title: 'Ongoing Projects',
-            data: [],
             image: '/ongoingIcon.svg',
+            data: [],
         },
         {
             id: 'finish',
             title: 'Finished Projects',
-            data: [],
             image: '/finishedIcon.svg',
+            data: [],
         },
         {
             id: 'closed',
             title: 'Closed Projects',
-            data: [],
             image: '/closedIcon2.svg',
+            data: [],
         },
         {
             id: 'pending',
             title: 'Pending Projects',
-            data: [],
             image: '/pendingIcon.png',
+            data: [],
         },
     ],
 })
 export const getters = {
-    List: (state) => state.DanhSach,
-    ListYeuCau: (state) => state.DanhSachYeuCau,
-    Project: (state) => state.DuAn,
-    ListDuAn: (state) => state.DanhSachDuAn,
+    buyProject: (state) => state.muaDuAn,
+    listBuyProject: (state) => state.danhSachMuaDuAn,
+    buyInternal: (state) => state.muaNoiBo,
+    listBuyInternal: (state) => state.danhSachMuaNoiBo,
+    approve: (state) => state.pheDuyet,
+    Manage: (state) => state.QuanLy,
+    ListManage: (state) => state.DanhSachQuanLy,
 }
 export const mutations = {
     ADD_LIST(state, newItem) {
         if (
-            !state.DuAn.find((i) => i.id === newItem.id) &&
-            !state.DanhSach.find((i) => i.id === newItem.id)
+            !state.muaDuAn.find((i) => i.id === newItem.id) &&
+            !state.muaNoiBo.find((i) => i.id === newItem.id) &&
+            !state.QuanLy.find((i) => i.id === newItem.id)
         ) {
-            state.DuAn.push(newItem)
-            state.DanhSach.push(newItem)
+            state.muaDuAn.push(newItem)
+            state.muaNoiBo.push(newItem)
+            state.QuanLy.push(newItem)
         }
     },
     LANG_SWITCH(state, lang) {
@@ -443,25 +567,27 @@ export const mutations = {
         state.isSelected = newText
     },
     CLICK_DELETE(state, itemId) {
-        state.DanhSach = state.DanhSach.filter((e) => e.id !== itemId)
-        state.DuAn = state.DuAn.filter((e) => e.id !== itemId)
+        state.muaDuAn = state.muaDuAn.filter((e) => e.id !== itemId)
+        state.muaNoiBo = state.muaNoiBo.filter((e) => e.id !== itemId)
+        state.QuanLy = state.QuanLy.filter((e) => e.id !== itemId)
     },
     CLEAR_DATA(state) {
-        state.DanhSach.splice(0, state.DanhSach.length)
-        state.DuAn.splice(0, state.DuAn.length)
+        state.muaDuAn.splice(0, state.muaDuAn.length)
+        state.muaNoiBo.splice(0, state.muaNoiBo.length)
+        state.QuanLy.splice(0, state.QuanLy.length)
     },
     ADD_OPTION(state) {
-        state.DanhSachDuAn.forEach((e) => {
-            if (!state.DuAn.find((i) => i.id === e.id)) {
-                if (e.loaiDanhSach === state.isSelected) {
-                    state.DuAn.push(e)
+        state.DanhSachQuanLy.forEach((e) => {
+            if (!state.QuanLy.find((i) => i.id === e.id)) {
+                if (e.listType === state.isSelected) {
+                    state.QuanLy.push(e)
                 }
             }
         })
     },
     PROJECT_STATUS(state) {
-        state.DanhSachDuAn.forEach((e) => {
-            if (e.loaiDanhSach === 'project') {
+        state.DanhSachQuanLy.forEach((e) => {
+            if (e.listType === 'project') {
                 state.statusItem.forEach((i) => {
                     if (i.id === 'ongoing') {
                         i.data = e.data.filter((x) => {

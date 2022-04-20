@@ -4,7 +4,7 @@
         <div class="toolbar">
             <div class="row align-center justify-space-around">
                 <div
-                    v-for="item in ListDuAn"
+                    v-for="item in ListManage"
                     :key="item.id"
                     class="xs6 text-xs-center btn-list"
                     @click="onItemClick(item)"
@@ -13,59 +13,20 @@
                     {{ $t(item.title) }}
                 </div>
             </div>
-            <div class="row align-center">
-                <DxButton
-                    text="New project"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-plus"
-                    @click="addButton($t('New project'), 'NewProject')"
-                    class="xs12"
-                />
-                <DxButton
-                    text="New partner"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-plus"
-                    @click="addButton($t('New partner'), 'NewPartner')"
-                    class="xs12"
-                />
-                <DxButton
-                    text="New customer"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-plus"
-                    @click="addButton($t('New customer'), 'NewCustomer')"
-                    class="xs12"
-                />
-                <DxButton
-                    text="New category"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-plus"
-                    @click="addButton($t('New category'), 'NewCategory')"
-                    class="xs12"
-                />
-                <DxButton
-                    text="New company"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-plus"
-                    @click="addButton($t('New company'), 'NewCompany')"
-                    class="xs12"
-                />
-                <DxButton
-                    text="New view"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-plus"
-                    @click="addButton($t('New view'), 'NewView')"
-                    class="xs12"
-                />
+            <div class="row align-center justify-space-around">
+                <div
+                    v-for="item in dataTaomoi"
+                    :key="item.id"
+                    class="xs6 text-xs-center btn-list"
+                    @click="onItemClick(item)"
+                >
+                    <i class="mdi mdi-plus-circle mr-1" />
+                    {{ $t(item.title) }}
+                </div>
             </div>
         </div>
         <div>
-            <div class="row justify-end" v-show="Project.length > 0">
+            <div class="row justify-end" v-show="Manage.length > 0">
                 <DxButton
                     text="Clear"
                     type="normal"
@@ -76,7 +37,7 @@
             </div>
             <div>
                 <DxTabPanel
-                    :data-source="Project"
+                    :data-source="Manage"
                     height="calc(78vh - 200px)"
                     :defer-rendering="false"
                     :show-nav-buttons="true"
@@ -87,98 +48,57 @@
                     item-template="itemTemplate"
                 >
                     >
-                    <template #title="{ data: projectItem }">
+                    <template #title="{ data: item }">
                         <div>
-                            <span>{{ projectItem.title }} </span
+                            <span>{{ item.title }} </span
                             ><i
                                 v-show="showCloseButton()"
                                 class="mdi mdi-close-circle"
-                                @click="closeButtonHandler(projectItem)"
+                                @click="closeButtonHandler(item)"
                             />
                         </div>
                     </template>
-                    <template #itemTemplate="{ data: projectItem }">
+                    <template #itemTemplate="{ data: item }">
                         <DxScrollView>
-                            <div>
-                                <div
-                                    v-if="
-                                        projectItem.loaiDanhSach === 'project'
-                                    "
-                                >
-                                    <listProject :dataProp="projectItem.data" />
-                                </div>
-                                <div
+                            <div v-if="item.listType === 'project'">
+                                <listProject :dataProp="item.data" />
+                            </div>
+                            <div v-else-if="item.listType === 'partner'">
+                                <listPartner :dataProp="item.data" />
+                            </div>
+                            <div v-else-if="item.listType === 'customer'">
+                                <listCustomer :dataProp="item.data" />
+                            </div>
+                            <div v-else-if="item.listType === 'category'">
+                                <listCategory :dataProp="item.data" />
+                            </div>
+                            <div v-else-if="item.listType === 'company'">
+                                <listCompany :dataProp="item.data" />
+                            </div>
+                            <div v-else-if="item.listType === 'view'">
+                                <listView :dataProp="item.data" />
+                            </div>
+                            <div v-else>
+                                <addProject
+                                    v-if="item.listType === 'NewProject'"
+                                    :dataProp="item.data"
+                                />
+                                <addCustomer
                                     v-else-if="
-                                        projectItem.loaiDanhSach === 'partner'
+                                        item.listType === 'NewPartner' ||
+                                        item.listType === 'NewCustomer'
                                     "
-                                >
-                                    <listPartner :dataProp="projectItem.data" />
-                                </div>
-                                <div
-                                    v-else-if="
-                                        projectItem.loaiDanhSach === 'customer'
-                                    "
-                                >
-                                    <listCustomer
-                                        :dataProp="projectItem.data"
-                                    />
-                                </div>
-                                <div
-                                    v-else-if="
-                                        projectItem.loaiDanhSach === 'category'
-                                    "
-                                >
-                                    <listCategory
-                                        :dataProp="projectItem.data"
-                                    />
-                                </div>
-                                <div
-                                    v-else-if="
-                                        projectItem.loaiDanhSach === 'company'
-                                    "
-                                >
-                                    <listCompany :dataProp="projectItem.data" />
-                                </div>
-                                <div
-                                    v-else-if="
-                                        projectItem.loaiDanhSach === 'view'
-                                    "
-                                >
-                                    <listView :dataProp="projectItem.data" />
-                                </div>
-                                <div v-else>
-                                    <addProject
-                                        v-if="
-                                            projectItem.loaiDanhSach ===
-                                            'NewProject'
-                                        "
-                                        :dataProp="projectItem.data"
-                                    />
-                                    <addCustomer
-                                        v-if="
-                                            projectItem.loaiDanhSach ===
-                                                'NewPartner' ||
-                                            projectItem.loaiDanhSach ===
-                                                'NewCustomer'
-                                        "
-                                        :dataProp="projectItem"
-                                    />
-                                    <addCategory
-                                        v-if="
-                                            projectItem.loaiDanhSach ===
-                                            'NewCategory'
-                                        "
-                                        :dataProp="projectItem.data"
-                                    />
-                                    <addView
-                                        v-if="
-                                            projectItem.loaiDanhSach ===
-                                            'NewView'
-                                        "
-                                        :dataProp="projectItem.data"
-                                    />
-                                    <dashboard v-else />
-                                </div>
+                                    :dataProp="item"
+                                />
+                                <addCategory
+                                    v-else-if="item.listType === 'NewCategory'"
+                                    :dataProp="item.data"
+                                />
+                                <addView
+                                    v-else-if="item.listType === 'NewView'"
+                                    :dataProp="item.data"
+                                />
+                                <dashboard v-else />
                             </div>
                         </DxScrollView>
                     </template>
@@ -228,25 +148,63 @@ export default {
     data() {
         return {
             selectedItem: null,
+            dataTaomoi: [
+                {
+                    id: this.idv4(),
+                    title: 'New project',
+                    listType: 'NewProject',
+                    data: [],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'New partner',
+                    listType: 'NewPartner',
+                    data: [],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'New customer',
+                    listType: 'NewCustomer',
+                    data: [],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'New category',
+                    listType: 'NewCategory',
+                    data: [],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'New company',
+                    listType: 'NewCompany',
+                    data: [],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'New view',
+                    listType: 'NewView',
+                    data: [],
+                },
+            ],
         }
     },
     computed: {
         ...mapGetters({
-            DanhSachDuAn: 'ListDuAn',
-            DuAn: 'Project',
+            QuanLy: 'Manage',
+            DanhSachQuanLy: 'ListManage',
         }),
         ...mapState(['isSelected']),
-        ListDuAn: {
+        Manage: {
             get() {
-                return this.DanhSachDuAn
+                return this.QuanLy
             },
             set(newItem) {
                 return newItem
             },
         },
-        Project: {
+        ListManage: {
             get() {
-                return this.DuAn
+                return this.DanhSachQuanLy
             },
             set(newItem) {
                 return newItem
@@ -255,29 +213,18 @@ export default {
     },
     methods: {
         onItemClick(e) {
+            if (!this.Manage.find((i) => i.listType === e.listType)) {
+                this.$store.commit('ADD_LIST', e)
+            }
             this.$store.commit('ADD_LIST', e)
             this.selectedItem = e
-        },
-        addButton(title, loaiDanhSach) {
-            let tmpObj = {
-                id: this.idv4(),
-                title: title,
-                loaiDanhSach: loaiDanhSach,
-                data: [],
-            }
-            if (
-                !this.Project.find(
-                    (i) => i.loaiDanhSach === tmpObj.loaiDanhSach
-                )
-            )
-                this.$store.commit('ADD_LIST', tmpObj)
         },
         closeButtonHandler(itemDel) {
             let result = confirm('Are you sure to close tab?')
             if (result) this.$store.commit('CLICK_DELETE', itemDel.id)
         },
         showCloseButton() {
-            return this.Project.length > 0
+            return this.Manage.length > 0
         },
         clearTab() {
             let result = confirm('Are you sure to close all tabs?')
@@ -298,7 +245,7 @@ export default {
     height: 100%;
     overflow: hidden;
     padding: 24px;
-    margin: 90px auto;
+    margin: 80px auto;
 }
 .main h2 {
     color: #0986c5;

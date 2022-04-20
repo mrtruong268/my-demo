@@ -1,43 +1,33 @@
 <template>
-    <div>
-        <div class="container-md">
-            <div class="footer-header row justify-space-around">
-                <div
-                    v-for="item in statusItem"
-                    :key="item.id"
-                    class="row align-center xs3 justify-center"
-                >
-                    <div class="info-project">
-                        <p>{{ $t(item.title) }}</p>
-                        <span>
-                            {{ item.data.length }}
-                        </span>
-                        <p class="detail" @click="openDetail">
-                            {{ $t('View details') }}
-                        </p>
-                    </div>
-                    <DxPopup
-                        :visible="popupVisible"
-                        :drag-enabled="false"
-                        :close-on-outside-click="false"
-                        :show-close-button="true"
-                        :show-title="true"
-                        width="90%"
-                        height="90%"
-                        title="Details"
-                    >
-                        <ongoing
-                            v-if="
-                                item.id === 'ongoing' ||
-                                item.id === 'finish' ||
-                                item.id === 'closed' ||
-                                item.id === 'pending'
-                            "
-                            :dataProp="item.data"
-                        />
-                    </DxPopup>
+    <div class="container-md">
+        <div class="footer-header row justify-space-around">
+            <div
+                v-for="item in statusItem"
+                :key="item.id"
+                class="row align-center xs3 justify-center"
+            >
+                <div class="info-project">
+                    <p>{{ $t(item.title) }}</p>
+                    <span>
+                        {{ item.data.length }}
+                    </span>
+                    <p class="detail" @click="openDetail(item.data)">
+                        {{ $t('View details') }}
+                    </p>
                 </div>
             </div>
+            <DxPopup
+                :visible="popupVisible"
+                :drag-enabled="false"
+                :close-on-outside-click="false"
+                :show-close-button="true"
+                :show-title="true"
+                width="100%"
+                height="100%"
+                title="Details"
+            >
+                <statusProject :data="dataDetail" />
+            </DxPopup>
         </div>
     </div>
 </template>
@@ -45,21 +35,23 @@
 <script>
 import { DxPopup } from 'devextreme-vue/popup'
 import { mapState } from 'vuex'
-import Ongoing from './dashboard/ongoing.vue'
+import statusProject from '../components/dashboard/statusProject.vue'
 export default {
     components: {
         DxPopup,
-        Ongoing,
+        statusProject,
     },
     data() {
         return {
             popupVisible: false,
+            dataDetail: null,
         }
     },
     computed: mapState(['statusItem']),
     methods: {
-        openDetail() {
+        openDetail(e) {
             this.popupVisible = !this.popupVisible
+            this.dataDetail = e
         },
     },
     created() {

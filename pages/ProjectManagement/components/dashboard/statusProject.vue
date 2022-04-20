@@ -1,10 +1,5 @@
 <template>
-    <DxDataGrid
-        id="gridContainer"
-        :data-source="dataProp"
-        :show-borders="true"
-        height="100%"
-    >
+    <DxDataGrid id="gridContainer" :data-source="data" :show-borders="true">
         <DxPaging :enabled="false" />
         <DxColumn data-field="no" caption="no" />
         <DxColumn data-field="id" caption="id" />
@@ -30,7 +25,7 @@ export default {
         DxColumn,
         DxPaging,
     },
-    props: ['dataProp'],
+    props: ['data'],
 }
 </script>
 

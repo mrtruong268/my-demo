@@ -1,7 +1,7 @@
 <template>
     <div class="container-md">
         <div class="row mb-4">
-            <div class="xs4" v-if="dataProp.loaiDanhSach === 'NewPartner'">
+            <div class="xs4" v-if="dataProp.listType === 'NewPartner'">
                 <DxTextBox
                     display-expr="title"
                     value-expr="id"

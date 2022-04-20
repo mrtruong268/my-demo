@@ -5,8 +5,9 @@
                 <div class="row align-center justify-space-between">
                     <div>
                         <img
-                            src="~/assets/logo.svg"
-                            width="80px"
+                            src="/logo.gif"
+                            width="70px"
+                            height="auto"
                             class="py-2"
                             @click="clickRouter('/', routeParams)"
                             style="cursor: pointer"
@@ -173,11 +174,11 @@ export default {
     computed: {
         ...mapState(['ChucNang', 'routeParams']),
         ...mapGetters({
-            DuAn: 'Project',
+            QuanLy: 'Manage',
         }),
-        Project: {
+        Manage: {
             get() {
-                return this.DuAn
+                return this.QuanLy
             },
             set(newItem) {
                 return newItem
@@ -210,14 +211,10 @@ export default {
             let newObj = {
                 id: this.idv4(),
                 title: 'Dashboard',
-                loaiDanhSach: 'dashboard',
+                listType: 'dashboard',
                 data: [],
             }
-            if (
-                !this.Project.find(
-                    (i) => i.loaiDanhSach === newObj.loaiDanhSach
-                )
-            ) {
+            if (!this.Manage.find((i) => i.listType === newObj.listType)) {
                 this.$store.commit('ADD_LIST', newObj)
             }
         },
@@ -247,14 +244,14 @@ export default {
     width: 400px;
     border: none;
     border-radius: 50px;
-    padding: 12px 16px;
+    padding: 10px 16px;
 }
 .btn-search {
     border-radius: 6px;
     position: absolute;
     font-size: 22px;
-    top: 8px;
-    right: 12px;
+    top: 5px;
+    right: 8px;
     color: #cccccc;
 }
 .icon {
@@ -263,7 +260,7 @@ export default {
     padding: 2px 6px;
 }
 .icon i {
-    font-size: 36px;
+    font-size: 28px;
     color: #c2c0bf;
 }
 #toggle {
@@ -273,8 +270,8 @@ export default {
 }
 .btn-guide {
     color: white;
-    margin-right: 4px;
-    font-size: 28px;
+    margin-right: 8px;
+    font-size: 20px;
 }
 .btn-search span {
     color: white;

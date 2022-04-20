@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 const mixin = {
     methods: {
         clickRouter(link, param) {
-            param == 'vi'
+            param === 'vi'
                 ? this.$router.push(`/${param}` + link)
                 : this.$router.push(link)
         },

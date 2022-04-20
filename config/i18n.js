@@ -6,3 +6,5 @@ export default {
     messages: { en, vi },
     silentTranslationWarn: true,
 }
+
+
