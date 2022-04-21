@@ -84,7 +84,7 @@
                     <DxSelectBox
                         v-model="selectedValue"
                         :data-source="$i18n.locales"
-                        display-expr="title"
+                        display-expr="name"
                         value-expr="code"
                         @selectionChanged="onChange(selectedValue)"
                         field-template="field"
@@ -94,14 +94,8 @@
                         <template #field="{ data }">
                             <div class="row align-center pa-1">
                                 <img
-                                    v-if="data.code === 'en'"
-                                    src="~assets/gb.svg"
-                                    style="width: 28px; height: 20px"
-                                />
-                                <img
-                                    v-else-if="data.code === 'vi'"
-                                    src="~assets/vn.svg"
-                                    style="width: 28px; height: 20px"
+                                    :src="data.icon"
+                                    style="width: 28px; height: 21px"
                                 />
                                 <p class="ml-3">
                                     {{ data.name }}

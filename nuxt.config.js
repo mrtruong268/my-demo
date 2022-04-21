@@ -42,33 +42,27 @@ export default {
     buildModules: [],
 
     // Modules: https://go.nuxtjs.dev/config-modules
-    modules: [
-        // https://go.nuxtjs.dev/axios
-        '@nuxtjs/axios',
-        '@nuxtjs/auth',
-        'nuxtjs-mdi-font',
-        'nuxt-i18n',
-    ],
+    modules: ['@nuxtjs/axios', '@nuxtjs/auth', 'nuxtjs-mdi-font', 'nuxt-i18n'],
     i18n: {
         locales: [
             {
                 code: 'en',
                 name: 'Eng',
-                title: 'English',
+                icon: 'gb.svg',
             },
             {
                 code: 'vi',
                 name: 'Vie',
-                title: 'Tiếng việt',
+                icon: 'vn.svg',
             },
         ],
         defaultLocale: 'en',
         vueI18n: i18n,
-        // detectBrowserLanguage: {
-        //     useCookie: true,
-        //     cookieKey: 'i18n_redirected',
-        //     redirectOn: 'root', // recommended
-        // },
+        detectBrowserLanguage: {
+            useCookie: true,
+            cookieKey: 'i18n_redirected',
+            redirectOn: 'root', // recommended
+        },
     },
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
