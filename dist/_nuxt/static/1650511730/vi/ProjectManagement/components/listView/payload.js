@@ -1,1 +1,0 @@
-__NUXT_JSONP__("/vi/ProjectManagement/components/listView", {data:[{}],fetch:{},mutations:[]});

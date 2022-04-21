@@ -1,1 +1,0 @@
-__NUXT_JSONP__("/ProjectManagement/components/listCategory", {data:[{}],fetch:{},mutations:[]});

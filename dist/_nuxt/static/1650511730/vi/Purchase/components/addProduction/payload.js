@@ -1,1 +1,0 @@
-__NUXT_JSONP__("/vi/Purchase/components/addProduction", {data:[{}],fetch:{},mutations:[]});

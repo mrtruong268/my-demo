@@ -1,1 +1,0 @@
-__NUXT_JSONP__("/vi/ProjectManagement/components/addNew/addCategory", {data:[{}],fetch:{},mutations:[]});

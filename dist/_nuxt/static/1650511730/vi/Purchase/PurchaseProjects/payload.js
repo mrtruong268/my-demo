@@ -1,1 +1,0 @@
-__NUXT_JSONP__("/vi/Purchase/PurchaseProjects", {data:[{}],fetch:{},mutations:[["PROJECT_STATUS",void 0]]});
