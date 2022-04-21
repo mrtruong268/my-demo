@@ -122,7 +122,7 @@ export default {
             this.$router.replace(this.switchLocalePath(e))
         },
         async submit(logininfo) {
-            this.clickRouter('/', this.routeParams)
+            this.clickRouter('', this.routeParams)
         },
     },
     created() {

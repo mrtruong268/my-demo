@@ -9,7 +9,7 @@
                             width="70px"
                             height="auto"
                             class="py-2"
-                            @click="clickRouter('/', routeParams)"
+                            @click="clickRouter('', routeParams)"
                             style="cursor: pointer"
                         />
                     </div>
@@ -35,7 +35,7 @@
                             <div class="dropdown-content2">
                                 <p>{{ $t('Update avatar') }}</p>
                                 <p>{{ $t('Change password') }}</p>
-                                <p @click="clickRouter('/Login', routeParams)">
+                                <p @click="clickRouter('Login', routeParams)">
                                     {{ $t('Log out') }}
                                 </p>
                             </div>
@@ -56,7 +56,7 @@
                         <ul class="row list-nav">
                             <li
                                 class="color-fff list-mobile px-4 py-2"
-                                @click="clickRouter('/', routeParams)"
+                                @click="clickRouter('', routeParams)"
                             >
                                 <i class="mdi mdi-home" />
                                 {{ $t('Home') }}
@@ -144,7 +144,7 @@
                 <div class="py-3">
                     <div
                         class="mdi mdi-home-outline btn-icon"
-                        @click="clickRouter('/', routeParams)"
+                        @click="clickRouter('', routeParams)"
                     ></div>
                 </div>
                 <div class="py-3">
@@ -204,10 +204,10 @@ export default {
         },
         goCategory() {
             this.$store.commit('IS_SELECTED', 'category')
-            this.clickRouter('/ProjectManagement', this.routeParams)
+            this.clickRouter('ProjectManagement', this.routeParams)
         },
         goDashboard() {
-            this.clickRouter('/ProjectManagement', this.routeParams)
+            this.clickRouter('ProjectManagement', this.routeParams)
             let newObj = {
                 id: this.idv4(),
                 title: 'Dashboard',

@@ -6,8 +6,8 @@ const mixin = {
     methods: {
         clickRouter(link, param) {
             param === 'vi'
-                ? this.$router.push(`/${param}` + link)
-                : this.$router.push(link)
+                ? this.$router.push(`/${param}` + `/${link}`)
+                : this.$router.push(`/${link}`)
         },
         idv4() {
             return uuidv4()

@@ -5,7 +5,7 @@ export const state = () => ({
         {
             id: uuidv4(),
             title: 'Project management',
-            to: '/ProjectManagement',
+            to: 'ProjectManagement',
             color: '#940726',
             image: '/icon-project-management.png',
         },
@@ -40,7 +40,7 @@ export const state = () => ({
         {
             id: uuidv4(),
             title: 'Purchasing',
-            to: '/Purchase',
+            to: 'Purchase',
             color: '#90AA1D',
             image: '/buy.gif',
         },
