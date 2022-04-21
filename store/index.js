@@ -7,7 +7,7 @@ export const state = () => ({
             title: 'Project management',
             to: '/ProjectManagement',
             color: '#940726',
-            image: '/IGYB.gif',
+            image: '/icon-project-management.png',
         },
         {
             id: uuidv4(),
@@ -253,7 +253,17 @@ export const state = () => ({
             nguoiTao: 'Nguyễn Duy Cương',
             phongBan: 'IT',
             ghiChu: '',
-            trangThai: 'pending',
+            trangThai: 'Pending',
+            HangHoa: [
+                {
+                    tenHangHoa: 'hang hoa 1',
+                    xuatXu: 'Viet nam',
+                    maHieu: 1020212,
+                    soluong: 100,
+                    soTien: 100000000,
+                    ghiChu: 'sadsadsadasdad',
+                },
+            ],
         },
         {
             id: uuidv4(),
@@ -263,7 +273,17 @@ export const state = () => ({
             nguoiTao: 'Nguyễn Duy Cương',
             phongBan: 'IT',
             ghiChu: '',
-            trangThai: 'pending',
+            trangThai: 'Pending',
+            HangHoa: [
+                {
+                    tenHangHoa: 'hang hoa 2',
+                    xuatXu: 'Viet nam',
+                    maHieu: 1020212,
+                    soluong: 100,
+                    soTien: 100000000,
+                    ghiChu: 'sadsadsadasdad',
+                },
+            ],
         },
         {
             id: uuidv4(),
@@ -273,7 +293,17 @@ export const state = () => ({
             nguoiTao: 'Nguyễn Duy Cương',
             phongBan: 'IT',
             ghiChu: '',
-            trangThai: 'approved',
+            trangThai: 'Approved',
+            HangHoa: [
+                {
+                    tenHangHoa: 'hang hoa 3',
+                    xuatXu: 'Viet nam',
+                    maHieu: 1020212,
+                    soluong: 100,
+                    soTien: 100000000,
+                    ghiChu: 'sadsadsadasdad',
+                },
+            ],
         },
         {
             id: uuidv4(),
@@ -284,6 +314,16 @@ export const state = () => ({
             phongBan: 'IT',
             ghiChu: '',
             trangThai: 'Not approved',
+            HangHoa: [
+                {
+                    tenHangHoa: 'hang hoa 4',
+                    xuatXu: 'Viet nam',
+                    maHieu: 1020212,
+                    soluong: 100,
+                    soTien: 100000000,
+                    ghiChu: 'sadsadsadasdad',
+                },
+            ],
         },
     ],
     QuanLy: [],

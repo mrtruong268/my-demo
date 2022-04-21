@@ -35,11 +35,6 @@
             caption="Labor"
             :allow-header-filtering="false"
         />
-        <DxColumn
-            data-field="loaiSanXuat"
-            caption="Production form"
-            :allow-header-filtering="true"
-        />
     </DxDataGrid>
 </template>
 

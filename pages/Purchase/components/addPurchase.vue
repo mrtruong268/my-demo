@@ -4,43 +4,37 @@
             <div class="xs9">
                 <div class="row mb-3">
                     <div class="xs6 mr-3">
-                        <DxSelectBox
-                            display-expr="title"
-                            value-expr="id"
-                            styling-mode="outlined"
-                            :label="$t('Purchase form')"
-                            label-mode="floating"
-                            class="pa-1"
-                        />
-                    </div>
-                    <div class="xs6 mr-3">
                         <DxTextBox
+                            v-model="newItem.nguoiTao"
                             styling-mode="outlined"
                             :label="$t('Name')"
                             label-mode="floating"
                             class="pa-1"
                         />
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="xs4 mr-3">
+                    <div class="xs6 mr-3">
                         <DxTextBox
+                            v-model="newItem.nguoiTao"
                             styling-mode="outlined"
                             :label="$t('Employee code')"
                             label-mode="floating"
                             class="pa-1"
                         />
                     </div>
-                    <div class="xs4 mr-3">
+                </div>
+                <div class="row mb-3">
+                    <div class="xs6 mr-3">
                         <DxTextBox
+                            v-model="newItem.phongBan"
                             styling-mode="outlined"
                             :label="$t('Position')"
                             label-mode="floating"
                             class="pa-1"
                         />
                     </div>
-                    <div class="xs4 mr-3">
+                    <div class="xs6 mr-3">
                         <DxTextBox
+                            v-model="newItem.phongBan"
                             styling-mode="outlined"
                             :label="$t('Department')"
                             label-mode="floating"
@@ -50,7 +44,8 @@
                 </div>
                 <div class="row mb-3">
                     <div class="xs6 mr-3">
-                        <DxDateBox
+                        <DxTextBox
+                            v-model="newItem.ngayDeTrinh"
                             styling-mode="outlined"
                             :label="$t('Submission date')"
                             label-mode="floating"
@@ -58,7 +53,8 @@
                         />
                     </div>
                     <div class="xs6 mr-3">
-                        <DxDateBox
+                        <DxTextBox
+                            v-model="newItem.ngayCanHang"
                             styling-mode="outlined"
                             :label="$t('Delivery date')"
                             label-mode="floating"
@@ -71,6 +67,7 @@
             <div class="xs3">
                 <div class="pb-3">
                     <DxTextBox
+                        v-model="newItem.nguoiTao"
                         styling-mode="outlined"
                         :label="$t('Surcharge')"
                         label-mode="floating"
@@ -79,6 +76,7 @@
                 </div>
                 <div class="pb-3">
                     <DxTextBox
+                        v-model="newItem.nguoiTao"
                         styling-mode="outlined"
                         :label="$t('Expense code')"
                         label-mode="floating"
@@ -87,6 +85,7 @@
                 </div>
                 <div class="pb-3">
                     <DxTextBox
+                        v-model="newItem.soThamChieu"
                         styling-mode="outlined"
                         :label="$t('Reference number')"
                         label-mode="floating"
@@ -97,6 +96,7 @@
         </div>
         <div class="mb-3">
             <DxTextBox
+                v-model="newItem.nguoiTao"
                 styling-mode="outlined"
                 :label="$t('Work location')"
                 label-mode="floating"
@@ -110,7 +110,7 @@
             </div>
             <DxDataGrid
                 id="gridContainer"
-                :data-source="HangHoa"
+                :data-source="newItem.HangHoa"
                 :show-borders="true"
                 height="100%"
                 :ref="dataGridRefKey"
@@ -187,6 +187,12 @@ import {
 const dataGridRefKey = 'my-data-grid'
 
 export default {
+    props: {
+        edit: {
+            type: Object,
+            default: null,
+        },
+    },
     components: {
         DxSelectBox,
         DxTextBox,
@@ -199,16 +205,37 @@ export default {
     },
     data() {
         return {
-            HangHoa: [
-                {
-                    idHangHoa: 1,
-                    tenHangHoa: 'hang hoa 1',
-                    soluong: 10,
-                    ghiChu: 'sadsadsadasdad',
-                },
-            ],
             dataGridRefKey,
+            newItem: {
+                id: this.idv4(),
+                soThamChieu: '',
+                ngayDeTrinh: '',
+                ngayCanHang: '',
+                nguoiTao: '',
+                phongBan: '',
+                ghiChu: '',
+                trangThai: '',
+                HangHoa: [
+                    {
+                        tenHangHoa: '',
+                        xuatXu: '',
+                        maHieu: 0,
+                        soluong: 0,
+                        soTien: 0,
+                        ghiChu: '',
+                    },
+                ],
+            },
         }
+    },
+    watch: {
+        edit() {
+            if (this.edit) {
+                this.newItem = Object.assign({}, this.edit)
+            } else {
+                this.newItem = {}
+            }
+        },
     },
     methods: {
         addRow() {

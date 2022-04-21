@@ -61,11 +61,25 @@
                 <DxButton icon="mdi mdi-eye" @click="viewDetail(data)" />
             </template>
         </DxDataGrid>
+        <DxPopup
+            :visible="popupVisible"
+            :drag-enabled="false"
+            :close-on-outside-click="false"
+            :show-close-button="true"
+            :show-title="true"
+            width="90%"
+            height="90%"
+            title="Details"
+        >
+            <addPurchase :edit="editItem" />
+        </DxPopup>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { DxPopup } from 'devextreme-vue/popup'
+
 import {
     DxDataGrid,
     DxColumn,
@@ -75,9 +89,16 @@ import {
     DxHeaderFilter,
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
+import addPurchase from '../components/addPurchase.vue'
 
 export default {
     layout: 'commonLayout',
+    data() {
+        return {
+            popupVisible: false,
+            editItem: {},
+        }
+    },
     components: {
         DxDataGrid,
         DxColumn,
@@ -85,7 +106,9 @@ export default {
         DxEditing,
         DxSelection,
         DxHeaderFilter,
+        DxPopup,
         DxButton,
+        addPurchase,
     },
     computed: {
         ...mapGetters({
@@ -102,7 +125,9 @@ export default {
     },
     methods: {
         viewDetail(e) {
-            console.log(e.data)
+            this.editItem = e.data
+            console.log("🚀 ~ file: index.vue ~ line 129 ~ this.editItem", this.editItem)
+            this.popupVisible = !this.popupVisible
         },
     },
 }

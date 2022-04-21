@@ -35,11 +35,6 @@
             caption="Time"
             :allow-header-filtering="false"
         />
-        <DxColumn
-            data-field="loaiMuaHang"
-            caption="Purchase form"
-            :allow-header-filtering="true"
-        />
     </DxDataGrid>
 </template>
 
