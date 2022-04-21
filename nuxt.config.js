@@ -5,9 +5,6 @@ export default {
     router: {
         base: '/my-demo/',
     },
-    static: {
-        prefix: false,
-    },
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         title: 'Project manager',
@@ -57,12 +54,12 @@ export default {
             {
                 code: 'en',
                 name: 'Eng',
-                icon: '/gb.svg',
+                title: 'English',
             },
             {
                 code: 'vi',
                 name: 'Vie',
-                icon: '/vn.svg',
+                title: 'Tiếng việt',
             },
         ],
         defaultLocale: 'en',

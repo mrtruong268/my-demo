@@ -59,13 +59,6 @@ export const state = () => ({
             color: '#90AA1D',
             image: '',
         },
-        {
-            id: uuidv4(),
-            title: '',
-            to: '',
-            color: '#90AA1D',
-            image: '',
-        },
     ],
     muaDuAn: [],
     danhSachMuaDuAn: [
