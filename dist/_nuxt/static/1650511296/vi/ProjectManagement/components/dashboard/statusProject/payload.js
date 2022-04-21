@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/vi/ProjectManagement/components/dashboard/statusProject", {data:[{},{}],fetch:{},mutations:[["PROJECT_STATUS",void 0]]});

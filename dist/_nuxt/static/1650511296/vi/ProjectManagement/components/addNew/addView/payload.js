@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/vi/ProjectManagement/components/addNew/addView", {data:[{}],fetch:{},mutations:[]});
