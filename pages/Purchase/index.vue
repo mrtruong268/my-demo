@@ -44,7 +44,7 @@ export default {
                 {
                     id: 1,
                     title: 'Purchasing for projects',
-                    image: '/purchasingForProjects.svg',
+                    image: require('assets/purchasingForProjects.svg'),
                     color: '#0986c5',
                     subTitle: [
                         {
@@ -62,7 +62,7 @@ export default {
                 {
                     id: 2,
                     title: 'Purchasing for non-projects',
-                    image: '/purchasingNoneProjects.svg',
+                    image: require('assets/purchasingNoneProjects.svg'),
                     color: '#b5222d',
                     subTitle: [
                         {
@@ -80,7 +80,7 @@ export default {
                 {
                     id: 3,
                     title: 'Purchasing approval',
-                    image: '/purchasingApprove.svg',
+                    image: require('assets/purchasingApprove.svg'),
                     color: '#87a248',
                     subTitle: [
                         {

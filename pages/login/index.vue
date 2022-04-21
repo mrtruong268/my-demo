@@ -27,7 +27,7 @@
                 <div class="login-image xs7 pa-4">
                     <div class="row">
                         <div class="describe xs7">
-                            <img src="/robot1.svg" alt="" />
+                            <img src="~assets/robot1.svg" alt="" />
                             <h3 class="pt-5 pb-4">
                                 {{ $t('SOFTWARE DEVELOPED BY VNAS GROUP') }}
                             </h3>
@@ -42,7 +42,7 @@
                         <div class="login-form xs5">
                             <div class="column justify-space-between">
                                 <div>
-                                    <img src="/logo.svg" alt="" />
+                                    <img src="~assets/logo.svg" alt="" />
                                     <h3 class="py-5">
                                         {{ $t('MANAGEMENT SOFTWARE SYSTEM') }}
                                     </h3>

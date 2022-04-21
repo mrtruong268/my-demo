@@ -5,7 +5,7 @@
                 <div class="row align-center justify-space-between">
                     <div>
                         <img
-                            src="/logo.gif"
+                            src="~assets/logo.gif"
                             width="70px"
                             height="auto"
                             class="py-2"
