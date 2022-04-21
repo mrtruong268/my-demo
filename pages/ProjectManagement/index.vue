@@ -4,7 +4,7 @@
         <div class="toolbar">
             <div class="row align-center justify-space-around">
                 <div
-                    v-for="item in ListManage"
+                    v-for="item in danhSachQuanLy"
                     :key="item.id"
                     class="xs6 text-xs-center btn-list"
                     @click="onItemClick(item)"
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div>
-            <div class="row justify-end" v-show="Manage.length > 0">
+            <div class="row justify-end" v-show="quanLy.length > 0">
                 <DxButton
                     text="Clear"
                     type="normal"
@@ -37,7 +37,7 @@
             </div>
             <div>
                 <DxTabPanel
-                    :data-source="Manage"
+                    :data-source="quanLy"
                     height="calc(78vh - 200px)"
                     :defer-rendering="false"
                     :show-nav-buttons="true"
@@ -190,21 +190,21 @@ export default {
     },
     computed: {
         ...mapGetters({
-            QuanLy: 'Manage',
-            DanhSachQuanLy: 'ListManage',
+            ql: 'quanLy',
+            dsql: 'danhSachQuanLy',
         }),
         ...mapState(['isSelected']),
-        Manage: {
+        quanLy: {
             get() {
-                return this.QuanLy
+                return this.ql
             },
             set(newItem) {
                 return newItem
             },
         },
-        ListManage: {
+        danhSachQuanLy: {
             get() {
-                return this.DanhSachQuanLy
+                return this.dsql
             },
             set(newItem) {
                 return newItem
@@ -213,7 +213,7 @@ export default {
     },
     methods: {
         onItemClick(e) {
-            if (!this.Manage.find((i) => i.listType === e.listType)) {
+            if (!this.quanLy.find((i) => i.listType === e.listType)) {
                 this.$store.commit('ADD_LIST', e)
             }
             this.$store.commit('ADD_LIST', e)
@@ -224,7 +224,7 @@ export default {
             if (result) this.$store.commit('CLICK_DELETE', itemDel.id)
         },
         showCloseButton() {
-            return this.Manage.length > 0
+            return this.quanLy.length > 0
         },
         clearTab() {
             let result = confirm('Are you sure to close all tabs?')

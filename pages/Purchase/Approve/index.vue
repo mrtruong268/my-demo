@@ -5,7 +5,7 @@
         </h2>
         <DxDataGrid
             id="gridContainer"
-            :data-source="approve"
+            :data-source="pheDuyet"
             :show-borders="true"
             height="100%"
             :hover-state-enabled="true"
@@ -112,11 +112,11 @@ export default {
     },
     computed: {
         ...mapGetters({
-            pheDuyet: 'approve',
+            pd: 'pheDuyet',
         }),
-        approve: {
+        pheDuyet: {
             get() {
-                return this.pheDuyet
+                return this.pd
             },
             set(newItem) {
                 return newItem
@@ -126,7 +126,6 @@ export default {
     methods: {
         viewDetail(e) {
             this.editItem = e.data
-            console.log("🚀 ~ file: index.vue ~ line 129 ~ this.editItem", this.editItem)
             this.popupVisible = !this.popupVisible
         },
     },

@@ -6,7 +6,7 @@
         <div class="toolbar">
             <div class="row align-center justify-space-around">
                 <div
-                    v-for="item in listBuyProject"
+                    v-for="item in danhSachMuaDuAn"
                     :key="item.id"
                     class="xs6 text-xs-center btn-list"
                     @click="onItemClick(item)"
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div>
-            <div class="row justify-end" v-show="buyProject.length > 0">
+            <div class="row justify-end" v-show="muaDuAn.length > 0">
                 <DxButton
                     :text="$t('Clear')"
                     type="normal"
@@ -39,7 +39,7 @@
             </div>
             <div class="tabPanel">
                 <DxTabPanel
-                    :data-source="buyProject"
+                    :data-source="muaDuAn"
                     height="calc(78vh - 200px)"
                     :defer-rendering="false"
                     :show-nav-buttons="true"
@@ -135,20 +135,20 @@ export default {
     },
     computed: {
         ...mapGetters({
-            muaDuAn: 'buyProject',
-            danhSachMuaDuAn: 'listBuyProject',
+            mda: 'muaDuAn',
+            dsmda: 'danhSachMuaDuAn',
         }),
-        buyProject: {
+        muaDuAn: {
             get() {
-                return this.muaDuAn
+                return this.mda
             },
             set(newItem) {
                 return newItem
             },
         },
-        listBuyProject: {
+        danhSachMuaDuAn: {
             get() {
-                return this.danhSachMuaDuAn
+                return this.dsmda
             },
             set(newItem) {
                 return newItem
@@ -157,7 +157,7 @@ export default {
     },
     methods: {
         onItemClick(e) {
-            if (!this.buyProject.find((i) => i.listType === e.listType)) {
+            if (!this.muaDuAn.find((i) => i.listType === e.listType)) {
                 this.$store.commit('ADD_LIST', e)
             }
             this.$store.commit('ADD_LIST', e)
@@ -168,7 +168,7 @@ export default {
             if (result) this.$store.commit('CLICK_DELETE', itemDel.id)
         },
         showCloseButton() {
-            return this.buyProject.length > 0
+            return this.muaDuAn.length > 0
         },
         clearTab() {
             let result = confirm('Are you sure to close all tabs?')

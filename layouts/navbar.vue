@@ -174,11 +174,11 @@ export default {
     computed: {
         ...mapState(['ChucNang', 'routeParams']),
         ...mapGetters({
-            QuanLy: 'Manage',
+            ql: 'quanLy',
         }),
-        Manage: {
+        quanLy: {
             get() {
-                return this.QuanLy
+                return this.ql
             },
             set(newItem) {
                 return newItem
@@ -214,7 +214,7 @@ export default {
                 listType: 'dashboard',
                 data: [],
             }
-            if (!this.Manage.find((i) => i.listType === newObj.listType)) {
+            if (!this.quanLy.find((i) => i.listType === newObj.listType)) {
                 this.$store.commit('ADD_LIST', newObj)
             }
         },

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
 
 export const state = () => ({
     ChucNang: [
@@ -580,15 +581,22 @@ export const state = () => ({
     ],
 })
 export const getters = {
-    buyProject: (state) => state.muaDuAn,
-    listBuyProject: (state) => state.danhSachMuaDuAn,
-    buyInternal: (state) => state.muaNoiBo,
-    listBuyInternal: (state) => state.danhSachMuaNoiBo,
-    approve: (state) => state.pheDuyet,
-    Manage: (state) => state.QuanLy,
-    ListManage: (state) => state.DanhSachQuanLy,
+    muaDuAn: (state) => state.muaDuAn,
+    danhSachMuaDuAn: (state) => state.danhSachMuaDuAn,
+    muaNoiBo: (state) => state.muaNoiBo,
+    danhSachMuaNoiBo: (state) => state.danhSachMuaNoiBo,
+    pheDuyet: (state) => state.pheDuyet,
+    quanLy: (state) => state.QuanLy,
+    danhSachQuanLy: (state) => state.DanhSachQuanLy,
 }
 export const mutations = {
+    SET_ITEM(state, item) {
+        state.danhSachMuaDuAn.forEach((e) => {
+            if (e.listType === 'muahang') {
+                e.data = item
+            }
+        })
+    },
     ADD_LIST(state, newItem) {
         if (
             !state.muaDuAn.find((i) => i.id === newItem.id) &&
@@ -654,4 +662,15 @@ export const mutations = {
         })
     },
 }
-export const actions = {}
+export const actions = {
+    async getData({ commit }) {
+        try {
+            const response = await axios.get(
+                `http://jsonplaceholder.typicode.com/posts`
+            )
+            commit('SET_ITEM', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+}
