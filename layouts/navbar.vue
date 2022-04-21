@@ -366,7 +366,7 @@ export default {
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
     z-index: 1;
     transition: 0.5s;
-    padding-top: 104px;
+    padding-top: 91px;
     overflow-y: scroll;
     bottom: 0;
 }

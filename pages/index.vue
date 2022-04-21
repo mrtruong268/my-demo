@@ -120,11 +120,10 @@ export default {
     overflow: hidden;
     height: 100%;
     top: 100px;
-    right: -12%;
+    right: 0;
 }
 .right-content img {
     transform: scaleX(-1);
-    width: 100%;
     height: 100%;
 }
 .main-mobile {

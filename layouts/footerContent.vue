@@ -2,17 +2,15 @@
     <div class="footer">
         <div class="split"></div>
         <div class="footer-header row justify-start">
-            <div
-                v-for="item in statusItem"
-                :key="item.id"
-                class="row align-center xs2"
-            >
-                <img :src="item.image" width="35px" height="35px" />
-                <div class="info-project">
-                    <p>{{ $t(item.title) }}</p>
-                    <span>
-                        {{ item.data.length }}
-                    </span>
+            <div v-for="item in statusItem" :key="item.id">
+                <div class="row align-center mr-5">
+                    <img :src="item.image" width="36px" height="36px" />
+                    <div class="info-project">
+                        <p>{{ $t(item.title) }}</p>
+                        <span>
+                            {{ item.data.length }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,17 +51,18 @@ export default {
     background-color: white;
 }
 .info-project {
-    margin-left: 10px;
     text-align: center;
+    margin-left: 10px;
 }
 .info-project p {
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.5px;
     color: #0986c5;
     font-weight: bold;
 }
 .info-project span {
     font-size: 24px;
+    font-weight: bold;
     color: #0986c5;
 }
 .footer-main {
