@@ -7,6 +7,7 @@
                 styling-mode="outlined"
                 :label="$t('Name')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxTextBox
@@ -14,12 +15,14 @@
                 styling-mode="outlined"
                 :label="$t('Employee code')"
                 label-mode="floating"
+                :read-only='true'
                 class="xs2 mr-3"
             />
             <DxTextBox
                 v-model="YeuCauMuaHang.chucVu"
                 styling-mode="outlined"
                 :label="$t('Position')"
+                :read-only='true'
                 label-mode="floating"
                 class="xs2 mr-3"
             />
@@ -28,6 +31,7 @@
                 styling-mode="outlined"
                 :label="$t('Department')"
                 label-mode="floating"
+                :read-only='true'
                 class="xs2 mr-3"
             />
             <DxTextBox
@@ -35,6 +39,7 @@
                 styling-mode="outlined"
                 :label="$t('Surcharge')"
                 label-mode="floating"
+                :read-only='true'
                 class="xs2 mr-3"
             />
             <DxTextBox
@@ -42,6 +47,7 @@
                 styling-mode="outlined"
                 :label="$t('Expense code')"
                 label-mode="floating"
+                :read-only='true'
                 class="xs2"
             />
         </div>
@@ -54,6 +60,7 @@
                 styling-mode="outlined"
                 :label="$t('Submission date')"
                 label-mode="floating"
+                :read-only='true'
                 class="xs2 mr-3"
             />
             <DxDateBox
@@ -64,6 +71,7 @@
                 styling-mode="outlined"
                 :label="$t('Submission date')"
                 class="xs2 mr-3"
+                :read-only='true'
                 label-mode="floating"
             />
             <DxTextBox
@@ -71,6 +79,7 @@
                 styling-mode="outlined"
                 :label="$t('Work location')"
                 label-mode="floating"
+                :read-only='true'
                 class="xs-4 mr-3"
             />
             <DxTextBox
@@ -78,6 +87,7 @@
                 styling-mode="outlined"
                 :label="$t('Reference number')"
                 label-mode="floating"
+                :read-only='true'
                 class="xs2 mr-3"
             />
             <DxNumberBox
@@ -85,13 +95,13 @@
                 styling-mode="outlined"
                 :label="$t('Total estimated amount')"
                 label-mode="floating"
+                :read-only='true'
                 class="xs2"
             />
         </div>
         <div class="mb-3">
             <div class="row justify-space-between">
-                <h3>{{ $t('Add goods, services') }}</h3>
-                <DxButton icon="mdi mdi-plus" class="mb-2" @click="addRow" />
+                <h3 class="mb-3">{{ $t('Add goods, services') }}</h3>
             </div>
             <DxDataGrid
                 id="gridContainer"
@@ -100,13 +110,6 @@
                 height="100%"
                 :ref="dataGridRefKey"
             >
-                <DxEditing
-                    :allow-updating="true"
-                    :allow-deleting="true"
-                    :confirmDelete="false"
-                    :useIcons="true"
-                    mode="cell"
-                />
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
@@ -142,14 +145,6 @@
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
         </div>
-        <div class="row justify-end align-center footer">
-            <DxButton
-                @click="clickAdd"
-                text="Lưu"
-                type="default"
-                styling-mode="contained"
-            />
-        </div>
     </div>
 </template>
 
@@ -169,7 +164,7 @@ const dataGridRefKey = 'my-data-grid'
 
 export default {
     props: {
-        edit: {
+        view: {
             type: Object,
             default: null,
         },
@@ -186,9 +181,9 @@ export default {
         DxEditing,
     },
     watch: {
-        edit() {
-            if (this.edit) {
-                this.YeuCauMuaHang = Object.assign({}, this.edit.data)
+        view() {
+            if (this.view) {
+                this.YeuCauMuaHang = Object.assign({}, this.view.data)
             } else {
                 this.resetData()
             }
@@ -228,18 +223,6 @@ export default {
         }
     },
     methods: {
-        addRow() {
-            return this.$refs[dataGridRefKey].instance.addRow()
-        },
-        clickAdd() {
-            if (this.YeuCauMuaHang.id == 0) {
-                this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-            } else {
-                this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
-            }
-            this.resetData()
-            this.$emit('invisible')
-        },
         resetData() {
             this.YeuCauMuaHang = {
                 id: 0,

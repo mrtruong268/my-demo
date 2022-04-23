@@ -1,64 +1,143 @@
 <template>
-    <DxDataGrid
-        id="gridContainer"
-        :data-source="dataProp"
-        :show-borders="true"
-        height="100%"
-    >
-        <DxHeaderFilter :visible="true" />
-        <DxEditing
-            :allow-updating="true"
-            :confirmDelete="false"
-            :useIcons="true"
-            :allow-deleting="true"
-            mode="cell"
-        />
-        <DxPaging :enabled="false" />
-        <DxSelection mode="multiple" />
-        <DxColumn
-            data-field="id"
-            caption="Id"
-            :allow-header-filtering="false"
-        />
-        <DxColumn
-            data-field="tenYeuCau"
-            caption="Request name"
-            :allow-header-filtering="false"
-        />
-        <DxColumn
-            data-field="soLuong"
-            caption="Amount"
-            :allow-header-filtering="false"
-        />
-        <DxColumn
-            data-field="thoiGian"
-            caption="Time"
-            :allow-header-filtering="false"
-        />
-    </DxDataGrid>
+    <div>
+        <div class="row justify-end">
+            <DxButton icon="mdi mdi-reload" @click="reload" />
+        </div>
+        <DxDataGrid
+            id="gridContainer"
+            :data-source="dataProp.data"
+            :show-borders="true"
+            height="100%"
+        >
+            <DxPaging :enabled="false" />
+            <DxColumn
+                data-field="id"
+                caption="No"
+                width="60"
+                alignment="center"
+            />
+            <DxColumn data-field="tenNhanVien" caption="Name" />
+            <DxColumn data-field="phongBan" caption="Department" />
+            <DxColumn data-field="soThamChieu" caption="Reference number" />
+            <DxColumn
+                data-field="ngayDeTrinh"
+                caption="Date of submission"
+                data-type="date"
+                format="dd/MM/yyyy"
+            />
+            <DxColumn
+                data-field="ngayCanHang"
+                caption="Delivery date"
+                format="dd/MM/yyyy"
+                data-type="date"
+            />
+
+            <DxColumn
+                :allow-header-filtering="false"
+                width="auto"
+                cell-template="buttons-cell"
+            />
+            <template #buttons-cell="{ data }">
+                <div>
+                    <DxButton icon="mdi mdi-eye" @click="clickView(data)" />
+                    <DxButton icon="mdi mdi-pencil" @click="clickEdit(data)" />
+                    <DxButton
+                        icon="mdi mdi-delete"
+                        @click="clickDelete(data)"
+                    />
+                </div>
+            </template>
+        </DxDataGrid>
+        <DxPopup
+            :visible="popupVisible"
+            :drag-enabled="false"
+            :close-on-outside-click="false"
+            :show-close-button="true"
+            :show-title="true"
+            title="Edit requisition"
+        >
+            <addPurchase :edit="suaYeuCau" @invisible="hiddenPopup" />
+        </DxPopup>
+        <DxPopup
+            :visible="popupVisible2"
+            :drag-enabled="false"
+            :close-on-outside-click="false"
+            :show-close-button="true"
+            :show-title="true"
+            title="View requisition"
+        >
+            <viewPurchase :view="suaYeuCau" />
+        </DxPopup>
+    </div>
 </template>
 
 <script>
+import { DxPopup } from 'devextreme-vue/popup'
 import {
     DxDataGrid,
     DxColumn,
     DxPaging,
-    DxEditing,
-    DxSelection,
     DxHeaderFilter,
 } from 'devextreme-vue/data-grid'
+import DxButton from 'devextreme-vue/button'
+import addPurchase from './addPurchase.vue'
+import { mapState } from 'vuex'
+import viewPurchase from './viewPurchase.vue'
 
 export default {
+    props: ['dataProp'],
     components: {
         DxDataGrid,
         DxColumn,
         DxPaging,
-        DxEditing,
-        DxSelection,
         DxHeaderFilter,
+        DxPopup,
+        DxButton,
+        addPurchase,
+        viewPurchase,
     },
-    props: ['dataProp'],
+    data() {
+        return {
+            popupVisible: false,
+            popupVisible2: false,
+        }
+    },
+    computed: {
+        ...mapState('muahang', ['suaYeuCau']),
+    },
+    methods: {
+        reload() {
+            setTimeout(() => {
+                this.$store.dispatch('muahang/getData')
+            }, 10)
+        },
+        clickView(e) {
+            this.popupVisible2 = !this.popupVisible2
+            this.$store.dispatch('muahang/getEditData', e.data.id)
+        },
+        clickEdit(e) {
+            this.popupVisible = !this.popupVisible
+            this.$store.dispatch('muahang/getEditData', e.data.id)
+        },
+        clickDelete(e) {
+            this.$store.dispatch('muahang/deleteData', e.data.id)
+            this.reload()
+        },
+        hiddenPopup() {
+            this.popupVisible = !this.popupVisible
+            this.reload()
+        },
+    },
+    mounted() {
+        this.reload()
+    },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+>>> .dx-datagrid .dx-row > td {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 20px;
+}
+</style>

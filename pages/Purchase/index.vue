@@ -10,7 +10,7 @@
                         :key="item.id"
                         :style="`border-left: 6px solid ${item.color}`"
                     >
-                        <div style="border-right: 1px solid #cccccc">
+                        <div class="image">
                             <img :src="item.image" class="pa-3" />
                         </div>
                         <div class="pa-3">
@@ -109,6 +109,14 @@ export default {
     color: #0986c5;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+.image {
+    border-right: 1px solid #cccccc;
+    text-align: center;
+}
+.image img {
+    max-width: 100%;
+    height: 100%;
+}
 .gridBox {
     display: flex;
     flex-wrap: wrap;
@@ -148,11 +156,15 @@ export default {
     .main h3 {
         font-size: 16px;
     }
+    .image img {
+        max-width: 60%;
+    }
     .chip {
         padding: 0;
         font-size: 14px;
         background-color: white;
         color: grey;
+        margin-bottom: 4px;
     }
 }
 </style>

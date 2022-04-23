@@ -28,13 +28,8 @@
                 :allow-header-filtering="false"
             />
             <DxColumn
-                data-field="ngayCanHang"
-                caption="ngayCanHang"
-                :allow-header-filtering="false"
-            />
-            <DxColumn
-                data-field="nguoiTao"
-                caption="nguoiTao"
+                data-field="tenNhanVien"
+                caption="tenNhanVien"
                 :allow-header-filtering="false"
             />
             <DxColumn
@@ -68,10 +63,9 @@
             :show-close-button="true"
             :show-title="true"
             width="90%"
-            height="90%"
             title="Details"
         >
-            <addPurchase :edit="editItem" />
+            <viewDetail :edit="editItem" />
         </DxPopup>
     </div>
 </template>
@@ -90,6 +84,7 @@ import {
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
 import addPurchase from '../components/addPurchase.vue'
+import viewDetail from '../components/common/viewDetail.vue'
 
 export default {
     layout: 'commonLayout',
@@ -109,6 +104,7 @@ export default {
         DxPopup,
         DxButton,
         addPurchase,
+        viewDetail,
     },
     computed: {
         ...mapGetters({
@@ -126,6 +122,10 @@ export default {
     methods: {
         viewDetail(e) {
             this.editItem = e.data
+            console.log(
+                '🚀 ~ file: index.vue ~ line 129 ~ this.editItem',
+                this.editItem
+            )
             this.popupVisible = !this.popupVisible
         },
     },
