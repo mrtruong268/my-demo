@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="main">
         <div class="header">
             <div class="container">
                 <div class="row align-center justify-space-between">
@@ -21,6 +21,51 @@
                                 class="search-box"
                             />
                             <i class="mdi mdi-magnify btn-search"></i>
+                        </div>
+                        <div class="notification mr-4">
+                            <i
+                                class="mdi mdi-bell-badge btn-drop"
+                                @click="openNoti"
+                            ></i>
+                            <div id="myDropdown" class="notification-content">
+                                <DxTabPanel
+                                    :data-source="ThongBao"
+                                    :selectedItem="selectedItem"
+                                    :defer-rendering="false"
+                                    :show-nav-buttons="true"
+                                    :repaint-changes-only="true"
+                                    item-title-template="title"
+                                    item-template="itemTemplate"
+                                >
+                                    <template #title="{ data: item }">
+                                        <div id="tabTitle">
+                                            <p>
+                                                {{ item.title }} ({{
+                                                    item.data.length
+                                                }})
+                                            </p>
+                                        </div>
+                                    </template>
+                                    <template #itemTemplate="{ data: item }">
+                                        <div>
+                                            <div
+                                                v-for="e in item.data"
+                                                :key="e.id"
+                                                class="notification-main row align-center"
+                                                @click="clickClose"
+                                            >
+                                                <img :src="e.image" />
+                                                <div class="main-right">
+                                                    <p>
+                                                        {{ e.title }}
+                                                    </p>
+                                                    <span>{{ e.time }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </DxTabPanel>
+                            </div>
                         </div>
                         <div class="user-guide">
                             <i class="mdi mdi-information btn-guide"></i>
@@ -155,6 +200,7 @@
                 </div>
             </div>
         </div>
+        <div id="overlay" @click="closeOverlay"></div>
     </div>
 </template>
 
@@ -163,16 +209,19 @@ import { mapState, mapGetters } from 'vuex'
 import DxButton from 'devextreme-vue/button'
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxTextBox from 'devextreme-vue/text-box'
+import DxTabPanel from 'devextreme-vue/tab-panel'
+import { DxScrollView } from 'devextreme-vue/scroll-view'
 
 export default {
-    components: { DxButton, DxSelectBox, DxTextBox },
+    components: { DxButton, DxSelectBox, DxTextBox, DxTabPanel, DxScrollView },
     data() {
         return {
             selectedValue: '',
+            selectedItem: null,
         }
     },
     computed: {
-        ...mapState(['ChucNang', 'routeParams']),
+        ...mapState(['ChucNang', 'ThongBao', 'routeParams']),
         ...mapGetters({
             ql: 'quanLy',
         }),
@@ -197,6 +246,32 @@ export default {
             }
             toggle.classList.toggle('active')
             sidebar.classList.toggle('active')
+        },
+        openNoti() {
+            let myDropdown = document.getElementById('myDropdown')
+            myDropdown.classList.toggle('show')
+            document.getElementById('overlay').style.display = 'block'
+            // window.onclick = function (e) {
+            //     if (e.target.matches('.notification-main')) {
+            //         console.log('sss')
+            //     }
+            //     // if (myDropdown.classList.contains('show')) {
+            //     //     myDropdown.classList.remove('show')
+            //     // }
+            // }
+        },
+        clickClose() {
+            let myDropdown = document.getElementById('myDropdown')
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show')
+            }
+        },
+        closeOverlay() {
+            let myDropdown = document.getElementById('myDropdown')
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show')
+            }
+            document.getElementById('overlay').style.display = 'none'
         },
         onChange(e) {
             this.$store.commit('LANG_SWITCH', e)
@@ -226,11 +301,22 @@ export default {
 </script>
 
 <style scoped>
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
 .header {
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: 2;
+    z-index: 3;
     background-color: #c2c0bf;
 }
 .container {
@@ -262,6 +348,64 @@ export default {
 .icon i {
     font-size: 28px;
     color: #c2c0bf;
+}
+.notification {
+    position: relative;
+    display: inline-block;
+}
+.notification i {
+    color: white;
+    font-size: 28px;
+    transition: all 0.2s linear 0s;
+    cursor: pointer;
+}
+.notification i:hover {
+    color: #0986c5;
+    font-size: 28px;
+    transition: all 0.2s linear 0s;
+    cursor: pointer;
+}
+.notification-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 4;
+    min-width: 500px;
+    height: 450px;
+    border-radius: 6px;
+}
+.notification-content p {
+    color: black;
+}
+.notification-main {
+    cursor: pointer;
+    transition: all 0.2s linear 0s;
+    padding: 20px 18px;
+}
+.notification-main:hover {
+    transition: all 0.2s linear 0s;
+    background-color: #f1f1f1;
+}
+.notification-main img {
+    width: 20%;
+    height: auto;
+}
+#tabTitle p {
+    text-transform: none;
+}
+.main-right {
+    margin-left: 20px;
+}
+.notification-main p {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+.show {
+    display: block;
 }
 #toggle {
     cursor: pointer;
@@ -431,5 +575,10 @@ export default {
     #sidebar {
         display: none;
     }
+}
+>>> .dx-tabpanel-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 </style>

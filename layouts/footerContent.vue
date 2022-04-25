@@ -26,9 +26,9 @@ export default {
     data() {
         return {}
     },
-    computed: mapState(['statusItem']),
+    computed: mapState('quanly', ['statusItem']),
     created() {
-        this.$store.commit('PROJECT_STATUS')
+        this.$store.commit('quanly/PROJECT_STATUS')
     },
 }
 </script>
@@ -39,7 +39,7 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 1;
 }
 .split {
     width: 100%;

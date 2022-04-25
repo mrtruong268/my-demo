@@ -59,6 +59,56 @@ export const state = () => ({
             image: '',
         },
     ],
+    ThongBao: [
+        {
+            id: 1,
+            title: 'Tất cả',
+            data: [
+                {
+                    id: 1,
+                    title: 'Phê duyệt yêu cầu mua hàng',
+                    time: '1 ngày trước',
+                    image: require('assets/logo.png'),
+                },
+                {
+                    id: 2,
+                    title: 'Phê duyệt yêu cầu mua hàng',
+                    time: '1 ngày trước',
+                    image: require('assets/logo.png'),
+                },
+                {
+                    id: 3,
+                    title: 'Phê duyệt yêu cầu mua hàng',
+                    time: '1 ngày trước',
+                    image: require('assets/logo.png'),
+                },
+                {
+                    id: 4,
+                    title: 'Phê duyệt yêu cầu mua hàng',
+                    time: '1 ngày trước',
+                    image: require('assets/logo.png'),
+                },
+            ],
+        },
+        {
+            id: 2,
+            title: 'Chưa đọc',
+            data: [
+                {
+                    id: 1,
+                    title: 'Phê duyệt yêu cầu mua hàng',
+                    time: '1 ngày trước',
+                    image: require('assets/file_tk-02.jpg'),
+                },
+                {
+                    id: 2,
+                    title: 'Phê duyệt yêu cầu mua hàng',
+                    time: '1 ngày trước',
+                    image: require('assets/file_tk-02.jpg'),
+                },
+            ],
+        },
+    ],
     routeParams: '',
 })
 
