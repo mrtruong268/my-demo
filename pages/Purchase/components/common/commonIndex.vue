@@ -48,6 +48,7 @@
                     :noDataText="$t('No data to display')"
                     item-title-template="title"
                     item-template="itemTemplate"
+                    @titleClick="titleClick"
                 >
                     <template #title="{ data: item }">
                         <div>
@@ -156,6 +157,9 @@ export default {
         clearTab() {
             let result = confirm('Are you sure to close all tabs?')
             if (result) this.$store.commit('muahang/CLEAR_DATA')
+        },
+        titleClick() {
+            this.$store.dispatch('muahang/getData')
         },
     },
     beforeDestroy() {

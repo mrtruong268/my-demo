@@ -128,9 +128,6 @@ export default {
             this.reload()
         },
     },
-    mounted() {
-        this.reload()
-    },
 }
 </script>
 
