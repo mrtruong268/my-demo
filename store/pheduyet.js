@@ -2,125 +2,35 @@ import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 
 export const state = () => ({
-    pheDuyet: [
-        {
-            id: uuidv4(),
-            tenNhanVien: 'Truong',
-            maNhanVien: 'Truong',
-            chucVu: 'Truong',
-            phongBan: 'Truong',
-            ngayDeTrinh: new Date().toISOString(),
-            ngayCanHang: new Date().toISOString(),
-            diaDiemLamViec: 'Truong',
-            phuPhi: 'Truong',
-            maChiPhi: 'Truong',
-            soThamChieu: 'Truong',
-            tongTienTamTinh: 1,
-            trangThai: 'Approved',
-            yeuCauMuaHangChiTiets: [
-                {
-                    id: uuidv4(),
-                    ycmhId: uuidv4(),
-                    tenHangHoa_DichVu: 'Truong',
-                    xuatXu_Hang: 'Truong',
-                    model_MaHieu: 'Truong',
-                    soLuong: 1,
-                    donVi: 'Truong',
-                    soTienTamTinh: 1,
-                    maHangMucTrienKhai: 'Truong',
-                    ghiChu: 'Truong',
-                },
-            ],
-        },
-        {
-            id: uuidv4(),
-            tenNhanVien: 'Truong',
-            maNhanVien: 'Truong',
-            chucVu: 'Truong',
-            phongBan: 'Truong',
-            ngayDeTrinh: new Date().toISOString(),
-            ngayCanHang: new Date().toISOString(),
-            diaDiemLamViec: 'Truong',
-            phuPhi: 'Truong',
-            maChiPhi: 'Truong',
-            soThamChieu: 'Truong',
-            trangThai: 'Pending',
-            tongTienTamTinh: 1,
-            yeuCauMuaHangChiTiets: [
-                {
-                    id: uuidv4(),
-                    ycmhId: uuidv4(),
-                    tenHangHoa_DichVu: 'Truong',
-                    xuatXu_Hang: 'Truong',
-                    model_MaHieu: 'Truong',
-                    soLuong: 1,
-                    donVi: 'Truong',
-                    soTienTamTinh: 1,
-                    maHangMucTrienKhai: 'Truong',
-                    ghiChu: 'Truong',
-                },
-            ],
-        },
-        {
-            id: uuidv4(),
-            tenNhanVien: 'Truong',
-            maNhanVien: 'Truong',
-            chucVu: 'Truong',
-            phongBan: 'Truong',
-            ngayDeTrinh: new Date().toISOString(),
-            ngayCanHang: new Date().toISOString(),
-            diaDiemLamViec: 'Truong',
-            phuPhi: 'Truong',
-            maChiPhi: 'Truong',
-            trangThai: 'Not approved',
-            soThamChieu: 'Truong',
-            tongTienTamTinh: 1,
-            yeuCauMuaHangChiTiets: [
-                {
-                    id: uuidv4(),
-                    ycmhId: uuidv4(),
-                    tenHangHoa_DichVu: 'Truong',
-                    xuatXu_Hang: 'Truong',
-                    model_MaHieu: 'Truong',
-                    soLuong: 1,
-                    donVi: 'Truong',
-                    soTienTamTinh: 1,
-                    maHangMucTrienKhai: 'Truong',
-                    ghiChu: 'Truong',
-                },
-            ],
-        },
-        {
-            id: uuidv4(),
-            tenNhanVien: 'Truong',
-            maNhanVien: 'Truong',
-            chucVu: 'Truong',
-            phongBan: 'Truong',
-            ngayDeTrinh: new Date().toISOString(),
-            ngayCanHang: new Date().toISOString(),
-            diaDiemLamViec: 'Truong',
-            phuPhi: 'Truong',
-            maChiPhi: 'Truong',
-            trangThai: 'Not approved',
-            soThamChieu: 'Truong',
-            tongTienTamTinh: 1,
-            yeuCauMuaHangChiTiets: [
-                {
-                    id: uuidv4(),
-                    ycmhId: uuidv4(),
-                    tenHangHoa_DichVu: 'Truong',
-                    xuatXu_Hang: 'Truong',
-                    model_MaHieu: 'Truong',
-                    soLuong: 1,
-                    donVi: 'Truong',
-                    soTienTamTinh: 1,
-                    maHangMucTrienKhai: 'Truong',
-                    ghiChu: 'Truong',
-                },
-            ],
-        },
-    ],
+    danhSachPheDuyet: [],
 })
-export const getters = {}
-export const mutations = {}
-export const actions = {}
+export const getters = {
+    danhSachPheDuyet: (state) => state.danhSachPheDuyet,
+}
+export const mutations = {
+    SET_ITEM(state, newData) {
+        state.danhSachPheDuyet = newData
+    },
+}
+export const actions = {
+    async getData({ commit }) {
+        try {
+            let response = await axios.get(
+                'http://internal.vnas.com.vn:108/api/pr/get-approving-prs'
+            )
+            commit('SET_ITEM', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async postData({ commit }, newItem) {
+        try {
+            let response = await axios.get(
+                `http://internal.vnas.com.vn:108/api/pr/submit-pr?id=${newItem}`
+            )
+            commit('SET_ITEM', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+}

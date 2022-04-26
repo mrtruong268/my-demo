@@ -39,6 +39,10 @@
             />
             <template #buttons-cell="{ data }">
                 <div>
+                    <DxButton
+                        icon="mdi mdi-cart-plus"
+                        @click="clickApprove(data)"
+                    />
                     <DxButton icon="mdi mdi-eye" @click="clickView(data)" />
                     <DxButton icon="mdi mdi-pencil" @click="clickEdit(data)" />
                     <DxButton
@@ -48,31 +52,23 @@
                 </div>
             </template>
         </DxDataGrid>
-        <DxPopup
-            :visible="popupVisible"
-            :drag-enabled="false"
-            :close-on-outside-click="false"
-            :show-close-button="true"
-            :show-title="true"
-            title="Edit requisition"
+        <popup
+            :showPopup="popupVisible"
+            :showTitle="true"
+            :title="isClick == 'edit' ? 'Edit requisition' : 'View details'"
         >
-            <addPurchase :edit="suaYeuCau" @invisible="hiddenPopup" />
-        </DxPopup>
-        <DxPopup
-            :visible="popupVisible2"
-            :drag-enabled="false"
-            :close-on-outside-click="false"
-            :show-close-button="true"
-            :show-title="true"
-            title="View requisition"
-        >
-            <viewPurchase :view="suaYeuCau" />
-        </DxPopup>
+            <template #main>
+                <addPurchase
+                    v-if="isClick == 'edit'"
+                    @invisible="hiddenPopup"
+                />
+                <viewDetail v-else :view="suaYeuCau" />
+            </template>
+        </popup>
     </div>
 </template>
 
 <script>
-import { DxPopup } from 'devextreme-vue/popup'
 import {
     DxDataGrid,
     DxColumn,
@@ -80,9 +76,10 @@ import {
     DxHeaderFilter,
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
+import { mapGetters } from 'vuex'
 import addPurchase from './addPurchase.vue'
-import { mapState } from 'vuex'
-import viewPurchase from './viewPurchase.vue'
+import viewDetail from './viewDetail.vue'
+import Popup from '~/components/popup.vue'
 
 export default {
     props: ['dataProp'],
@@ -91,33 +88,38 @@ export default {
         DxColumn,
         DxPaging,
         DxHeaderFilter,
-        DxPopup,
         DxButton,
         addPurchase,
-        viewPurchase,
+        viewDetail,
+        Popup,
     },
     data() {
         return {
             popupVisible: false,
-            popupVisible2: false,
+            isClick: null,
         }
     },
     computed: {
-        ...mapState('muahang', ['suaYeuCau']),
+        ...mapGetters('muahang', ['suaYeuCau']),
     },
     methods: {
         reload() {
             setTimeout(() => {
                 this.$store.dispatch('muahang/getData')
-            }, 10)
+            }, 100)
+        },
+        clickApprove(e) {
+            this.$store.dispatch('pheduyet/postData', e.data.id)
         },
         clickView(e) {
-            this.popupVisible2 = !this.popupVisible2
+            this.popupVisible = !this.popupVisible
             this.$store.dispatch('muahang/getEditData', e.data.id)
+            this.isClick = 'view'
         },
         clickEdit(e) {
             this.popupVisible = !this.popupVisible
             this.$store.dispatch('muahang/getEditData', e.data.id)
+            this.isClick = 'edit'
         },
         clickDelete(e) {
             this.$store.dispatch('muahang/deleteData', e.data.id)
@@ -128,13 +130,10 @@ export default {
             this.reload()
         },
     },
+    created() {
+        this.$store.dispatch('muahang/getData')
+    },
 }
 </script>
 
-<style scoped>
->>> .dx-datagrid .dx-row > td {
-    padding: 8px;
-    font-size: 14px;
-    line-height: 20px;
-}
-</style>
+<style scoped></style>

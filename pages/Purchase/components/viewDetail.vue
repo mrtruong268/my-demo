@@ -15,14 +15,14 @@
                 styling-mode="outlined"
                 :label="$t('Employee code')"
                 label-mode="floating"
-                :read-only='true'
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxTextBox
                 v-model="YeuCauMuaHang.chucVu"
                 styling-mode="outlined"
                 :label="$t('Position')"
-                :read-only='true'
+                :read-only="true"
                 label-mode="floating"
                 class="xs2 mr-3"
             />
@@ -31,7 +31,7 @@
                 styling-mode="outlined"
                 :label="$t('Department')"
                 label-mode="floating"
-                :read-only='true'
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxTextBox
@@ -39,7 +39,7 @@
                 styling-mode="outlined"
                 :label="$t('Surcharge')"
                 label-mode="floating"
-                :read-only='true'
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxTextBox
@@ -47,7 +47,7 @@
                 styling-mode="outlined"
                 :label="$t('Expense code')"
                 label-mode="floating"
-                :read-only='true'
+                :read-only="true"
                 class="xs2"
             />
         </div>
@@ -60,7 +60,7 @@
                 styling-mode="outlined"
                 :label="$t('Submission date')"
                 label-mode="floating"
-                :read-only='true'
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxDateBox
@@ -69,9 +69,9 @@
                 :use-mask-behavior="true"
                 validationMessageMode="always"
                 styling-mode="outlined"
-                :label="$t('Submission date')"
+                :label="$t('Delivery date')"
                 class="xs2 mr-3"
-                :read-only='true'
+                :read-only="true"
                 label-mode="floating"
             />
             <DxTextBox
@@ -79,7 +79,7 @@
                 styling-mode="outlined"
                 :label="$t('Work location')"
                 label-mode="floating"
-                :read-only='true'
+                :read-only="true"
                 class="xs-4 mr-3"
             />
             <DxTextBox
@@ -87,15 +87,15 @@
                 styling-mode="outlined"
                 :label="$t('Reference number')"
                 label-mode="floating"
-                :read-only='true'
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxNumberBox
                 v-model="YeuCauMuaHang.tongTienTamTinh"
                 styling-mode="outlined"
-                :label="$t('Total estimated amount')"
+                :label="$t('Estimated amount')"
                 label-mode="floating"
-                :read-only='true'
+                :read-only="true"
                 class="xs2"
             />
         </div>

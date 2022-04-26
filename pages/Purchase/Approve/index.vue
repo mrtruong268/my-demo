@@ -5,46 +5,42 @@
         </h2>
         <DxDataGrid
             id="gridContainer"
-            :data-source="pheDuyet"
+            :data-source="danhSachPheDuyet.data"
             :show-borders="true"
             height="100%"
             :hover-state-enabled="true"
         >
             <DxHeaderFilter :visible="true" />
+            <DxFilterRow :visible="true" />
             <DxPaging :enabled="false" />
             <DxColumn
                 data-field="id"
-                caption="Id"
+                caption="No"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="soThamChieu"
-                caption="soThamChieu"
-                :allow-header-filtering="false"
-            />
-            <DxColumn
-                data-field="ngayDeTrinh"
-                caption="ngayDeTrinh"
+                caption="Reference number"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="tenNhanVien"
-                caption="tenNhanVien"
+                caption="Name"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="phongBan"
-                caption="phongBan"
+                caption="Department"
                 :allow-header-filtering="false"
             />
             <DxColumn
-                data-field="ghiChu"
-                caption="ghiChu"
+                data-field="ngayDeTrinh"
+                caption="Submission date"
                 :allow-header-filtering="false"
             />
             <DxColumn
-                data-field="trangThai"
-                caption="status"
+                data-field="approvalState"
+                caption="Status"
                 :allow-header-filtering="true"
             />
             <DxColumn
@@ -56,23 +52,12 @@
                 <DxButton icon="mdi mdi-eye" @click="viewDetail(data)" />
             </template>
         </DxDataGrid>
-        <DxPopup
-            :visible="popupVisible"
-            :drag-enabled="false"
-            :close-on-outside-click="false"
-            :show-close-button="true"
-            :show-title="true"
-            width="90%"
-            title="Details"
-        >
-            <viewDetail :edit="editItem" />
-        </DxPopup>
+        <popup :showPopup="popupVisible" :showTitle="true" :title="'Details'" />
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { DxPopup } from 'devextreme-vue/popup'
 
 import {
     DxDataGrid,
@@ -81,10 +66,10 @@ import {
     DxEditing,
     DxSelection,
     DxHeaderFilter,
+    DxFilterRow,
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
-import addPurchase from '../components/addPurchase.vue'
-import viewDetail from '../components/common/viewDetail.vue'
+import popup from '~/components/popup.vue'
 
 export default {
     layout: 'commonLayout',
@@ -101,23 +86,12 @@ export default {
         DxEditing,
         DxSelection,
         DxHeaderFilter,
-        DxPopup,
+        DxFilterRow,
         DxButton,
-        addPurchase,
-        viewDetail,
+        popup,
     },
     computed: {
-        ...mapGetters({
-            pd: 'pheDuyet',
-        }),
-        pheDuyet: {
-            get() {
-                return this.pd
-            },
-            set(newItem) {
-                return newItem
-            },
-        },
+        ...mapGetters('pheduyet', ['danhSachPheDuyet']),
     },
     methods: {
         viewDetail(e) {
@@ -128,6 +102,9 @@ export default {
             )
             this.popupVisible = !this.popupVisible
         },
+    },
+    created() {
+        this.$store.dispatch('pheduyet/getData')
     },
 }
 </script>

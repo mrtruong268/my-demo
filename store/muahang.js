@@ -39,6 +39,7 @@ export const getters = {
     danhSachMuaDuAn: (state) => state.danhSachMuaDuAn,
     muaNoiBo: (state) => state.muaNoiBo,
     danhSachMuaNoiBo: (state) => state.danhSachMuaNoiBo,
+    suaYeuCau: (state) => state.suaYeuCau,
 }
 export const mutations = {
     SET_ITEM(state, item) {
@@ -94,7 +95,7 @@ export const actions = {
     },
     async deleteData({ commit }, delId) {
         try {
-            let response = await axios.delete(
+            await axios.delete(
                 `http://internal.vnas.com.vn:108/api/pr/delete-pr?id=${delId}`
             )
         } catch (err) {
@@ -113,7 +114,7 @@ export const actions = {
     },
     async editData({ commit }, editItem) {
         try {
-            let response = await axios.put(
+            await axios.put(
                 'http://internal.vnas.com.vn:108/api/pr/put-pr',
                 editItem
             )

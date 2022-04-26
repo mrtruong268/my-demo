@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3">
+    <div class="container-md" style="height: 100%">
         <h3 class="mb-2">{{ $t('Information') }}</h3>
         <div class="row align-center justify-space-between mb-3">
             <DxTextBox
@@ -62,7 +62,7 @@
                 :use-mask-behavior="true"
                 validationMessageMode="always"
                 styling-mode="outlined"
-                :label="$t('Submission date')"
+                :label="$t('Delivery date')"
                 class="xs2 mr-3"
                 label-mode="floating"
             />
@@ -83,7 +83,7 @@
             <DxNumberBox
                 v-model="YeuCauMuaHang.tongTienTamTinh"
                 styling-mode="outlined"
-                :label="$t('Total estimated amount')"
+                :label="$t('Estimated amount')"
                 label-mode="floating"
                 class="xs2"
             />
@@ -142,18 +142,14 @@
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
         </div>
-        <div class="row justify-end align-center footer">
-            <DxButton
-                @click="clickAdd"
-                text="Lưu"
-                type="default"
-                styling-mode="contained"
-            />
+        <div class="row justify-end">
+            <span @click="clickAdd" class="btn-save">Lưu</span>
         </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
@@ -168,12 +164,6 @@ import {
 const dataGridRefKey = 'my-data-grid'
 
 export default {
-    props: {
-        edit: {
-            type: Object,
-            default: null,
-        },
-    },
     components: {
         DxSelectBox,
         DxTextBox,
@@ -185,10 +175,13 @@ export default {
         DxButton,
         DxEditing,
     },
+    computed: {
+        ...mapGetters('muahang', ['suaYeuCau']),
+    },
     watch: {
-        edit() {
-            if (this.edit) {
-                this.YeuCauMuaHang = Object.assign({}, this.edit.data)
+        suaYeuCau() {
+            if (this.suaYeuCau) {
+                this.YeuCauMuaHang = Object.assign({}, this.suaYeuCau.data)
             } else {
                 this.resetData()
             }
@@ -209,6 +202,7 @@ export default {
                 phuPhi: '',
                 maChiPhi: '',
                 soThamChieu: '',
+                comment: '0',
                 tongTienTamTinh: 0,
                 yeuCauMuaHangChiTiets: [
                     {
@@ -253,6 +247,7 @@ export default {
                 phuPhi: '',
                 maChiPhi: '',
                 soThamChieu: '',
+                comment: '0',
                 tongTienTamTinh: 0,
                 yeuCauMuaHangChiTiets: [
                     {
@@ -277,6 +272,21 @@ export default {
 <style scoped>
 .btn-add {
     font-size: 28px;
+}
+.btn-save {
+    background-color: #0986c5;
+    color: white;
+    padding: 8px 0;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s linear 0s;
+}
+.btn-save:hover {
+    color: #0986c5;
+    background-color: #f1f1f1;
+    transition: all 0.2s linear 0s;
 }
 .xs-4 {
     flex-basis: 34.5%;
