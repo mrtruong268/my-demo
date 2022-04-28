@@ -47,7 +47,7 @@ export default {
             dataDetail: null,
         }
     },
-    computed: mapState(['statusItem']),
+    computed: mapState('quanly', ['statusItem']),
     methods: {
         openDetail(e) {
             this.popupVisible = !this.popupVisible
@@ -55,7 +55,7 @@ export default {
         },
     },
     created() {
-        this.$store.commit('PROJECT_STATUS')
+        this.$store.commit('quanly/PROJECT_STATUS')
     },
 }
 </script>

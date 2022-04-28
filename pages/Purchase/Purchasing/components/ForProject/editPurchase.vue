@@ -78,14 +78,7 @@
                 styling-mode="outlined"
                 :label="$t('Reference number')"
                 label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxNumberBox
-                v-model="YeuCauMuaHang.tongTienTamTinh"
-                styling-mode="outlined"
-                :label="$t('Estimated amount')"
-                label-mode="floating"
-                class="xs2"
+                class="xs-4"
             />
         </div>
         <div class="mb-3">
@@ -97,17 +90,18 @@
                 id="gridContainer"
                 :data-source="danhSachHangHoa"
                 :show-borders="true"
-                height="400px"
+                height="340px"
                 :ref="dataGridRefKey"
                 :remote-operations="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 :repaint-changes-only="true"
+                :hover-state-enabled="true"
                 @saved="saved"
             >
                 <DxEditing
                     :allow-updating="true"
-                    :allow-deleting="false"
+                    :allow-deleting="true"
                     :useIcons="true"
                     :confirm-delete="false"
                     mode="cell"
@@ -115,7 +109,7 @@
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    width="120"
+                    width="150"
                     :caption="$t('Name')"
                 />
                 <DxColumn
@@ -123,36 +117,38 @@
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80" />
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50" />
                 <DxColumn
                     data-field="donGiaTamTinh"
                     :caption="$t('Estimated unit price')"
-                    width="120"
+                    width="150"
+                    :format="customFormat"
                 />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Categories')"
-                    width="120"
+                    width="90"
                 />
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
-                    width="100"
+                    width="70"
                 />
                 <DxColumn
                     data-field="model_MaHieu"
                     :caption="$t('Model')"
-                    width="100"
+                    width="70"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
                     width="150"
                     :caption="$t('Amount')"
+                    :format="customFormat"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
-                <DxColumn
+                <!-- <DxColumn
                     :allow-header-filtering="false"
-                    width="auto"
+                    width="40"
                     cell-template="buttons-cell"
                 />
                 <template #buttons-cell="{ data }">
@@ -161,11 +157,16 @@
                         style="cursor: pointer"
                         @click="clickDelete(data)"
                     ></p>
-                </template>
+                </template> -->
             </DxDataGrid>
         </div>
         <div class="button">
-            <span @click="clickAdd" class="btn-save">Lưu</span>
+            <DxButton
+                text="Lưu"
+                type="default"
+                styling-mode="contained"
+                @click="clickSave"
+            />
         </div>
     </div>
 </template>
@@ -235,9 +236,7 @@ export default {
     watch: {
         suaYeuCau: {
             handler(suaYeuCau) {
-                if (suaYeuCau) {
-                    this.YeuCauMuaHang = { ...suaYeuCau.data }
-                }
+                if (suaYeuCau) this.YeuCauMuaHang = { ...suaYeuCau.data }
             },
             deep: true,
         },
@@ -253,15 +252,24 @@ export default {
             let tmpData =
                 this.$refs[dataGridRefKey].instance.getDataSource()._items
             this.YeuCauMuaHang.yeuCauMuaHangChiTiets = tmpData
-            this.$refs[dataGridRefKey].instance.refresh()
         },
-        clickAdd() {
-            this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
+        clickSave() {
+            setTimeout(() => {
+                this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
+            }, 100)
             this.$emit('invisible')
         },
         clickDelete(e) {
             this.$store.dispatch('muahang/deletePrItem', e.data.id)
-            this.$refs[dataGridRefKey].instance.refresh()
+            setTimeout(() => {
+                this.$refs[dataGridRefKey].instance.getDataSource().reload()
+            }, 200)
+        },
+        customFormat(e) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            }).format(e)
         },
     },
 }
@@ -271,26 +279,13 @@ export default {
 .btn-add {
     font-size: 28px;
 }
-.btn-save {
-    background-color: #0986c5;
-    color: white;
-    padding: 8px 0;
-    width: 80px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.2s linear 0s;
+.button {
     position: absolute;
     bottom: 24px;
     right: 24px;
 }
-.btn-save:hover {
-    color: #0986c5;
-    background-color: #f1f1f1;
-    transition: all 0.2s linear 0s;
-}
 .xs-4 {
-    flex-basis: 34.5%;
-    max-width: 34.5%;
+    flex-basis: 34.6%;
+    max-width: 34.6%;
 }
 </style>

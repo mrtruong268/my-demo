@@ -229,17 +229,7 @@ export default {
     },
     computed: {
         ...mapState(['ChucNang', 'ThongBao', 'routeParams']),
-        ...mapGetters({
-            ql: 'quanLy',
-        }),
-        quanLy: {
-            get() {
-                return this.ql
-            },
-            set(newItem) {
-                return newItem
-            },
-        },
+        ...mapGetters('quanly', ['quanLy']),
     },
     methods: {
         openNav() {
@@ -258,14 +248,6 @@ export default {
             let myDropdown = document.getElementById('myDropdown')
             myDropdown.classList.toggle('show')
             document.getElementById('overlay').style.display = 'block'
-            // window.onclick = function (e) {
-            //     if (e.target.matches('.notification-main')) {
-            //         console.log('sss')
-            //     }
-            //     // if (myDropdown.classList.contains('show')) {
-            //     //     myDropdown.classList.remove('show')
-            //     // }
-            // }
         },
         clickClose() {
             let myDropdown = document.getElementById('myDropdown')
@@ -285,7 +267,7 @@ export default {
             this.$router.replace(this.switchLocalePath(e))
         },
         goCategory() {
-            this.$store.commit('IS_SELECTED', 'category')
+            this.$store.commit('quanly/IS_SELECTED', 'category')
             this.clickRouter('ProjectManagement', this.routeParams)
         },
         goDashboard() {
@@ -297,7 +279,7 @@ export default {
                 data: [],
             }
             if (!this.quanLy.find((i) => i.listType === newObj.listType)) {
-                this.$store.commit('ADD_LIST', newObj)
+                this.$store.commit('quanly/ADD_LIST', newObj)
             }
         },
     },

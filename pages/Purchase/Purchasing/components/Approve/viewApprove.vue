@@ -88,15 +88,7 @@
                 :label="$t('Reference number')"
                 label-mode="floating"
                 :read-only="true"
-                class="xs2 mr-3"
-            />
-            <DxNumberBox
-                v-model="YeuCauMuaHang.tongTienTamTinh"
-                styling-mode="outlined"
-                :label="$t('Estimated amount')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs2"
+                class="xs-4"
             />
         </div>
         <div class="mb-3">
@@ -108,56 +100,58 @@
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
                 :ref="dataGridRefKey"
+                :hover-state-enabled="true"
             >
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    width="240"
                     :caption="$t('Goods, services')"
+                    width="150"
                 />
                 <DxColumn
                     data-field="soLuong"
                     :caption="$t('Quantity')"
                     width="90"
                 />
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50" />
                 <DxColumn
                     data-field="donGiaTamTinh"
-                    :caption="$t('Unit')"
-                    width="80"
+                    :format="customFormat"
+                    :caption="$t('Estimated unit price')"
+                    width="150"
                 />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Categories')"
-                    width="120"
+                    width="90"
                 />
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
-                    width="100"
+                    width="70"
                 />
                 <DxColumn
                     data-field="model_MaHieu"
                     :caption="$t('Model')"
-                    width="100"
+                    width="70"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
                     width="150"
+                    :format="customFormat"
                     :caption="$t('Amount of money')"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
         </div>
         <div class="mb-3">
-            <h3 class="mb-2">{{ $t('Comment') }}</h3>
+            <h3 class="mb-3">{{ $t('Comment') }}</h3>
             <DxTextArea
                 v-model="YeuCauMuaHang.comment"
                 styling-mode="outlined"
-                :label="$t('Type...')"
-                label-mode="floating"
                 :height="120"
             />
-            <div class="row justify-end mt-3">
+            <div class="button">
                 <DxButton
                     :width="190"
                     text="Edit requisition"
@@ -296,6 +290,12 @@ export default {
             this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
             this.$emit('hiddenPopup')
         },
+        customFormat(e) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            }).format(e)
+        },
     },
 }
 </script>
@@ -303,6 +303,11 @@ export default {
 <style scoped>
 .btn-add {
     font-size: 28px;
+}
+.button {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
 }
 .xs-4 {
     flex-basis: 34.5%;

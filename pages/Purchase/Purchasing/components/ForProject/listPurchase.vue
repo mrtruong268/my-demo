@@ -8,6 +8,7 @@
             :data-source="dataProp.data"
             :show-borders="true"
             height="100%"
+            :hover-state-enabled="true"
         >
             <DxPaging :enabled="false" />
             <DxColumn
@@ -40,7 +41,7 @@
             <template #buttons-cell="{ data }">
                 <div class="row justify-center">
                     <p
-                        class="mdi mdi-cart-plus font-24 mr-3"
+                        class="mdi mdi-file-check font-24 mr-3"
                         style="cursor: pointer"
                         @click="clickApprove(data)"
                     ></p>
@@ -113,10 +114,10 @@ export default {
         reload() {
             setTimeout(() => {
                 this.$store.dispatch('muahang/getData')
-            }, 100)
+            }, 200)
         },
         clickApprove(e) {
-            this.$store.dispatch('muahang/submitApprove', e.data.id)
+            this.$store.dispatch('pheduyet/submitApprove', e.data.id)
         },
         clickView(e) {
             this.popupVisible = !this.popupVisible

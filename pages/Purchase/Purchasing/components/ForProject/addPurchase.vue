@@ -78,14 +78,7 @@
                 styling-mode="outlined"
                 :label="$t('Reference number')"
                 label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxNumberBox
-                v-model="YeuCauMuaHang.tongTienTamTinh"
-                styling-mode="outlined"
-                :label="$t('Estimated amount')"
-                label-mode="floating"
-                class="xs2"
+                class="xs-4"
             />
         </div>
         <div class="mb-3">
@@ -110,7 +103,7 @@
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    width="200"
+                    width="150"
                     :caption="$t('Goods, services')"
                 />
                 <DxColumn
@@ -118,31 +111,33 @@
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80" />
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50" />
                 <DxColumn
                     data-field="donGiaTamTinh"
                     :caption="$t('Estimated unit price')"
-                    width="80"
+                    width="150"
+                    :format="customFormat"
                 />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Categories')"
-                    width="120"
+                    width="90"
                 />
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
-                    width="100"
+                    width="70"
                 />
                 <DxColumn
                     data-field="model_MaHieu"
                     :caption="$t('Model')"
-                    width="100"
+                    width="70"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
                     width="150"
-                    :caption="$t('Amount of money')"
+                    :caption="$t('Amount')"
+                    :format="customFormat"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
@@ -223,6 +218,12 @@ export default {
             this.resetData()
             this.$emit('invisible')
         },
+        customFormat(e) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            }).format(e)
+        },
         resetData() {
             this.YeuCauMuaHang = {
                 id: 0,
@@ -267,7 +268,7 @@ export default {
     background-color: #0986c5;
     color: white;
     padding: 8px 0;
-    width: 80px;
+    width: 60px;
     text-align: center;
     cursor: pointer;
     border-radius: 6px;
@@ -279,7 +280,7 @@ export default {
     transition: all 0.2s linear 0s;
 }
 .xs-4 {
-    flex-basis: 34.5%;
-    max-width: 34.5%;
+    flex-basis: 34.6%;
+    max-width: 34.6%;
 }
 </style>

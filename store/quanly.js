@@ -260,7 +260,7 @@ export const getters = {
 }
 export const mutations = {
     SET_ITEM(state, item) {
-        state.danhSachQuanLy.forEach((e) => {
+        state.DanhSachQuanLy.forEach((e) => {
             if (e.listType === 'muahang') {
                 e.data = item
             }

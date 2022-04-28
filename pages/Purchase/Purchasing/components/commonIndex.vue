@@ -5,21 +5,19 @@
         </h2>
         <div class="toolbar">
             <div class="row align-center justify-space-around">
-                <div
-                    v-for="item in List"
-                    :key="item.id"
-                    class="xs6 text-xs-center btn-list"
-                    @click="onItemClick(item)"
-                >
-                    <i class="mdi mdi-format-list-numbered mr-1" />
-                    {{ $t(item.title) }}
+                <div v-for="item in List" :key="item.id" class="xs4">
+                    <p class="header">{{ item.header }}</p>
+                    <div @click="onItemClick(item)" class="btn-list">
+                        <i class="mdi mdi-format-list-numbered mr-1" />
+                        {{ $t(item.title) }}
+                    </div>
                 </div>
             </div>
-            <div class="row align-center justify-space-around text-xs-center">
+            <div class="row align-center">
                 <div
                     v-for="item in dataNew"
                     :key="item.id"
-                    class="xs6 btn-list"
+                    class="xs4 btn-list"
                     @click="onItemClick(item)"
                 >
                     <i class="mdi mdi-plus-circle mr-1" />
@@ -40,7 +38,7 @@
             <div class="tabPanel">
                 <DxTabPanel
                     :data-source="tabPanel"
-                    height="calc(78vh - 200px)"
+                    height="calc(78vh - 210px)"
                     :defer-rendering="false"
                     :show-nav-buttons="true"
                     :repaint-changes-only="true"
@@ -188,12 +186,17 @@ export default {
 }
 .toolbar {
     border: 1px solid #e7e7e7;
+    padding: 0 24px;
+}
+.header{
+    padding: 6px 0;
+    font-weight: bold;
 }
 .btn-list {
     background-color: white;
     color: black;
     cursor: pointer;
-    padding: 10px 0;
+    padding: 6px 0;
 }
 .btn-list:hover {
     background-color: #e7e7e7;

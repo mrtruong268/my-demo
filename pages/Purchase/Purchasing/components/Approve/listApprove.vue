@@ -16,16 +16,17 @@
             <DxColumn
                 data-field="id"
                 caption="No"
-                :allow-header-filtering="false"
-            />
-            <DxColumn
-                data-field="soThamChieu"
-                caption="Reference number"
+                width="50"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="tenNhanVien"
                 caption="Name"
+                :allow-header-filtering="false"
+            />
+            <DxColumn
+                data-field="soThamChieu"
+                caption="Reference number"
                 :allow-header-filtering="false"
             />
             <DxColumn
@@ -36,6 +37,8 @@
             <DxColumn
                 data-field="ngayDeTrinh"
                 caption="Submission date"
+                format="dd/MM/yyyy"
+                data-type="date"
                 :allow-header-filtering="false"
             />
             <DxColumn
@@ -49,7 +52,11 @@
                 cell-template="buttons-cell"
             />
             <template #buttons-cell="{ data }">
-                <DxButton icon="mdi mdi-eye" @click="viewDetail(data)" />
+                <p
+                    class="mdi mdi-eye font-24"
+                    style="cursor: pointer"
+                    @click="viewDetail(data)"
+                ></p>
             </template>
         </DxDataGrid>
         <popup :showPopup="popupVisible" :showTitle="true" :title="'Details'">
@@ -105,7 +112,9 @@ export default {
             this.popupVisible = !this.popupVisible
         },
         clickReload() {
-            this.$store.dispatch('pheduyet/getApprove')
+            setTimeout(() => {
+                this.$store.dispatch('pheduyet/getApprove')
+            }, 200)
         },
         hidePopup() {
             this.popupVisible = !this.popupVisible
@@ -113,7 +122,9 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('pheduyet/getApprove')
+        setTimeout(() => {
+            this.$store.dispatch('pheduyet/getApprove')
+        }, 200)
     },
 }
 </script>

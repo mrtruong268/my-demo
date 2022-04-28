@@ -4,7 +4,7 @@
         <div class="footer-header row justify-start">
             <div v-for="item in statusItem" :key="item.id">
                 <div class="row align-center mr-5">
-                    <img :src="item.image" width="36px" height="36px" />
+                    <img :src="item.image" width="28px" height="28px" />
                     <div class="info-project">
                         <p>{{ $t(item.title) }}</p>
                         <span>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="footer-main">
-            <h1>VIET NAM AUTO SOLUTIONS GROUP - ERP</h1>
+            <h2>VIET NAM AUTO SOLUTIONS GROUP - ERP</h2>
         </div>
     </div>
 </template>
@@ -43,25 +43,25 @@ export default {
 }
 .split {
     width: 100%;
-    height: 8px;
+    height: 6px;
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
 }
 .footer-header {
-    padding: 2px 24px;
+    padding: 0 24px;
     background-color: white;
 }
 .info-project {
     text-align: center;
-    margin-left: 10px;
+    margin-left: 6px;
 }
 .info-project p {
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 0.5px;
     color: #0986c5;
     font-weight: bold;
 }
 .info-project span {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     color: #0986c5;
 }
@@ -70,9 +70,9 @@ export default {
     text-align: center;
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
 }
-.footer-main h1 {
-    padding: 12px 0;
-    font-size: 20px;
+.footer-main h2 {
+    padding: 8px 0;
+    font-size: 18px;
 }
 @media only screen and (max-width: 739px) {
     .footer {

@@ -6,18 +6,21 @@ export const state = () => ({
     danhSachMuaDuAn: [
         {
             id: uuidv4(),
+            header: 'Purchase',
             title: 'List of purchase requests',
             listType: 'muahang',
             data: [],
         },
         {
             id: uuidv4(),
+            header: 'Production',
             title: 'List of production requirements',
             listType: 'sanxuat',
             data: [],
         },
         {
             id: uuidv4(),
+            header: 'Approve',
             title: 'List of approve requests',
             listType: 'pheduyet',
             data: [],

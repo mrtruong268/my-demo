@@ -189,53 +189,34 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
-            ql: 'quanLy',
-            dsql: 'danhSachQuanLy',
-        }),
-        ...mapState(['isSelected']),
-        quanLy: {
-            get() {
-                return this.ql
-            },
-            set(newItem) {
-                return newItem
-            },
-        },
-        danhSachQuanLy: {
-            get() {
-                return this.dsql
-            },
-            set(newItem) {
-                return newItem
-            },
-        },
+        ...mapGetters('quanly', ['quanLy', 'danhSachQuanLy']),
+        ...mapState('quanly', ['isSelected']),
     },
     methods: {
         onItemClick(e) {
             if (!this.quanLy.find((i) => i.listType === e.listType)) {
-                this.$store.commit('ADD_LIST', e)
+                this.$store.commit('quanly/ADD_LIST', e)
             }
-            this.$store.commit('ADD_LIST', e)
+            this.$store.commit('quanly/ADD_LIST', e)
             this.selectedItem = e
         },
         closeButtonHandler(itemDel) {
             let result = confirm('Are you sure to close tab?')
-            if (result) this.$store.commit('CLICK_DELETE', itemDel.id)
+            if (result) this.$store.commit('quanly/CLICK_DELETE', itemDel.id)
         },
         showCloseButton() {
             return this.quanLy.length > 0
         },
         clearTab() {
             let result = confirm('Are you sure to close all tabs?')
-            if (result) this.$store.commit('CLEAR_DATA')
+            if (result) this.$store.commit('quanly/CLEAR_DATA')
         },
     },
     created() {
-        if (this.isSelected !== '') this.$store.commit('ADD_OPTION')
+        if (this.isSelected !== '') this.$store.commit('quanly/ADD_OPTION')
     },
     beforeDestroy() {
-        this.$store.commit('CLEAR_DATA')
+        this.$store.commit('quanly/CLEAR_DATA')
     },
 }
 </script>
