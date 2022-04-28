@@ -1,8 +1,8 @@
 <template>
-    <div class="container main">
-        <h2 class="text-xs-center mb-2">
-            {{ $t('Purchase approval') }}
-        </h2>
+    <div>
+        <div class="row justify-end">
+            <DxButton icon="mdi mdi-reload" @click="clickReload" />
+        </div>
         <DxDataGrid
             id="gridContainer"
             :data-source="danhSachPheDuyet.data"
@@ -52,7 +52,11 @@
                 <DxButton icon="mdi mdi-eye" @click="viewDetail(data)" />
             </template>
         </DxDataGrid>
-        <popup :showPopup="popupVisible" :showTitle="true" :title="'Details'" />
+        <popup :showPopup="popupVisible" :showTitle="true" :title="'Details'">
+            <template #main>
+                <viewApprove :view="editItem" @hiddenPopup="hidePopup" />
+            </template>
+        </popup>
     </div>
 </template>
 
@@ -70,6 +74,7 @@ import {
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
 import popup from '~/components/popup.vue'
+import viewApprove from './viewApprove.vue'
 
 export default {
     layout: 'commonLayout',
@@ -89,6 +94,7 @@ export default {
         DxFilterRow,
         DxButton,
         popup,
+        viewApprove,
     },
     computed: {
         ...mapGetters('pheduyet', ['danhSachPheDuyet']),
@@ -96,28 +102,20 @@ export default {
     methods: {
         viewDetail(e) {
             this.editItem = e.data
-            console.log(
-                '🚀 ~ file: index.vue ~ line 129 ~ this.editItem',
-                this.editItem
-            )
             this.popupVisible = !this.popupVisible
+        },
+        clickReload() {
+            this.$store.dispatch('pheduyet/getApprove')
+        },
+        hidePopup() {
+            this.popupVisible = !this.popupVisible
+            this.clickReload()
         },
     },
     created() {
-        this.$store.dispatch('pheduyet/getData')
+        this.$store.dispatch('pheduyet/getApprove')
     },
 }
 </script>
 
-<style scoped>
-.main {
-    margin: 80px auto;
-}
-.main h2 {
-    color: #0986c5;
-}
-.dx-data-row .column-button-hover:hover {
-    background-color: #0986c5;
-    width: 100%;
-}
-</style>
+<style scoped></style>

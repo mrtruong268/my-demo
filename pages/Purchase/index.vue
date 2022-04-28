@@ -50,12 +50,12 @@ export default {
                         {
                             id: 1,
                             des: 'Purchase requisition',
-                            to: 'Purchase/PurchaseProjects',
+                            to: 'Purchase/Purchasing',
                         },
                         {
                             id: 2,
                             des: 'Production requisition',
-                            to: 'Purchase/PurchaseProjects',
+                            to: 'Purchase/Purchasing',
                         },
                     ],
                 },
@@ -68,12 +68,12 @@ export default {
                         {
                             id: 1,
                             des: 'Purchase requisition',
-                            to: 'Purchase/PurchaseNonProjects',
+                            to: 'Purchase/Purchasing',
                         },
                         {
                             id: 2,
                             des: 'Production requisition',
-                            to: 'Purchase/PurchaseNonProjects',
+                            to: 'Purchase/Purchasing',
                         },
                     ],
                 },
@@ -86,7 +86,7 @@ export default {
                         {
                             id: 1,
                             des: 'Approve',
-                            to: 'Purchase/Approve',
+                            to: 'Purchase/Purchasing',
                         },
                     ],
                 },

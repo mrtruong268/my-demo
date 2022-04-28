@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 
 export const state = () => ({
@@ -13,7 +12,7 @@ export const mutations = {
     },
 }
 export const actions = {
-    async getData({ commit }) {
+    async getApprove({ commit }) {
         try {
             let response = await axios.get(
                 'http://internal.vnas.com.vn:108/api/pr/get-approving-prs'
@@ -23,10 +22,32 @@ export const actions = {
             console.log(err)
         }
     },
-    async postData({ commit }, newItem) {
+    async submitApprove({ commit }, newItem) {
         try {
             let response = await axios.get(
                 `http://internal.vnas.com.vn:108/api/pr/submit-pr?id=${newItem}`
+            )
+            commit('SET_ITEM', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async postApprove({ commit }, newItem) {
+        try {
+            let response = await axios.post(
+                'http://internal.vnas.com.vn:108/api/pr/approve-pr',
+                newItem
+            )
+            commit('SET_ITEM', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async postRevise({ commit }, newItem) {
+        try {
+            let response = await axios.post(
+                'http://internal.vnas.com.vn:108/api/pr/must-revise-pr',
+                newItem
             )
             commit('SET_ITEM', response.data)
         } catch (err) {

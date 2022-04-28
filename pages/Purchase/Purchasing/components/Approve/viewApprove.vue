@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3">
+    <div>
         <h3 class="mb-2">{{ $t('Information') }}</h3>
         <div class="row align-center justify-space-between mb-3">
             <DxTextBox
@@ -107,13 +107,12 @@
                 id="gridContainer"
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
-                height="100%"
                 :ref="dataGridRefKey"
             >
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    width="200"
+                    width="240"
                     :caption="$t('Goods, services')"
                 />
                 <DxColumn
@@ -121,7 +120,11 @@
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80" />
+                <DxColumn
+                    data-field="donGiaTamTinh"
+                    :caption="$t('Unit')"
+                    width="80"
+                />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Categories')"
@@ -145,6 +148,35 @@
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
         </div>
+        <div class="mb-3">
+            <h3 class="mb-2">{{ $t('Comment') }}</h3>
+            <DxTextArea
+                v-model="YeuCauMuaHang.comment"
+                styling-mode="outlined"
+                :label="$t('Type...')"
+                label-mode="floating"
+                :height="120"
+            />
+            <div class="row justify-end mt-3">
+                <DxButton
+                    :width="190"
+                    text="Edit requisition"
+                    class="mr-3"
+                    type="danger"
+                    icon="close"
+                    styling-mode="outlined"
+                    @click="khongDuyet"
+                />
+                <DxButton
+                    :width="130"
+                    type="default"
+                    icon="check"
+                    text="Approve"
+                    styling-mode="outlined"
+                    @click="duyet"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -152,6 +184,7 @@
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
+import DxTextArea from 'devextreme-vue/text-area'
 import DxDateBox from 'devextreme-vue/date-box'
 import DxButton from 'devextreme-vue/button'
 import {
@@ -179,15 +212,7 @@ export default {
         DxNumberBox,
         DxButton,
         DxEditing,
-    },
-    watch: {
-        view() {
-            if (this.view) {
-                this.YeuCauMuaHang = Object.assign({}, this.view.data)
-            } else {
-                this.resetData()
-            }
-        },
+        DxTextArea,
     },
     data() {
         return {
@@ -204,6 +229,7 @@ export default {
                 phuPhi: '',
                 maChiPhi: '',
                 soThamChieu: '',
+                comment: '0',
                 tongTienTamTinh: 0,
                 yeuCauMuaHangChiTiets: [
                     {
@@ -215,6 +241,7 @@ export default {
                         soLuong: 0,
                         donVi: '',
                         soTienTamTinh: 0,
+                        donGiaTamTinh: 0,
                         maHangMucTrienKhai: '',
                         ghiChu: '',
                     },
@@ -222,36 +249,52 @@ export default {
             },
         }
     },
-    methods: {
-        resetData() {
-            this.YeuCauMuaHang = {
-                id: 0,
-                tenNhanVien: '',
-                maNhanVien: '',
-                chucVu: '',
-                phongBan: '',
-                ngayDeTrinh: new Date().toISOString(),
-                ngayCanHang: new Date().toISOString(),
-                diaDiemLamViec: '',
-                phuPhi: '',
-                maChiPhi: '',
-                soThamChieu: '',
-                tongTienTamTinh: 0,
-                yeuCauMuaHangChiTiets: [
-                    {
-                        id: 0,
-                        ycmhId: 0,
-                        tenHangHoa_DichVu: '',
-                        xuatXu_Hang: '',
-                        model_MaHieu: '',
-                        soLuong: 0,
-                        donVi: '',
-                        soTienTamTinh: 0,
-                        maHangMucTrienKhai: '',
-                        ghiChu: '',
-                    },
-                ],
+    watch: {
+        view() {
+            if (this.view) {
+                this.YeuCauMuaHang = Object.assign({}, this.view)
+            } else {
+                this.YeuCauMuaHang = {
+                    id: 0,
+                    tenNhanVien: '',
+                    maNhanVien: '',
+                    chucVu: '',
+                    phongBan: '',
+                    ngayDeTrinh: new Date().toISOString(),
+                    ngayCanHang: new Date().toISOString(),
+                    diaDiemLamViec: '',
+                    phuPhi: '',
+                    maChiPhi: '',
+                    soThamChieu: '',
+                    comment: '0',
+                    tongTienTamTinh: 0,
+                    yeuCauMuaHangChiTiets: [
+                        {
+                            id: 0,
+                            ycmhId: 0,
+                            tenHangHoa_DichVu: '',
+                            xuatXu_Hang: '',
+                            model_MaHieu: '',
+                            soLuong: 0,
+                            donVi: '',
+                            soTienTamTinh: 0,
+                            donGiaTamTinh: 0,
+                            maHangMucTrienKhai: '',
+                            ghiChu: '',
+                        },
+                    ],
+                }
             }
+        },
+    },
+    methods: {
+        duyet() {
+            this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
+            this.$emit('hiddenPopup')
+        },
+        khongDuyet() {
+            this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
+            this.$emit('hiddenPopup')
         },
     },
 }

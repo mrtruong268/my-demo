@@ -1,5 +1,5 @@
 <template>
-    <div class="container-md" style="height: 100%">
+    <div>
         <h3 class="mb-2">{{ $t('Information') }}</h3>
         <div class="row align-center justify-space-between mb-3">
             <DxTextBox
@@ -7,6 +7,7 @@
                 styling-mode="outlined"
                 :label="$t('Name')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxTextBox
@@ -14,12 +15,14 @@
                 styling-mode="outlined"
                 :label="$t('Employee code')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxTextBox
                 v-model="YeuCauMuaHang.chucVu"
                 styling-mode="outlined"
                 :label="$t('Position')"
+                :read-only="true"
                 label-mode="floating"
                 class="xs2 mr-3"
             />
@@ -28,6 +31,7 @@
                 styling-mode="outlined"
                 :label="$t('Department')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxTextBox
@@ -35,6 +39,7 @@
                 styling-mode="outlined"
                 :label="$t('Surcharge')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxTextBox
@@ -42,6 +47,7 @@
                 styling-mode="outlined"
                 :label="$t('Expense code')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2"
             />
         </div>
@@ -54,6 +60,7 @@
                 styling-mode="outlined"
                 :label="$t('Submission date')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxDateBox
@@ -64,6 +71,7 @@
                 styling-mode="outlined"
                 :label="$t('Delivery date')"
                 class="xs2 mr-3"
+                :read-only="true"
                 label-mode="floating"
             />
             <DxTextBox
@@ -71,6 +79,7 @@
                 styling-mode="outlined"
                 :label="$t('Work location')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs-4 mr-3"
             />
             <DxTextBox
@@ -78,6 +87,7 @@
                 styling-mode="outlined"
                 :label="$t('Reference number')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2 mr-3"
             />
             <DxNumberBox
@@ -85,29 +95,26 @@
                 styling-mode="outlined"
                 :label="$t('Estimated amount')"
                 label-mode="floating"
+                :read-only="true"
                 class="xs2"
             />
         </div>
         <div class="mb-3">
             <div class="row justify-space-between">
-                <h3>{{ $t('Add goods, services') }}</h3>
-                <DxButton icon="mdi mdi-plus" class="mb-2" @click="addRow" />
+                <h3 class="mb-3">{{ $t('Add goods, services') }}</h3>
             </div>
             <DxDataGrid
                 id="gridContainer"
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
                 height="100%"
+                :remote-operations="true"
+                :allow-column-resizing="true"
+                :column-auto-width="true"
+                :repaint-changes-only="true"
                 :ref="dataGridRefKey"
             >
-                <DxEditing
-                    :allow-updating="true"
-                    :allow-deleting="true"
-                    :confirmDelete="false"
-                    :useIcons="true"
-                    mode="cell"
-                />
-                <DxPaging :enabled="false" />
+                <DxPaging :enabled="true" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
                     width="200"
@@ -119,6 +126,11 @@
                     width="90"
                 />
                 <DxColumn data-field="donVi" :caption="$t('Unit')" width="80" />
+                <DxColumn
+                    data-field="donGiaTamTinh"
+                    :caption="$t('Estimated unit price')"
+                    width="80"
+                />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Categories')"
@@ -142,14 +154,10 @@
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
         </div>
-        <div class="row justify-end">
-            <span @click="clickAdd" class="btn-save">Lưu</span>
-        </div>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
@@ -164,6 +172,12 @@ import {
 const dataGridRefKey = 'my-data-grid'
 
 export default {
+    props: {
+        view: {
+            type: Object,
+            default: null,
+        },
+    },
     components: {
         DxSelectBox,
         DxTextBox,
@@ -175,16 +189,13 @@ export default {
         DxButton,
         DxEditing,
     },
-    computed: {
-        ...mapGetters('muahang', ['suaYeuCau']),
-    },
     watch: {
-        suaYeuCau() {
-            if (this.suaYeuCau) {
-                this.YeuCauMuaHang = Object.assign({}, this.suaYeuCau.data)
-            } else {
-                this.resetData()
-            }
+        view: {
+            handler(view) {
+                if (view) this.YeuCauMuaHang = { ...view }
+            },
+            deep: true,
+            immediate: true,
         },
     },
     data() {
@@ -202,7 +213,7 @@ export default {
                 phuPhi: '',
                 maChiPhi: '',
                 soThamChieu: '',
-                comment: '0',
+                comment: '',
                 tongTienTamTinh: 0,
                 yeuCauMuaHangChiTiets: [
                     {
@@ -214,6 +225,7 @@ export default {
                         soLuong: 0,
                         donVi: '',
                         soTienTamTinh: 0,
+                        donGiaTamTinh: 0,
                         maHangMucTrienKhai: '',
                         ghiChu: '',
                     },
@@ -221,72 +233,12 @@ export default {
             },
         }
     },
-    methods: {
-        addRow() {
-            return this.$refs[dataGridRefKey].instance.addRow()
-        },
-        clickAdd() {
-            if (this.YeuCauMuaHang.id == 0) {
-                this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-            } else {
-                this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
-            }
-            this.resetData()
-            this.$emit('invisible')
-        },
-        resetData() {
-            this.YeuCauMuaHang = {
-                id: 0,
-                tenNhanVien: '',
-                maNhanVien: '',
-                chucVu: '',
-                phongBan: '',
-                ngayDeTrinh: new Date().toISOString(),
-                ngayCanHang: new Date().toISOString(),
-                diaDiemLamViec: '',
-                phuPhi: '',
-                maChiPhi: '',
-                soThamChieu: '',
-                comment: '0',
-                tongTienTamTinh: 0,
-                yeuCauMuaHangChiTiets: [
-                    {
-                        id: 0,
-                        ycmhId: 0,
-                        tenHangHoa_DichVu: '',
-                        xuatXu_Hang: '',
-                        model_MaHieu: '',
-                        soLuong: 0,
-                        donVi: '',
-                        soTienTamTinh: 0,
-                        maHangMucTrienKhai: '',
-                        ghiChu: '',
-                    },
-                ],
-            }
-        },
-    },
 }
 </script>
 
 <style scoped>
 .btn-add {
     font-size: 28px;
-}
-.btn-save {
-    background-color: #0986c5;
-    color: white;
-    padding: 8px 0;
-    width: 80px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.2s linear 0s;
-}
-.btn-save:hover {
-    color: #0986c5;
-    background-color: #f1f1f1;
-    transition: all 0.2s linear 0s;
 }
 .xs-4 {
     flex-basis: 34.5%;

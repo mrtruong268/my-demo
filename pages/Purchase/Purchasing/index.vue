@@ -4,7 +4,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import commonIndex from '../components/common/commonIndex.vue'
+import commonIndex from './components/commonIndex.vue'
 
 export default {
     components: { commonIndex },

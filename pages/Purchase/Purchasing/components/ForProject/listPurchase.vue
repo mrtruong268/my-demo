@@ -38,17 +38,27 @@
                 cell-template="buttons-cell"
             />
             <template #buttons-cell="{ data }">
-                <div>
-                    <DxButton
-                        icon="mdi mdi-cart-plus"
+                <div class="row justify-center">
+                    <p
+                        class="mdi mdi-cart-plus font-24 mr-3"
+                        style="cursor: pointer"
                         @click="clickApprove(data)"
-                    />
-                    <DxButton icon="mdi mdi-eye" @click="clickView(data)" />
-                    <DxButton icon="mdi mdi-pencil" @click="clickEdit(data)" />
-                    <DxButton
-                        icon="mdi mdi-delete"
+                    ></p>
+                    <p
+                        class="mdi mdi-eye font-24 mr-3"
+                        style="cursor: pointer"
+                        @click="clickView(data)"
+                    ></p>
+                    <p
+                        class="mdi mdi-pencil font-24 mr-3"
+                        style="cursor: pointer"
+                        @click="clickEdit(data)"
+                    ></p>
+                    <p
+                        class="mdi mdi-delete font-24"
+                        style="cursor: pointer"
                         @click="clickDelete(data)"
-                    />
+                    ></p>
                 </div>
             </template>
         </DxDataGrid>
@@ -58,11 +68,11 @@
             :title="isClick == 'edit' ? 'Edit requisition' : 'View details'"
         >
             <template #main>
-                <addPurchase
+                <editPurchase
                     v-if="isClick == 'edit'"
                     @invisible="hiddenPopup"
                 />
-                <viewDetail v-else :view="suaYeuCau" />
+                <viewDetail v-else :view="details" />
             </template>
         </popup>
     </div>
@@ -76,10 +86,9 @@ import {
     DxHeaderFilter,
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
-import { mapGetters } from 'vuex'
-import addPurchase from './addPurchase.vue'
-import viewDetail from './viewDetail.vue'
 import Popup from '~/components/popup.vue'
+import editPurchase from './editPurchase.vue'
+import viewDetail from './viewDetail.vue'
 
 export default {
     props: ['dataProp'],
@@ -89,18 +98,16 @@ export default {
         DxPaging,
         DxHeaderFilter,
         DxButton,
-        addPurchase,
         viewDetail,
         Popup,
+        editPurchase,
     },
     data() {
         return {
             popupVisible: false,
             isClick: null,
+            details: null,
         }
-    },
-    computed: {
-        ...mapGetters('muahang', ['suaYeuCau']),
     },
     methods: {
         reload() {
@@ -109,11 +116,11 @@ export default {
             }, 100)
         },
         clickApprove(e) {
-            this.$store.dispatch('pheduyet/postData', e.data.id)
+            this.$store.dispatch('muahang/submitApprove', e.data.id)
         },
         clickView(e) {
             this.popupVisible = !this.popupVisible
-            this.$store.dispatch('muahang/getEditData', e.data.id)
+            this.details = e.data
             this.isClick = 'view'
         },
         clickEdit(e) {

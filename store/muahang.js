@@ -16,6 +16,12 @@ export const state = () => ({
             listType: 'sanxuat',
             data: [],
         },
+        {
+            id: uuidv4(),
+            title: 'List of approve requests',
+            listType: 'pheduyet',
+            data: [],
+        },
     ],
     muaNoiBo: [],
     danhSachMuaNoiBo: [
@@ -40,6 +46,11 @@ export const getters = {
     muaNoiBo: (state) => state.muaNoiBo,
     danhSachMuaNoiBo: (state) => state.danhSachMuaNoiBo,
     suaYeuCau: (state) => state.suaYeuCau,
+    danhSachHangHoa: (state) => {
+        let objSuaYeuCau = JSON.parse(JSON.stringify(state.suaYeuCau))
+        if (!objSuaYeuCau) return []
+        return objSuaYeuCau.data ? objSuaYeuCau.data.yeuCauMuaHangChiTiets : []
+    },
 }
 export const mutations = {
     SET_ITEM(state, item) {
@@ -97,6 +108,15 @@ export const actions = {
         try {
             await axios.delete(
                 `http://internal.vnas.com.vn:108/api/pr/delete-pr?id=${delId}`
+            )
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async deletePrItem({ commit }, delId) {
+        try {
+            await axios.delete(
+                `http://internal.vnas.com.vn:108/api/pr/delete-pr-item?id=${delId}`
             )
         } catch (err) {
             console.log(err)

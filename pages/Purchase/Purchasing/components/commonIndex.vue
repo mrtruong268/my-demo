@@ -69,6 +69,9 @@
                                 <div v-else-if="item.listType === 'sanxuat'">
                                     <listProduct :dataProp="item.data" />
                                 </div>
+                                <div v-else-if="item.listType === 'pheduyet'">
+                                    <listApprove :dataProp="item.data" />
+                                </div>
                                 <div v-else>
                                     <addPurchase
                                         v-if="item.listType === 'TaoMuaHang'"
@@ -95,10 +98,9 @@ import DxTabPanel from 'devextreme-vue/tab-panel'
 import DxButton from 'devextreme-vue/button'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
 
-import ListPurchase from '../listPurchase.vue'
-import ListProduct from '../listProduct.vue'
-import addPurchase from '../addPurchase.vue'
-import addProduction from '../addProduction.vue'
+import ListPurchase from './ForProject/listPurchase.vue'
+import addPurchase from './ForProject/addPurchase.vue'
+import listApprove from '../components/Approve/listApprove.vue'
 
 export default {
     props: {
@@ -116,9 +118,8 @@ export default {
         DxButton,
         DxScrollView,
         ListPurchase,
-        ListProduct,
         addPurchase,
-        addProduction,
+        listApprove,
     },
     data() {
         return {

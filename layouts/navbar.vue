@@ -108,6 +108,13 @@
                             </li>
                             <li
                                 class="color-fff list-mobile px-4 py-2"
+                                @click="clickRouter('', routeParams)"
+                            >
+                                <i class="mdi mdi-account" />
+                                {{ $t('User') }}
+                            </li>
+                            <li
+                                class="color-fff list-mobile px-4 py-2"
                                 @click="goCategory"
                             >
                                 <i class="mdi mdi-view-list" />
