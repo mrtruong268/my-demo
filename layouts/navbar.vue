@@ -324,9 +324,9 @@ export default {
 .btn-search {
     border-radius: 6px;
     position: absolute;
-    font-size: 22px;
+    font-size: 24px;
     top: 5px;
-    right: 8px;
+    right: 10px;
     color: #cccccc;
 }
 .icon {

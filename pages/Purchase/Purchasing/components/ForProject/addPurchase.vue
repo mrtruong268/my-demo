@@ -105,7 +105,13 @@
                     data-field="tenHangHoa_DichVu"
                     width="150"
                     :caption="$t('Goods, services')"
-                />
+                >
+                    <!-- <DxLookup
+                        :data-source="getFilteredCities"
+                        display-expr="Name"
+                        value-expr="ID"
+                    /> -->
+                </DxColumn>
                 <DxColumn
                     data-field="soLuong"
                     :caption="$t('Quantity')"
@@ -159,6 +165,7 @@ import {
     DxColumn,
     DxPaging,
     DxEditing,
+    DxLookup,
 } from 'devextreme-vue/data-grid'
 const dataGridRefKey = 'my-data-grid'
 
@@ -173,6 +180,7 @@ export default {
         DxNumberBox,
         DxButton,
         DxEditing,
+        DxLookup,
     },
     data() {
         return {
@@ -257,6 +265,9 @@ export default {
             }
         },
     },
+    // created() {
+    //     this.$store.dispatch('muahang/getAllItem')
+    // },
 }
 </script>
 

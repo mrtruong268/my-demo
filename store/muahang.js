@@ -42,6 +42,8 @@ export const state = () => ({
         },
     ],
     suaYeuCau: null,
+    HangHoaDichVu: null,
+    isSelected: '',
 })
 export const getters = {
     muaDuAn: (state) => state.muaDuAn,
@@ -63,8 +65,14 @@ export const mutations = {
             }
         })
     },
+    IS_SELECTED(state, newText) {
+        state.isSelected = newText
+    },
     EDIT_ITEM(state, item) {
         state.suaYeuCau = item
+    },
+    GET_ALL_ITEM(state, item) {
+        state.HangHoaDichVu = item
     },
     ADD_LIST(state, newItem) {
         if (
@@ -82,6 +90,15 @@ export const mutations = {
     CLEAR_DATA(state) {
         state.muaDuAn.splice(0, state.muaDuAn.length)
         state.muaNoiBo.splice(0, state.muaNoiBo.length)
+    },
+    ADD_OPTION(state) {
+        state.danhSachMuaDuAn.forEach((e) => {
+            if (!state.muaDuAn.find((i) => i.id === e.id)) {
+                if (e.listType === state.isSelected) {
+                    state.muaDuAn.push(e)
+                }
+            }
+        })
     },
 }
 export const actions = {
@@ -145,4 +162,15 @@ export const actions = {
             console.log(err)
         }
     },
+
+    // async getAllItem({ commit }) {
+    //     try {
+    //         await axios.get(
+    //             'http://internal.vnas.com.vn:108/api/staff/get-all-staff'
+    //         )
+    //         commit('GET_ALL_ITEM', response.data)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // },
 }

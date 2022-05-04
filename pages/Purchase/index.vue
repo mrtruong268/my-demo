@@ -20,7 +20,7 @@
                                     v-for="sub in item.subTitle"
                                     :key="sub.id"
                                     class="chip mr-2"
-                                    @click="clickRouter(sub.to, routeParams)"
+                                    @click="onClick(sub)"
                                 >
                                     {{ $t(sub.des) }}
                                 </div>
@@ -51,11 +51,13 @@ export default {
                             id: 1,
                             des: 'Purchase requisition',
                             to: 'Purchase/Purchasing',
+                            type: 'muahang',
                         },
                         {
                             id: 2,
                             des: 'Production requisition',
                             to: 'Purchase/Purchasing',
+                            type: 'sanxuat',
                         },
                     ],
                 },
@@ -69,11 +71,13 @@ export default {
                             id: 1,
                             des: 'Purchase requisition',
                             to: 'Purchase/Purchasing',
+                            type: 'muahang',
                         },
                         {
                             id: 2,
                             des: 'Production requisition',
                             to: 'Purchase/Purchasing',
+                            type: 'sanxuat',
                         },
                     ],
                 },
@@ -87,6 +91,7 @@ export default {
                             id: 1,
                             des: 'Approve',
                             to: 'Purchase/Purchasing',
+                            type: 'pheduyet',
                         },
                     ],
                 },
@@ -94,6 +99,12 @@ export default {
         }
     },
     computed: mapState(['routeParams']),
+    methods: {
+        onClick(e) {
+            this.clickRouter(e.to, this.routeParams)
+            this.$store.commit('muahang/IS_SELECTED', e.type)
+        },
+    },
 }
 </script>
 

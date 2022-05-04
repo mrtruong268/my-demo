@@ -65,7 +65,7 @@
                                     <listPurchase :dataProp="item.data" />
                                 </div>
                                 <div v-else-if="item.listType === 'sanxuat'">
-                                    <listProduct :dataProp="item.data" />
+                                    <!-- <listProduct :dataProp="item.data" /> -->
                                 </div>
                                 <div v-else-if="item.listType === 'pheduyet'">
                                     <listApprove :dataProp="item.data" />
@@ -75,12 +75,12 @@
                                         v-if="item.listType === 'TaoMuaHang'"
                                         :dataProp="item.data"
                                     />
-                                    <addProduction
+                                    <!-- <addProduction
                                         v-else-if="
                                             item.listType === 'TaoSanXuat'
                                         "
                                         :dataProp="item.data"
-                                    />
+                                    /> -->
                                 </div>
                             </div>
                         </DxScrollView>
@@ -99,6 +99,7 @@ import { DxScrollView } from 'devextreme-vue/scroll-view'
 import ListPurchase from './ForProject/listPurchase.vue'
 import addPurchase from './ForProject/addPurchase.vue'
 import listApprove from '../components/Approve/listApprove.vue'
+import { mapState } from 'vuex'
 
 export default {
     props: {
@@ -138,6 +139,9 @@ export default {
             ],
         }
     },
+    computed: {
+        ...mapState('muahang', ['isSelected']),
+    },
     methods: {
         onItemClick(e) {
             if (!this.tabPanel.find((i) => i.listType === e.listType)) {
@@ -160,6 +164,9 @@ export default {
         titleClick() {
             this.$store.dispatch('muahang/getData')
         },
+    },
+    created() {
+        if (this.isSelected !== '') this.$store.commit('muahang/ADD_OPTION')
     },
     beforeDestroy() {
         this.$store.commit('muahang/CLEAR_DATA')
@@ -188,7 +195,7 @@ export default {
     border: 1px solid #e7e7e7;
     padding: 0 24px;
 }
-.header{
+.header {
     padding: 6px 0;
     font-weight: bold;
 }

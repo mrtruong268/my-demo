@@ -113,7 +113,7 @@ export default {
 .main-content {
     position: relative;
     overflow: hidden;
-    height: 90vh;
+    height: 100vh;
 }
 .right-content {
     position: absolute;
