@@ -5,7 +5,7 @@
         :close-on-outside-click="false"
         :show-close-button="true"
         :show-title="showTitle"
-        height="90%"
+        height="auto"
         :title="title"
     >
         <div class="text-xs-center">

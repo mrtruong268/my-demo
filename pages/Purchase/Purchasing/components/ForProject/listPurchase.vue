@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row justify-end">
-            <DxButton icon="mdi mdi-reload" @click="reload" />
+            <DxButton icon="mdi mdi-reload" @click="reload" text="Reload" />
         </div>
         <DxDataGrid
             id="gridContainer"
@@ -40,26 +40,34 @@
             />
             <template #buttons-cell="{ data }">
                 <div class="row justify-center">
-                    <p
-                        class="mdi mdi-file-check font-24 mr-3"
-                        style="cursor: pointer"
+                    <DxButton
+                        type="normal"
+                        hint="Submit"
+                        styling-mode="text"
+                        icon="mdi mdi-file-check"
                         @click="clickApprove(data)"
-                    ></p>
-                    <p
-                        class="mdi mdi-eye font-24 mr-3"
-                        style="cursor: pointer"
+                    />
+                    <DxButton
+                        type="normal"
+                        hint="View detail"
+                        styling-mode="text"
+                        icon="mdi mdi-eye"
                         @click="clickView(data)"
-                    ></p>
-                    <p
-                        class="mdi mdi-pencil font-24 mr-3"
-                        style="cursor: pointer"
+                    />
+                    <DxButton
+                        type="normal"
+                        hint="Edit"
+                        styling-mode="text"
+                        icon="mdi mdi-pencil"
                         @click="clickEdit(data)"
-                    ></p>
-                    <p
-                        class="mdi mdi-delete font-24"
-                        style="cursor: pointer"
+                    />
+                    <DxButton
+                        type="normal"
+                        hint="Delete"
+                        styling-mode="text"
+                        icon="mdi mdi-delete"
                         @click="clickDelete(data)"
-                    ></p>
+                    />
                 </div>
             </template>
         </DxDataGrid>

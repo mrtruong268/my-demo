@@ -142,7 +142,7 @@
                 <DxColumn
                     data-field="soTienTamTinh"
                     width="150"
-                    :caption="$t('Amount of money')"
+                    :caption="$t('Amount')"
                     :format="customFormat"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />

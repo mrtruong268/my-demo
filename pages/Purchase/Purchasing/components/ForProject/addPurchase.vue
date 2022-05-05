@@ -1,5 +1,5 @@
 <template>
-    <div class="container-md" style="height: 100%">
+    <div class="container-md">
         <h3 class="mb-2">{{ $t('Information') }}</h3>
         <div class="row align-center justify-space-between mb-3">
             <DxTextBox
@@ -81,10 +81,9 @@
                 class="xs-4"
             />
         </div>
-        <div class="mb-3">
-            <div class="row justify-space-between">
+        <div>
+            <div class="row justify-space-between mb-3">
                 <h3>{{ $t('Add goods, services') }}</h3>
-                <DxButton icon="mdi mdi-plus" class="mb-2" @click="addRow" />
             </div>
             <DxDataGrid
                 id="gridContainer"
@@ -99,6 +98,7 @@
                     :confirmDelete="false"
                     :useIcons="true"
                     mode="cell"
+                    new-row-position="last"
                 />
                 <DxPaging :enabled="false" />
                 <DxColumn
@@ -139,14 +139,14 @@
                     :caption="$t('Model')"
                     width="70"
                 />
-                <DxColumn
-                    data-field="soTienTamTinh"
-                    width="150"
-                    :caption="$t('Amount')"
-                    :format="customFormat"
-                />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
+            <DxButton
+                icon="mdi mdi-plus"
+                @click="addRow"
+                styling-mode="text"
+                text="Thêm hàng hóa"
+            />
         </div>
         <div class="row justify-end">
             <span @click="clickAdd" class="btn-save">Lưu</span>

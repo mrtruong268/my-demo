@@ -112,12 +112,8 @@ export default {
 .main {
     margin-top: 80px;
 }
-.main h2 {
-    color: #0986c5;
-}
 .project {
     border-radius: 9.6px;
-    color: #0986c5;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 .image {
@@ -142,6 +138,7 @@ export default {
     border-radius: 25px;
     background-color: #f1f1f1;
     transition: all 0.2s linear 0s;
+    color: #0986c5;
     cursor: pointer;
 }
 .chip:hover {

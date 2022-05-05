@@ -231,9 +231,6 @@ export default {
 .main h2 {
     color: #0986c5;
 }
->>> .dx-multiview-item-container .dx-empty-message {
-    margin-top: 200px;
-}
 >>> .dx-button-text {
     text-transform: none;
     line-height: unset;

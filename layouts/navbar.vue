@@ -108,10 +108,17 @@
                             </li>
                             <li
                                 class="color-fff list-mobile px-4 py-2"
-                                @click="clickRouter('', routeParams)"
+                                @click="clickRouter('user', routeParams)"
                             >
                                 <i class="mdi mdi-account" />
                                 {{ $t('User') }}
+                            </li>
+                            <li
+                                class="color-fff list-mobile px-4 py-2"
+                                @click="clickRouter('UserGroup', routeParams)"
+                            >
+                                <i class="mdi mdi-account" />
+                                {{ $t('User group') }}
                             </li>
                             <li
                                 class="color-fff list-mobile px-4 py-2"

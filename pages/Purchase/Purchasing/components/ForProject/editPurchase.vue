@@ -90,7 +90,7 @@
                 id="gridContainer"
                 :data-source="danhSachHangHoa"
                 :show-borders="true"
-                height="340px"
+                height="calc(100vh - 450px)"
                 :ref="dataGridRefKey"
                 :remote-operations="true"
                 :allow-column-resizing="true"
@@ -104,6 +104,7 @@
                     :allow-deleting="true"
                     :useIcons="true"
                     :confirm-delete="false"
+                    new-row-position="last"
                     mode="cell"
                 />
                 <DxPaging :enabled="false" />
@@ -139,12 +140,6 @@
                     :caption="$t('Model')"
                     width="70"
                 />
-                <DxColumn
-                    data-field="soTienTamTinh"
-                    width="150"
-                    :caption="$t('Amount')"
-                    :format="customFormat"
-                />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
                 <!-- <DxColumn
                     :allow-header-filtering="false"
@@ -160,7 +155,7 @@
                 </template> -->
             </DxDataGrid>
         </div>
-        <div class="button">
+        <div class="row justify-end">
             <DxButton
                 text="Lưu"
                 type="default"
@@ -278,11 +273,6 @@ export default {
 <style scoped>
 .btn-add {
     font-size: 28px;
-}
-.button {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
 }
 .xs-4 {
     flex-basis: 34.6%;
