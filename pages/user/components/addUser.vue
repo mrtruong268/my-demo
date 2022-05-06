@@ -25,31 +25,40 @@
         </div>
         <div class="row align-center mb-2">
             <DxSelectBox
-                :data-source="DanhSachChucVu"
-                :value="NhanVien.chucVu"
+                :dataSource="DanhSachChucVu"
+                v-model="NhanVien.chucVuId"
                 display-expr="ten"
                 value-expr="id"
                 :label="$t('Position')"
                 label-mode="floating"
-                class="xs4 mr-3"
+                class="xs3 mr-3"
             />
             <DxSelectBox
-                :data-source="DanhSachPhongBan"
-                :value="NhanVien.phongBan"
+                :dataSource="DanhSachPhongBan"
+                v-model="NhanVien.phongBan"
                 display-expr="Name"
                 value-expr="ID"
                 :label="$t('Department')"
                 label-mode="floating"
-                class="xs4 mr-3"
+                class="xs3 mr-3"
             />
             <DxSelectBox
-                :data-source="DanhSachCongTy"
-                :value="NhanVien.congTy"
+                :dataSource="DanhSachNhom"
+                v-model="NhanVien.groupName"
+                display-expr="groupName"
+                value-expr="id"
+                :label="$t('Group')"
+                label-mode="floating"
+                class="xs3 mr-3"
+            />
+            <DxSelectBox
+                :dataSource="DanhSachCongTy"
+                v-model="NhanVien.congTy"
                 display-expr="name"
                 value-expr="id"
                 :label="$t('Company')"
                 label-mode="floating"
-                class="xs4"
+                class="xs3"
             />
         </div>
         <div class="row align-center mb-2">
@@ -60,24 +69,6 @@
                 label-mode="floating"
                 class="xs4 mr-3"
             />
-            <DxSelectBox
-                :data-source="DanhSachNhom"
-                :value="NhanVien.groupName"
-                display-expr="groupName"
-                value-expr="id"
-                :label="$t('Group')"
-                label-mode="floating"
-                class="xs4 mr-3"
-            />
-            <DxTextBox
-                v-model="NhanVien.isActive"
-                styling-mode="outlined"
-                :label="$t('Active')"
-                label-mode="floating"
-                class="xs4"
-            />
-        </div>
-        <div class="row align-center mb-3">
             <DxDateBox
                 v-model="NhanVien.createdDate"
                 displayFormat="dd/MM/yyyy"
@@ -86,11 +77,17 @@
                 styling-mode="outlined"
                 :label="$t('Created date')"
                 label-mode="floating"
-                class="xs12"
+                class="xs4 mr-3"
             />
+            <DxCheckBox :value="NhanVien.isActive" class="xs4" text="Active" />
         </div>
         <div class="row justify-end">
-            <DxButton text="Lưu" type="default" styling-mode="contained" />
+            <DxButton
+                text="Lưu"
+                type="default"
+                styling-mode="contained"
+                @click="clickSave"
+            />
         </div>
     </div>
 </template>
@@ -101,7 +98,8 @@ import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
 import DxDateBox from 'devextreme-vue/date-box'
 import DxButton from 'devextreme-vue/button'
-import { mapGetters, mapState } from 'vuex'
+import { DxCheckBox } from 'devextreme-vue/check-box'
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -109,22 +107,48 @@ export default {
         DxTextBox,
         DxDateBox,
         DxNumberBox,
+        DxCheckBox,
         DxButton,
     },
     computed: {
-        ...mapGetters('user', ['NhanVien']),
         ...mapState('user', [
             'DanhSachChucVu',
             'DanhSachCongTy',
-            'DanhSachPhongBan',
             'DanhSachNhom',
+            'DanhSachPhongBan',
         ]),
     },
     data() {
-        return {}
+        return {
+            NhanVien: {
+                id: 0,
+                tenNhanVien: '',
+                maNhanVien: '',
+                email: '',
+                chucVuId: '',
+                phongBan: '',
+                username: '',
+                groupName: '',
+                congTy: '',
+                isActive: true,
+                createdDate: new Date(),
+            },
+        }
     },
-    mounted() {
-        console.log(this.DanhSachChucVu)
+    methods: {
+        selectionChanged(e) {
+            console.log(
+                '🚀 ~ file: addUser.vue ~ line 141 ~ this.NhanVien.chucVu',
+                e.selectedItem.ten
+            )
+        },
+        clickSave() {
+            // this.$store.dispatch('user/postStaff', this.NhanVien)
+            console.log(
+                '🚀 ~ file: addUser.vue ~ line 147 ~ this.NhanVien',
+                this.NhanVien
+            )
+        },
     },
     created() {
         this.$store.dispatch('user/getAllPosition')

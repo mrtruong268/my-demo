@@ -16,6 +16,7 @@
             height="calc(100vh - 230px)"
             :allow-column-resizing="true"
             :column-auto-width="true"
+            :hover-state-enabled="true"
             key-expr="id"
         >
             <DxFilterRow :visible="true" />

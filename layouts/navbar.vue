@@ -117,7 +117,7 @@
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="clickRouter('UserGroup', routeParams)"
                             >
-                                <i class="mdi mdi-account" />
+                                <i class="mdi mdi-account-group" />
                                 {{ $t('User group') }}
                             </li>
                             <li

@@ -11,34 +11,28 @@
         </div>
         <DxDataGrid
             id="gridContainer"
-            :data-source="DanhSachQuyen"
+            :data-source="DanhSachNhom"
             :show-borders="true"
             height="100%"
             :remote-operations="true"
             :allow-column-resizing="true"
+            :hover-state-enabled="true"
             :column-auto-width="true"
             :repaint-changes-only="true"
         >
             <DxPaging :enabled="true" />
-            <DxColumn data-field="id" :caption="$t('No')" />
-            <DxColumn data-field="GroupName" :caption="$t('Name')" />
-            <DxColumn data-field="CreatedDate" :caption="$t('CreatedDate')" />
-            <DxColumn data-field="Owner" :caption="$t('Owner')" />
-            <DxColumn data-field="Admin" :caption="$t('Admin')" />
-            <DxColumn data-field="Create" :caption="$t('Create')" />
-            <DxColumn data-field="Edit" :caption="$t('Edit')" />
-            <DxColumn data-field="Delete" :caption="$t('Delete')" />
-            <DxColumn data-field="ViewDoiTac" :caption="$t('ViewDoiTac')" />
+            <DxColumn data-field="id" :caption="$t('No')" width="60" />
+            <DxColumn data-field="groupName" :caption="$t('Group name')" />
             <DxColumn
-                data-field="ViewKhachHang"
-                :caption="$t('ViewKhachHang')"
+                data-field="createdDate"
+                :caption="$t('Created date')"
+                data-type="date"
+                format="dd/MM/yyyy"
             />
             <DxColumn
-                data-field="ViewProjectName"
-                :caption="$t('ViewProjectName')"
+                data-field="isAdministrator"
+                :caption="$t('Administrator')"
             />
-            <DxColumn data-field="ViewPhanLoai" :caption="$t('ViewPhanLoai')" />
-            <DxColumn data-field="ViewPIC" :caption="$t('ViewPIC')" />
             <DxColumn
                 :allow-header-filtering="false"
                 width="auto"
@@ -95,62 +89,18 @@ export default {
     data() {
         return {
             popupVisible: false,
-            DanhSachQuyen: [
-                {
-                    id: 1,
-                    GroupName: 'Admin',
-                    CreatedDate: '6/6/2021 12:00:00 AM',
-                    Owner: false,
-                    Admin: true,
-                    Create: false,
-                    Edit: false,
-                    Delete: false,
-                    ViewDoiTac: false,
-                    ViewKhachHang: false,
-                    ViewProjectName: false,
-                    ViewPhanLoai: false,
-                    ViewPIC: false,
-                },
-                {
-                    id: 2,
-                    GroupName: 'Dự Án',
-                    CreatedDate: '6/6/2021 12:00:00 AM',
-                    Owner: false,
-                    Admin: false,
-                    Create: false,
-                    Edit: true,
-                    Delete: false,
-                    ViewDoiTac: true,
-                    ViewKhachHang: true,
-                    ViewProjectName: true,
-                    ViewPhanLoai: true,
-                    ViewPIC: true,
-                },
-                {
-                    id: 3,
-                    GroupName: 'IT',
-                    CreatedDate: '6/6/2021 12:00:00 AM',
-                    Owner: true,
-                    Admin: true,
-                    Create: true,
-                    Edit: true,
-                    Delete: false,
-                    ViewDoiTac: false,
-                    ViewKhachHang: false,
-                    ViewProjectName: false,
-                    ViewPhanLoai: false,
-                    ViewPIC: false,
-                },
-            ],
         }
     },
     computed: {
-        // ...mapState('user', ['DanhSachNhanVien']),
+        ...mapState('user', ['DanhSachNhom']),
     },
     methods: {
         clickAdd() {
             this.popupVisible = !this.popupVisible
         },
+    },
+    created() {
+        this.$store.dispatch('user/getAllGroup')
     },
 }
 </script>

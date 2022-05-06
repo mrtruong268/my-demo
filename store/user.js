@@ -2,27 +2,12 @@ import axios from 'axios'
 
 export const state = () => ({
     DanhSachNhanVien: [],
-    NhanVien: {
-        id: 0,
-        tenNhanVien: '',
-        maNhanVien: '',
-        email: '',
-        chucVu: '',
-        phongBan: '',
-        username: '',
-        groupName: '',
-        congTy: '',
-        isActive: null,
-        createdDate: '',
-    },
     DanhSachChucVu: [],
     DanhSachCongTy: [],
     DanhSachPhongBan: [],
     DanhSachNhom: [],
 })
-export const getters = {
-    NhanVien: (state) => state.NhanVien,
-}
+export const getters = {}
 export const mutations = {
     GET_ALL_STAFF(state, item) {
         state.DanhSachNhanVien = item
@@ -33,11 +18,11 @@ export const mutations = {
     GET_ALL_COMPANY(state, item) {
         state.DanhSachCongTy = item
     },
-    GET_ALL_DIVISION(state, item) {
-        state.DanhSachPhongBan = item
-    },
     GET_ALL_GROUP(state, item) {
         state.DanhSachNhom = item
+    },
+    GET_ALL_DIVISION(state, item) {
+        state.DanhSachPhongBan = item
     },
 }
 export const actions = {
@@ -51,12 +36,22 @@ export const actions = {
             console.log(err)
         }
     },
+    async postStaff({ commit }, newItem) {
+        try {
+            await axios.post(
+                'http://internal.vnas.com.vn:108/api/staff/post-pr',
+                newItem
+            )
+        } catch (err) {
+            console.log(err)
+        }
+    },
     async getAllPosition({ commit }) {
         try {
             let response = await axios.get(
                 'http://internal.vnas.com.vn:108/api/position/get-all-position'
             )
-            commit('GET_ALL_POSITION', response.data)
+            commit('GET_ALL_POSITION', response.data.data)
         } catch (err) {
             console.log(err)
         }
@@ -66,7 +61,7 @@ export const actions = {
             let response = await axios.get(
                 'http://internal.vnas.com.vn:108/api/company/get-all-company'
             )
-            commit('GET_ALL_COMPANY', response.data)
+            commit('GET_ALL_COMPANY', response.data.data)
         } catch (err) {
             console.log(err)
         }
@@ -76,7 +71,7 @@ export const actions = {
             let response = await axios.get(
                 'http://internal.vnas.com.vn:108/api/group/get-all-group'
             )
-            commit('GET_ALL_GROUP', response.data)
+            commit('GET_ALL_GROUP', response.data.data)
         } catch (err) {
             console.log(err)
         }
@@ -86,7 +81,7 @@ export const actions = {
             let response = await axios.get(
                 'http://internal.vnas.com.vn:108/api/division/get-all-division'
             )
-            commit('GET_ALL_DIVISION', response.data)
+            commit('GET_ALL_DIVISION', response.data.data)
         } catch (err) {
             console.log(err)
         }
