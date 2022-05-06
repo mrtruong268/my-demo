@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
 
 export const state = () => ({
     ChucNang: [
@@ -42,7 +43,7 @@ export const state = () => ({
             title: 'Work place',
             to: '',
             color: '#2B585F',
-            image: require('assets/programming.gif'),
+            image: require('assets/wp.gif'),
         },
         {
             id: uuidv4(),
@@ -110,10 +111,60 @@ export const state = () => ({
         },
     ],
     routeParams: '',
+    DanhSachChucVu: [],
+    DanhSachCongTy: [],
+    DanhSachPhongBan: [],
+    isVisible: false,
 })
+export const getters = {}
 
 export const mutations = {
     LANG_SWITCH(state, lang) {
         state.routeParams = lang
+    },
+    GET_ALL_POSITION(state, item) {
+        state.DanhSachChucVu = item
+    },
+    GET_ALL_COMPANY(state, item) {
+        state.DanhSachCongTy = item
+    },
+    GET_ALL_DIVISION(state, item) {
+        state.DanhSachPhongBan = item
+    },
+    IS_VISIBLE(state, item) {
+        state.isVisible = item
+    },
+}
+
+export const actions = {
+    async getAllPosition({ commit }) {
+        try {
+            let response = await axios.get(
+                'http://internal.vnas.com.vn:108/api/position/get-all-position'
+            )
+            commit('GET_ALL_POSITION', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getAllCompany({ commit }) {
+        try {
+            let response = await axios.get(
+                'http://internal.vnas.com.vn:108/api/company/get-all-company'
+            )
+            commit('GET_ALL_COMPANY', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getAllDivision({ commit }) {
+        try {
+            let response = await axios.get(
+                'http://internal.vnas.com.vn:108/api/division/get-all-division'
+            )
+            commit('GET_ALL_DIVISION', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
     },
 }

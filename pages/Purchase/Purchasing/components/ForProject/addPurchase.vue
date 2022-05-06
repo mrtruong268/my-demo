@@ -151,10 +151,12 @@
         <div class="row justify-end">
             <span @click="clickAdd" class="btn-save">Lưu</span>
         </div>
+        <toast :response="resCode" />
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
@@ -167,6 +169,7 @@ import {
     DxEditing,
     DxLookup,
 } from 'devextreme-vue/data-grid'
+import toast from '~/components/toast.vue'
 const dataGridRefKey = 'my-data-grid'
 
 export default {
@@ -181,6 +184,7 @@ export default {
         DxButton,
         DxEditing,
         DxLookup,
+        toast,
     },
     data() {
         return {
@@ -217,14 +221,17 @@ export default {
             },
         }
     },
+    computed: {
+        ...mapState('muahang', ['resCode']),
+    },
     methods: {
         addRow() {
             return this.$refs[dataGridRefKey].instance.addRow()
         },
         clickAdd() {
             this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
+            this.$store.commit('IS_VISIBLE', true)
             this.resetData()
-            this.$emit('invisible')
         },
         customFormat(e) {
             return new Intl.NumberFormat('vi-VN', {

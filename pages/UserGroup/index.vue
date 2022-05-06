@@ -1,7 +1,7 @@
 <template>
     <div class="container main">
         <div class="mb-2 row justify-space-between align-center">
-            <h3>{{ $t('User group') }}</h3>
+            <h3>{{ $t('List group') }}</h3>
             <DxButton
                 icon="mdi mdi-plus"
                 text="Create"
@@ -13,7 +13,7 @@
             id="gridContainer"
             :data-source="DanhSachNhom"
             :show-borders="true"
-            height="100%"
+            height="calc(100vh - 240px)"
             :remote-operations="true"
             :allow-column-resizing="true"
             :hover-state-enabled="true"
@@ -53,7 +53,7 @@
         </DxDataGrid>
         <popup :showPopup="popupVisible" :showTitle="true" :title="'User'">
             <template #main>
-                <AddUser />
+                <!-- <AddUser /> -->
             </template>
         </popup>
     </div>

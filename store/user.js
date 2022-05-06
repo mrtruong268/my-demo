@@ -2,27 +2,18 @@ import axios from 'axios'
 
 export const state = () => ({
     DanhSachNhanVien: [],
-    DanhSachChucVu: [],
-    DanhSachCongTy: [],
-    DanhSachPhongBan: [],
     DanhSachNhom: [],
 })
-export const getters = {}
+export const getters = {
+    DanhSachNhom: (state) => state.DanhSachNhom,
+}
 export const mutations = {
     GET_ALL_STAFF(state, item) {
         state.DanhSachNhanVien = item
     },
-    GET_ALL_POSITION(state, item) {
-        state.DanhSachChucVu = item
-    },
-    GET_ALL_COMPANY(state, item) {
-        state.DanhSachCongTy = item
-    },
+
     GET_ALL_GROUP(state, item) {
         state.DanhSachNhom = item
-    },
-    GET_ALL_DIVISION(state, item) {
-        state.DanhSachPhongBan = item
     },
 }
 export const actions = {
@@ -46,22 +37,11 @@ export const actions = {
             console.log(err)
         }
     },
-    async getAllPosition({ commit }) {
+    async deleteStaff({ commit }, delId) {
         try {
-            let response = await axios.get(
-                'http://internal.vnas.com.vn:108/api/position/get-all-position'
+            await axios.delete(
+                `http://internal.vnas.com.vn:108/api/staff/delete-staff?id=${delId}`
             )
-            commit('GET_ALL_POSITION', response.data.data)
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    async getAllCompany({ commit }) {
-        try {
-            let response = await axios.get(
-                'http://internal.vnas.com.vn:108/api/company/get-all-company'
-            )
-            commit('GET_ALL_COMPANY', response.data.data)
         } catch (err) {
             console.log(err)
         }
@@ -72,16 +52,6 @@ export const actions = {
                 'http://internal.vnas.com.vn:108/api/group/get-all-group'
             )
             commit('GET_ALL_GROUP', response.data.data)
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    async getAllDivision({ commit }) {
-        try {
-            let response = await axios.get(
-                'http://internal.vnas.com.vn:108/api/division/get-all-division'
-            )
-            commit('GET_ALL_DIVISION', response.data.data)
         } catch (err) {
             console.log(err)
         }

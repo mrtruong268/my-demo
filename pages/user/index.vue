@@ -2,12 +2,20 @@
     <div class="container main">
         <div class="mb-2 row justify-space-between align-center">
             <h3>{{ $t('List user') }}</h3>
-            <DxButton
-                icon="mdi mdi-plus"
-                text="Create"
-                @click="clickAdd"
-                type="normal"
-            />
+            <div>
+                <DxButton
+                    icon="mdi mdi-reload"
+                    text="Reload"
+                    @click="clickReload"
+                    type="normal"
+                />
+                <DxButton
+                    icon="mdi mdi-plus"
+                    text="Create"
+                    @click="clickAdd"
+                    type="normal"
+                />
+            </div>
         </div>
         <DxDataGrid
             id="gridContainer"
@@ -52,23 +60,25 @@
                     <p
                         class="mdi mdi-pencil font-24 mr-3"
                         style="cursor: pointer"
+                        @click="clickEdit(data)"
                     ></p>
                     <p
                         class="mdi mdi-delete font-24"
                         style="cursor: pointer"
+                        @click="clickDelete(data)"
                     ></p>
                 </div>
             </template>
             <DxSummary>
-                <DxTotalItem
-                    column="tenNhanVien"
-                    summary-type="count"
-                />
+                <DxTotalItem column="tenNhanVien" summary-type="count" />
             </DxSummary>
         </DxDataGrid>
-        <popup :showPopup="popupVisible" :showTitle="true" :title="'User'">
+        <popup :showPopup="popupVisible" :showTitle="false">
+            <template #header>
+                <h2 class="mb-3">User</h2>
+            </template>
             <template #main>
-                <AddUser />
+                <AddUser :edit="editData" @hiddenPopup="hidePopup" />
             </template>
         </popup>
     </div>
@@ -110,6 +120,7 @@ export default {
     data() {
         return {
             popupVisible: false,
+            editData: null,
         }
     },
     computed: {
@@ -118,6 +129,25 @@ export default {
     methods: {
         clickAdd() {
             this.popupVisible = !this.popupVisible
+        },
+        clickReload() {
+            this.$store.dispatch('user/getAllStaff')
+        },
+        clickEdit(e) {
+            this.editData = e.data
+            this.popupVisible = !this.popupVisible
+        },
+        clickDelete(e) {
+            this.$store.dispatch('user/deleteStaff', e.data.id)
+            setTimeout(() => {
+                this.clickReload()
+            }, 10)
+        },
+        hidePopup() {
+            this.clickAdd()
+            setTimeout(() => {
+                this.clickReload()
+            }, 10)
         },
     },
     created() {

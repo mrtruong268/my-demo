@@ -44,6 +44,7 @@ export const state = () => ({
     suaYeuCau: null,
     HangHoaDichVu: null,
     isSelected: '',
+    resCode: null,
 })
 export const getters = {
     muaDuAn: (state) => state.muaDuAn,
@@ -64,6 +65,9 @@ export const mutations = {
                 e.data = item
             }
         })
+    },
+    RES_CODE(state, item) {
+        state.resCode = item
     },
     IS_SELECTED(state, newText) {
         state.isSelected = newText
@@ -120,15 +124,17 @@ export const actions = {
                 newItem
             )
             commit('SET_ITEM', response.data)
+            commit('RES_CODE', response.status)
         } catch (err) {
             console.log(err)
         }
     },
     async deleteData({ commit }, delId) {
         try {
-            await axios.delete(
+            let response = await axios.delete(
                 `http://internal.vnas.com.vn:108/api/pr/delete-pr?id=${delId}`
             )
+            commit('RES_CODE', response.status)
         } catch (err) {
             console.log(err)
         }
@@ -154,23 +160,13 @@ export const actions = {
     },
     async editData({ commit }, editItem) {
         try {
-            await axios.put(
+            let response = await axios.put(
                 'http://internal.vnas.com.vn:108/api/pr/put-pr',
                 editItem
             )
+            commit('RES_CODE', response.status)
         } catch (err) {
             console.log(err)
         }
     },
-
-    // async getAllItem({ commit }) {
-    //     try {
-    //         await axios.get(
-    //             'http://internal.vnas.com.vn:108/api/staff/get-all-staff'
-    //         )
-    //         commit('GET_ALL_ITEM', response.data)
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // },
 }

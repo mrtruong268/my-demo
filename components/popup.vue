@@ -6,9 +6,10 @@
         :show-close-button="true"
         :show-title="showTitle"
         height="auto"
+        width="auto"
         :title="title"
     >
-        <div class="text-xs-center">
+        <div>
             <slot name="header"></slot>
         </div>
         <div>
