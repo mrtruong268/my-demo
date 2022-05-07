@@ -6,7 +6,7 @@
         :show-close-button="true"
         :show-title="showTitle"
         height="auto"
-        width="auto"
+        :width="width"
         :title="title"
     >
         <div>
@@ -37,6 +37,10 @@ export default {
         showTitle: {
             type: Boolean,
             default: false,
+        },
+        width: {
+            type: String,
+            default: 'auto',
         },
     },
     components: {

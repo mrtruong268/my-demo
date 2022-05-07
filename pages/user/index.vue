@@ -131,7 +131,9 @@ export default {
             this.popupVisible = !this.popupVisible
         },
         clickReload() {
-            this.$store.dispatch('user/getAllStaff')
+            setTimeout(() => {
+                this.$store.dispatch('user/getAllStaff')
+            }, 10)
         },
         clickEdit(e) {
             this.editData = e.data
@@ -139,15 +141,11 @@ export default {
         },
         clickDelete(e) {
             this.$store.dispatch('user/deleteStaff', e.data.id)
-            setTimeout(() => {
-                this.clickReload()
-            }, 10)
+            this.clickReload()
         },
         hidePopup() {
             this.clickAdd()
-            setTimeout(() => {
-                this.clickReload()
-            }, 10)
+            this.clickReload()
         },
     },
     created() {

@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const state = () => ({
     danhSachPheDuyet: [],
 })
@@ -14,9 +12,7 @@ export const mutations = {
 export const actions = {
     async getApprove({ commit }) {
         try {
-            let response = await axios.get(
-                'http://internal.vnas.com.vn:108/api/pr/get-approving-prs'
-            )
+            let response = await this.$axios.get('/pr/get-approving-prs')
             commit('SET_ITEM', response.data)
         } catch (err) {
             console.log(err)
@@ -24,9 +20,7 @@ export const actions = {
     },
     async submitApprove({ commit }, newItem) {
         try {
-            let response = await axios.get(
-                `http://internal.vnas.com.vn:108/api/pr/submit-pr?id=${newItem}`
-            )
+            let response = await this.$axios.get(`/pr/submit-pr?id=${newItem}`)
             commit('SET_ITEM', response.data)
         } catch (err) {
             console.log(err)
@@ -34,10 +28,7 @@ export const actions = {
     },
     async postApprove({ commit }, newItem) {
         try {
-            let response = await axios.post(
-                'http://internal.vnas.com.vn:108/api/pr/approve-pr',
-                newItem
-            )
+            let response = await this.$axios.post('/pr/approve-pr', newItem)
             commit('SET_ITEM', response.data)
         } catch (err) {
             console.log(err)
@@ -45,10 +36,7 @@ export const actions = {
     },
     async postRevise({ commit }, newItem) {
         try {
-            let response = await axios.post(
-                'http://internal.vnas.com.vn:108/api/pr/must-revise-pr',
-                newItem
-            )
+            let response = await this.$axios.post('/pr/must-revise-pr', newItem)
             commit('SET_ITEM', response.data)
         } catch (err) {
             console.log(err)

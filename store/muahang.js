@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-import axios from 'axios'
 
 export const state = () => ({
     muaDuAn: [],
@@ -44,7 +43,6 @@ export const state = () => ({
     suaYeuCau: null,
     HangHoaDichVu: null,
     isSelected: '',
-    resCode: null,
 })
 export const getters = {
     muaDuAn: (state) => state.muaDuAn,
@@ -65,9 +63,6 @@ export const mutations = {
                 e.data = item
             }
         })
-    },
-    RES_CODE(state, item) {
-        state.resCode = item
     },
     IS_SELECTED(state, newText) {
         state.isSelected = newText
@@ -108,9 +103,7 @@ export const mutations = {
 export const actions = {
     async getData({ commit }) {
         try {
-            let response = await axios.get(
-                'http://internal.vnas.com.vn:108/api/pr/get-all-of-pr'
-            )
+            let response = await this.$axios.get('/pr/get-all-of-pr')
             commit('SET_ITEM', response.data)
         } catch (err) {
             console.log(err)
@@ -119,40 +112,29 @@ export const actions = {
 
     async postData({ commit }, newItem) {
         try {
-            let response = await axios.post(
-                'http://internal.vnas.com.vn:108/api/pr/post-pr',
-                newItem
-            )
+            let response = await this.$axios.post('/pr/post-pr', newItem)
             commit('SET_ITEM', response.data)
-            commit('RES_CODE', response.status)
         } catch (err) {
             console.log(err)
         }
     },
     async deleteData({ commit }, delId) {
         try {
-            let response = await axios.delete(
-                `http://internal.vnas.com.vn:108/api/pr/delete-pr?id=${delId}`
-            )
-            commit('RES_CODE', response.status)
+            let response = await this.$axios.delete(`/pr/delete-pr?id=${delId}`)
         } catch (err) {
             console.log(err)
         }
     },
     async deletePrItem({ commit }, delId) {
         try {
-            await axios.delete(
-                `http://internal.vnas.com.vn:108/api/pr/delete-pr-item?id=${delId}`
-            )
+            await this.$axios.delete(`/pr/delete-pr-item?id=${delId}`)
         } catch (err) {
             console.log(err)
         }
     },
     async getEditData({ commit }, editId) {
         try {
-            let response = await axios.get(
-                `http://internal.vnas.com.vn:108/api/pr/get-pr?id=${editId}`
-            )
+            let response = await this.$axios.get(`/pr/get-pr?id=${editId}`)
             commit('EDIT_ITEM', response.data)
         } catch (err) {
             console.log(err)
@@ -160,11 +142,7 @@ export const actions = {
     },
     async editData({ commit }, editItem) {
         try {
-            let response = await axios.put(
-                'http://internal.vnas.com.vn:108/api/pr/put-pr',
-                editItem
-            )
-            commit('RES_CODE', response.status)
+            let response = await this.$axios.put('/pr/put-pr', editItem)
         } catch (err) {
             console.log(err)
         }

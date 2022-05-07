@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-import axios from 'axios'
 
 export const state = () => ({
     ChucNang: [
@@ -139,9 +138,7 @@ export const mutations = {
 export const actions = {
     async getAllPosition({ commit }) {
         try {
-            let response = await axios.get(
-                'http://internal.vnas.com.vn:108/api/position/get-all-position'
-            )
+            let response = await this.$axios.get('/position/get-all-position')
             commit('GET_ALL_POSITION', response.data.data)
         } catch (err) {
             console.log(err)
@@ -149,9 +146,7 @@ export const actions = {
     },
     async getAllCompany({ commit }) {
         try {
-            let response = await axios.get(
-                'http://internal.vnas.com.vn:108/api/company/get-all-company'
-            )
+            let response = await this.$axios.get('/company/get-all-company')
             commit('GET_ALL_COMPANY', response.data.data)
         } catch (err) {
             console.log(err)
@@ -159,9 +154,7 @@ export const actions = {
     },
     async getAllDivision({ commit }) {
         try {
-            let response = await axios.get(
-                'http://internal.vnas.com.vn:108/api/division/get-all-division'
-            )
+            let response = await this.$axios.get('/division/get-all-division')
             commit('GET_ALL_DIVISION', response.data.data)
         } catch (err) {
             console.log(err)

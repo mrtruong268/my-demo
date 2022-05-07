@@ -144,14 +144,14 @@
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
         </div>
-        <div class="mb-3">
+        <div>
             <h3 class="mb-3">{{ $t('Comment') }}</h3>
             <DxTextArea
                 v-model="YeuCauMuaHang.comment"
                 styling-mode="outlined"
                 :height="120"
             />
-            <div class="button">
+            <div class="row justify-end align-center mt-3">
                 <DxButton
                     :width="190"
                     text="Edit requisition"
@@ -171,6 +171,7 @@
                 />
             </div>
         </div>
+        <toast />
     </div>
 </template>
 
@@ -187,6 +188,8 @@ import {
     DxPaging,
     DxEditing,
 } from 'devextreme-vue/data-grid'
+import toast from '~/components/toast.vue'
+
 const dataGridRefKey = 'my-data-grid'
 
 export default {
@@ -207,6 +210,7 @@ export default {
         DxButton,
         DxEditing,
         DxTextArea,
+        toast,
     },
     data() {
         return {
@@ -284,10 +288,12 @@ export default {
     methods: {
         duyet() {
             this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
+            this.showToast()
             this.$emit('hiddenPopup')
         },
         khongDuyet() {
             this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
+            this.showToast()
             this.$emit('hiddenPopup')
         },
         customFormat(e) {
@@ -303,11 +309,6 @@ export default {
 <style scoped>
 .btn-add {
     font-size: 28px;
-}
-.button {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
 }
 .xs-4 {
     flex-basis: 34.5%;

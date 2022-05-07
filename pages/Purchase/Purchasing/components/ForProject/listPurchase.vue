@@ -75,6 +75,7 @@
             :showPopup="popupVisible"
             :showTitle="true"
             :title="isClick == 'edit' ? 'Edit requisition' : 'View details'"
+            :width="'80%'"
         >
             <template #main>
                 <editPurchase

@@ -30,10 +30,6 @@
                 format="dd/MM/yyyy"
             />
             <DxColumn
-                data-field="isAdministrator"
-                :caption="$t('Administrator')"
-            />
-            <DxColumn
                 :allow-header-filtering="false"
                 width="auto"
                 cell-template="buttons-cell"
@@ -43,6 +39,7 @@
                     <p
                         class="mdi mdi-pencil font-24 mr-3"
                         style="cursor: pointer"
+                        @click="clickEdit(data)"
                     ></p>
                     <p
                         class="mdi mdi-delete font-24"
@@ -51,9 +48,14 @@
                 </div>
             </template>
         </DxDataGrid>
-        <popup :showPopup="popupVisible" :showTitle="true" :title="'User'">
+        <popup
+            :showPopup="popupVisible"
+            :showTitle="true"
+            :title="'Group permission'"
+            :width="'80%'"
+        >
             <template #main>
-                <!-- <AddUser /> -->
+                <addGroup :edit="editData" />
             </template>
         </popup>
     </div>
@@ -71,7 +73,7 @@ import {
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
 import popup from '~/components/popup.vue'
-// import AddUser from './components/addUser.vue'
+import addGroup from './components/addGroup.vue'
 
 export default {
     layout: 'commonLayout',
@@ -84,11 +86,12 @@ export default {
         DxGrouping,
         DxGroupPanel,
         popup,
-        // AddUser,
+        addGroup,
     },
     data() {
         return {
             popupVisible: false,
+            editData: {},
         }
     },
     computed: {
@@ -97,6 +100,10 @@ export default {
     methods: {
         clickAdd() {
             this.popupVisible = !this.popupVisible
+        },
+        clickEdit(e) {
+            this.popupVisible = !this.popupVisible
+            this.editData = e.data
         },
     },
     created() {

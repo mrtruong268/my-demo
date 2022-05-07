@@ -59,7 +59,12 @@
                 ></p>
             </template>
         </DxDataGrid>
-        <popup :showPopup="popupVisible" :showTitle="true" :title="'Details'">
+        <popup
+            :showPopup="popupVisible"
+            :showTitle="true"
+            :title="'Details'"
+            :width="'80%'"
+        >
             <template #main>
                 <viewApprove :view="editItem" @hiddenPopup="hidePopup" />
             </template>

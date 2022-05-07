@@ -13,6 +13,12 @@ const mixin = {
         idv4() {
             return uuidv4()
         },
+        showToast() {
+            setTimeout(() => {
+                this.$store.commit('IS_VISIBLE', false)
+            }, 2000)
+            this.$store.commit('IS_VISIBLE', true)
+        },
     },
 }
 

@@ -45,7 +45,7 @@
                 class="xs2"
             />
         </div>
-        <div class="row align-center mb-3">
+        <div class="row align-center mb-2">
             <DxDateBox
                 v-model="YeuCauMuaHang.ngayDeTrinh"
                 displayFormat="dd/MM/yyyy"
@@ -82,7 +82,7 @@
             />
         </div>
         <div>
-            <div class="row justify-space-between mb-3">
+            <div class="row justify-space-between mb-2">
                 <h3>{{ $t('Add goods, services') }}</h3>
             </div>
             <DxDataGrid
@@ -145,18 +145,17 @@
                 icon="mdi mdi-plus"
                 @click="addRow"
                 styling-mode="text"
-                text="Thêm hàng hóa"
+                text="Add"
             />
         </div>
         <div class="row justify-end">
             <span @click="clickAdd" class="btn-save">Lưu</span>
         </div>
-        <toast :response="resCode" />
+        <toast />
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
@@ -221,16 +220,13 @@ export default {
             },
         }
     },
-    computed: {
-        ...mapState('muahang', ['resCode']),
-    },
     methods: {
         addRow() {
             return this.$refs[dataGridRefKey].instance.addRow()
         },
         clickAdd() {
             this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-            this.$store.commit('IS_VISIBLE', true)
+            this.showToast()
             this.resetData()
         },
         customFormat(e) {

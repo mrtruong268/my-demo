@@ -163,6 +163,7 @@
                 @click="clickSave"
             />
         </div>
+        <toast />
     </div>
 </template>
 
@@ -179,6 +180,7 @@ import {
     DxEditing,
 } from 'devextreme-vue/data-grid'
 import { mapGetters } from 'vuex'
+import toast from '~/components/toast.vue'
 const dataGridRefKey = 'my-data-grid'
 
 export default {
@@ -192,6 +194,7 @@ export default {
         DxNumberBox,
         DxButton,
         DxEditing,
+        toast,
     },
     data() {
         return {
@@ -252,13 +255,8 @@ export default {
             setTimeout(() => {
                 this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
             }, 100)
+            this.showToast()
             this.$emit('invisible')
-        },
-        clickDelete(e) {
-            this.$store.dispatch('muahang/deletePrItem', e.data.id)
-            setTimeout(() => {
-                this.$refs[dataGridRefKey].instance.getDataSource().reload()
-            }, 200)
         },
         customFormat(e) {
             return new Intl.NumberFormat('vi-VN', {

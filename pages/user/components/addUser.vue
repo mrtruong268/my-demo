@@ -8,7 +8,7 @@
                 :label="$t('Name')"
                 label-mode="floating"
                 class="mb-3"
-                width="70vh"
+                width="40vw"
             />
             <DxTextBox
                 v-model="NhanVien.maNhanVien"
@@ -16,7 +16,7 @@
                 :label="$t('Employee code')"
                 class="mb-3"
                 label-mode="floating"
-                width="70vh"
+                width="40vw"
             />
             <DxTextBox
                 v-model="NhanVien.email"
@@ -24,7 +24,7 @@
                 :label="$t('Email')"
                 class="mb-3"
                 label-mode="floating"
-                width="70vh"
+                width="40vw"
             />
             <DxSelectBox
                 :dataSource="DanhSachChucVu"
@@ -34,7 +34,7 @@
                 :label="$t('Position')"
                 class="mb-3"
                 label-mode="floating"
-                width="70vh"
+                width="40vw"
             />
             <DxSelectBox
                 :dataSource="DanhSachPhongBan"
@@ -44,7 +44,7 @@
                 :label="$t('Department')"
                 class="mb-3"
                 label-mode="floating"
-                width="70vh"
+                width="40vw"
             />
             <DxTextBox
                 v-model="NhanVien.username"
@@ -52,7 +52,7 @@
                 :label="$t('Username')"
                 class="mb-3"
                 label-mode="floating"
-                width="70vh"
+                width="40vw"
             />
             <DxSelectBox
                 :dataSource="DanhSachNhom"
@@ -62,7 +62,7 @@
                 :label="$t('Group')"
                 class="mb-3"
                 label-mode="floating"
-                width="70vh"
+                width="40vw"
             />
             <DxSelectBox
                 :dataSource="DanhSachCongTy"
@@ -72,7 +72,7 @@
                 :label="$t('Company')"
                 class="mb-3"
                 label-mode="floating"
-                width="70vh"
+                width="40vw"
             />
             <DxDateBox
                 v-model="NhanVien.createdDate"
@@ -83,7 +83,7 @@
                 :label="$t('Created date')"
                 label-mode="floating"
                 class="mb-3"
-                width="70vh"
+                width="40vw"
             />
             <DxCheckBox v-model="NhanVien.isActive" text="Active" />
         </div>
@@ -95,6 +95,7 @@
                 @click="clickSave"
             />
         </div>
+        <toast :response="resCode" />
     </div>
 </template>
 
@@ -106,6 +107,7 @@ import DxDateBox from 'devextreme-vue/date-box'
 import DxButton from 'devextreme-vue/button'
 import { DxCheckBox } from 'devextreme-vue/check-box'
 import { mapState, mapGetters } from 'vuex'
+import toast from '~/components/toast.vue'
 
 export default {
     props: {
@@ -121,6 +123,7 @@ export default {
         DxNumberBox,
         DxCheckBox,
         DxButton,
+        toast,
     },
     data() {
         return {
@@ -141,18 +144,18 @@ export default {
     },
     watch: {
         edit() {
-            if (this.edit) {
-                this.NhanVien = { ...this.edit }
-            }
+            if (this.edit) this.NhanVien = { ...this.edit }
         },
     },
     computed: {
         ...mapState(['DanhSachChucVu', 'DanhSachCongTy', 'DanhSachPhongBan']),
+        ...mapState('user', ['resCode']),
         ...mapGetters('user', ['DanhSachNhom']),
     },
     methods: {
         clickSave() {
             this.$store.dispatch('user/postStaff', this.NhanVien)
+            this.showToast()
             this.clickClose()
         },
         clickClose() {
