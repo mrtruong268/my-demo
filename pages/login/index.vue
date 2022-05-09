@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submit">
+    <div>
         <div class="row justify-end align-center">
             <div class="mr-2">{{ $t('Select language') }} :</div>
             <DxSelectBox
@@ -40,45 +40,18 @@
                             </div>
                         </div>
                         <div class="login-form xs5">
-                            <div class="column justify-space-between">
+                            <div>
                                 <div>
                                     <img src="~assets/logo.svg" alt="" />
                                     <h3 class="py-5">
                                         {{ $t('MANAGEMENT SOFTWARE SYSTEM') }}
                                     </h3>
-                                    <div class="pb-4">
-                                        <DxTextBox
-                                            :placeholder="$t('Username')"
-                                            stylingMode="underlined"
-                                            :show-clear-button="true"
-                                            v-model="login.email"
-                                        />
-                                    </div>
-                                    <div>
-                                        <DxTextBox
-                                            :show-clear-button="true"
-                                            mode="password"
-                                            :placeholder="$t('Password')"
-                                            stylingMode="underlined"
-                                            v-model="login.password"
-                                        />
-                                    </div>
-                                    <div class="pt-5">
-                                        <div class="captcha pt-3">
-                                            <DxTextBox
-                                                :placeholder="
-                                                    $t('Type captcha code')
-                                                "
-                                                stylingMode="underlined"
-                                            />
-                                        </div>
-                                    </div>
                                 </div>
                                 <div>
                                     <button
                                         class="btn-login"
                                         type="submit"
-                                        @click="submit(login)"
+                                        @click="submit"
                                     >
                                         {{ $t('Log in') }}
                                     </button>
@@ -89,7 +62,7 @@
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </template>
 
 <script>
@@ -109,8 +82,8 @@ export default {
     data() {
         return {
             login: {
-                email: 'Truong',
-                password: '1234',
+                email: '',
+                password: '',
             },
             selectedValue: '',
         }
@@ -121,8 +94,8 @@ export default {
             this.$store.commit('LANG_SWITCH', e)
             this.$router.replace(this.switchLocalePath(e))
         },
-        async submit(logininfo) {
-            this.clickRouter('', this.routeParams)
+        submit() {
+            this.$auth.loginWith('social')
         },
     },
     created() {
@@ -151,6 +124,7 @@ export default {
     background-color: #0986c5;
     border: none;
     color: white;
+    cursor: pointer;
 }
 @media only screen and (max-width: 739px) {
     .describe {

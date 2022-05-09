@@ -52,7 +52,7 @@
             :showPopup="popupVisible"
             :showTitle="true"
             :title="'Group permission'"
-            :width="'80%'"
+            :width="'30%'"
         >
             <template #main>
                 <addGroup :edit="editData" />

@@ -5,7 +5,6 @@ export default {
     router: {
         base: '/my-demo/',
     },
-    // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         title: 'Project manager',
         htmlAttrs: {
@@ -42,7 +41,12 @@ export default {
     buildModules: [],
 
     // Modules: https://go.nuxtjs.dev/config-modules
-    modules: ['@nuxtjs/axios', '@nuxtjs/auth', 'nuxtjs-mdi-font', 'nuxt-i18n'],
+    modules: [
+        '@nuxtjs/axios',
+        '@nuxtjs/auth-next',
+        'nuxtjs-mdi-font',
+        'nuxt-i18n',
+    ],
     i18n: {
         locales: [
             {
@@ -64,7 +68,6 @@ export default {
             redirectOn: 'root', // recommended
         },
     },
-    // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
         baseURL: 'http://internal.vnas.com.vn:108/api',
     },
@@ -73,10 +76,11 @@ export default {
             social: {
                 scheme: 'oauth2',
                 endpoints: {
-                    authorization: '',
+                    authorization:
+                        'https://internal.vnas.com.vn/identityserver',
                     token: undefined,
                     userInfo: '',
-                    logout: '',
+                    logout: 'https://internal.vnas.com.vn/identityserver/logout',
                 },
                 token: {
                     property: 'access_token',
@@ -92,8 +96,8 @@ export default {
                 accessType: undefined,
                 redirectUri: undefined,
                 logoutRedirectUri: undefined,
-                clientId: 'SET_ME',
-                scope: ['openid', 'profile', 'email'],
+                clientId: 'PurchasingAppId',
+                scope: ['openid', 'profile', 'email', 'address', 'role'],
                 state: 'UNIQUE_AND_NON_GUESSABLE',
                 codeChallengeMethod: '',
                 responseMode: '',
@@ -102,6 +106,5 @@ export default {
             },
         },
     },
-    // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {},
 }

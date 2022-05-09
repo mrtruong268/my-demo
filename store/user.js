@@ -1,23 +1,91 @@
 export const state = () => ({
     DanhSachNhanVien: [],
     DanhSachNhom: [],
-    DanhSachQuyen: [
+    DanhSachChucNang: [
         {
-            key: 'Project manage',
+            key: 'Project management',
             items: [
                 {
                     id: 1,
                     title: 'Project',
+                    dataQuyen: [
+                        {
+                            id: 1,
+                            quyen: 'Full control',
+                            allow: true,
+                        },
+                        {
+                            id: 2,
+                            quyen: 'Read',
+                            allow: false,
+                        },
+                        {
+                            id: 3,
+                            quyen: 'White',
+                            allow: false,
+                        },
+                    ],
                 },
                 {
                     id: 2,
                     title: 'Partner',
+                    dataQuyen: [
+                        {
+                            id: 1,
+                            quyen: 'Full control',
+                            allow: true,
+                        },
+                        {
+                            id: 2,
+                            quyen: 'Read',
+                            allow: true,
+                        },
+                        {
+                            id: 3,
+                            quyen: 'White',
+                            allow: false,
+                        },
+                    ],
                 },
                 {
                     id: 3,
                     title: 'Customer',
+                    dataQuyen: [
+                        {
+                            id: 1,
+                            quyen: 'Full control',
+                            allow: false,
+                        },
+                        {
+                            id: 2,
+                            quyen: 'Read',
+                            allow: false,
+                        },
+                        {
+                            id: 3,
+                            quyen: 'White',
+                            allow: true,
+                        },
+                    ],
                 },
             ],
+        },
+    ],
+    DanhSachQuyen: [
+        {
+            id: 1,
+            quyen: 'Full control',
+            allow: false,
+        },
+        {
+            id: 2,
+            quyen: 'Read',
+            allow: false,
+        },
+        {
+            id: 3,
+            quyen: 'White',
+            allow: false,
         },
     ],
 })
