@@ -65,11 +65,7 @@ import DxButton from 'devextreme-vue/button'
 export default {
     layout: 'commonLayout',
     components: { DxButton },
-    data() {
-        return {}
-    },
     computed: mapState(['ChucNang', 'routeParams']),
-    methods: {},
 }
 </script>
 

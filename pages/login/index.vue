@@ -69,7 +69,7 @@
 import DxTextBox from 'devextreme-vue/text-box'
 import DxButton from 'devextreme-vue/button'
 import DxSelectBox from 'devextreme-vue/select-box'
-
+import { UserManager } from 'oidc-client'
 import { mapState } from 'vuex'
 
 export default {
@@ -81,11 +81,8 @@ export default {
     },
     data() {
         return {
-            login: {
-                email: '',
-                password: '',
-            },
             selectedValue: '',
+            userMng: null,
         }
     },
     computed: mapState(['routeParams']),
@@ -95,11 +92,23 @@ export default {
             this.$router.replace(this.switchLocalePath(e))
         },
         submit() {
-            this.$auth.loginWith('social')
+            return this.userMng.signinRedirect()
         },
     },
     created() {
         this.selectedValue = this.$i18n.locale
+        if (!process.server) {
+            this.userMng = new UserManager({
+                authority: 'https://internal.vnas.com.vn/identityserver',
+                client_id: 'PurchasingAppId',
+                redirect_uri: 'http://localhost:3000/my-demo',
+                response_type: 'code',
+                scope: 'openid profile email address role',
+                // loadUserInfo: true
+                post_logout_redirect_uri: 'http://localhost:3000/my-demo',
+                // silent_redirect_uri: 'http://localhost:3000/my-demo',
+            })
+        }
     },
 }
 </script>

@@ -47,6 +47,9 @@ export default {
         'nuxtjs-mdi-font',
         'nuxt-i18n',
     ],
+    axios: {
+        baseURL: 'http://internal.vnas.com.vn:108/api',
+    },
     i18n: {
         locales: [
             {
@@ -66,44 +69,6 @@ export default {
             useCookie: true,
             cookieKey: 'i18n_redirected',
             redirectOn: 'root', // recommended
-        },
-    },
-    axios: {
-        baseURL: 'http://internal.vnas.com.vn:108/api',
-    },
-    auth: {
-        strategies: {
-            social: {
-                scheme: 'oauth2',
-                endpoints: {
-                    authorization:
-                        'https://internal.vnas.com.vn/identityserver',
-                    token: undefined,
-                    userInfo: '',
-                    logout: 'https://internal.vnas.com.vn/identityserver/logout',
-                },
-                token: {
-                    property: 'access_token',
-                    type: 'Bearer',
-                    maxAge: 1800,
-                },
-                refreshToken: {
-                    property: 'refresh_token',
-                    maxAge: 60 * 60 * 24 * 30,
-                },
-                responseType: 'token',
-                grantType: 'authorization_code',
-                accessType: undefined,
-                redirectUri: undefined,
-                logoutRedirectUri: undefined,
-                clientId: 'PurchasingAppId',
-                scope: ['openid', 'profile', 'email', 'address', 'role'],
-                state: 'UNIQUE_AND_NON_GUESSABLE',
-                codeChallengeMethod: '',
-                responseMode: '',
-                acrValues: '',
-                // autoLogout: false
-            },
         },
     },
     build: {},

@@ -67,11 +67,14 @@
                                 </DxTabPanel>
                             </div>
                         </div>
-                        <div class="user-guide">
+                        <div class="user-guide mr-3">
                             <i class="mdi mdi-information btn-guide"></i>
-                            <p style="color: #00679b">{{ $t('User guide') }}</p>
+                            <p style="color: #0986c5">{{ $t('User guide') }}</p>
                         </div>
-                        <div class="dropdown2">
+                        <p @click="login" class="btn-login">
+                            {{ $t('Sign in') }}
+                        </p>
+                        <!-- <div class="dropdown2">
                             <div class="row">
                                 <div class="icon">
                                     <i class="mdi mdi-account"></i>
@@ -84,7 +87,7 @@
                                     {{ $t('Log out') }}
                                 </p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -225,6 +228,7 @@ import DxSelectBox from 'devextreme-vue/select-box'
 import DxTextBox from 'devextreme-vue/text-box'
 import DxTabPanel from 'devextreme-vue/tab-panel'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
+import { UserManager } from 'oidc-client'
 
 export default {
     components: { DxButton, DxSelectBox, DxTextBox, DxTabPanel, DxScrollView },
@@ -232,6 +236,7 @@ export default {
         return {
             selectedValue: '',
             selectedItem: null,
+            userMng: null,
         }
     },
     computed: {
@@ -289,9 +294,31 @@ export default {
                 this.$store.commit('quanly/ADD_LIST', newObj)
             }
         },
+        login() {
+            return this.userMng.signinRedirect()
+        },
     },
     created() {
         this.selectedValue = this.$i18n.locale
+        if (!process.server) {
+            this.userMng = new UserManager({
+                authority: 'https://internal.vnas.com.vn/identityserver',
+                client_id: 'PurchasingAppId',
+                redirect_uri: 'http://localhost:3000/my-demo/',
+                response_type: 'code',
+                scope: 'openid profile email address role',
+                post_logout_redirect_uri: 'http://localhost:3000/my-demo/',
+                // loadUserInfo: true
+                // silent_redirect_uri: 'http://localhost:3000/my-demo',
+            })
+            const { code, scope, session_state, state } = this.$route.query
+            if (code && scope && session_state && state) {
+                this.userMng.signinRedirectCallback().then((user) => {
+                    console.log('🚀 ~ file: navbar.vue ~ line 317 ~ user', user)
+                    this.clickRouter('', this.routeParams)
+                })
+            }
+        }
     },
 }
 </script>
@@ -335,6 +362,13 @@ export default {
     top: 5px;
     right: 10px;
     color: #cccccc;
+}
+.btn-login {
+    color: white;
+    cursor: pointer;
+    padding: 10px 16px;
+    border-radius: 24px;
+    background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
 }
 .icon {
     background-color: white;
