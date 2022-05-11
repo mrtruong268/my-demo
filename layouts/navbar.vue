@@ -306,8 +306,8 @@ export default {
                 client_id: 'PurchasingAppId',
                 redirect_uri: 'http://localhost:3000/my-demo/',
                 response_type: 'code',
-                scope: 'openid profile email address role',
-                post_logout_redirect_uri: 'http://localhost:3000/my-demo/',
+                scope: 'openid profile email address roleapi roleapp',
+                // post_logout_redirect_uri: 'http://localhost:3000/my-demo/',
                 // loadUserInfo: true
                 // silent_redirect_uri: 'http://localhost:3000/my-demo',
             })

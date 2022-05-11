@@ -85,7 +85,9 @@ export default {
             userMng: null,
         }
     },
-    computed: mapState(['routeParams']),
+    computed: {
+        ...mapState(['routeParams']),
+    },
     methods: {
         onChange(e) {
             this.$store.commit('LANG_SWITCH', e)
