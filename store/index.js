@@ -114,6 +114,7 @@ export const state = () => ({
     DanhSachCongTy: [],
     DanhSachPhongBan: [],
     isVisible: false,
+    token: '',
 })
 export const getters = {}
 
@@ -132,6 +133,9 @@ export const mutations = {
     },
     IS_VISIBLE(state, item) {
         state.isVisible = item
+    },
+    GET_TOKEN(state, item) {
+        state.token = item
     },
 }
 

@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div>
-                    <DxSelectBox
+                    <!-- <DxSelectBox
                         v-model="selectedValue"
                         :data-source="$i18n.locales"
                         display-expr="name"
@@ -165,7 +165,7 @@
                                 <DxTextBox style="display: none" />
                             </div>
                         </template>
-                    </DxSelectBox>
+                    </DxSelectBox> -->
                 </div>
             </div>
         </div>
@@ -228,7 +228,6 @@ import DxSelectBox from 'devextreme-vue/select-box'
 import DxTextBox from 'devextreme-vue/text-box'
 import DxTabPanel from 'devextreme-vue/tab-panel'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
-import { UserManager } from 'oidc-client'
 
 export default {
     components: { DxButton, DxSelectBox, DxTextBox, DxTabPanel, DxScrollView },
@@ -236,7 +235,6 @@ export default {
         return {
             selectedValue: '',
             selectedItem: null,
-            userMng: null,
         }
     },
     computed: {
@@ -295,30 +293,20 @@ export default {
             }
         },
         login() {
-            return this.userMng.signinRedirect()
+            this.userManage().signinRedirect()
         },
+    },
+    mounted() {
+        if (window.location.hash !== '') {
+            var accessToken = window.location.hash.match(
+                /\#(?:access_token)\=([\S\s]*?)\&/
+            )[1]
+            this.$store.commit('GET_TOKEN', accessToken)
+            localStorage.setItem('accessToken', accessToken)
+        }
     },
     created() {
         this.selectedValue = this.$i18n.locale
-        if (!process.server) {
-            this.userMng = new UserManager({
-                authority: 'https://internal.vnas.com.vn/identityserver',
-                client_id: 'PurchasingAppId',
-                redirect_uri: 'http://localhost:3000/my-demo/',
-                response_type: 'code',
-                scope: 'openid profile email address roleapi roleapp',
-                // post_logout_redirect_uri: 'http://localhost:3000/my-demo/',
-                // loadUserInfo: true
-                // silent_redirect_uri: 'http://localhost:3000/my-demo',
-            })
-            const { code, scope, session_state, state } = this.$route.query
-            if (code && scope && session_state && state) {
-                this.userMng.signinRedirectCallback().then((user) => {
-                    console.log('🚀 ~ file: navbar.vue ~ line 317 ~ user', user)
-                    this.clickRouter('', this.routeParams)
-                })
-            }
-        }
     },
 }
 </script>

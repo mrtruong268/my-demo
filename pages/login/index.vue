@@ -94,23 +94,11 @@ export default {
             this.$router.replace(this.switchLocalePath(e))
         },
         submit() {
-            return this.userMng.signinRedirect()
+            // return this.userMng.signinRedirect()
         },
     },
     created() {
         this.selectedValue = this.$i18n.locale
-        if (!process.server) {
-            this.userMng = new UserManager({
-                authority: 'https://internal.vnas.com.vn/identityserver',
-                client_id: 'PurchasingAppId',
-                redirect_uri: 'http://localhost:3000/my-demo',
-                response_type: 'code',
-                scope: 'openid profile email address role',
-                // loadUserInfo: true
-                post_logout_redirect_uri: 'http://localhost:3000/my-demo',
-                // silent_redirect_uri: 'http://localhost:3000/my-demo',
-            })
-        }
     },
 }
 </script>

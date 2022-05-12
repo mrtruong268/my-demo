@@ -2,9 +2,9 @@ import i18n from './config/i18n'
 
 export default {
     target: 'static',
-    router: {
-        base: '/my-demo/',
-    },
+    // router: {
+    //     base: '/my-demo/',
+    // },
     head: {
         title: 'Project manager',
         htmlAttrs: {
@@ -32,7 +32,7 @@ export default {
     css: ['~/assets/css/style.css'],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-    plugins: ['~plugins/main.js'],
+    plugins: ['~plugins/main.js', '~plugins/axios'],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: true,
