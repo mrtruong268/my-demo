@@ -26,7 +26,9 @@ export default {
     data() {
         return {}
     },
-    computed: mapState('quanly', ['statusItem']),
+    computed: {
+        ...mapState('quanly', ['statusItem']),
+    },
     created() {
         this.$store.commit('quanly/PROJECT_STATUS')
     },

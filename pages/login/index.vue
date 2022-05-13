@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row justify-end align-center">
-            <div class="mr-2">{{ $t('Select language') }} :</div>
+            <!-- <div class="mr-2">{{ $t('Select language') }} :</div>
             <DxSelectBox
                 v-model="selectedValue"
                 :data-source="$i18n.locales"
@@ -20,7 +20,7 @@
                         <DxTextBox :read-only="true" style="display: none" />
                     </div>
                 </template>
-            </DxSelectBox>
+            </DxSelectBox> -->
         </div>
         <div class="container">
             <div class="row justify-center align-center">
@@ -41,21 +41,41 @@
                         </div>
                         <div class="login-form xs5">
                             <div>
-                                <div>
+                                <div
+                                    class="text-xs-center"
+                                    style="margin-bottom: 30px"
+                                >
                                     <img src="~assets/logo.svg" alt="" />
                                     <h3 class="py-5">
                                         {{ $t('MANAGEMENT SOFTWARE SYSTEM') }}
                                     </h3>
                                 </div>
-                                <div>
-                                    <button
-                                        class="btn-login"
-                                        type="submit"
-                                        @click="submit"
-                                    >
-                                        {{ $t('Log in') }}
-                                    </button>
+                                <div class="mb-4">
+                                    <p>Username</p>
+                                    <DxTextBox
+                                        stylingMode="underlined"
+                                        :show-clear-button="true"
+                                        v-model="login.username"
+                                    />
                                 </div>
+                                <div>
+                                    <p>Password</p>
+                                    <DxTextBox
+                                        :show-clear-button="true"
+                                        mode="password"
+                                        stylingMode="underlined"
+                                        v-model="login.password"
+                                    />
+                                </div>
+                            </div>
+                            <div style="margin-top: 50px">
+                                <button
+                                    class="btn-login"
+                                    type="submit"
+                                    @click="submit"
+                                >
+                                    {{ $t('SIGN IN') }}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -69,7 +89,6 @@
 import DxTextBox from 'devextreme-vue/text-box'
 import DxButton from 'devextreme-vue/button'
 import DxSelectBox from 'devextreme-vue/select-box'
-import { UserManager } from 'oidc-client'
 import { mapState } from 'vuex'
 
 export default {
@@ -82,11 +101,14 @@ export default {
     data() {
         return {
             selectedValue: '',
-            userMng: null,
+            login: {
+                username: '',
+                password: '',
+            },
         }
     },
     computed: {
-        ...mapState(['routeParams']),
+        ...mapState(['routeParams', 'token']),
     },
     methods: {
         onChange(e) {
@@ -94,7 +116,24 @@ export default {
             this.$router.replace(this.switchLocalePath(e))
         },
         submit() {
-            // return this.userMng.signinRedirect()
+            let form = {
+                client_id: 'PurchasingAppAccount',
+                client_secret: 'pr1234!',
+                grant_type: 'password',
+                scope: 'roleapi',
+                username: this.login.username,
+                password: this.login.password,
+            }
+            const formData = new FormData()
+            Object.keys(form).forEach((e) => {
+                formData.append(e, form[e])
+            })
+            this.$store.dispatch('login', formData)
+        },
+    },
+    watch: {
+        token() {
+            if (this.token !== '') this.clickRouter('')
         },
     },
     created() {
@@ -109,17 +148,20 @@ export default {
     border-radius: 6px;
     color: white;
 }
+.describe img {
+    width: 100%;
+    height: auto;
+}
 .login-form {
     background-color: white;
     color: #0986c5;
     border-radius: 6px;
-    text-align: center;
     padding: 20px;
 }
 .btn-login {
     width: 100%;
-    height: 36px;
-    border-radius: 4px;
+    padding: 16px 0;
+    border-radius: 24px;
     background-color: #0986c5;
     border: none;
     color: white;

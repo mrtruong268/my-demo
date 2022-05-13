@@ -47,9 +47,6 @@ export default {
         'nuxtjs-mdi-font',
         'nuxt-i18n',
     ],
-    axios: {
-        baseURL: 'http://internal.vnas.com.vn:108/api',
-    },
     i18n: {
         locales: [
             {

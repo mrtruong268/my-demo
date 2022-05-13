@@ -2,7 +2,7 @@
 import 'devextreme/dist/css/dx.light.css'
 import Vue from 'vue'
 import { v4 as uuidv4 } from 'uuid'
-import { UserManager } from 'oidc-client'
+// import { UserManager } from 'oidc-client'
 
 const mixin = {
     methods: {
@@ -20,21 +20,21 @@ const mixin = {
             }, 2000)
             this.$store.commit('IS_VISIBLE', true)
         },
-        userManage() {
-            var userMng = new UserManager({
-                authority: 'https://internal.vnas.com.vn/identityserver',
-                client_id: 'PurchasingJsImplicit',
-                redirect_uri: 'http://localhost:3000/',
-                response_type: 'token',
-                scope: 'roleapi',
-                post_logout_redirect_uri: 'http://localhost:3000/',
-                // silent_redirect_uri: 'http://localhost:3000/my-demo',
-                // userStore: new WebStorageStateStore({
-                //     store: window.localStorage,
-                // }),
-            })
-            return userMng
-        },
+        // userManage() {
+        //     var userMng = new UserManager({
+        //         authority: 'https://internal.vnas.com.vn/identityserver',
+        //         client_id: 'PurchasingJsImplicit',
+        //         redirect_uri: 'http://localhost:3000/',
+        //         response_type: 'token',
+        //         scope: 'roleapi',
+        //         post_logout_redirect_uri: 'http://localhost:3000/',
+        //         // silent_redirect_uri: 'http://localhost:3000/my-demo',
+        //         // userStore: new WebStorageStateStore({
+        //         //     store: window.localStorage,
+        //         // }),
+        //     })
+        //     return userMng
+        // },
     },
 }
 

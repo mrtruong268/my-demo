@@ -3,7 +3,16 @@
         <div class="main-content row">
             <div class="left-content xs8">
                 <div class="container">
-                    <div class="grid-container">
+                    <div v-if="token == ''">
+                        <DxButton
+                            text="Sign in"
+                            type="default"
+                            styling-mode="contained"
+                            @click="clickRouter('login')"
+                            :width="200"
+                        />
+                    </div>
+                    <div v-else class="grid-container">
                         <div
                             class="btn-chucnang"
                             v-for="item in ChucNang"
@@ -65,7 +74,12 @@ import DxButton from 'devextreme-vue/button'
 export default {
     layout: 'commonLayout',
     components: { DxButton },
-    computed: mapState(['ChucNang', 'routeParams']),
+    computed: mapState(['ChucNang', 'routeParams', 'token']),
+    watch: {
+        token() {
+            if (this.token !== '') this.clickRouter('login')
+        },
+    },
 }
 </script>
 

@@ -164,4 +164,15 @@ export const actions = {
             console.log(err)
         }
     },
+    async login({ commit }, item) {
+        try {
+            let response = await this.$axios.post(
+                'https://internal.vnas.com.vn/identityserver/connect/token',
+                item
+            )
+            commit('GET_TOKEN', response.data.access_token)
+        } catch (err) {
+            console.log(err)
+        }
+    },
 }

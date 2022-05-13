@@ -71,9 +71,11 @@
                             <i class="mdi mdi-information btn-guide"></i>
                             <p style="color: #0986c5">{{ $t('User guide') }}</p>
                         </div>
-                        <p @click="login" class="btn-login">
-                            {{ $t('Sign in') }}
-                        </p>
+                        <div v-if="token !== ''">
+                            <p @click="signOut" class="btn-login">
+                                {{ $t('Sign out') }}
+                            </p>
+                        </div>
                         <!-- <div class="dropdown2">
                             <div class="row">
                                 <div class="icon">
@@ -238,7 +240,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['ChucNang', 'ThongBao', 'routeParams']),
+        ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'token']),
         ...mapGetters('quanly', ['quanLy']),
     },
     methods: {
@@ -292,18 +294,9 @@ export default {
                 this.$store.commit('quanly/ADD_LIST', newObj)
             }
         },
-        login() {
-            this.userManage().signinRedirect()
+        signOut() {
+            this.$store.commit('GET_TOKEN', '')
         },
-    },
-    mounted() {
-        if (window.location.hash !== '') {
-            var accessToken = window.location.hash.match(
-                /\#(?:access_token)\=([\S\s]*?)\&/
-            )[1]
-            this.$store.commit('GET_TOKEN', accessToken)
-            localStorage.setItem('accessToken', accessToken)
-        }
     },
     created() {
         this.selectedValue = this.$i18n.locale

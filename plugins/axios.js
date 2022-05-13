@@ -1,12 +1,12 @@
 export default function ({ $axios, redirect, store }) {
     $axios.onRequest((config) => {
-        if(store.state.token){
-            config.headers = {
-                "Accept-Encoding": 'gzip',
-                "Authorization": `Bearer ${store.state.token}`, 
-            }
-        }else{
-            redirect('/')
+        config.baseURL = 'http://data.vnas.com.vn:108/api'
+        if (store.state.token) {
+            config.headers.common[
+                'Authorization'
+            ] = `Bearer ${store.state.token}`
+        } else {
+            redirect('/login')
         }
     })
 }
