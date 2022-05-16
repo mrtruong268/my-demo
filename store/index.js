@@ -25,7 +25,7 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: '1 Office',
+            title: '1Office',
             to: '',
             color: '#157787',
             image: require('assets/1office.svg'),

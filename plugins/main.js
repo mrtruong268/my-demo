@@ -3,9 +3,8 @@ import 'devextreme/dist/css/dx.light.css'
 import Vue from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import VueToast from 'vue-toast-notification'
-// Import one of the available themes
-//import 'vue-toast-notification/dist/theme-default.css';
 import 'vue-toast-notification/dist/theme-sugar.css'
+//import 'vue-toast-notification/dist/theme-default.css';
 // import { UserManager } from 'oidc-client'
 
 const mixin = {
@@ -36,5 +35,8 @@ const mixin = {
     },
 }
 
+const pluginArr = [VueToast]
+pluginArr.forEach((e) => {
+    Vue.use(e)
+})
 Vue.mixin(mixin)
-Vue.use(VueToast)

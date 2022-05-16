@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @keyup.enter="submit">
         <div class="row justify-end align-center">
             <!-- <div class="mr-2">{{ $t('Select language') }} :</div>
             <DxSelectBox
@@ -40,51 +40,62 @@
                             </div>
                         </div>
                         <div class="login-form xs5">
-                            <div>
-                                <div
-                                    class="text-xs-center"
-                                    style="margin-bottom: 24px"
-                                >
-                                    <img src="~assets/logo.svg" alt="" />
-                                    <h3 class="py-5">
-                                        {{ $t('MANAGEMENT SOFTWARE SYSTEM') }}
-                                    </h3>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="mb-2 ml-2">Username</p>
-                                    <DxTextBox
-                                        stylingMode="outlined"
-                                        :show-clear-button="true"
-                                        height="44"
-                                        v-model="login.username"
-                                    />
-                                </div>
-                                <div @keyup.enter="submit">
-                                    <p class="mb-2 ml-2">Password</p>
-                                    <DxTextBox
-                                        stylingMode="outlined"
-                                        height="44"
-                                        :mode="passwordMode"
-                                        v-model="login.password"
-                                        :show-clear-button="true"
-                                    >
-                                        <DxTextBoxButton
-                                            :options="passwordButton"
-                                            name="password"
-                                            location="after"
+                            <div class="column justify-space-between">
+                                <div>
+                                    <div>
+                                        <div class="text-xs-center">
+                                            <img
+                                                src="~assets/logo.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div class="my-4">
+                                            <h1 class="mb-2">
+                                                {{ $t('Log in') }}
+                                            </h1>
+                                            <p>
+                                                Welcome to Management software
+                                                system, enter your credentials
+                                                to start using the app.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <DxTextBox
+                                            stylingMode="outlined"
+                                            :show-clear-button="true"
+                                            v-model="login.username"
+                                            height="50"
+                                            label="Username"
                                         />
-                                        <DxTextBoxButton name="clear" />
-                                    </DxTextBox>
+                                    </div>
+                                    <div>
+                                        <DxTextBox
+                                            stylingMode="outlined"
+                                            :mode="passwordMode"
+                                            v-model="login.password"
+                                            height="50"
+                                            :show-clear-button="true"
+                                            label="Password"
+                                        >
+                                            <DxTextBoxButton
+                                                :options="passwordButton"
+                                                name="password"
+                                                location="after"
+                                            />
+                                            <DxTextBoxButton name="clear" />
+                                        </DxTextBox>
+                                    </div>
                                 </div>
-                            </div>
-                            <div style="margin-top: 70px">
-                                <button
-                                    class="btn-login"
-                                    type="submit"
-                                    @click="submit"
-                                >
-                                    {{ $t('LOG IN') }}
-                                </button>
+                                <div>
+                                    <button
+                                        class="btn-login"
+                                        type="submit"
+                                        @click="submit"
+                                    >
+                                        {{ $t('LOG IN') }}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -177,6 +188,10 @@ export default {
     color: #0986c5;
     border-radius: 6px;
     padding: 20px;
+}
+.login-form p {
+    color: #cccccc;
+    line-height: 20px;
 }
 .btn-login {
     width: 100%;

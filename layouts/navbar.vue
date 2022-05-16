@@ -78,8 +78,9 @@
                                 </div>
                             </div>
                             <div class="dropdown-content2">
-                                <p>{{ $t('Update avatar') }}</p>
-                                <p>{{ $t('Change password') }}</p>
+                                <span>Hi! {{ userInfo.roleapp }}</span>
+                                <!-- <p>{{ $t('Update avatar') }}</p>
+                                <p>{{ $t('Change password') }}</p> -->
                                 <p @click="signOut">
                                     {{ $t('Log out') }}
                                 </p>
@@ -232,6 +233,7 @@ export default {
         return {
             selectedValue: '',
             selectedItem: null,
+            userInfo: {},
         }
     },
     computed: {
@@ -293,6 +295,18 @@ export default {
             this.$store.commit('GET_TOKEN', '')
             this.clickRouter('login')
         },
+        parseJwt(tk) {
+            var base64Payload = tk.split('.')[1]
+            var payload = Buffer.from(base64Payload, 'base64')
+            return JSON.parse(payload.toString())
+        },
+    },
+    mounted() {
+        if (this.token !== '') {
+            this.userInfo = this.parseJwt(this.token)
+        } else {
+            return
+        }
     },
     created() {
         this.selectedValue = this.$i18n.locale
@@ -487,6 +501,13 @@ export default {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     right: 0;
     z-index: 2;
+}
+.dropdown-content2 span {
+    color: white;
+    display: block;
+    padding: 10px 16px;
+    text-align: right;
+    font-style: italic;
 }
 .user-guide {
     display: flex;

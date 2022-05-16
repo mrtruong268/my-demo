@@ -17,7 +17,7 @@
                             class="btn-chucnang"
                             v-for="item in ChucNang"
                             :key="item.id"
-                            @click="clickRouter(item.to, routeParams)"
+                            @click="clickTo(item)"
                             :style="`border-left: 4px solid ${item.color}`"
                         >
                             <div class="row align-center">
@@ -77,6 +77,15 @@ export default {
     computed: mapState(['ChucNang', 'routeParams', 'token']),
     created() {
         if (this.token == '') this.clickRouter('login')
+    },
+    methods: {
+        clickTo(item) {
+            if (item.title === '1Office') {
+                window.open('https://hrvnas.1office.vn/')
+            } else {
+                this.clickRouter(item.to, this.routeParams)
+            }
+        },
     },
 }
 </script>
