@@ -127,6 +127,7 @@ export default {
         },
         clickApprove(e) {
             this.$store.dispatch('pheduyet/submitApprove', e.data.id)
+            this.$toast.success('Success!')
         },
         clickView(e) {
             this.popupVisible = !this.popupVisible
@@ -140,6 +141,7 @@ export default {
         },
         clickDelete(e) {
             this.$store.dispatch('muahang/deleteData', e.data.id)
+            this.$toast.success('Success!')
             this.reload()
         },
         hiddenPopup() {

@@ -66,12 +66,14 @@
                                         height="44"
                                         :mode="passwordMode"
                                         v-model="login.password"
+                                        :show-clear-button="true"
                                     >
                                         <DxTextBoxButton
                                             :options="passwordButton"
                                             name="password"
                                             location="after"
                                         />
+                                        <DxTextBoxButton name="clear" />
                                     </DxTextBox>
                                 </div>
                             </div>
@@ -151,6 +153,7 @@ export default {
     watch: {
         token() {
             if (this.token !== '') this.clickRouter('')
+            this.$toast.success('Success!')
         },
     },
     created() {

@@ -151,7 +151,6 @@
         <div class="row justify-end">
             <span @click="clickAdd" class="btn-save">Lưu</span>
         </div>
-        <toast />
     </div>
 </template>
 
@@ -168,7 +167,6 @@ import {
     DxEditing,
     DxLookup,
 } from 'devextreme-vue/data-grid'
-import toast from '~/components/toast.vue'
 const dataGridRefKey = 'my-data-grid'
 
 export default {
@@ -183,7 +181,6 @@ export default {
         DxButton,
         DxEditing,
         DxLookup,
-        toast,
     },
     data() {
         return {
@@ -226,7 +223,7 @@ export default {
         },
         clickAdd() {
             this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-            this.showToast()
+            this.$toast.success('Success!')
             this.resetData()
         },
         customFormat(e) {

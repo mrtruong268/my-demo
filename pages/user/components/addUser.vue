@@ -95,7 +95,6 @@
                 @click="clickSave"
             />
         </div>
-        <toast :response="resCode" />
     </div>
 </template>
 
@@ -107,7 +106,6 @@ import DxDateBox from 'devextreme-vue/date-box'
 import DxButton from 'devextreme-vue/button'
 import { DxCheckBox } from 'devextreme-vue/check-box'
 import { mapState, mapGetters } from 'vuex'
-import toast from '~/components/toast.vue'
 
 export default {
     props: {
@@ -123,7 +121,6 @@ export default {
         DxNumberBox,
         DxCheckBox,
         DxButton,
-        toast,
     },
     data() {
         return {
@@ -155,7 +152,6 @@ export default {
     methods: {
         clickSave() {
             this.$store.dispatch('user/postStaff', this.NhanVien)
-            this.showToast()
             this.clickClose()
         },
         clickClose() {

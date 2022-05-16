@@ -2,6 +2,10 @@
 import 'devextreme/dist/css/dx.light.css'
 import Vue from 'vue'
 import { v4 as uuidv4 } from 'uuid'
+import VueToast from 'vue-toast-notification'
+// Import one of the available themes
+//import 'vue-toast-notification/dist/theme-default.css';
+import 'vue-toast-notification/dist/theme-sugar.css'
 // import { UserManager } from 'oidc-client'
 
 const mixin = {
@@ -13,12 +17,6 @@ const mixin = {
         },
         idv4() {
             return uuidv4()
-        },
-        showToast() {
-            setTimeout(() => {
-                this.$store.commit('IS_VISIBLE', false)
-            }, 2000)
-            this.$store.commit('IS_VISIBLE', true)
         },
         // userManage() {
         //     var userMng = new UserManager({
@@ -39,3 +37,4 @@ const mixin = {
 }
 
 Vue.mixin(mixin)
+Vue.use(VueToast)

@@ -171,7 +171,6 @@
                 />
             </div>
         </div>
-        <toast />
     </div>
 </template>
 
@@ -188,7 +187,6 @@ import {
     DxPaging,
     DxEditing,
 } from 'devextreme-vue/data-grid'
-import toast from '~/components/toast.vue'
 
 const dataGridRefKey = 'my-data-grid'
 
@@ -210,7 +208,6 @@ export default {
         DxButton,
         DxEditing,
         DxTextArea,
-        toast,
     },
     data() {
         return {
@@ -288,12 +285,12 @@ export default {
     methods: {
         duyet() {
             this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
-            this.showToast()
+            this.$toast.success('Success!')
             this.$emit('hiddenPopup')
         },
         khongDuyet() {
             this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
-            this.showToast()
+            this.$toast.success('Success!')
             this.$emit('hiddenPopup')
         },
         customFormat(e) {

@@ -113,7 +113,6 @@ export const state = () => ({
     DanhSachChucVu: [],
     DanhSachCongTy: [],
     DanhSachPhongBan: [],
-    isVisible: false,
     token: '',
 })
 export const getters = {}
@@ -130,9 +129,6 @@ export const mutations = {
     },
     GET_ALL_DIVISION(state, item) {
         state.DanhSachPhongBan = item
-    },
-    IS_VISIBLE(state, item) {
-        state.isVisible = item
     },
     GET_TOKEN(state, item) {
         state.token = item
