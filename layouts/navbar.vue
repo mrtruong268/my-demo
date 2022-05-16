@@ -67,16 +67,11 @@
                                 </DxTabPanel>
                             </div>
                         </div>
-                        <div class="user-guide mr-3">
+                        <div class="user-guide mr-2">
                             <i class="mdi mdi-information btn-guide"></i>
                             <p style="color: #0986c5">{{ $t('User guide') }}</p>
                         </div>
-                        <div v-if="token !== ''">
-                            <p @click="signOut" class="btn-login">
-                                {{ $t('Sign out') }}
-                            </p>
-                        </div>
-                        <!-- <div class="dropdown2">
+                        <div v-if="token !== ''" class="dropdown2">
                             <div class="row">
                                 <div class="icon">
                                     <i class="mdi mdi-account"></i>
@@ -85,11 +80,11 @@
                             <div class="dropdown-content2">
                                 <p>{{ $t('Update avatar') }}</p>
                                 <p>{{ $t('Change password') }}</p>
-                                <p @click="clickRouter('Login', routeParams)">
+                                <p @click="signOut">
                                     {{ $t('Log out') }}
                                 </p>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -296,6 +291,7 @@ export default {
         },
         signOut() {
             this.$store.commit('GET_TOKEN', '')
+            this.clickRouter('login')
         },
     },
     created() {

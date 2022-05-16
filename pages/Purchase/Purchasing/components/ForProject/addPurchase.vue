@@ -82,7 +82,7 @@
             />
         </div>
         <div>
-            <div class="row justify-space-between mb-2">
+            <div class="row justify-space-between mb-3">
                 <h3>{{ $t('Add goods, services') }}</h3>
             </div>
             <DxDataGrid

@@ -6,7 +6,7 @@ export default function ({ $axios, redirect, store }) {
                 'Authorization'
             ] = `Bearer ${store.state.token}`
         } else {
-            redirect('/login')
+            return redirect('/login')
         }
     })
 }

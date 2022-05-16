@@ -43,7 +43,7 @@
                             <div>
                                 <div
                                     class="text-xs-center"
-                                    style="margin-bottom: 30px"
+                                    style="margin-bottom: 24px"
                                 >
                                     <img src="~assets/logo.svg" alt="" />
                                     <h3 class="py-5">
@@ -51,30 +51,37 @@
                                     </h3>
                                 </div>
                                 <div class="mb-4">
-                                    <p>Username</p>
+                                    <p class="mb-2 ml-2">Username</p>
                                     <DxTextBox
-                                        stylingMode="underlined"
+                                        stylingMode="outlined"
                                         :show-clear-button="true"
+                                        height="44"
                                         v-model="login.username"
                                     />
                                 </div>
-                                <div>
-                                    <p>Password</p>
+                                <div @keyup.enter="submit">
+                                    <p class="mb-2 ml-2">Password</p>
                                     <DxTextBox
-                                        :show-clear-button="true"
-                                        mode="password"
-                                        stylingMode="underlined"
+                                        stylingMode="outlined"
+                                        height="44"
+                                        :mode="passwordMode"
                                         v-model="login.password"
-                                    />
+                                    >
+                                        <DxTextBoxButton
+                                            :options="passwordButton"
+                                            name="password"
+                                            location="after"
+                                        />
+                                    </DxTextBox>
                                 </div>
                             </div>
-                            <div style="margin-top: 50px">
+                            <div style="margin-top: 70px">
                                 <button
                                     class="btn-login"
                                     type="submit"
                                     @click="submit"
                                 >
-                                    {{ $t('SIGN IN') }}
+                                    {{ $t('LOG IN') }}
                                 </button>
                             </div>
                         </div>
@@ -86,7 +93,7 @@
 </template>
 
 <script>
-import DxTextBox from 'devextreme-vue/text-box'
+import { DxButton as DxTextBoxButton, DxTextBox } from 'devextreme-vue/text-box'
 import DxButton from 'devextreme-vue/button'
 import DxSelectBox from 'devextreme-vue/select-box'
 import { mapState } from 'vuex'
@@ -97,10 +104,20 @@ export default {
         DxTextBox,
         DxButton,
         DxSelectBox,
+        DxTextBoxButton,
     },
     data() {
         return {
             selectedValue: '',
+            passwordMode: 'password',
+            passwordButton: {
+                icon: 'mdi mdi-eye',
+                type: 'icon',
+                onClick: () => {
+                    this.passwordMode =
+                        this.passwordMode === 'text' ? 'password' : 'text'
+                },
+            },
             login: {
                 username: '',
                 password: '',
@@ -160,12 +177,15 @@ export default {
 }
 .btn-login {
     width: 100%;
-    padding: 16px 0;
-    border-radius: 24px;
+    padding: 14px 0;
+    border-radius: 4px;
     background-color: #0986c5;
     border: none;
     color: white;
     cursor: pointer;
+}
+>>> .dx-texteditor-buttons-container {
+    margin-right: 6px;
 }
 @media only screen and (max-width: 739px) {
     .describe {

@@ -75,10 +75,8 @@ export default {
     layout: 'commonLayout',
     components: { DxButton },
     computed: mapState(['ChucNang', 'routeParams', 'token']),
-    watch: {
-        token() {
-            if (this.token !== '') this.clickRouter('login')
-        },
+    created() {
+        if (this.token == '') this.clickRouter('login')
     },
 }
 </script>

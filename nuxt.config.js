@@ -2,9 +2,6 @@ import i18n from './config/i18n'
 
 export default {
     target: 'static',
-    // router: {
-    //     base: '/my-demo/',
-    // },
     head: {
         title: 'Project manager',
         htmlAttrs: {
