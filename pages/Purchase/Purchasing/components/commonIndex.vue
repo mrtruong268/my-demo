@@ -212,6 +212,7 @@ export default {
         },
         titleClick() {
             this.$store.dispatch('muahang/getData')
+            this.$store.dispatch('pheduyet/getApprove')
         },
     },
     created() {

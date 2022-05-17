@@ -25,7 +25,6 @@
         "uuid": "^8.3.2",
         "vue": "^2.6.14",
         "vue-fullscreen": "^2.6.1",
-        "vue-loading-overlay": "3.0",
         "vue-server-renderer": "^2.6.14",
         "vue-template-compiler": "^2.6.14",
         "vue-toast-notification": "^0.6.2",

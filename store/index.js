@@ -115,7 +115,9 @@ export const state = () => ({
     DanhSachPhongBan: [],
     token: '',
 })
-export const getters = {}
+export const getters = {
+    isLogin: (state) => (state.token !== '' ? true : false),
+}
 
 export const mutations = {
     LANG_SWITCH(state, lang) {
@@ -166,7 +168,8 @@ export const actions = {
                 'https://internal.vnas.com.vn/identityserver/connect/token',
                 item
             )
-            commit('GET_TOKEN', response.data.access_token)
+            localStorage.setItem('accessToken', response.data.access_token)
+            commit('GET_TOKEN', localStorage.getItem('accessToken'))
         } catch (err) {
             console.log(err)
         }

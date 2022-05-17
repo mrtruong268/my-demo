@@ -1,5 +1,5 @@
 <template>
-    <div @keyup.enter="submit">
+    <div>
         <div class="row justify-end align-center">
             <!-- <div class="mr-2">{{ $t('Select language') }} :</div>
             <DxSelectBox
@@ -39,44 +39,34 @@
                                 <p>{{ $t('Hotline') }}: +(84) 904 576 993</p>
                             </div>
                         </div>
-                        <div class="login-form xs5">
+                        <div @keyup.enter="submit" class="login-form xs5">
                             <div class="column justify-space-between">
                                 <div>
-                                    <div>
+                                    <div style="margin-bottom: 60px">
                                         <div class="text-xs-center">
                                             <img
                                                 src="~assets/logo.svg"
                                                 alt=""
                                             />
                                         </div>
-                                        <div class="my-4">
-                                            <h1 class="mb-2">
-                                                {{ $t('Log in') }}
-                                            </h1>
-                                            <p>
-                                                Welcome to Management software
-                                                system, enter your credentials
-                                                to start using the app.
-                                            </p>
-                                        </div>
                                     </div>
-                                    <div class="mb-4">
+                                    <div>
+                                        <p class="login-info mb-3">Username</p>
                                         <DxTextBox
                                             stylingMode="outlined"
                                             :show-clear-button="true"
                                             v-model="login.username"
-                                            height="50"
-                                            label="Username"
+                                            height="44"
                                         />
                                     </div>
                                     <div>
+                                        <p class="login-info my-3">Password</p>
                                         <DxTextBox
                                             stylingMode="outlined"
                                             :mode="passwordMode"
                                             v-model="login.password"
-                                            height="50"
+                                            height="44"
                                             :show-clear-button="true"
-                                            label="Password"
                                         >
                                             <DxTextBoxButton
                                                 :options="passwordButton"
@@ -109,10 +99,9 @@
 import { DxButton as DxTextBoxButton, DxTextBox } from 'devextreme-vue/text-box'
 import DxButton from 'devextreme-vue/button'
 import DxSelectBox from 'devextreme-vue/select-box'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-    name: 'IndexPage',
     components: {
         DxTextBox,
         DxButton,
@@ -138,7 +127,8 @@ export default {
         }
     },
     computed: {
-        ...mapState(['routeParams', 'token']),
+        ...mapState(['routeParams']),
+        ...mapGetters(['isLogin']),
     },
     methods: {
         onChange(e) {
@@ -162,8 +152,8 @@ export default {
         },
     },
     watch: {
-        token() {
-            if (this.token !== '') this.clickRouter('')
+        isLogin() {
+            if (this.isLogin) this.clickRouter('')
             this.$toast.success('Success!')
         },
     },
@@ -185,13 +175,12 @@ export default {
 }
 .login-form {
     background-color: white;
-    color: #0986c5;
+    color: rgba(0, 0, 0, 0.7);
     border-radius: 6px;
     padding: 20px;
 }
-.login-form p {
-    color: #cccccc;
-    line-height: 20px;
+.login-info {
+    color: #999999;
 }
 .btn-login {
     width: 100%;

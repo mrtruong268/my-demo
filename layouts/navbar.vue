@@ -71,7 +71,7 @@
                             <i class="mdi mdi-information btn-guide"></i>
                             <p style="color: #0986c5">{{ $t('User guide') }}</p>
                         </div>
-                        <div v-if="token !== ''" class="dropdown2">
+                        <div v-if="isLogin" class="dropdown2">
                             <div class="row">
                                 <div class="icon">
                                     <i class="mdi mdi-account"></i>
@@ -239,6 +239,7 @@ export default {
     computed: {
         ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'token']),
         ...mapGetters('quanly', ['quanLy']),
+        ...mapGetters(['isLogin']),
     },
     methods: {
         openNav() {
@@ -293,6 +294,7 @@ export default {
         },
         signOut() {
             this.$store.commit('GET_TOKEN', '')
+            localStorage.removeItem('accessToken')
             this.clickRouter('login')
         },
         parseJwt(tk) {
@@ -302,11 +304,7 @@ export default {
         },
     },
     mounted() {
-        if (this.token !== '') {
-            this.userInfo = this.parseJwt(this.token)
-        } else {
-            return
-        }
+        if (this.isLogin) this.userInfo = this.parseJwt(this.token)
     },
     created() {
         this.selectedValue = this.$i18n.locale

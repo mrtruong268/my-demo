@@ -2,7 +2,6 @@ import i18n from './config/i18n'
 
 export default {
     target: 'static',
-    router: {},
     head: {
         title: 'Project manager',
         htmlAttrs: {
@@ -25,7 +24,7 @@ export default {
             },
         ],
     },
-
+    loading: '~/components/loading.vue',
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: ['~/assets/css/style.css'],
 

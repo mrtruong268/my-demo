@@ -1,17 +1,17 @@
 import Vue from 'vue'
 
-export default function ({ $axios, redirect, store }) {
+export default function ({ $axios, redirect }) {
     $axios.onRequest((config) => {
         config.baseURL = 'http://data.vnas.com.vn:108/api'
-        if (store.state.token) {
-            config.headers.common[
-                'Authorization'
-            ] = `Bearer ${store.state.token}`
+        var accessToken = localStorage.getItem('accessToken')
+        if (accessToken) {
+            config.headers.common['Authorization'] = `Bearer ${accessToken}`
         } else {
             return redirect('/login')
         }
     })
-    $axios.onError((err) => {
-        Vue.$toast.error('Failed! An error has occurred!')
+    $axios.onError((error) => {
+        Vue.$toast.error(`Failed! ${error.message}`)
+        if (error.response.status === 401) return redirect('/login')
     })
 }
