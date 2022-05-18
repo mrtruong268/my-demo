@@ -43,6 +43,7 @@ export default {
         '@nuxtjs/auth-next',
         'nuxtjs-mdi-font',
         'nuxt-i18n',
+        'cookie-universal-nuxt',
     ],
     i18n: {
         locales: [

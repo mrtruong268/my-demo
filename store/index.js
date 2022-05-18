@@ -169,7 +169,11 @@ export const actions = {
                 item
             )
             localStorage.setItem('accessToken', response.data.access_token)
-            commit('GET_TOKEN', localStorage.getItem('accessToken'))
+            this.$cookies.set('cookieToken', response.data.access_token, {
+                path: '/',
+                maxAge: 60 * 60 * 24 * 7,
+            })
+            commit('GET_TOKEN', response.data.access_token)
         } catch (err) {
             console.log(err)
         }

@@ -149,12 +149,18 @@ export default {
                 formData.append(e, form[e])
             })
             this.$store.dispatch('login', formData)
+            this.signIn()
+        },
+        signIn() {
+            if (localStorage.getItem('accessToken')) {
+                this.clickRouter('')
+                this.$toast.success('Success!')
+            }
         },
     },
     watch: {
         isLogin() {
-            if (this.isLogin) this.clickRouter('')
-            this.$toast.success('Success!')
+            this.signIn()
         },
     },
     created() {
@@ -178,6 +184,10 @@ export default {
     color: rgba(0, 0, 0, 0.7);
     border-radius: 6px;
     padding: 20px;
+}
+.login-form img {
+    max-width: 100%;
+    height: auto;
 }
 .login-info {
     color: #999999;
@@ -208,6 +218,9 @@ export default {
     }
     .captcha {
         margin-bottom: 32px;
+    }
+    .btn-login{
+        margin-top: 40px;
     }
 }
 </style>

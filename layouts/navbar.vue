@@ -71,14 +71,16 @@
                             <i class="mdi mdi-information btn-guide"></i>
                             <p style="color: #0986c5">{{ $t('User guide') }}</p>
                         </div>
-                        <div v-if="isLogin" class="dropdown2">
-                            <div class="row">
+                        <div class="dropdown2">
+                            <div class="row align-center">
+                                <div class="mr-2">
+                                    <span>Hi! {{ userInfo.roleapp }}</span>
+                                </div>
                                 <div class="icon">
                                     <i class="mdi mdi-account"></i>
                                 </div>
                             </div>
                             <div class="dropdown-content2">
-                                <span>Hi! {{ userInfo.roleapp }}</span>
                                 <!-- <p>{{ $t('Update avatar') }}</p>
                                 <p>{{ $t('Change password') }}</p> -->
                                 <p @click="signOut">
@@ -237,9 +239,8 @@ export default {
         }
     },
     computed: {
-        ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'token']),
+        ...mapState(['ChucNang', 'ThongBao', 'routeParams']),
         ...mapGetters('quanly', ['quanLy']),
-        ...mapGetters(['isLogin']),
     },
     methods: {
         openNav() {
@@ -295,6 +296,7 @@ export default {
         signOut() {
             this.$store.commit('GET_TOKEN', '')
             localStorage.removeItem('accessToken')
+            this.$cookies.remove('cookieToken')
             this.clickRouter('login')
         },
         parseJwt(tk) {
@@ -304,7 +306,7 @@ export default {
         },
     },
     mounted() {
-        if (this.isLogin) this.userInfo = this.parseJwt(this.token)
+        this.userInfo = this.parseJwt(localStorage.getItem('accessToken'))
     },
     created() {
         this.selectedValue = this.$i18n.locale
@@ -491,6 +493,9 @@ export default {
     display: inline-block;
     margin-left: 16px;
 }
+.dropdown2 span {
+    color: #0986c5;
+}
 .dropdown-content2 {
     display: none;
     position: absolute;
@@ -499,13 +504,6 @@ export default {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     right: 0;
     z-index: 2;
-}
-.dropdown-content2 span {
-    color: white;
-    display: block;
-    padding: 10px 16px;
-    text-align: right;
-    font-style: italic;
 }
 .user-guide {
     display: flex;

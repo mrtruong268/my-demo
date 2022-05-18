@@ -16,6 +16,7 @@
         "@mdi/font": "^6.6.96",
         "@nuxtjs/auth-next": "5.0.0-1648802546.c9880dc",
         "@nuxtjs/axios": "^5.13.6",
+        "cookie-universal-nuxt": "^2.1.5",
         "core-js": "^3.19.3",
         "devextreme": "21.2.6",
         "devextreme-vue": "21.2.6",

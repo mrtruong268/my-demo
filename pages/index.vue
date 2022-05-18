@@ -59,20 +59,18 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import DxButton from 'devextreme-vue/button'
 
 export default {
     layout: 'commonLayout',
     components: { DxButton },
-    data() {
-        return {
-            isAuth: '',
-        }
+    middleware({ app, redirect }) {
+        let cookieToken = app.$cookies.get('cookieToken')
+        if (cookieToken == null) return redirect('/login')
     },
     computed: {
         ...mapState(['ChucNang', 'routeParams']),
-        ...mapGetters(['isLogin']),
     },
     methods: {
         clickTo(item) {
@@ -83,15 +81,6 @@ export default {
             }
         },
     },
-    // watch: {
-    //     isAuth: {
-    //         handler(isAuth) {
-    //             isAuth = window.localStorage.getItem('accessToken')
-    //             if (isAuth) this.clickRouter('login')
-    //         },
-    //         immediate: true,
-    //     },
-    // },
 }
 </script>
 
