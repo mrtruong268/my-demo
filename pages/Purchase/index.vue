@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="main">
-            <h2 class="text-xs-center mb-3">{{ $t('Purchasing') }}</h2>
+            <h2 class="text-xs-center mb-3">{{ $t('Purchase') }}</h2>
             <transition name="fade" appear>
                 <div>
                     <div

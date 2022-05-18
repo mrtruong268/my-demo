@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div>
-                    <!-- <DxSelectBox
+                    <DxSelectBox
                         v-model="selectedValue"
                         :data-source="$i18n.locales"
                         display-expr="name"
@@ -165,7 +165,7 @@
                                 <DxTextBox style="display: none" />
                             </div>
                         </template>
-                    </DxSelectBox> -->
+                    </DxSelectBox>
                 </div>
             </div>
         </div>

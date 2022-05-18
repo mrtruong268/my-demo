@@ -1,27 +1,5 @@
 <template>
     <div>
-        <div class="row justify-end align-center">
-            <!-- <div class="mr-2">{{ $t('Select language') }} :</div>
-            <DxSelectBox
-                v-model="selectedValue"
-                :data-source="$i18n.locales"
-                display-expr="name"
-                value-expr="code"
-                width="80"
-                @selectionChanged="onChange(selectedValue)"
-                field-template="field"
-            >
-                <template #field="{ data }">
-                    <div class="row align-center pa-1">
-                        <img
-                            :src="data.icon"
-                            style="width: 28px; height: 21px"
-                        />
-                        <DxTextBox :read-only="true" style="display: none" />
-                    </div>
-                </template>
-            </DxSelectBox> -->
-        </div>
         <div class="container">
             <div class="row justify-center align-center">
                 <div class="login-image xs7 pa-4">
@@ -51,7 +29,9 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <p class="login-info mb-3">Username</p>
+                                        <p class="login-info mb-3">
+                                            {{ $t('Username') }}
+                                        </p>
                                         <DxTextBox
                                             stylingMode="outlined"
                                             :show-clear-button="true"
@@ -60,7 +40,9 @@
                                         />
                                     </div>
                                     <div>
-                                        <p class="login-info my-3">Password</p>
+                                        <p class="login-info my-3">
+                                            {{ $t('Password') }}
+                                        </p>
                                         <DxTextBox
                                             stylingMode="outlined"
                                             :mode="passwordMode"
@@ -83,7 +65,7 @@
                                         type="submit"
                                         @click="submit"
                                     >
-                                        {{ $t('LOG IN') }}
+                                        {{ $t('Log in') }}
                                     </button>
                                 </div>
                             </div>
@@ -110,7 +92,6 @@ export default {
     },
     data() {
         return {
-            selectedValue: '',
             passwordMode: 'password',
             passwordButton: {
                 icon: 'mdi mdi-eye',
@@ -127,14 +108,9 @@ export default {
         }
     },
     computed: {
-        ...mapState(['routeParams']),
         ...mapGetters(['isLogin']),
     },
     methods: {
-        onChange(e) {
-            this.$store.commit('LANG_SWITCH', e)
-            this.$router.replace(this.switchLocalePath(e))
-        },
         submit() {
             let form = {
                 client_id: 'PurchasingAppAccount',
@@ -162,9 +138,6 @@ export default {
         isLogin() {
             this.signIn()
         },
-    },
-    created() {
-        this.selectedValue = this.$i18n.locale
     },
 }
 </script>
@@ -219,7 +192,7 @@ export default {
     .captcha {
         margin-bottom: 32px;
     }
-    .btn-login{
+    .btn-login {
         margin-top: 40px;
     }
 }

@@ -10,9 +10,9 @@ import 'vue-toast-notification/dist/theme-sugar.css'
 const mixin = {
     methods: {
         clickRouter(link, param) {
-            // param === 'vi'
-            // ? this.$router.push(`/${param}` + `/${link}`)
-            this.$router.push(`/${link}`)
+            param === 'vi'
+                ? this.$router.push(`/${param}` + `/${link}`)
+                : this.$router.push(`/${link}`)
         },
         idv4() {
             return uuidv4()
