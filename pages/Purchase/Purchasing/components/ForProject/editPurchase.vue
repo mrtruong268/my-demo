@@ -1,89 +1,123 @@
 <template>
     <div>
-        <h3 class="mb-2">{{ $t('Information') }}</h3>
-        <div class="row align-center justify-space-between mb-3">
-            <DxTextBox
-                v-model="YeuCauMuaHang.tenNhanVien"
-                styling-mode="outlined"
-                :label="$t('Name')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.maNhanVien"
-                styling-mode="outlined"
-                :label="$t('Employee code')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.chucVu"
-                styling-mode="outlined"
-                :label="$t('Position')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.phongBan"
-                styling-mode="outlined"
-                :label="$t('Department')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.phuPhi"
-                styling-mode="outlined"
-                :label="$t('Surcharge')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.maChiPhi"
-                styling-mode="outlined"
-                :label="$t('Expense code')"
-                label-mode="floating"
-                class="xs2"
-            />
-        </div>
-        <div class="row align-center mb-3">
-            <DxDateBox
-                v-model="YeuCauMuaHang.ngayDeTrinh"
-                displayFormat="dd/MM/yyyy"
-                :use-mask-behavior="true"
-                validationMessageMode="always"
-                styling-mode="outlined"
-                :label="$t('Submission date')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxDateBox
-                v-model="YeuCauMuaHang.ngayCanHang"
-                displayFormat="dd/MM/yyyy"
-                :use-mask-behavior="true"
-                validationMessageMode="always"
-                styling-mode="outlined"
-                :label="$t('Delivery date')"
-                class="xs2 mr-3"
-                label-mode="floating"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.diaDiemLamViec"
-                styling-mode="outlined"
-                :label="$t('Work location')"
-                label-mode="floating"
-                class="xs-4 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.soThamChieu"
-                styling-mode="outlined"
-                :label="$t('Reference number')"
-                label-mode="floating"
-                class="xs-4"
-            />
-        </div>
+        <DxValidationGroup :ref="formValidation">
+            <div class="row align-center justify-space-between mb-3">
+                <DxTextBox
+                    v-model="YeuCauMuaHang.tenNhanVien"
+                    styling-mode="outlined"
+                    :label="$t('Name')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.maNhanVien"
+                    styling-mode="outlined"
+                    :label="$t('Employee code')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.chucVu"
+                    styling-mode="outlined"
+                    :label="$t('Position')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.phongBan"
+                    styling-mode="outlined"
+                    :label="$t('Department')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.phuPhi"
+                    styling-mode="outlined"
+                    :label="$t('Surcharge')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.maChiPhi"
+                    styling-mode="outlined"
+                    :label="$t('Expense code')"
+                    label-mode="floating"
+                    class="xs2"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+            </div>
+            <div class="row align-center mb-3">
+                <DxDateBox
+                    v-model="YeuCauMuaHang.ngayDeTrinh"
+                    displayFormat="dd/MM/yyyy"
+                    :use-mask-behavior="true"
+                    validationMessageMode="always"
+                    styling-mode="outlined"
+                    :label="$t('Submission date')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                />
+                <DxDateBox
+                    v-model="YeuCauMuaHang.ngayCanHang"
+                    displayFormat="dd/MM/yyyy"
+                    :use-mask-behavior="true"
+                    validationMessageMode="always"
+                    styling-mode="outlined"
+                    :label="$t('Delivery date')"
+                    class="xs2 mr-3"
+                    label-mode="floating"
+                />
+                <DxTextBox
+                    v-model="YeuCauMuaHang.diaDiemLamViec"
+                    styling-mode="outlined"
+                    :label="$t('Work location')"
+                    label-mode="floating"
+                    class="xs-4 mr-3"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.soThamChieu"
+                    styling-mode="outlined"
+                    :label="$t('Reference number')"
+                    label-mode="floating"
+                    class="xs-4"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+            </div>
+        </DxValidationGroup>
+
         <div class="mb-3">
             <div class="row justify-space-between">
-                <h3>{{ $t('Add goods, services') }}</h3>
+                <h3>{{ $t('List of goods and services') }}</h3>
                 <DxButton icon="mdi mdi-plus" class="mb-2" @click="addRow" />
             </div>
             <DxDataGrid
@@ -111,14 +145,33 @@
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
                     width="150"
-                    :caption="$t('Name')"
-                />
+                    :caption="$t('Goods, services')"
+                >
+                    <!-- <DxLookup
+                        :data-source="getFilteredCities"
+                        display-expr="Name"
+                        value-expr="ID"
+                    /> -->
+                </DxColumn>
+                <DxColumn
+                    data-field="model_MaHieu"
+                    :caption="$t('Model')"
+                    width="70"
+                >
+                </DxColumn>
+                <DxColumn
+                    data-field="xuatXu_Hang"
+                    :caption="$t('Origin')"
+                    width="70"
+                >
+                </DxColumn>
                 <DxColumn
                     data-field="soLuong"
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50" />
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50">
+                </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
                     :caption="$t('Estimated unit price')"
@@ -126,19 +179,21 @@
                     :format="customFormat"
                 />
                 <DxColumn
+                    data-field="soTienTamTinh"
+                    :caption="$t('Estimated amount price')"
+                    width="180"
+                    :format="customFormat"
+                    :calculate-cell-value="calculateAmount"
+                />
+                <DxColumn
+                    data-field="maDuAn"
+                    :caption="$t('Project code')"
+                    width="120"
+                />
+                <DxColumn
                     data-field="maHangMucTrienKhai"
-                    :caption="$t('Categories')"
-                    width="90"
-                />
-                <DxColumn
-                    data-field="xuatXu_Hang"
-                    :caption="$t('Origin')"
-                    width="70"
-                />
-                <DxColumn
-                    data-field="model_MaHieu"
-                    :caption="$t('Model')"
-                    width="70"
+                    :caption="$t('Deployment category code')"
+                    width="200"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
                 <!-- <DxColumn
@@ -179,7 +234,8 @@ import {
     DxEditing,
 } from 'devextreme-vue/data-grid'
 import { mapGetters } from 'vuex'
-const dataGridRefKey = 'my-data-grid'
+import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
+import DxValidationGroup from 'devextreme-vue/validation-group'
 
 export default {
     components: {
@@ -192,10 +248,14 @@ export default {
         DxNumberBox,
         DxButton,
         DxEditing,
+        DxValidator,
+        DxRequiredRule,
+        DxValidationGroup,
     },
     data() {
         return {
-            dataGridRefKey,
+            dataGridRefKey: 'datagridValid',
+            formValidation: 'formValid',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -238,28 +298,40 @@ export default {
     },
     computed: {
         ...mapGetters('muahang', ['suaYeuCau', 'danhSachHangHoa']),
+        validationGroup() {
+            return this.$refs[this.formValidation].instance
+        },
     },
     methods: {
         addRow() {
-            return this.$refs[dataGridRefKey].instance.addRow()
+            return this.$refs[this.dataGridRefKey].instance.addRow()
         },
         saved() {
             let tmpData =
-                this.$refs[dataGridRefKey].instance.getDataSource()._items
+                this.$refs[this.dataGridRefKey].instance.getDataSource()._items
             this.YeuCauMuaHang.yeuCauMuaHangChiTiets = tmpData
         },
         clickSave() {
-            setTimeout(() => {
-                this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
-            }, 100)
-            this.$toast.success('Success!')
-            this.$emit('invisible')
+            let result = this.validationGroup.validate()
+            let checkEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets.some(
+                (e) => e.tenHangHoa_DichVu !== ''
+            )
+            if (result.isValid && checkEmpty) {
+                setTimeout(() => {
+                    this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
+                }, 100)
+                this.$toast.success('Success!')
+                this.$emit('invisible')
+            }
         },
         customFormat(e) {
             return new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
                 currency: 'VND',
             }).format(e)
+        },
+        calculateAmount(e) {
+            return e.soLuong * e.donGiaTamTinh
         },
     },
 }

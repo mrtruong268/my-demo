@@ -128,7 +128,7 @@ export default {
             this.signIn()
         },
         signIn() {
-            if (localStorage.getItem('accessToken')) {
+            if (this.$cookies.get('cookieToken')) {
                 this.clickRouter('')
                 this.$toast.success('Success!')
             }

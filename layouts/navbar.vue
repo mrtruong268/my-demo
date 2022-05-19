@@ -74,7 +74,7 @@
                         <div class="dropdown2">
                             <div class="row align-center">
                                 <div class="mr-2">
-                                    <span>Hi! {{ userInfo.roleapp }}</span>
+                                    <span>Hi! {{ userInfo.username }}</span>
                                 </div>
                                 <div class="icon">
                                     <i class="mdi mdi-account"></i>
@@ -148,16 +148,16 @@
                         :data-source="$i18n.locales"
                         display-expr="name"
                         value-expr="code"
+                        stylingMode="filled"
+                        class="mr-4"
                         @selectionChanged="onChange(selectedValue)"
                         field-template="field"
-                        class="mr-4"
-                        stylingMode="underlined"
                     >
                         <template #field="{ data }">
                             <div class="row align-center pa-1">
                                 <img
                                     :src="data.icon"
-                                    style="width: 28px; height: 21px"
+                                    style="width: 22px; height: 22px"
                                 />
                                 <p class="ml-3">
                                     {{ data.name }}
@@ -235,11 +235,11 @@ export default {
         return {
             selectedValue: '',
             selectedItem: null,
-            userInfo: {},
+            user: {},
         }
     },
     computed: {
-        ...mapState(['ChucNang', 'ThongBao', 'routeParams']),
+        ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'userInfo']),
         ...mapGetters('quanly', ['quanLy']),
     },
     methods: {
@@ -295,20 +295,18 @@ export default {
         },
         signOut() {
             this.$store.commit('GET_TOKEN', '')
-            localStorage.removeItem('accessToken')
             this.$cookies.remove('cookieToken')
             this.clickRouter('login')
         },
-        parseJwt(tk) {
-            var base64Payload = tk.split('.')[1]
+        parseJwt(token) {
+            var base64Payload = token.split('.')[1]
             var payload = Buffer.from(base64Payload, 'base64')
             return JSON.parse(payload.toString())
         },
     },
-    mounted() {
-        this.userInfo = this.parseJwt(localStorage.getItem('accessToken'))
-    },
     created() {
+        this.user = this.parseJwt(this.$cookies.get('cookieToken'))
+        this.$store.dispatch('getUser', this.user.name)
         this.selectedValue = this.$i18n.locale
     },
 }

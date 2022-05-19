@@ -1,118 +1,119 @@
 <template>
     <div class="container-md">
-        <!-- <DxValidationGroup :ref="formValidation"> -->
-        <div class="row align-center justify-space-between mb-3">
-            <DxTextBox
-                v-model="YeuCauMuaHang.tenNhanVien"
-                styling-mode="outlined"
-                :label="$t('Name')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            >
-                <!-- <DxValidator>
+        <DxValidationGroup :ref="formValidation">
+            <div class="row align-center justify-space-between mb-3">
+                <DxTextBox
+                    v-model="YeuCauMuaHang.tenNhanVien"
+                    styling-mode="outlined"
+                    :label="$t('Name')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
-            </DxTextBox>
-            <DxTextBox
-                v-model="YeuCauMuaHang.maNhanVien"
-                styling-mode="outlined"
-                :label="$t('Employee code')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            >
-                <!-- <DxValidator>
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.maNhanVien"
+                    styling-mode="outlined"
+                    :label="$t('Employee code')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
-            </DxTextBox>
-            <DxTextBox
-                v-model="YeuCauMuaHang.chucVu"
-                styling-mode="outlined"
-                :label="$t('Position')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            >
-                <!-- <DxValidator>
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.chucVu"
+                    styling-mode="outlined"
+                    :label="$t('Position')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
-            </DxTextBox>
-            <DxTextBox
-                v-model="YeuCauMuaHang.phongBan"
-                styling-mode="outlined"
-                :label="$t('Department')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            >
-                <!-- <DxValidator>
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.phongBan"
+                    styling-mode="outlined"
+                    :label="$t('Department')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
-            </DxTextBox>
-            <DxTextBox
-                v-model="YeuCauMuaHang.phuPhi"
-                styling-mode="outlined"
-                :label="$t('Surcharge')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            >
-                <!-- <DxValidator>
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.phuPhi"
+                    styling-mode="outlined"
+                    :label="$t('Surcharge')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
-            </DxTextBox>
-            <DxTextBox
-                v-model="YeuCauMuaHang.maChiPhi"
-                styling-mode="outlined"
-                :label="$t('Expense code')"
-                label-mode="floating"
-                class="xs2"
-            >
-                <!-- <DxValidator>
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.maChiPhi"
+                    styling-mode="outlined"
+                    :label="$t('Expense code')"
+                    label-mode="floating"
+                    class="xs2"
+                >
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
-            </DxTextBox>
-        </div>
-        <div class="row align-center mb-2">
-            <DxDateBox
-                v-model="YeuCauMuaHang.ngayDeTrinh"
-                displayFormat="dd/MM/yyyy"
-                :use-mask-behavior="true"
-                validationMessageMode="always"
-                styling-mode="outlined"
-                :label="$t('Submission date')"
-                label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxDateBox
-                v-model="YeuCauMuaHang.ngayCanHang"
-                displayFormat="dd/MM/yyyy"
-                :use-mask-behavior="true"
-                validationMessageMode="always"
-                styling-mode="outlined"
-                :label="$t('Delivery date')"
-                class="xs2 mr-3"
-                label-mode="floating"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.diaDiemLamViec"
-                styling-mode="outlined"
-                :label="$t('Work location')"
-                label-mode="floating"
-                class="xs-4 mr-3"
-            >
-                <!-- <DxValidator>
+                    </DxValidator>
+                </DxTextBox>
+            </div>
+            <div class="row align-center mb-2">
+                <DxDateBox
+                    v-model="YeuCauMuaHang.ngayDeTrinh"
+                    displayFormat="dd/MM/yyyy"
+                    :use-mask-behavior="true"
+                    validationMessageMode="always"
+                    styling-mode="outlined"
+                    :label="$t('Submission date')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                />
+                <DxDateBox
+                    v-model="YeuCauMuaHang.ngayCanHang"
+                    displayFormat="dd/MM/yyyy"
+                    :use-mask-behavior="true"
+                    validationMessageMode="always"
+                    styling-mode="outlined"
+                    :label="$t('Delivery date')"
+                    class="xs2 mr-3"
+                    label-mode="floating"
+                />
+                <DxTextBox
+                    v-model="YeuCauMuaHang.diaDiemLamViec"
+                    styling-mode="outlined"
+                    :label="$t('Work location')"
+                    label-mode="floating"
+                    class="xs-4 mr-3"
+                >
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
-            </DxTextBox>
-            <DxTextBox
-                v-model="YeuCauMuaHang.soThamChieu"
-                styling-mode="outlined"
-                :label="$t('Reference number')"
-                label-mode="floating"
-                class="xs-4"
-            >
-                <!-- <DxValidator>
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
+                    v-model="YeuCauMuaHang.soThamChieu"
+                    styling-mode="outlined"
+                    :label="$t('Reference number')"
+                    label-mode="floating"
+                    class="xs-4"
+                >
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
-            </DxTextBox>
-        </div>
+                    </DxValidator>
+                </DxTextBox>
+            </div>
+        </DxValidationGroup>
 
         <div>
             <div class="row mb-2 justify-center">
@@ -139,7 +140,6 @@
                     width="150"
                     :caption="$t('Goods, services')"
                 >
-                    <!-- <DxRequiredRule /> -->
                     <!-- <DxLookup
                         :data-source="getFilteredCities"
                         display-expr="Name"
@@ -151,14 +151,12 @@
                     :caption="$t('Model')"
                     width="70"
                 >
-                    <!-- <DxRequiredRule /> -->
                 </DxColumn>
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
                     width="70"
                 >
-                    <!-- <DxRequiredRule /> -->
                 </DxColumn>
                 <DxColumn
                     data-field="soLuong"
@@ -166,7 +164,6 @@
                     width="90"
                 />
                 <DxColumn data-field="donVi" :caption="$t('Unit')" width="50">
-                    <!-- <DxRequiredRule /> -->
                 </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
@@ -201,7 +198,6 @@
                 text="Add"
             />
         </div>
-        <!-- </DxValidationGroup> -->
 
         <div class="row justify-end">
             <DxButton
@@ -227,8 +223,9 @@ import {
     DxEditing,
     DxLookup,
 } from 'devextreme-vue/data-grid'
-import { DxValidator, DxRequiredRule } from 'devextreme-vue/validator'
+import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
 import DxValidationGroup from 'devextreme-vue/validation-group'
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -248,7 +245,7 @@ export default {
     },
     data() {
         return {
-            dataGridRefKey: 'my-data-grid',
+            dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
             YeuCauMuaHang: {
                 id: 0,
@@ -283,31 +280,14 @@ export default {
         }
     },
     computed: {
+        ...mapState(['userInfo']),
         validationGroup() {
-            return this.$refs[this.formValidation].instance.validate()
+            return this.$refs[this.formValidation].instance
         },
     },
     methods: {
         addRow() {
             return this.$refs[this.dataGridRefKey].instance.addRow()
-        },
-        // clickAdd() {
-        //     console.log(
-        //         '🚀 ~ file: addPurchase.vue ~ line 299 ~ this.validationGroup.isValid',
-        //         this.validationGroup
-        //     )
-        //     if (this.validationGroup.isValid) {
-        //         this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-        //         this.$toast.success('Success!')
-        //         this.resetData()
-        //     } else {
-        //         this.$toast.error('Failed!')
-        //     }
-        // },
-        clickAdd() {
-            this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-            this.$toast.success('Success!')
-            this.resetData()
         },
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
@@ -317,6 +297,21 @@ export default {
                 style: 'currency',
                 currency: 'VND',
             }).format(e)
+        },
+        clickAdd() {
+            let result = this.validationGroup.validate()
+            let checkEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets.some(
+                (e) => e.tenHangHoa_DichVu !== ''
+            )
+            if (result.isValid && checkEmpty) {
+                this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
+                this.$toast.success('Success!')
+                this.resetData()
+            } else {
+                this.$toast.error(
+                    'Failed! One or more validation errors occurred'
+                )
+            }
         },
         resetData() {
             this.YeuCauMuaHang = {
@@ -351,9 +346,11 @@ export default {
             }
         },
     },
-    // created() {
-    //     this.$store.dispatch('muahang/getAllItem')
-    // },
+    created() {
+        this.YeuCauMuaHang.tenNhanVien = this.userInfo.tenNhanVien
+        this.YeuCauMuaHang.chucVu = this.userInfo.chucVu
+        this.YeuCauMuaHang.phongBan = this.userInfo.phongBan
+    },
 }
 </script>
 

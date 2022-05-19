@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h3 class="mb-2">{{ $t('Information') }}</h3>
         <div class="row align-center justify-space-between mb-3">
             <DxTextBox
                 v-model="YeuCauMuaHang.tenNhanVien"
@@ -92,8 +91,8 @@
             />
         </div>
         <div class="mb-3">
-            <div class="row justify-space-between">
-                <h3 class="mb-3">{{ $t('Add goods, services') }}</h3>
+            <div class="row justify-center">
+                <h3 class="mb-3">{{ $t('List of goods and services') }}</h3>
             </div>
             <DxDataGrid
                 id="gridContainer"
@@ -105,41 +104,56 @@
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    :caption="$t('Goods, services')"
                     width="150"
-                />
+                    :caption="$t('Goods, services')"
+                >
+                    <!-- <DxLookup
+                        :data-source="getFilteredCities"
+                        display-expr="Name"
+                        value-expr="ID"
+                    /> -->
+                </DxColumn>
+                <DxColumn
+                    data-field="model_MaHieu"
+                    :caption="$t('Model')"
+                    width="70"
+                >
+                </DxColumn>
+                <DxColumn
+                    data-field="xuatXu_Hang"
+                    :caption="$t('Origin')"
+                    width="70"
+                >
+                </DxColumn>
                 <DxColumn
                     data-field="soLuong"
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50" />
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50">
+                </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
-                    :format="customFormat"
                     :caption="$t('Estimated unit price')"
                     width="150"
-                />
-                <DxColumn
-                    data-field="maHangMucTrienKhai"
-                    :caption="$t('Categories')"
-                    width="90"
-                />
-                <DxColumn
-                    data-field="xuatXu_Hang"
-                    :caption="$t('Origin')"
-                    width="70"
-                />
-                <DxColumn
-                    data-field="model_MaHieu"
-                    :caption="$t('Model')"
-                    width="70"
+                    :format="customFormat"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
-                    width="150"
+                    :caption="$t('Estimated amount price')"
+                    width="180"
                     :format="customFormat"
-                    :caption="$t('Amount of money')"
+                    :calculate-cell-value="calculateAmount"
+                />
+                <DxColumn
+                    data-field="maDuAn"
+                    :caption="$t('Project code')"
+                    width="120"
+                />
+                <DxColumn
+                    data-field="maHangMucTrienKhai"
+                    :caption="$t('Deployment category code')"
+                    width="200"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
@@ -188,8 +202,6 @@ import {
     DxEditing,
 } from 'devextreme-vue/data-grid'
 
-const dataGridRefKey = 'my-data-grid'
-
 export default {
     props: {
         view: {
@@ -211,7 +223,7 @@ export default {
     },
     data() {
         return {
-            dataGridRefKey,
+            dataGridRefKey: 'datagridValid',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -298,6 +310,9 @@ export default {
                 style: 'currency',
                 currency: 'VND',
             }).format(e)
+        },
+        calculateAmount(e) {
+            return e.soLuong * e.donGiaTamTinh
         },
     },
 }

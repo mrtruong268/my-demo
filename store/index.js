@@ -114,6 +114,7 @@ export const state = () => ({
     DanhSachCongTy: [],
     DanhSachPhongBan: [],
     token: '',
+    userInfo: {},
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
@@ -134,6 +135,9 @@ export const mutations = {
     },
     GET_TOKEN(state, item) {
         state.token = item
+    },
+    GET_USER(state, item) {
+        state.userInfo = item
     },
 }
 
@@ -168,12 +172,21 @@ export const actions = {
                 'https://data.vnas.com.vn/identityserver/connect/token',
                 item
             )
-            localStorage.setItem('accessToken', response.data.access_token)
             this.$cookies.set('cookieToken', response.data.access_token, {
                 path: '/',
                 maxAge: 60 * 60 * 24 * 7,
             })
             commit('GET_TOKEN', response.data.access_token)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getUser({ commit }, username) {
+        try {
+            let response = await this.$axios.get(
+                `/staff/get-staff-by-username?username=${username}`
+            )
+            commit('GET_USER', response.data.data || {})
         } catch (err) {
             console.log(err)
         }
