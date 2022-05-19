@@ -165,7 +165,7 @@ export const actions = {
     async login({ commit }, item) {
         try {
             let response = await this.$axios.post(
-                'https://internal.vnas.com.vn/identityserver/connect/token',
+                'https://data.vnas.com.vn/identityserver/connect/token',
                 item
             )
             localStorage.setItem('accessToken', response.data.access_token)

@@ -1,6 +1,6 @@
 <template>
     <div class="container-md">
-        <DxValidationGroup :ref="formValidation">
+        <!-- <DxValidationGroup :ref="formValidation"> -->
             <div class="row align-center justify-space-between mb-3">
                 <DxTextBox
                     v-model="YeuCauMuaHang.tenNhanVien"
@@ -213,7 +213,7 @@
                     text="Add"
                 />
             </div>
-        </DxValidationGroup>
+        <!-- </DxValidationGroup> -->
 
         <div class="row justify-end">
             <span @click="clickAdd" class="btn-save">Lưu</span>
@@ -235,7 +235,7 @@ import {
     DxLookup,
 } from 'devextreme-vue/data-grid'
 import { DxValidator, DxRequiredRule } from 'devextreme-vue/validator'
-import DxValidationGroup from 'devextreme-vue/validation-group'
+// import DxValidationGroup from 'devextreme-vue/validation-group'
 
 export default {
     components: {
@@ -299,13 +299,13 @@ export default {
             return this.$refs[this.dataGridRefKey].instance.addRow()
         },
         clickAdd() {
-            if (this.validationGroup.isValid == true) {
+            // if (this.validationGroup.isValid == true) {
                 this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
                 this.$toast.success('Success!')
                 this.resetData()
-            } else {
-                this.$toast.error('Failed!')
-            }
+            // } else {
+                // this.$toast.error('Failed!')
+            // }
         },
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
