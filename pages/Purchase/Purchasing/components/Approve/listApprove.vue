@@ -1,7 +1,11 @@
 <template>
     <div>
         <div class="row justify-end">
-            <DxButton icon="mdi mdi-reload" @click="clickReload" />
+            <DxButton
+                icon="mdi mdi-reload"
+                @click="clickReload"
+                text="Reload"
+            />
         </div>
         <DxDataGrid
             id="gridContainer"
