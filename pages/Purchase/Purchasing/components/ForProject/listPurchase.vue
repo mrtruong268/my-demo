@@ -10,29 +10,83 @@
             height="100%"
             :hover-state-enabled="true"
         >
+            <DxHeaderFilter :visible="true" />
+            <DxFilterRow :visible="true" />
             <DxPaging :enabled="false" />
             <DxColumn
                 data-field="id"
                 caption="No"
                 width="60"
                 alignment="center"
+                :allow-header-filtering="false"
             />
-            <DxColumn data-field="tenNhanVien" caption="Name" />
-            <DxColumn data-field="phongBan" caption="Department" />
-            <DxColumn data-field="soThamChieu" caption="Reference number" />
+            <DxColumn
+                :allow-header-filtering="false"
+                data-field="tenNhanVien"
+                caption="Name"
+            />
+            <DxColumn
+                :allow-header-filtering="false"
+                data-field="phongBan"
+                caption="Department"
+            />
+            <DxColumn
+                :allow-header-filtering="false"
+                data-field="soThamChieu"
+                caption="Reference number"
+            />
             <DxColumn
                 data-field="ngayDeTrinh"
                 caption="Date of submission"
                 data-type="date"
                 format="dd/MM/yyyy"
+                :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="ngayCanHang"
                 caption="Delivery date"
                 format="dd/MM/yyyy"
                 data-type="date"
+                :allow-header-filtering="false"
             />
-
+            <DxColumn
+                :allow-header-filtering="true"
+                data-field="approvalState"
+                caption="Approval state"
+                cell-template="cellTemplate"
+            />
+            <template #cellTemplate="{ data }">
+                <div
+                    :class="
+                        data.value === 'DANG_TAO'
+                            ? ''
+                            : data.value === 'SUBMITED'
+                            ? 'submit'
+                            : 'approve'
+                    "
+                >
+                    {{ data.value }}
+                </div>
+            </template>
+            <DxColumn
+                :allow-header-filtering="true"
+                data-field="approvalStatus"
+                caption="Approval status"
+                cell-template="cellTemplate2"
+            />
+            <template #cellTemplate2="{ data }">
+                <div
+                    :class="
+                        data.value === 'None'
+                            ? 'none'
+                            : data.value === 'Approval'
+                            ? 'approval'
+                            : 'revise'
+                    "
+                >
+                    {{ data.value }}
+                </div>
+            </template>
             <DxColumn
                 :allow-header-filtering="false"
                 width="auto"
@@ -40,7 +94,23 @@
             />
             <template #buttons-cell="{ data }">
                 <div class="row justify-center">
-                    <DxButton
+                    <div
+                        class="mdi mdi-eye button"
+                        @click="clickView(data)"
+                    ></div>
+                    <div
+                        class="mdi mdi-pencil button"
+                        @click="clickEdit(data)"
+                    ></div>
+                    <div
+                        class="mdi mdi-file-check button"
+                        @click="clickApprove(data)"
+                    ></div>
+                    <div
+                        class="mdi mdi-delete button"
+                        @click="clickDelete(data)"
+                    ></div>
+                    <!-- <DxButton
                         type="normal"
                         hint="Submit"
                         styling-mode="text"
@@ -67,7 +137,7 @@
                         styling-mode="text"
                         icon="mdi mdi-delete"
                         @click="clickDelete(data)"
-                    />
+                    /> -->
                 </div>
             </template>
         </DxDataGrid>
@@ -94,6 +164,7 @@ import {
     DxColumn,
     DxPaging,
     DxHeaderFilter,
+    DxFilterRow,
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
 import Popup from '~/components/popup.vue'
@@ -107,6 +178,7 @@ export default {
         DxColumn,
         DxPaging,
         DxHeaderFilter,
+        DxFilterRow,
         DxButton,
         viewDetail,
         Popup,
@@ -155,4 +227,36 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.none {
+    color: white;
+    background-color: red;
+}
+.approval {
+    color: white;
+    background-color: #acdf87;
+}
+.revise {
+    color: white;
+    background-color: orange;
+}
+.submit {
+    color: orange;
+}
+.approve {
+    color: #acdf87;
+}
+.button {
+    font-size: 24px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: all 0.2s linear 0s;
+    color: #4d4d4d;
+}
+.button:hover {
+    font-size: 30px;
+    transition: all 0.2s linear 0s;
+    background-color: #ddd;
+    border-radius: 50%;
+}
+</style>

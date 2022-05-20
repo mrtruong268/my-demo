@@ -124,7 +124,10 @@
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
                 height="100%"
+                :column-auto-width="true"
                 :ref="dataGridRefKey"
+                @saved="saved"
+                @editingStart="editingStart"
             >
                 <DxEditing
                     :allow-updating="true"
@@ -140,6 +143,7 @@
                     width="150"
                     :caption="$t('Goods, services')"
                 >
+                    <DxRequiredRule />
                     <!-- <DxLookup
                         :data-source="getFilteredCities"
                         display-expr="Name"
@@ -151,12 +155,14 @@
                     :caption="$t('Model')"
                     width="70"
                 >
+                    <DxRequiredRule />
                 </DxColumn>
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
                     width="70"
                 >
+                    <DxRequiredRule />
                 </DxColumn>
                 <DxColumn
                     data-field="soLuong"
@@ -164,6 +170,7 @@
                     width="90"
                 />
                 <DxColumn data-field="donVi" :caption="$t('Unit')" width="50">
+                    <DxRequiredRule />
                 </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
@@ -205,6 +212,7 @@
                 type="default"
                 styling-mode="contained"
                 @click="clickAdd"
+                :disabled="disabled"
             />
         </div>
     </div>
@@ -247,6 +255,7 @@ export default {
         return {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
+            disabled: true,
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -298,19 +307,28 @@ export default {
                 currency: 'VND',
             }).format(e)
         },
+        editingStart() {
+            this.disabled = true
+        },
+        saved() {
+            let conditionsArray = []
+            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach(
+                (e) =>
+                    (conditionsArray = [
+                        e.tenHangHoa_DichVu !== '',
+                        e.xuatXu_Hang !== '',
+                        e.model_MaHieu !== '',
+                        e.donVi !== '',
+                    ])
+            )
+            if (conditionsArray.indexOf(false) === -1) this.disabled = false
+        },
         clickAdd() {
             let result = this.validationGroup.validate()
-            let checkEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets.some(
-                (e) => e.tenHangHoa_DichVu !== ''
-            )
-            if (result.isValid && checkEmpty) {
+            if (result.isValid) {
                 this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
                 this.$toast.success('Success!')
                 this.resetData()
-            } else {
-                this.$toast.error(
-                    'Failed! One or more validation errors occurred'
-                )
             }
         },
         resetData() {
@@ -348,6 +366,7 @@ export default {
     },
     created() {
         this.YeuCauMuaHang.tenNhanVien = this.userInfo.tenNhanVien
+        this.YeuCauMuaHang.maNhanVien = this.userInfo.maNhanVien
         this.YeuCauMuaHang.chucVu = this.userInfo.chucVu
         this.YeuCauMuaHang.phongBan = this.userInfo.phongBan
     },

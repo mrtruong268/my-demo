@@ -29,8 +29,18 @@
                 :allow-header-filtering="false"
             />
             <DxColumn
+                data-field="maNhanVien"
+                caption="Employee code"
+                :allow-header-filtering="false"
+            />
+            <DxColumn
                 data-field="soThamChieu"
                 caption="Reference number"
+                :allow-header-filtering="false"
+            />
+            <DxColumn
+                data-field="chucVu"
+                caption="Position"
                 :allow-header-filtering="false"
             />
             <DxColumn
@@ -44,11 +54,6 @@
                 format="dd/MM/yyyy"
                 data-type="date"
                 :allow-header-filtering="false"
-            />
-            <DxColumn
-                data-field="approvalState"
-                caption="Status"
-                :allow-header-filtering="true"
             />
             <DxColumn
                 :allow-header-filtering="false"
@@ -131,9 +136,7 @@ export default {
         },
     },
     created() {
-        setTimeout(() => {
-            this.$store.dispatch('pheduyet/getApprove')
-        }, 200)
+        this.$store.dispatch('pheduyet/getApprove')
     },
 }
 </script>

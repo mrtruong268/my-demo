@@ -39,8 +39,8 @@
             <DxSelectBox
                 :dataSource="DanhSachPhongBan"
                 v-model="NhanVien.phongBanId"
-                display-expr="Name"
-                value-expr="ID"
+                display-expr="name"
+                value-expr="id"
                 :label="$t('Department')"
                 class="mb-3"
                 label-mode="floating"

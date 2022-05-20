@@ -156,7 +156,7 @@
                 <DxColumn
                     data-field="model_MaHieu"
                     :caption="$t('Model')"
-                    width="70"
+                    width="80"
                 >
                 </DxColumn>
                 <DxColumn
@@ -170,17 +170,17 @@
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50">
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="70">
                 </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
-                    :caption="$t('Estimated unit price')"
+                    :caption="$t('Estimated unit')"
                     width="150"
                     :format="customFormat"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
-                    :caption="$t('Estimated amount price')"
+                    :caption="$t('Estimated amount')"
                     width="180"
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
@@ -192,8 +192,8 @@
                 />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
-                    :caption="$t('Deployment category code')"
-                    width="200"
+                    :caption="$t('Deployment category')"
+                    width="170"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
                 <!-- <DxColumn
@@ -212,7 +212,7 @@
         </div>
         <div class="row justify-end">
             <DxButton
-                text="Lưu"
+                text="Save"
                 type="default"
                 styling-mode="contained"
                 @click="clickSave"
