@@ -18,7 +18,7 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: 'Purchasing',
+            title: 'Purchase',
             to: 'Purchase',
             color: '#90AA1D',
             image: require('assets/buy.gif'),
@@ -115,6 +115,7 @@ export const state = () => ({
     DanhSachPhongBan: [],
     token: '',
     userInfo: {},
+    excelFile: null,
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
@@ -138,6 +139,9 @@ export const mutations = {
     },
     GET_USER(state, item) {
         state.userInfo = item
+    },
+    EXCEL_FILE(state, item) {
+        state.excelFile = item
     },
 }
 
@@ -187,6 +191,17 @@ export const actions = {
                 `/staff/get-staff-by-username?username=${username}`
             )
             commit('GET_USER', response.data.data || {})
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async exportExcel({ commit }) {
+        try {
+            let response = await this.$axios.get('/position/get-all-position', {
+                responseType: 'blob',
+            })
+            commit('EXCEL_FILE', response.data.data)
         } catch (err) {
             console.log(err)
         }

@@ -120,13 +120,13 @@
                 <DxColumn
                     data-field="model_MaHieu"
                     :caption="$t('Model')"
-                    width="80"
+                    width="90"
                 >
                 </DxColumn>
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
-                    width="70"
+                    width="90"
                 >
                 </DxColumn>
                 <DxColumn
@@ -134,7 +134,7 @@
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="70">
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80">
                 </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
@@ -157,7 +157,7 @@
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
-                    width="170"
+                    width="180"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
@@ -177,7 +177,6 @@ import {
     DxPaging,
     DxEditing,
 } from 'devextreme-vue/data-grid'
-const dataGridRefKey = 'my-data-grid'
 
 export default {
     props: {
@@ -208,7 +207,7 @@ export default {
     },
     data() {
         return {
-            dataGridRefKey,
+            dataGridRefKey: 'my-data-grid',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',

@@ -118,7 +118,12 @@
         <div class="mb-3">
             <div class="row justify-space-between">
                 <h3>{{ $t('List of goods and services') }}</h3>
-                <DxButton icon="mdi mdi-plus" class="mb-2" @click="addRow" />
+                <DxButton
+                    icon="mdi mdi-plus"
+                    class="mb-2"
+                    @click="addRow"
+                    :text="$t('Add')"
+                />
             </div>
             <DxDataGrid
                 id="gridContainer"
@@ -156,13 +161,13 @@
                 <DxColumn
                     data-field="model_MaHieu"
                     :caption="$t('Model')"
-                    width="80"
+                    width="90"
                 >
                 </DxColumn>
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
-                    width="70"
+                    width="90"
                 >
                 </DxColumn>
                 <DxColumn
@@ -170,7 +175,7 @@
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="70">
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80">
                 </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
@@ -193,7 +198,7 @@
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
-                    width="170"
+                    width="180"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
                 <!-- <DxColumn
@@ -212,7 +217,7 @@
         </div>
         <div class="row justify-end">
             <DxButton
-                text="Save"
+                :text="$t('Save')"
                 type="default"
                 styling-mode="contained"
                 @click="clickSave"

@@ -100,6 +100,10 @@
                 :show-borders="true"
                 :ref="dataGridRefKey"
                 :hover-state-enabled="true"
+                :remote-operations="true"
+                :allow-column-resizing="true"
+                :column-auto-width="true"
+                :repaint-changes-only="true"
             >
                 <DxPaging :enabled="false" />
                 <DxColumn
@@ -116,13 +120,13 @@
                 <DxColumn
                     data-field="model_MaHieu"
                     :caption="$t('Model')"
-                    width="70"
+                    width="90"
                 >
                 </DxColumn>
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
-                    width="70"
+                    width="90"
                 >
                 </DxColumn>
                 <DxColumn
@@ -130,17 +134,17 @@
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50">
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80">
                 </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
-                    :caption="$t('Estimated unit price')"
+                    :caption="$t('Estimated unit')"
                     width="150"
                     :format="customFormat"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
-                    :caption="$t('Estimated amount price')"
+                    :caption="$t('Estimated amount')"
                     width="180"
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
@@ -152,8 +156,8 @@
                 />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
-                    :caption="$t('Deployment category code')"
-                    width="200"
+                    :caption="$t('Deployment category')"
+                    width="180"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
             </DxDataGrid>
@@ -167,8 +171,7 @@
             />
             <div class="row justify-end align-center mt-3">
                 <DxButton
-                    :width="190"
-                    text="Edit requisition"
+                    :text="$t('Edit requisition')"
                     class="mr-3"
                     type="danger"
                     icon="close"
@@ -176,10 +179,9 @@
                     @click="khongDuyet"
                 />
                 <DxButton
-                    :width="130"
                     type="default"
                     icon="check"
-                    text="Approve"
+                    :text="$t('Approve')"
                     styling-mode="outlined"
                     @click="duyet"
                 />

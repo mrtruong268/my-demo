@@ -126,8 +126,6 @@
                 height="100%"
                 :column-auto-width="true"
                 :ref="dataGridRefKey"
-                @saved="saved"
-                @editingStart="editingStart"
             >
                 <DxEditing
                     :allow-updating="true"
@@ -143,7 +141,7 @@
                     width="150"
                     :caption="$t('Goods, services')"
                 >
-                    <DxRequiredRule />
+                    <!-- <DxRequiredRule /> -->
                     <!-- <DxLookup
                         :data-source="getFilteredCities"
                         display-expr="Name"
@@ -153,34 +151,34 @@
                 <DxColumn
                     data-field="model_MaHieu"
                     :caption="$t('Model')"
-                    width="70"
+                    width="90"
                 >
-                    <DxRequiredRule />
+                    <!-- <DxRequiredRule /> -->
                 </DxColumn>
                 <DxColumn
                     data-field="xuatXu_Hang"
                     :caption="$t('Origin')"
-                    width="70"
+                    width="90"
                 >
-                    <DxRequiredRule />
+                    <!-- <DxRequiredRule /> -->
                 </DxColumn>
                 <DxColumn
                     data-field="soLuong"
                     :caption="$t('Quantity')"
                     width="90"
                 />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="50">
-                    <DxRequiredRule />
+                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80">
+                    <!-- <DxRequiredRule /> -->
                 </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
-                    :caption="$t('Estimated unit price')"
+                    :caption="$t('Estimated unit')"
                     width="150"
                     :format="customFormat"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
-                    :caption="$t('Estimated amount price')"
+                    :caption="$t('Estimated amount')"
                     width="180"
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
@@ -192,7 +190,7 @@
                 />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
-                    :caption="$t('Deployment category code')"
+                    :caption="$t('Deployment category')"
                     width="200"
                 />
                 <DxColumn data-field="ghiChu" :caption="$t('Note')" />
@@ -202,17 +200,16 @@
                 :use-submit-behavior="true"
                 @click="addRow"
                 styling-mode="text"
-                text="Add"
+                :text="$t('Add')"
             />
         </div>
 
         <div class="row justify-end">
             <DxButton
-                text="Save"
+                :text="$t('Save')"
                 type="default"
                 styling-mode="contained"
                 @click="clickAdd"
-                :disabled="disabled"
             />
         </div>
     </div>
@@ -255,7 +252,6 @@ export default {
         return {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
-            disabled: true,
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -298,6 +294,29 @@ export default {
         addRow() {
             return this.$refs[this.dataGridRefKey].instance.addRow()
         },
+        checkArray() {
+            let conditionsArray = []
+            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach(
+                (e) =>
+                    (conditionsArray = [
+                        e.tenHangHoa_DichVu !== '',
+                        e.model_MaHieu !== '',
+                        e.xuatXu_Hang !== '',
+                        e.donVi !== '',
+                    ])
+            )
+            return !conditionsArray.includes(false)
+        },
+        clickAdd() {
+            let result = this.validationGroup.validate()
+            if (result.isValid && this.checkArray()) {
+                this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
+                this.$toast.success('Success!')
+                this.resetData()
+            } else {
+                this.$toast.error('One or more validation errors occurred!')
+            }
+        },
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
         },
@@ -307,37 +326,13 @@ export default {
                 currency: 'VND',
             }).format(e)
         },
-        editingStart() {
-            this.disabled = true
-        },
-        saved() {
-            let conditionsArray = []
-            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach(
-                (e) =>
-                    (conditionsArray = [
-                        e.tenHangHoa_DichVu !== '',
-                        e.xuatXu_Hang !== '',
-                        e.model_MaHieu !== '',
-                        e.donVi !== '',
-                    ])
-            )
-            if (conditionsArray.indexOf(false) === -1) this.disabled = false
-        },
-        clickAdd() {
-            let result = this.validationGroup.validate()
-            if (result.isValid) {
-                this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-                this.$toast.success('Success!')
-                this.resetData()
-            }
-        },
         resetData() {
             this.YeuCauMuaHang = {
                 id: 0,
-                tenNhanVien: '',
-                maNhanVien: '',
-                chucVu: '',
-                phongBan: '',
+                tenNhanVien: this.userInfo.tenNhanVien,
+                maNhanVien: this.userInfo.maNhanVien,
+                chucVu: this.userInfo.chucVu,
+                phongBan: this.userInfo.phongBan,
                 ngayDeTrinh: new Date().toISOString(),
                 ngayCanHang: new Date().toISOString(),
                 diaDiemLamViec: '',

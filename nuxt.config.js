@@ -50,12 +50,12 @@ export default {
             {
                 code: 'en',
                 name: 'Eng',
-                icon: 'united-kingdom-flag-button-round-icon-32.png',
+                language: 'English',
             },
             {
                 code: 'vi',
                 name: 'Vie',
-                icon: 'vietnam-flag-3d-round-icon-32.png',
+                language: 'Vietnamese',
             },
         ],
         defaultLocale: 'en',

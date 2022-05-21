@@ -4,7 +4,7 @@
             <DxButton
                 icon="mdi mdi-reload"
                 @click="clickReload"
-                text="Reload"
+                :text="$t('Reload')"
             />
         </div>
         <DxDataGrid
@@ -19,38 +19,38 @@
             <DxPaging :enabled="false" />
             <DxColumn
                 data-field="id"
-                caption="No"
-                width="50"
+                :caption="$t('No')"
+                width="70"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="tenNhanVien"
-                caption="Name"
+                :caption="$t('Name')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="maNhanVien"
-                caption="Employee code"
+                :caption="$t('Employee code')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="soThamChieu"
-                caption="Reference number"
+                :caption="$t('Reference number')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="chucVu"
-                caption="Position"
+                :caption="$t('Position')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="phongBan"
-                caption="Department"
+                :caption="$t('Department')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="ngayDeTrinh"
-                caption="Submission date"
+                :caption="$t('Submission date')"
                 format="dd/MM/yyyy"
                 data-type="date"
                 :allow-header-filtering="false"
@@ -71,7 +71,7 @@
         <popup
             :showPopup="popupVisible"
             :showTitle="true"
-            :title="'Details'"
+            :title="$t('View details')"
             :width="'80%'"
         >
             <template #main>

@@ -6,7 +6,7 @@
         <div class="toolbar">
             <div class="row align-center justify-space-around">
                 <div v-for="item in List" :key="item.id" class="xs4">
-                    <p class="header">{{ item.header }}</p>
+                    <p class="header">{{ $t(item.header) }}</p>
                     <div @click="onItemClick(item)" class="btn-list row">
                         <i class="mdi mdi-format-list-numbered mr-1" />
                         <p class="font-14">

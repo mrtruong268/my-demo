@@ -74,7 +74,10 @@
                         <div class="dropdown2">
                             <div class="row align-center">
                                 <div class="mr-2">
-                                    <span>Hi! {{ userInfo.username }}</span>
+                                    <span
+                                        >{{ $t('Hi!') }}
+                                        {{ userInfo.username }}</span
+                                    >
                                 </div>
                                 <div class="icon">
                                     <i class="mdi mdi-account"></i>
@@ -142,24 +145,27 @@
                         </ul>
                     </div>
                 </div>
-                <div>
+                <div class="selectbox mr-4">
                     <DxSelectBox
                         v-model="selectedValue"
                         :data-source="$i18n.locales"
-                        display-expr="name"
+                        display-expr="language"
                         value-expr="code"
-                        stylingMode="filled"
-                        class="mr-4"
+                        stylingMode="outlined"
                         @selectionChanged="onChange(selectedValue)"
                         field-template="field"
                     >
                         <template #field="{ data }">
-                            <div class="row align-center pa-1">
+                            <div class="row align-center py-1 pl-2">
                                 <img
-                                    :src="data.icon"
+                                    :src="
+                                        data.name == 'Vie'
+                                            ? require('assets/vn.png')
+                                            : require('assets/uk.png')
+                                    "
                                     style="width: 22px; height: 22px"
                                 />
-                                <p class="ml-3">
+                                <p class="ml-2">
                                     {{ data.name }}
                                 </p>
                                 <DxTextBox style="display: none" />
@@ -522,6 +528,10 @@ export default {
 }
 .dropdown2:hover .dropdown-content2 {
     display: block;
+}
+.selectbox {
+    background-color: white;
+    border-radius: 4px;
 }
 #sidebar {
     position: fixed;

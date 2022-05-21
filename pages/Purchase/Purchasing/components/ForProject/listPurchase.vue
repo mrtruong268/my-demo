@@ -1,7 +1,11 @@
 <template>
     <div>
         <div class="row justify-end">
-            <DxButton icon="mdi mdi-reload" @click="reload" text="Reload" />
+            <DxButton
+                icon="mdi mdi-reload"
+                @click="reload"
+                :text="$t('Reload')"
+            />
         </div>
         <DxDataGrid
             id="gridContainer"
@@ -15,7 +19,7 @@
             <DxPaging :enabled="false" />
             <DxColumn
                 data-field="id"
-                caption="No"
+                :caption="$t('No')"
                 width="60"
                 alignment="center"
                 :allow-header-filtering="false"
@@ -23,28 +27,28 @@
             <DxColumn
                 :allow-header-filtering="false"
                 data-field="tenNhanVien"
-                caption="Name"
+                :caption="$t('Name')"
             />
             <DxColumn
                 :allow-header-filtering="false"
                 data-field="phongBan"
-                caption="Department"
+                :caption="$t('Department')"
             />
             <DxColumn
                 :allow-header-filtering="false"
                 data-field="soThamChieu"
-                caption="Reference number"
+                :caption="$t('Reference number')"
             />
             <DxColumn
                 data-field="ngayDeTrinh"
-                caption="Date of submission"
+                :caption="$t('Submission date')"
                 data-type="date"
                 format="dd/MM/yyyy"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="ngayCanHang"
-                caption="Delivery date"
+                :caption="$t('Delivery date')"
                 format="dd/MM/yyyy"
                 data-type="date"
                 :allow-header-filtering="false"
@@ -52,7 +56,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="approvalState"
-                caption="Approval state"
+                :caption="$t('Approval state')"
                 cell-template="cellTemplate"
             />
             <template #cellTemplate="{ data }">
@@ -71,7 +75,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="approvalStatus"
-                caption="Approval status"
+                :caption="$t('Approval status')"
                 cell-template="cellTemplate2"
             />
             <template #cellTemplate2="{ data }">
@@ -95,6 +99,16 @@
             <template #buttons-cell="{ data }">
                 <div class="row justify-center">
                     <div
+                        v-if="data.data.approvalState == 'TGD_DUYET'"
+                        class="mdi mdi-printer button"
+                        @click="clickPrint(data)"
+                    ></div>
+                    <div
+                        v-else
+                        class="mdi mdi-file-check button"
+                        @click="clickApprove(data)"
+                    ></div>
+                    <div
                         class="mdi mdi-eye button"
                         @click="clickView(data)"
                     ></div>
@@ -103,48 +117,18 @@
                         @click="clickEdit(data)"
                     ></div>
                     <div
-                        class="mdi mdi-file-check button"
-                        @click="clickApprove(data)"
-                    ></div>
-                    <div
                         class="mdi mdi-delete button"
                         @click="clickDelete(data)"
                     ></div>
-                    <!-- <DxButton
-                        type="normal"
-                        hint="Submit"
-                        styling-mode="text"
-                        icon="mdi mdi-file-check"
-                        @click="clickApprove(data)"
-                    />
-                    <DxButton
-                        type="normal"
-                        hint="View detail"
-                        styling-mode="text"
-                        icon="mdi mdi-eye"
-                        @click="clickView(data)"
-                    />
-                    <DxButton
-                        type="normal"
-                        hint="Edit"
-                        styling-mode="text"
-                        icon="mdi mdi-pencil"
-                        @click="clickEdit(data)"
-                    />
-                    <DxButton
-                        type="normal"
-                        hint="Delete"
-                        styling-mode="text"
-                        icon="mdi mdi-delete"
-                        @click="clickDelete(data)"
-                    /> -->
                 </div>
             </template>
         </DxDataGrid>
         <popup
             :showPopup="popupVisible"
             :showTitle="true"
-            :title="isClick == 'edit' ? 'Edit requisition' : 'View details'"
+            :title="
+                isClick == 'edit' ? $t('Edit requisition') : $t('View details')
+            "
             :width="'80%'"
         >
             <template #main>
@@ -170,6 +154,8 @@ import DxButton from 'devextreme-vue/button'
 import Popup from '~/components/popup.vue'
 import editPurchase from './editPurchase.vue'
 import viewDetail from './viewDetail.vue'
+// import { saveAs } from 'file-saver'
+import FileSaver from 'file-saver'
 
 export default {
     props: ['dataProp'],
@@ -200,6 +186,7 @@ export default {
         clickApprove(e) {
             this.$store.dispatch('pheduyet/submitApprove', e.data.id)
             this.$toast.success('Success!')
+            this.reload()
         },
         clickView(e) {
             this.popupVisible = !this.popupVisible
@@ -212,9 +199,14 @@ export default {
             this.isClick = 'edit'
         },
         clickDelete(e) {
-            this.$store.dispatch('muahang/deleteData', e.data.id)
-            this.$toast.success('Success!')
-            this.reload()
+            if (confirm('Are you sure to delete?') == true) {
+                this.$store.dispatch('muahang/deleteData', e.data.id)
+                this.$toast.success('Success!')
+                this.reload()
+            }
+        },
+        clickPrint() {
+            // FileSaver.saveAs('Export2.xlsx')
         },
         hiddenPopup() {
             this.popupVisible = !this.popupVisible

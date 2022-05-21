@@ -20,6 +20,7 @@
         "core-js": "^3.19.3",
         "devextreme": "21.2.6",
         "devextreme-vue": "21.2.6",
+        "file-saver": "^2.0.5",
         "nuxt": "^2.15.8",
         "nuxt-i18n": "^6.28.1",
         "nuxtjs-mdi-font": "^1.0.2",
