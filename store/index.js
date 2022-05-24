@@ -33,9 +33,9 @@ export const state = () => ({
         {
             id: uuidv4(),
             title: 'Distribution list',
-            to: '',
+            to: 'distribution',
             color: '#008AC1',
-            image: require('assets/list2.gif'),
+            image: require('assets/list.png'),
         },
         {
             id: uuidv4(),
@@ -196,12 +196,21 @@ export const actions = {
         }
     },
 
-    async exportExcel({ commit }) {
+    async exportExcel({ commit }, exportId) {
         try {
-            let response = await this.$axios.get('/position/get-all-position', {
-                responseType: 'blob',
-            })
+            let response = await this.$axios.get(
+                `/pr/export-pr?id=${exportId}`,
+                {
+                    responseType: 'blob',
+                }
+            )
             commit('EXCEL_FILE', response.data.data)
+            let url = window.URL.createObjectURL(new Blob([response.data]))
+            let link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', 'De-Nghi-Mua-Hang.xlsx')
+            document.body.appendChild(link)
+            link.click()
         } catch (err) {
             console.log(err)
         }

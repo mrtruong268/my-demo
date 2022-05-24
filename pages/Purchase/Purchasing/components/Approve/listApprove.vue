@@ -12,6 +12,9 @@
             :data-source="danhSachPheDuyet.data"
             :show-borders="true"
             height="100%"
+            remote-operations="true"
+            :allow-column-resizing="true"
+            :column-auto-width="true"
             :hover-state-enabled="true"
         >
             <DxHeaderFilter :visible="true" />
@@ -20,7 +23,6 @@
             <DxColumn
                 data-field="id"
                 :caption="$t('No')"
-                width="70"
                 :allow-header-filtering="false"
             />
             <DxColumn
@@ -56,8 +58,45 @@
                 :allow-header-filtering="false"
             />
             <DxColumn
+                :allow-header-filtering="true"
+                data-field="approvalState"
+                :caption="$t('Approval state')"
+                cell-template="cellTemplate"
+            />
+            <template #cellTemplate="{ data }">
+                <div
+                    :class="
+                        data.value === 'DANG_TAO'
+                            ? ''
+                            : data.value === 'SUBMITED'
+                            ? 'submit'
+                            : 'approve'
+                    "
+                >
+                    {{ data.value }}
+                </div>
+            </template>
+            <DxColumn
+                :allow-header-filtering="true"
+                data-field="approvalStatus"
+                :caption="$t('Approval status')"
+                cell-template="cellTemplate2"
+            />
+            <template #cellTemplate2="{ data }">
+                <div
+                    :class="
+                        data.value === 'None'
+                            ? 'none'
+                            : data.value === 'Approval'
+                            ? 'approval'
+                            : 'revise'
+                    "
+                >
+                    {{ data.value }}
+                </div>
+            </template>
+            <DxColumn
                 :allow-header-filtering="false"
-                width="auto"
                 cell-template="buttons-cell"
             />
             <template #buttons-cell="{ data }">
@@ -141,4 +180,23 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.none {
+    color: white;
+    background-color: red;
+}
+.approval {
+    color: white;
+    background-color: #acdf87;
+}
+.revise {
+    color: white;
+    background-color: orange;
+}
+.submit {
+    color: orange;
+}
+.approve {
+    color: #acdf87;
+}
+</style>

@@ -134,7 +134,6 @@
                 :remote-operations="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
-                :repaint-changes-only="true"
                 :hover-state-enabled="true"
                 @saved="saved"
             >
@@ -149,7 +148,6 @@
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    width="150"
                     :caption="$t('Goods, services')"
                 >
                     <!-- <DxLookup
@@ -158,49 +156,33 @@
                         value-expr="ID"
                     /> -->
                 </DxColumn>
-                <DxColumn
-                    data-field="model_MaHieu"
-                    :caption="$t('Model')"
-                    width="90"
-                >
+                <DxColumn data-field="model_MaHieu" :caption="$t('Model')">
                 </DxColumn>
-                <DxColumn
-                    data-field="xuatXu_Hang"
-                    :caption="$t('Origin')"
-                    width="90"
-                >
+                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')">
                 </DxColumn>
-                <DxColumn
-                    data-field="soLuong"
-                    :caption="$t('Quantity')"
-                    width="90"
-                />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80">
-                </DxColumn>
+                <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
+                <DxColumn data-field="donVi" :caption="$t('Unit')"> </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
                     :caption="$t('Estimated unit')"
-                    width="150"
                     :format="customFormat"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
                     :caption="$t('Estimated amount')"
-                    width="180"
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
-                <DxColumn
-                    data-field="maDuAn"
-                    :caption="$t('Project code')"
-                    width="120"
-                />
+                <DxColumn data-field="maDuAn" :caption="$t('Project code')" />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
-                    width="180"
                 />
-                <DxColumn data-field="ghiChu" :caption="$t('Note')" />
+                <DxColumn
+                    data-field="ghiChu"
+                    :caption="$t('Note')"
+                    width="250"
+                />
                 <!-- <DxColumn
                     :allow-header-filtering="false"
                     width="40"

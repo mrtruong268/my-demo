@@ -18,7 +18,7 @@
     "Dashboard": "Bảng tổng hợp",
     "Category": "Phân loại",
     "Project management": "Quản lý dự án",
-    "Distribution list": "Danh sách phân phối",
+    "Distribution list": "Danh sách nhà phân phối",
     "Work place": "Địa điểm làm việc",
     "Purchase": "Mua hàng",
     "Production": "Sản xuất",
@@ -71,6 +71,7 @@
     "Model": "Mã hiệu",
     "Estimated unit": "Đơn giá",
     "Estimated amount": "Tổng tiền",
+    "Estimated amount(VAT)": "Tổng tiền(Gồm VAT)",
     "Project code": "Mã dự án",
     "Deployment category": "Mã hạng mục triển khai",
     "Note": "Ghi chú",
@@ -81,7 +82,8 @@
     "Pending projects": "Dự án chưa giải quyết",
     "Edit requisition": "Yêu cầu chỉnh sửa",
     "View details": "Xem chi tiết",
-    "abc": "abc",
-    "abc": "abc",
-    "abc": "abc"
+    "Distributor name": "Tên nhà phân phối",
+    "Delivery time": "Thời gian giao hàng",
+    "Warranty period": "Thời gian bảo hành",
+    "Rules": "Điều khoản"
 }

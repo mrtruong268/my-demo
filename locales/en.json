@@ -71,6 +71,7 @@
     "Model": "Model",
     "Estimated unit": "Estimated unit",
     "Estimated amount": "Estimated amount",
+    "Estimated amount(VAT)": "Estimated amount(VAT)",
     "Project code": "Project code",
     "Deployment category": "Deployment category",
     "Note": "Note",
@@ -80,5 +81,9 @@
     "Closed projects": "Closed projects",
     "Pending projects": "Pending projects",
     "View details": "View details",
-    "Edit requisition": "Edit requisition"
+    "Edit requisition": "Edit requisition",
+    "Distributor name": "Distributor name",
+    "Delivery time": "Delivery time",
+    "Warranty period": "Warranty period",
+    "Rules": "Rules"
 }

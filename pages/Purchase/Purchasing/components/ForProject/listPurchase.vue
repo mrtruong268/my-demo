@@ -12,6 +12,9 @@
             :data-source="dataProp.data"
             :show-borders="true"
             height="100%"
+            remote-operations="true"
+            :allow-column-resizing="true"
+            :column-auto-width="true"
             :hover-state-enabled="true"
         >
             <DxHeaderFilter :visible="true" />
@@ -20,7 +23,6 @@
             <DxColumn
                 data-field="id"
                 :caption="$t('No')"
-                width="60"
                 alignment="center"
                 :allow-header-filtering="false"
             />
@@ -154,8 +156,6 @@ import DxButton from 'devextreme-vue/button'
 import Popup from '~/components/popup.vue'
 import editPurchase from './editPurchase.vue'
 import viewDetail from './viewDetail.vue'
-// import { saveAs } from 'file-saver'
-import FileSaver from 'file-saver'
 
 export default {
     props: ['dataProp'],
@@ -205,8 +205,8 @@ export default {
                 this.reload()
             }
         },
-        clickPrint() {
-            // FileSaver.saveAs('Export2.xlsx')
+        clickPrint(e) {
+            this.$store.dispatch('exportExcel', e.data.id)
         },
         hiddenPopup() {
             this.popupVisible = !this.popupVisible

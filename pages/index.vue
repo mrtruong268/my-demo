@@ -76,6 +76,8 @@ export default {
         clickTo(item) {
             if (item.title === '1Office') {
                 window.open('https://hrvnas.1office.vn/')
+            } else if (item.title === 'Project management') {
+                window.open('https://data.vnas.com.vn/')
             } else {
                 this.clickRouter(item.to, this.routeParams)
             }
@@ -85,9 +87,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    margin-top: 100px;
-}
 .left-content {
     background-color: white;
 }
@@ -110,6 +109,7 @@ export default {
     display: grid;
     grid-template-columns: 24% 24% 24% 24%;
     column-gap: 14px;
+    margin-top: 100px;
     row-gap: 16px;
 }
 .info-btn span {
@@ -141,7 +141,7 @@ export default {
     display: none;
 }
 @media only screen and (max-width: 739px) {
-    .container {
+    .grid-container {
         margin-top: 0;
     }
     .main-content {

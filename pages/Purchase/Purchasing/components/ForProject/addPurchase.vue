@@ -124,6 +124,8 @@
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
                 height="100%"
+                remote-operations="true"
+                :allow-column-resizing="true"
                 :column-auto-width="true"
                 :ref="dataGridRefKey"
             >
@@ -138,62 +140,41 @@
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    width="150"
                     :caption="$t('Goods, services')"
                 >
-                    <!-- <DxRequiredRule /> -->
                     <!-- <DxLookup
                         :data-source="getFilteredCities"
                         display-expr="Name"
                         value-expr="ID"
                     /> -->
                 </DxColumn>
-                <DxColumn
-                    data-field="model_MaHieu"
-                    :caption="$t('Model')"
-                    width="90"
-                >
-                    <!-- <DxRequiredRule /> -->
+                <DxColumn data-field="model_MaHieu" :caption="$t('Model')">
                 </DxColumn>
-                <DxColumn
-                    data-field="xuatXu_Hang"
-                    :caption="$t('Origin')"
-                    width="90"
-                >
-                    <!-- <DxRequiredRule /> -->
+                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')">
                 </DxColumn>
-                <DxColumn
-                    data-field="soLuong"
-                    :caption="$t('Quantity')"
-                    width="90"
-                />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" width="80">
-                    <!-- <DxRequiredRule /> -->
-                </DxColumn>
+                <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
+                <DxColumn data-field="donVi" :caption="$t('Unit')"> </DxColumn>
                 <DxColumn
                     data-field="donGiaTamTinh"
                     :caption="$t('Estimated unit')"
-                    width="150"
                     :format="customFormat"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
                     :caption="$t('Estimated amount')"
-                    width="180"
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
-                <DxColumn
-                    data-field="maDuAn"
-                    :caption="$t('Project code')"
-                    width="120"
-                />
+                <DxColumn data-field="maDuAn" :caption="$t('Project code')" />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
-                    width="200"
                 />
-                <DxColumn data-field="ghiChu" :caption="$t('Note')" />
+                <DxColumn
+                    data-field="ghiChu"
+                    :caption="$t('Note')"
+                    width="250"
+                />
             </DxDataGrid>
             <DxButton
                 icon="mdi mdi-plus"
