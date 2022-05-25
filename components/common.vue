@@ -1,11 +1,11 @@
 <template>
     <div class="purchase">
         <h3 class="text-xs-center mb-2">
-            {{ $t('Purchase requisition') }}
+            {{ $t(headerTitle) }}
         </h3>
         <div class="toolbar">
             <div class="row align-center justify-space-around">
-                <div v-for="item in List" :key="item.id" class="xs4">
+                <div v-for="item in list" :key="item.id" :class="classProp">
                     <p class="header">{{ $t(item.header) }}</p>
                     <div @click="onItemClick(item)" class="btn-list row">
                         <i class="mdi mdi-format-list-numbered mr-1" />
@@ -19,7 +19,8 @@
                 <div
                     v-for="item in dataNew"
                     :key="item.id"
-                    class="xs4 btn-list"
+                    style="cursor: pointer; padding: 4px 0"
+                    :class="classProp"
                     @click="onItemClick(item)"
                 >
                     <div class="row">
@@ -32,7 +33,7 @@
             </div>
         </div>
         <div>
-            <div class="row justify-end" v-show="tabPanel.length > 0">
+            <div class="row justify-end" v-show="dataTab.length > 0">
                 <DxButton
                     type="normal"
                     styling-mode="text"
@@ -63,7 +64,7 @@
                             />
                         </div>
                         <DxTabPanel
-                            :data-source="tabPanel"
+                            :data-source="dataTab"
                             :height="fullscreen ? 'auto' : 'calc(80vh - 180px)'"
                             :defer-rendering="false"
                             :show-nav-buttons="true"
@@ -87,42 +88,7 @@
                             <template #itemTemplate="{ data: item }">
                                 <DxScrollView>
                                     <div :class="fullscreen ? 'item-temp' : ''">
-                                        <div v-if="item.listType === 'muahang'">
-                                            <listPurchase
-                                                :dataProp="item.data"
-                                            />
-                                        </div>
-                                        <div
-                                            v-else-if="
-                                                item.listType === 'sanxuat'
-                                            "
-                                        >
-                                            <!-- <listProduct :dataProp="item.data" /> -->
-                                        </div>
-                                        <div
-                                            v-else-if="
-                                                item.listType === 'pheduyet'
-                                            "
-                                        >
-                                            <listApprove
-                                                :dataProp="item.data"
-                                            />
-                                        </div>
-                                        <div v-else>
-                                            <addPurchase
-                                                v-if="
-                                                    item.listType ===
-                                                    'TaoMuaHang'
-                                                "
-                                                :dataProp="item.data"
-                                            />
-                                            <!-- <addProduction
-                                        v-else-if="
-                                            item.listType === 'TaoSanXuat'
-                                        "
-                                        :dataProp="item.data"
-                                    /> -->
-                                        </div>
+                                        <slot :itemProp="item" />
                                     </div>
                                 </DxScrollView>
                             </template>
@@ -138,21 +104,32 @@
 import DxTabPanel from 'devextreme-vue/tab-panel'
 import DxButton from 'devextreme-vue/button'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
-
-import ListPurchase from './ForProject/listPurchase.vue'
-import addPurchase from './ForProject/addPurchase.vue'
-import listApprove from '../components/Approve/listApprove.vue'
 import { mapState } from 'vuex'
+
 import Vue from 'vue'
 import VueFullscreen from 'vue-fullscreen'
+
 Vue.use(VueFullscreen)
+
 export default {
     props: {
-        tabPanel: {
+        headerTitle: {
+            type: String,
+            default: '',
+        },
+        classProp: {
+            type: String,
+            default: '',
+        },
+        dataTab: {
             type: Array,
             default: null,
         },
-        List: {
+        list: {
+            type: Array,
+            default: null,
+        },
+        dataNew: {
             type: Array,
             default: null,
         },
@@ -161,65 +138,59 @@ export default {
         DxTabPanel,
         DxButton,
         DxScrollView,
-        ListPurchase,
-        addPurchase,
-        listApprove,
     },
     data() {
         return {
             selectedItem: null,
-            dataNew: [
-                {
-                    id: this.idv4(),
-                    title: 'Create purchase requisition',
-                    listType: 'TaoMuaHang',
-                    data: [],
-                },
-                {
-                    id: this.idv4(),
-                    title: 'Create production requisition',
-                    listType: 'TaoSanXuat',
-                    data: [],
-                },
-            ],
             fullscreen: false,
         }
     },
     computed: {
-        ...mapState('muahang', ['isSelected']),
+        ...mapState(['isSelected']),
     },
     methods: {
         toggle() {
             this.fullscreen = !this.fullscreen
         },
         onItemClick(e) {
-            if (!this.tabPanel.find((i) => i.listType === e.listType)) {
-                this.$store.commit('muahang/ADD_LIST', e)
+            if (!this.dataTab.find((i) => i.listType === e.listType)) {
+                if (!this.dataTab.find((i) => i.id === e.id)) {
+                    this.dataTab.push(e)
+                }
             }
-            this.$store.commit('muahang/ADD_LIST', e)
             this.selectedItem = e
         },
         closeButtonHandler(itemDel) {
             let result = confirm('Are you sure to close tab?')
-            if (result) this.$store.commit('muahang/CLICK_DELETE', itemDel.id)
+            if (result)
+                this.dataTab = this.dataTab.filter((e) => e.id !== itemDel.id)
         },
         showCloseButton() {
-            return this.tabPanel.length > 0
+            return this.dataTab.length > 0
         },
         clearTab() {
             let result = confirm('Are you sure to close all tabs?')
-            if (result) this.$store.commit('muahang/CLEAR_DATA')
+            if (result) this.dataTab.splice(0, this.dataTab.length)
         },
         titleClick() {
-            this.$store.dispatch('muahang/getData')
-            this.$store.dispatch('pheduyet/getApprove')
+            // this.$store.dispatch('muahang/getData')
+            // this.$store.dispatch('pheduyet/getApprove')
+        },
+        addOption() {
+            this.list.forEach((e) => {
+                if (!this.dataTab.find((i) => i.id === e.id)) {
+                    if (e.listType === this.isSelected) {
+                        this.dataTab.push(e)
+                    }
+                }
+            })
         },
     },
     created() {
-        if (this.isSelected !== '') this.$store.commit('muahang/ADD_OPTION')
+        if (this.isSelected !== '') this.addOption()
     },
     beforeDestroy() {
-        this.$store.commit('muahang/CLEAR_DATA')
+        this.dataTab.splice(0, this.dataTab.length)
     },
 }
 </script>
@@ -245,7 +216,6 @@ export default {
     padding: 0 24px;
 }
 .header {
-    padding: 4px 0;
     font-weight: bold;
     font-size: 14px;
 }

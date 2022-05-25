@@ -9,9 +9,9 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                 >
-                    <DxValidator>
+                    <!-- <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator>
+                    </DxValidator> -->
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.maNhanVien"
@@ -20,9 +20,9 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                 >
-                    <DxValidator>
+                    <!-- <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator>
+                    </DxValidator> -->
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.chucVu"
@@ -31,9 +31,9 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                 >
-                    <DxValidator>
+                    <!-- <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator>
+                    </DxValidator> -->
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.phongBan"
@@ -42,9 +42,9 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                 >
-                    <DxValidator>
+                    <!-- <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator>
+                    </DxValidator> -->
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.phuPhi"
@@ -53,9 +53,9 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                 >
-                    <DxValidator>
+                    <!-- <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator>
+                    </DxValidator> -->
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.maChiPhi"
@@ -64,9 +64,9 @@
                     label-mode="floating"
                     class="xs2"
                 >
-                    <DxValidator>
+                    <!-- <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator>
+                    </DxValidator> -->
                 </DxTextBox>
             </div>
             <div class="row align-center mb-2">
@@ -97,9 +97,9 @@
                     label-mode="floating"
                     class="xs-4 mr-3"
                 >
-                    <DxValidator>
+                    <!-- <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator>
+                    </DxValidator> -->
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
@@ -108,9 +108,9 @@
                     label-mode="floating"
                     class="xs-4"
                 >
-                    <DxValidator>
+                    <!-- <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator>
+                    </DxValidator> -->
                 </DxTextBox>
             </div>
         </DxValidationGroup>
@@ -129,6 +129,7 @@
                 :column-auto-width="true"
                 :ref="dataGridRefKey"
             >
+                <!-- @saving="saving" -->
                 <DxEditing
                     :allow-updating="true"
                     :allow-deleting="true"
@@ -142,18 +143,18 @@
                     data-field="tenHangHoa_DichVu"
                     :caption="$t('Goods, services')"
                 >
-                    <!-- <DxLookup
-                        :data-source="getFilteredCities"
-                        display-expr="Name"
-                        value-expr="ID"
-                    /> -->
+                    <DxLookup
+                        :data-source="listItem"
+                        display-expr="name"
+                        value-expr="id"
+                    />
                 </DxColumn>
                 <DxColumn data-field="model_MaHieu" :caption="$t('Model')">
                 </DxColumn>
                 <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')">
                 </DxColumn>
                 <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
-                <DxColumn data-field="donVi" :caption="$t('Unit')"> </DxColumn>
+                <DxColumn data-field="donVi" :caption="$t('Unit')" />
                 <DxColumn
                     data-field="donGiaTamTinh"
                     :caption="$t('Estimated unit')"
@@ -266,6 +267,7 @@ export default {
         }
     },
     computed: {
+        ...mapState('muahang', ['listItem']),
         ...mapState(['userInfo']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
@@ -289,8 +291,7 @@ export default {
             return !conditionsArray.includes(false)
         },
         clickAdd() {
-            let result = this.validationGroup.validate()
-            if (result.isValid && this.checkArray()) {
+            if (this.checkArray()) {
                 this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
                 this.$toast.success('Success!')
                 this.resetData()
@@ -307,6 +308,21 @@ export default {
                 currency: 'VND',
             }).format(e)
         },
+        // saving(e) {
+        //     if (e.parentType == 'dataRow' && e.dataField == 'CustomerID') {
+        //         e.editorOptions.onValueChanged = function (arg) {
+        //             e.setValue(arg.value)
+        //             var entireObject = arg.component.option('selectedItem')
+        //             e.component.cellValue(
+        //                 e.row.rowIndex,
+        //                 'ShipCountry',
+        //                 entireObject.CustomerID +
+        //                     ' ' +
+        //                     entireObject.CustomerName
+        //             )
+        //         }
+        //     }
+        // },
         resetData() {
             this.YeuCauMuaHang = {
                 id: 0,
@@ -341,6 +357,7 @@ export default {
         },
     },
     created() {
+        this.$store.dispatch('muahang/getItems')
         this.YeuCauMuaHang.tenNhanVien = this.userInfo.tenNhanVien
         this.YeuCauMuaHang.maNhanVien = this.userInfo.maNhanVien
         this.YeuCauMuaHang.chucVu = this.userInfo.chucVu

@@ -116,6 +116,7 @@ export const state = () => ({
     token: '',
     userInfo: {},
     excelFile: null,
+    isSelected: '',
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
@@ -142,6 +143,9 @@ export const mutations = {
     },
     EXCEL_FILE(state, item) {
         state.excelFile = item
+    },
+    IS_SELECTED(state, newText) {
+        state.isSelected = newText
     },
 }
 

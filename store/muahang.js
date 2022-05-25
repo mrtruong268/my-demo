@@ -41,8 +41,8 @@ export const state = () => ({
         },
     ],
     suaYeuCau: null,
-    HangHoaDichVu: null,
     isSelected: '',
+    listItem: [],
 })
 export const getters = {
     muaDuAn: (state) => state.muaDuAn,
@@ -70,9 +70,6 @@ export const mutations = {
     EDIT_ITEM(state, item) {
         state.suaYeuCau = item
     },
-    GET_ALL_ITEM(state, item) {
-        state.HangHoaDichVu = item
-    },
     ADD_LIST(state, newItem) {
         if (
             !state.muaDuAn.find((i) => i.id === newItem.id) &&
@@ -98,6 +95,9 @@ export const mutations = {
                 }
             }
         })
+    },
+    GET_ITEM(state, item) {
+        state.listItem = item
     },
 }
 export const actions = {
@@ -143,6 +143,14 @@ export const actions = {
     async editData({ commit }, editItem) {
         try {
             let response = await this.$axios.put('/pr/put-pr', editItem)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getItems({ commit }) {
+        try {
+            let response = await this.$axios.get('/item/get-items')
+            commit('GET_ITEM', response.data.data)
         } catch (err) {
             console.log(err)
         }

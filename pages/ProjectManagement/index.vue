@@ -1,119 +1,61 @@
 <template>
-    <div class="main">
-        <h2 class="text-xs-center mb-2">Project management</h2>
-        <div class="toolbar">
-            <div class="row align-center justify-space-around">
-                <div
-                    v-for="item in danhSachQuanLy"
-                    :key="item.id"
-                    class="xs6 text-xs-center btn-list"
-                    @click="onItemClick(item)"
-                >
-                    <i class="mdi mdi-format-list-numbered mr-1" />
-                    {{ $t(item.title) }}
+    <div class="m-80">
+        <common
+            :headerTitle="$t('Project management')"
+            :classProp="'xs4'"
+            :dataTab="duLieuTab"
+            :dataNew="duLieuMoi"
+            :list="danhSach"
+        >
+            <template slot-scope="{ itemProp }">
+                <div v-if="itemProp.listType === 'project'">
+                    <listProject :dataProp="itemProp.data" />
                 </div>
-            </div>
-            <div class="row align-center justify-space-around">
-                <div
-                    v-for="item in dataTaomoi"
-                    :key="item.id"
-                    class="xs6 text-xs-center btn-list"
-                    @click="onItemClick(item)"
-                >
-                    <i class="mdi mdi-plus-circle mr-1" />
-                    {{ $t(item.title) }}
+                <div v-else-if="itemProp.listType === 'partner'">
+                    <listPartner :dataProp="itemProp.data" />
                 </div>
-            </div>
-        </div>
-        <div>
-            <div class="row justify-end" v-show="quanLy.length > 0">
-                <DxButton
-                    text="Clear"
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-close"
-                    @click="clearTab"
-                />
-            </div>
-            <div>
-                <DxTabPanel
-                    :data-source="quanLy"
-                    height="calc(78vh - 200px)"
-                    :defer-rendering="false"
-                    :show-nav-buttons="true"
-                    :repaint-changes-only="true"
-                    :selectedItem="selectedItem"
-                    noDataText="No data to display"
-                    item-title-template="title"
-                    item-template="itemTemplate"
-                >
-                    >
-                    <template #title="{ data: item }">
-                        <div>
-                            <span>{{ item.title }} </span
-                            ><i
-                                v-show="showCloseButton()"
-                                class="mdi mdi-close-circle"
-                                @click="closeButtonHandler(item)"
-                            />
-                        </div>
-                    </template>
-                    <template #itemTemplate="{ data: item }">
-                        <DxScrollView>
-                            <div v-if="item.listType === 'project'">
-                                <listProject :dataProp="item.data" />
-                            </div>
-                            <div v-else-if="item.listType === 'partner'">
-                                <listPartner :dataProp="item.data" />
-                            </div>
-                            <div v-else-if="item.listType === 'customer'">
-                                <listCustomer :dataProp="item.data" />
-                            </div>
-                            <div v-else-if="item.listType === 'category'">
-                                <listCategory :dataProp="item.data" />
-                            </div>
-                            <div v-else-if="item.listType === 'company'">
-                                <listCompany :dataProp="item.data" />
-                            </div>
-                            <div v-else-if="item.listType === 'view'">
-                                <listView :dataProp="item.data" />
-                            </div>
-                            <div v-else>
-                                <addProject
-                                    v-if="item.listType === 'NewProject'"
-                                    :dataProp="item.data"
-                                />
-                                <addCustomer
-                                    v-else-if="
-                                        item.listType === 'NewPartner' ||
-                                        item.listType === 'NewCustomer'
-                                    "
-                                    :dataProp="item"
-                                />
-                                <addCategory
-                                    v-else-if="item.listType === 'NewCategory'"
-                                    :dataProp="item.data"
-                                />
-                                <addView
-                                    v-else-if="item.listType === 'NewView'"
-                                    :dataProp="item.data"
-                                />
-                                <dashboard v-else />
-                            </div>
-                        </DxScrollView>
-                    </template>
-                </DxTabPanel>
-            </div>
-        </div>
+                <div v-else-if="itemProp.listType === 'customer'">
+                    <listCustomer :dataProp="itemProp.data" />
+                </div>
+                <div v-else-if="itemProp.listType === 'category'">
+                    <listCategory :dataProp="itemProp.data" />
+                </div>
+                <div v-else-if="itemProp.listType === 'company'">
+                    <listCompany :dataProp="itemProp.data" />
+                </div>
+                <div v-else-if="itemProp.listType === 'view'">
+                    <listView :dataProp="itemProp.data" />
+                </div>
+                <div v-else>
+                    <addProject
+                        v-if="itemProp.listType === 'NewProject'"
+                        :dataProp="itemProp.data"
+                    />
+                    <addCustomer
+                        v-else-if="
+                            itemProp.listType === 'NewPartner' ||
+                            itemProp.listType === 'NewCustomer'
+                        "
+                        :dataProp="itemProp"
+                    />
+                    <addCategory
+                        v-else-if="itemProp.listType === 'NewCategory'"
+                        :dataProp="itemProp.data"
+                    />
+                    <addView
+                        v-else-if="itemProp.listType === 'NewView'"
+                        :dataProp="itemProp.data"
+                    />
+                    <dashboard v-else />
+                </div>
+            </template>
+        </common>
     </div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import DxList from 'devextreme-vue/list'
-import DxButton from 'devextreme-vue/button'
-import DxTabPanel from 'devextreme-vue/tab-panel'
-import { DxScrollView } from 'devextreme-vue/scroll-view'
+
 import listProject from './components/listProject.vue'
 import listPartner from './components/listPartner.vue'
 import listCustomer from './components/listCustomer.vue'
@@ -125,14 +67,19 @@ import addCustomer from './components/addNew/addCustomer.vue'
 import addCategory from './components/addNew/addCategory.vue'
 import addView from './components/addNew/addView.vue'
 import Dashboard from './components/dashboard.vue'
+import Common from '~/components/common.vue'
 
 export default {
+    props: {
+        itemProp: {
+            type: Object,
+            default() {
+                return {}
+            },
+        },
+    },
     layout: 'commonLayout',
     components: {
-        DxList,
-        DxButton,
-        DxTabPanel,
-        DxScrollView,
         listProject,
         listPartner,
         listCustomer,
@@ -144,11 +91,129 @@ export default {
         addCategory,
         addView,
         Dashboard,
+        Common,
     },
     data() {
         return {
-            selectedItem: null,
-            dataTaomoi: [
+            duLieuTab: [],
+            danhSach: [
+                {
+                    id: this.idv4(),
+                    title: 'List of projects',
+                    listType: 'project',
+                    data: [
+                        {
+                            no: 1,
+                            id: 'AAD2101',
+                            Partner: 'AAD',
+                            Customer: 'AAD',
+                            ProjectName: 'Service Samsung',
+                            Description: '',
+                            Category: 'service',
+                            Company: 'VNAS Services',
+                            status: 'Finish',
+                            Type: 'Ngoài hệ thống',
+                            CreatedDate: '7/7/2021 8:50:33 AM',
+                            CurrentIssue: 'test new',
+                        },
+                    ],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'List of partners',
+                    listType: 'partner',
+                    data: [
+                        {
+                            id: 1,
+                            PartnerID: 'AUM',
+                            Name: 'Aumann',
+                            TIN: 2800720339,
+                            Address: '48361 Beelen, Deutschland, Đức',
+                            Contact: '',
+                            Email: '',
+                            Phone: 0,
+                        },
+                    ],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'List of customers',
+                    listType: 'customer',
+                    data: [
+                        {
+                            id: 1,
+                            CustomerID: 'AUM',
+                            Name: 'Aumann',
+                            TIN: 2800720339,
+                            Address: '48361 Beelen, Deutschland, Đức',
+                            Contact: '',
+                            Email: '',
+                            Phone: 0,
+                        },
+                    ],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'List of categories',
+                    listType: 'category',
+                    data: [
+                        {
+                            id: 1,
+                            name: 'Báo giá',
+                        },
+                        {
+                            id: 2,
+                            name: 'Chế tạo, sửa chữa',
+                        },
+                        {
+                            id: 3,
+                            name: 'Gia công theo bản vẽ',
+                        },
+
+                        {
+                            id: 4,
+                            name: 'Service',
+                        },
+                        {
+                            id: 5,
+                            name: 'Spare part',
+                        },
+                        {
+                            id: 6,
+                            name: 'Thương mại',
+                        },
+                        {
+                            id: 7,
+                            name: 'Turnkey line',
+                        },
+                    ],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'List of companies',
+                    listType: 'company',
+                    data: [{}],
+                },
+                {
+                    id: this.idv4(),
+                    title: 'List of project views',
+                    listType: 'view',
+                    data: [
+                        {
+                            id: 1,
+                            Description: 'Basic',
+                            ViewMaDuAn: true,
+                            ViewDoiTac: true,
+                            ViewKhachHang: true,
+                            ViewTenDuAn: true,
+                            ViewPhanLoai: true,
+                            ViewNgayTao: true,
+                            ViewTinhTrang: true,
+                        },
+                    ],
+                },
+            ],
+            duLieuMoi: [
                 {
                     id: this.idv4(),
                     title: 'New project',
@@ -188,63 +253,9 @@ export default {
             ],
         }
     },
-    computed: {
-        ...mapGetters('quanly', ['quanLy', 'danhSachQuanLy']),
-        ...mapState('quanly', ['isSelected']),
-    },
-    methods: {
-        onItemClick(e) {
-            if (!this.quanLy.find((i) => i.listType === e.listType)) {
-                this.$store.commit('quanly/ADD_LIST', e)
-            }
-            this.$store.commit('quanly/ADD_LIST', e)
-            this.selectedItem = e
-        },
-        closeButtonHandler(itemDel) {
-            let result = confirm('Are you sure to close tab?')
-            if (result) this.$store.commit('quanly/CLICK_DELETE', itemDel.id)
-        },
-        showCloseButton() {
-            return this.quanLy.length > 0
-        },
-        clearTab() {
-            let result = confirm('Are you sure to close all tabs?')
-            if (result) this.$store.commit('quanly/CLEAR_DATA')
-        },
-    },
-    created() {
-        if (this.isSelected !== '') this.$store.commit('quanly/ADD_OPTION')
-    },
-    beforeDestroy() {
-        this.$store.commit('quanly/CLEAR_DATA')
-    },
+    methods: {},
+    created() {},
 }
 </script>
 
-<style scoped>
-.main {
-    height: 100%;
-    overflow: hidden;
-    padding: 24px;
-    margin: 80px auto;
-}
-.main h2 {
-    color: #0986c5;
-}
->>> .dx-button-text {
-    text-transform: none;
-    line-height: unset;
-}
-.toolbar {
-    border: 1px solid #e7e7e7;
-}
-.btn-list {
-    background-color: white;
-    color: black;
-    cursor: pointer;
-    padding: 10px 0;
-}
-.btn-list:hover {
-    background-color: #e7e7e7;
-}
-</style>
+<style scoped></style>

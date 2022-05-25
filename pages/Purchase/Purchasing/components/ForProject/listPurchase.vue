@@ -16,6 +16,7 @@
             :allow-column-resizing="true"
             :column-auto-width="true"
             :hover-state-enabled="true"
+            :ref="dataGridRefKey"
         >
             <DxHeaderFilter :visible="true" />
             <DxFilterRow :visible="true" />
@@ -172,6 +173,7 @@ export default {
     },
     data() {
         return {
+            dataGridRefKey: 'datagridValid',
             popupVisible: false,
             isClick: null,
             details: null,

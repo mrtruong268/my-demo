@@ -105,6 +105,17 @@ export default {
             this.$store.commit('muahang/IS_SELECTED', e.type)
         },
     },
+    created() {
+        let token = this.$route.query.access_token
+        if (token !== '') {
+            this.$cookies.set('cookieToken2', this.$route.query.access_token, {
+                path: '/',
+                maxAge: 60 * 60 * 24 * 7,
+            })
+        } else {
+            return
+        }
+    },
 }
 </script>
 
