@@ -146,7 +146,7 @@
                     <DxLookup
                         :data-source="listItem"
                         display-expr="name"
-                        value-expr="id"
+                        value-expr="name"
                     />
                 </DxColumn>
                 <DxColumn data-field="model_MaHieu" :caption="$t('Model')">
