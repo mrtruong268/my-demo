@@ -10,11 +10,15 @@ export default function ({ app, $axios, redirect }) {
             return redirect('/login')
         }
     })
-    $axios.onError((error) => {
-        if (error.response.status === 401) {
-            Vue.$toast.error(`Failed! Unauthorized`)
-        } else {
-            Vue.$toast.error(`Failed! ${error.message}`)
+    $axios.onResponse((response) => {
+        if (response.status === 200) {
+            if (response.data.success === false) {
+                Vue.$toast.error(response.data.message)
+            }
         }
+    })
+    $axios.onError((error) => {
+        if (error.response.status === 401)
+            Vue.$toast.error(`Failed! Unauthorized`)
     })
 }

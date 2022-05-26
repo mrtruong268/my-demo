@@ -82,12 +82,21 @@
                 class="xs-4 mr-3"
             />
             <DxTextBox
+                v-model="YeuCauMuaHang.maDuAn"
+                styling-mode="outlined"
+                :label="$t('Project code')"
+                label-mode="floating"
+                :read-only="true"
+                class="xs2 mr-3"
+            >
+            </DxTextBox>
+            <DxTextBox
                 v-model="YeuCauMuaHang.soThamChieu"
                 styling-mode="outlined"
                 :label="$t('Reference number')"
                 label-mode="floating"
                 :read-only="true"
-                class="xs-4"
+                class="xs2"
             />
         </div>
         <div class="mb-3">
@@ -132,7 +141,6 @@
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
-                <DxColumn data-field="maDuAn" :caption="$t('Project code')" />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
@@ -149,7 +157,7 @@
             />
             <div class="row justify-end align-center mt-3">
                 <DxButton
-                    :text="$t('Edit requisition')"
+                    :text="$t('Reject')"
                     class="mr-3"
                     type="danger"
                     icon="close"
@@ -204,36 +212,7 @@ export default {
     data() {
         return {
             dataGridRefKey: 'datagridValid',
-            YeuCauMuaHang: {
-                id: 0,
-                tenNhanVien: '',
-                maNhanVien: '',
-                chucVu: '',
-                phongBan: '',
-                ngayDeTrinh: new Date().toISOString(),
-                ngayCanHang: new Date().toISOString(),
-                diaDiemLamViec: '',
-                phuPhi: '',
-                maChiPhi: '',
-                soThamChieu: '',
-                comment: '0',
-                tongTienTamTinh: 0,
-                yeuCauMuaHangChiTiets: [
-                    {
-                        id: 0,
-                        ycmhId: 0,
-                        tenHangHoa_DichVu: '',
-                        xuatXu_Hang: '',
-                        model_MaHieu: '',
-                        soLuong: 0,
-                        donVi: '',
-                        soTienTamTinh: 0,
-                        donGiaTamTinh: 0,
-                        maHangMucTrienKhai: '',
-                        ghiChu: '',
-                    },
-                ],
-            },
+            YeuCauMuaHang: {},
         }
     },
     watch: {
@@ -241,48 +220,17 @@ export default {
             if (this.view) {
                 this.YeuCauMuaHang = Object.assign({}, this.view)
             } else {
-                this.YeuCauMuaHang = {
-                    id: 0,
-                    tenNhanVien: '',
-                    maNhanVien: '',
-                    chucVu: '',
-                    phongBan: '',
-                    ngayDeTrinh: new Date().toISOString(),
-                    ngayCanHang: new Date().toISOString(),
-                    diaDiemLamViec: '',
-                    phuPhi: '',
-                    maChiPhi: '',
-                    soThamChieu: '',
-                    comment: '0',
-                    tongTienTamTinh: 0,
-                    yeuCauMuaHangChiTiets: [
-                        {
-                            id: 0,
-                            ycmhId: 0,
-                            tenHangHoa_DichVu: '',
-                            xuatXu_Hang: '',
-                            model_MaHieu: '',
-                            soLuong: 0,
-                            donVi: '',
-                            soTienTamTinh: 0,
-                            donGiaTamTinh: 0,
-                            maHangMucTrienKhai: '',
-                            ghiChu: '',
-                        },
-                    ],
-                }
+                this.YeuCauMuaHang = {}
             }
         },
     },
     methods: {
         duyet() {
             this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
-            this.$toast.success('Success!')
             this.$emit('hiddenPopup')
         },
         khongDuyet() {
             this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
-            this.$toast.success('Success!')
             this.$emit('hiddenPopup')
         },
         customFormat(e) {

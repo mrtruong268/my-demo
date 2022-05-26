@@ -2,7 +2,7 @@
     <DxPopup
         :visible="showPopup"
         :drag-enabled="false"
-        :close-on-outside-click="false"
+        :close-on-outside-click="closeOut"
         :show-close-button="true"
         :show-title="showTitle"
         height="auto"
@@ -35,6 +35,10 @@ export default {
             default: '',
         },
         showTitle: {
+            type: Boolean,
+            default: false,
+        },
+        closeOut: {
             type: Boolean,
             default: false,
         },

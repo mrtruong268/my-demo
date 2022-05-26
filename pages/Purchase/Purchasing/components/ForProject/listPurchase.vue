@@ -128,10 +128,9 @@
         </DxDataGrid>
         <popup
             :showPopup="popupVisible"
-            :showTitle="true"
-            :title="
-                isClick == 'edit' ? $t('Edit requisition') : $t('View details')
-            "
+            :showTitle="isClick == 'edit' ? true : false"
+            :closeOut="isClick == 'edit' ? false : true"
+            :title="isClick == 'edit' ? $t('Edit requisition') : $t('')"
             :width="'80%'"
         >
             <template #main>
@@ -187,7 +186,6 @@ export default {
         },
         clickApprove(e) {
             this.$store.dispatch('pheduyet/submitApprove', e.data.id)
-            this.$toast.success('Success!')
             this.reload()
         },
         clickView(e) {
@@ -203,7 +201,6 @@ export default {
         clickDelete(e) {
             if (confirm('Are you sure to delete?') == true) {
                 this.$store.dispatch('muahang/deleteData', e.data.id)
-                this.$toast.success('Success!')
                 this.reload()
             }
         },

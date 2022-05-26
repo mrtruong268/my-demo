@@ -68,7 +68,6 @@
                             :defer-rendering="false"
                             :show-nav-buttons="true"
                             :repaint-changes-only="true"
-                            :animationEnabled="true"
                             :selectedItem="selectedItem"
                             :noDataText="$t('No data to display')"
                             item-title-template="title"

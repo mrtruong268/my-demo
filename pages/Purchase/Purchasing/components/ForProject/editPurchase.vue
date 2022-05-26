@@ -102,11 +102,22 @@
                     </DxValidator>
                 </DxTextBox>
                 <DxTextBox
+                    v-model="YeuCauMuaHang.maDuAn"
+                    styling-mode="outlined"
+                    :label="$t('Project code')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+                <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
                     styling-mode="outlined"
                     :label="$t('Reference number')"
                     label-mode="floating"
-                    class="xs-4"
+                    class="xs2"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -136,6 +147,7 @@
                 :column-auto-width="true"
                 :hover-state-enabled="true"
                 @saved="saved"
+                @editorPreparing="editorPreparing"
             >
                 <DxEditing
                     :allow-updating="true"
@@ -149,19 +161,11 @@
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
                     :caption="$t('Goods, services')"
-                >
-                    <!-- <DxLookup
-                        :data-source="getFilteredCities"
-                        display-expr="Name"
-                        value-expr="ID"
-                    /> -->
-                </DxColumn>
-                <DxColumn data-field="model_MaHieu" :caption="$t('Model')">
-                </DxColumn>
-                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')">
-                </DxColumn>
+                />
+                <DxColumn data-field="model_MaHieu" :caption="$t('Model')" />
+                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')" />
                 <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
-                <DxColumn data-field="donVi" :caption="$t('Unit')"> </DxColumn>
+                <DxColumn data-field="donVi" :caption="$t('Unit')" />
                 <DxColumn
                     data-field="donGiaTamTinh"
                     :caption="$t('Estimated unit')"
@@ -173,7 +177,6 @@
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
-                <DxColumn data-field="maDuAn" :caption="$t('Project code')" />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
@@ -183,18 +186,6 @@
                     :caption="$t('Note')"
                     width="250"
                 />
-                <!-- <DxColumn
-                    :allow-header-filtering="false"
-                    width="40"
-                    cell-template="buttons-cell"
-                />
-                <template #buttons-cell="{ data }">
-                    <p
-                        class="mdi mdi-delete font-24"
-                        style="cursor: pointer"
-                        @click="clickDelete(data)"
-                    ></p>
-                </template> -->
             </DxDataGrid>
         </div>
         <div class="row justify-end">
@@ -220,7 +211,7 @@ import {
     DxPaging,
     DxEditing,
 } from 'devextreme-vue/data-grid'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
 import DxValidationGroup from 'devextreme-vue/validation-group'
 
@@ -243,36 +234,7 @@ export default {
         return {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
-            YeuCauMuaHang: {
-                id: 0,
-                tenNhanVien: '',
-                maNhanVien: '',
-                chucVu: '',
-                phongBan: '',
-                ngayDeTrinh: new Date().toISOString(),
-                ngayCanHang: new Date().toISOString(),
-                diaDiemLamViec: '',
-                phuPhi: '',
-                maChiPhi: '',
-                soThamChieu: '',
-                comment: '',
-                tongTienTamTinh: 0,
-                yeuCauMuaHangChiTiets: [
-                    {
-                        id: 0,
-                        ycmhId: 0,
-                        tenHangHoa_DichVu: '',
-                        xuatXu_Hang: '',
-                        model_MaHieu: '',
-                        soLuong: 0,
-                        donVi: '',
-                        soTienTamTinh: 0,
-                        donGiaTamTinh: 0,
-                        maHangMucTrienKhai: '',
-                        ghiChu: '',
-                    },
-                ],
-            },
+            YeuCauMuaHang: {},
         }
     },
     watch: {
@@ -284,6 +246,7 @@ export default {
         },
     },
     computed: {
+        ...mapState('muahang', ['listItem']),
         ...mapGetters('muahang', ['suaYeuCau', 'danhSachHangHoa']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
@@ -298,6 +261,20 @@ export default {
                 this.$refs[this.dataGridRefKey].instance.getDataSource()._items
             this.YeuCauMuaHang.yeuCauMuaHangChiTiets = tmpData
         },
+        editorPreparing(e) {
+            let arrTmp = []
+            this.listItem.forEach((e) => arrTmp.push(e.name))
+            if (e.dataField === 'tenHangHoa_DichVu') {
+                e.editorName = 'dxAutocomplete'
+                e.editorOptions = {
+                    items: arrTmp,
+                    value: e.value,
+                    onValueChanged: function (ev) {
+                        e.setValue(ev.value)
+                    },
+                }
+            }
+        },
         clickSave() {
             let result = this.validationGroup.validate()
             let checkEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets.some(
@@ -307,7 +284,6 @@ export default {
                 setTimeout(() => {
                     this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
                 }, 100)
-                this.$toast.success('Success!')
                 this.$emit('invisible')
             }
         },

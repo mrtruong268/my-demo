@@ -54,7 +54,7 @@
                     class="xs2 mr-3"
                 >
                     <!-- <DxValidator>
-                        <DxRequiredRule />
+                        <DxRequiredRule validationMessageMode="auto" />
                     </DxValidator> -->
                 </DxTextBox>
                 <DxTextBox
@@ -102,11 +102,22 @@
                     </DxValidator> -->
                 </DxTextBox>
                 <DxTextBox
+                    v-model="YeuCauMuaHang.maDuAn"
+                    styling-mode="outlined"
+                    :label="$t('Project code')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                >
+                    <!-- <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator> -->
+                </DxTextBox>
+                <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
                     styling-mode="outlined"
                     :label="$t('Reference number')"
                     label-mode="floating"
-                    class="xs-4"
+                    class="xs2"
                 >
                     <!-- <DxValidator>
                         <DxRequiredRule />
@@ -128,13 +139,13 @@
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 :ref="dataGridRefKey"
+                @editorPreparing="editorPreparing"
             >
-                <!-- @saving="saving" -->
                 <DxEditing
                     :allow-updating="true"
                     :allow-deleting="true"
-                    :confirmDelete="false"
                     :useIcons="true"
+                    :confirmDelete="false"
                     mode="cell"
                     new-row-position="last"
                 />
@@ -142,17 +153,9 @@
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
                     :caption="$t('Goods, services')"
-                >
-                    <DxLookup
-                        :data-source="listItem"
-                        display-expr="name"
-                        value-expr="name"
-                    />
-                </DxColumn>
-                <DxColumn data-field="model_MaHieu" :caption="$t('Model')">
-                </DxColumn>
-                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')">
-                </DxColumn>
+                />
+                <DxColumn data-field="model_MaHieu" :caption="$t('Model')" />
+                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')" />
                 <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
                 <DxColumn data-field="donVi" :caption="$t('Unit')" />
                 <DxColumn
@@ -166,7 +169,6 @@
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
-                <DxColumn data-field="maDuAn" :caption="$t('Project code')" />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
@@ -208,10 +210,10 @@ import {
     DxColumn,
     DxPaging,
     DxEditing,
-    DxLookup,
 } from 'devextreme-vue/data-grid'
 import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
 import DxValidationGroup from 'devextreme-vue/validation-group'
+import { DxAutocomplete } from 'devextreme-vue/autocomplete'
 import { mapState } from 'vuex'
 
 export default {
@@ -225,10 +227,10 @@ export default {
         DxNumberBox,
         DxButton,
         DxEditing,
-        DxLookup,
         DxValidator,
         DxRequiredRule,
         DxValidationGroup,
+        DxAutocomplete,
     },
     data() {
         return {
@@ -264,6 +266,7 @@ export default {
                     },
                 ],
             },
+            tmpObj: {},
         }
     },
     computed: {
@@ -291,12 +294,10 @@ export default {
             return !conditionsArray.includes(false)
         },
         clickAdd() {
+            // let result = this.validationGroup.validate()
             if (this.checkArray()) {
                 this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-                this.$toast.success('Success!')
                 this.resetData()
-            } else {
-                this.$toast.error('One or more validation errors occurred!')
             }
         },
         calculateAmount(e) {
@@ -308,21 +309,20 @@ export default {
                 currency: 'VND',
             }).format(e)
         },
-        // saving(e) {
-        //     if (e.parentType == 'dataRow' && e.dataField == 'CustomerID') {
-        //         e.editorOptions.onValueChanged = function (arg) {
-        //             e.setValue(arg.value)
-        //             var entireObject = arg.component.option('selectedItem')
-        //             e.component.cellValue(
-        //                 e.row.rowIndex,
-        //                 'ShipCountry',
-        //                 entireObject.CustomerID +
-        //                     ' ' +
-        //                     entireObject.CustomerName
-        //             )
-        //         }
-        //     }
-        // },
+        editorPreparing(e) {
+            let arrTmp = []
+            this.listItem.forEach((e) => arrTmp.push(e.name))
+            if (e.dataField === 'tenHangHoa_DichVu') {
+                e.editorName = 'dxAutocomplete'
+                e.editorOptions = {
+                    items: arrTmp,
+                    value: e.value,
+                    onValueChanged: function (ev) {
+                        e.setValue(ev.value)
+                    },
+                }
+            }
+        },
         resetData() {
             this.YeuCauMuaHang = {
                 id: 0,

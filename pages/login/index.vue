@@ -128,10 +128,7 @@ export default {
             this.signIn()
         },
         signIn() {
-            if (this.$cookies.get('cookieToken')) {
-                this.clickRouter('')
-                this.$toast.success('Success!')
-            }
+            if (this.$cookies.get('cookieToken')) this.clickRouter('')
         },
     },
     watch: {
