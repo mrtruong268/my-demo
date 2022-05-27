@@ -246,7 +246,6 @@ export default {
     },
     computed: {
         ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'userInfo']),
-        ...mapGetters('quanly', ['quanLy']),
     },
     methods: {
         openNav() {
@@ -284,20 +283,11 @@ export default {
             this.$router.replace(this.switchLocalePath(e))
         },
         goCategory() {
-            this.$store.commit('quanly/IS_SELECTED', 'category')
+            this.$store.commit('IS_SELECTED', 4)
             this.clickRouter('ProjectManagement', this.routeParams)
         },
         goDashboard() {
             this.clickRouter('ProjectManagement', this.routeParams)
-            let newObj = {
-                id: this.idv4(),
-                title: 'Dashboard',
-                listType: 'dashboard',
-                data: [],
-            }
-            if (!this.quanLy.find((i) => i.listType === newObj.listType)) {
-                this.$store.commit('quanly/ADD_LIST', newObj)
-            }
         },
         signOut() {
             this.$store.commit('GET_TOKEN', '')

@@ -123,7 +123,7 @@ export default {
         },
         dataTab: {
             type: Array,
-            default: null,
+            default: [],
         },
         list: {
             type: Array,
@@ -187,10 +187,7 @@ export default {
         },
     },
     created() {
-        if (this.isSelected !== '') this.addOption()
-    },
-    beforeDestroy() {
-        this.dataTab.splice(0, this.dataTab.length)
+        if (this.isSelected !== 0) this.addOption()
     },
 }
 </script>

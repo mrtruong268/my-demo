@@ -8,22 +8,22 @@
             :list="danhSach"
         >
             <template slot-scope="{ itemProp }">
-                <div v-if="itemProp.listType === 'project'">
+                <div v-if="itemProp.listType === 1">
                     <listProject :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 'partner'">
+                <div v-else-if="itemProp.listType === 2">
                     <listPartner :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 'customer'">
+                <div v-else-if="itemProp.listType === 3">
                     <listCustomer :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 'category'">
+                <div v-else-if="itemProp.listType === 4">
                     <listCategory :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 'company'">
+                <div v-else-if="itemProp.listType === 5">
                     <listCompany :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 'view'">
+                <div v-else-if="itemProp.listType === 6">
                     <listView :dataProp="itemProp.data" />
                 </div>
                 <div v-else>
@@ -100,117 +100,38 @@ export default {
                 {
                     id: this.idv4(),
                     title: 'List of projects',
-                    listType: 'project',
-                    data: [
-                        {
-                            no: 1,
-                            id: 'AAD2101',
-                            Partner: 'AAD',
-                            Customer: 'AAD',
-                            ProjectName: 'Service Samsung',
-                            Description: '',
-                            Category: 'service',
-                            Company: 'VNAS Services',
-                            status: 'Finish',
-                            Type: 'Ngoài hệ thống',
-                            CreatedDate: '7/7/2021 8:50:33 AM',
-                            CurrentIssue: 'test new',
-                        },
-                    ],
+                    listType: 1,
+                    data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of partners',
-                    listType: 'partner',
-                    data: [
-                        {
-                            id: 1,
-                            PartnerID: 'AUM',
-                            Name: 'Aumann',
-                            TIN: 2800720339,
-                            Address: '48361 Beelen, Deutschland, Đức',
-                            Contact: '',
-                            Email: '',
-                            Phone: 0,
-                        },
-                    ],
+                    listType: 2,
+                    data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of customers',
-                    listType: 'customer',
-                    data: [
-                        {
-                            id: 1,
-                            CustomerID: 'AUM',
-                            Name: 'Aumann',
-                            TIN: 2800720339,
-                            Address: '48361 Beelen, Deutschland, Đức',
-                            Contact: '',
-                            Email: '',
-                            Phone: 0,
-                        },
-                    ],
+                    listType: 3,
+                    data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of categories',
-                    listType: 'category',
-                    data: [
-                        {
-                            id: 1,
-                            name: 'Báo giá',
-                        },
-                        {
-                            id: 2,
-                            name: 'Chế tạo, sửa chữa',
-                        },
-                        {
-                            id: 3,
-                            name: 'Gia công theo bản vẽ',
-                        },
-
-                        {
-                            id: 4,
-                            name: 'Service',
-                        },
-                        {
-                            id: 5,
-                            name: 'Spare part',
-                        },
-                        {
-                            id: 6,
-                            name: 'Thương mại',
-                        },
-                        {
-                            id: 7,
-                            name: 'Turnkey line',
-                        },
-                    ],
+                    listType: 4,
+                    data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of companies',
-                    listType: 'company',
-                    data: [{}],
+                    listType: 5,
+                    data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of project views',
-                    listType: 'view',
-                    data: [
-                        {
-                            id: 1,
-                            Description: 'Basic',
-                            ViewMaDuAn: true,
-                            ViewDoiTac: true,
-                            ViewKhachHang: true,
-                            ViewTenDuAn: true,
-                            ViewPhanLoai: true,
-                            ViewNgayTao: true,
-                            ViewTinhTrang: true,
-                        },
-                    ],
+                    listType: 6,
+                    data: [],
                 },
             ],
             duLieuMoi: [
@@ -253,8 +174,45 @@ export default {
             ],
         }
     },
-    methods: {},
-    created() {},
+    computed: {
+        ...mapState('quanly', [
+            'dataProject',
+            'dataPartner',
+            'dataCustomer',
+            'dataCategory',
+            'dataCompany',
+            'dataView',
+        ]),
+    },
+    methods: {
+        toDashboard() {
+            let newObj = {
+                id: this.idv4(),
+                title: 'Dashboard',
+                listType: 7,
+                data: [],
+            }
+            if (!this.duLieuTab.find((i) => i.id === newObj.id)) {
+                this.duLieuTab.push(newObj)
+            }
+        },
+    },
+    created() {
+        this.toDashboard()
+        this.danhSach.forEach((e) => {
+            e.listType == 1
+                ? (e.data = this.dataProject)
+                : e.listType == 2
+                ? (e.data = this.dataPartner)
+                : e.listType == 3
+                ? (e.data = this.dataCustomer)
+                : e.listType == 4
+                ? (e.data = this.dataCategory)
+                : e.listType == 5
+                ? (e.data = this.dataCompany)
+                : (e.data = this.dataView)
+        })
+    },
 }
 </script>
 

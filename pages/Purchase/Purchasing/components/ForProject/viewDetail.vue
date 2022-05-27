@@ -196,26 +196,34 @@
                 </DxSummary>
             </DxDataGrid>
         </div>
-        <div class="row align-center footer">
+        <div class="row align-center mb-2">
             <div
                 v-for="yc in YeuCauMuaHang.duyetYCMHs"
                 :key="yc.id"
                 class="xs3"
             >
-                <div class="footer">
+                <div class="footer-content">
                     <p>
                         Trạng thái:
                         <span>{{ yc.approvalStatus }}</span>
                     </p>
                     <p>
-                        Bước duyệt:
-                        <span>{{ yc.approvalState }}</span>
+                        Người duyệt:
+                        <span>{{ yc.tenNhanVien }}</span>
                     </p>
                     <p>
                         Thời gian duyệt:
                         <span>{{ timestamp(yc.ngayDuyet) }}</span>
                     </p>
                 </div>
+            </div>
+        </div>
+        <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id">
+            <div v-if="yc.approvalStatus == 'MustRevise'">
+                <p style="font-weight: bold">
+                    (Lý do không duyệt:
+                    <span style="font-weight: normal">{{ yc.comment }})</span>
+                </p>
             </div>
         </div>
     </div>
@@ -284,16 +292,12 @@ export default {
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
         },
-        get() {
-            console.log(this.YeuCauMuaHang)
-        },
     },
 }
 </script>
 
 <style scoped>
-.header,
-.footer {
+.header {
     border: 1px solid #ddd;
 }
 .border-box {
@@ -310,10 +314,14 @@ export default {
 .sss {
     padding: 4px 0;
 }
-.footer p {
+.footer-content p {
     font-weight: bold;
 }
-.footer span {
+.footer-content span {
     font-weight: normal;
+}
+.footer-content {
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 </style>

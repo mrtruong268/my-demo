@@ -116,12 +116,16 @@ export const state = () => ({
     token: '',
     userInfo: {},
     excelFile: null,
+    isSelected: 0,
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
 }
 
 export const mutations = {
+    IS_SELECTED(state, item) {
+        state.isSelected = item
+    },
     LANG_SWITCH(state, lang) {
         state.routeParams = lang
     },
