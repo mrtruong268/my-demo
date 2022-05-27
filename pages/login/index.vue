@@ -20,12 +20,19 @@
                         <div @keyup.enter="submit" class="login-form xs5">
                             <div class="column justify-space-between">
                                 <div>
-                                    <div style="margin-bottom: 60px">
+                                    <div>
                                         <div class="text-xs-center">
                                             <img
                                                 src="~assets/logo.svg"
                                                 alt=""
                                             />
+                                            <h3 class="my-5">
+                                                {{
+                                                    $t(
+                                                        'MANAGEMENT SOFTWARE SYSTEM'
+                                                    )
+                                                }}
+                                            </h3>
                                         </div>
                                     </div>
                                     <div>
@@ -33,10 +40,9 @@
                                             {{ $t('Username') }}
                                         </p>
                                         <DxTextBox
-                                            stylingMode="outlined"
+                                            stylingMode="filled"
                                             :show-clear-button="true"
                                             v-model="login.username"
-                                            height="44"
                                         />
                                     </div>
                                     <div>
@@ -44,10 +50,9 @@
                                             {{ $t('Password') }}
                                         </p>
                                         <DxTextBox
-                                            stylingMode="outlined"
+                                            stylingMode="filled"
                                             :mode="passwordMode"
                                             v-model="login.password"
-                                            height="44"
                                             :show-clear-button="true"
                                         >
                                             <DxTextBoxButton

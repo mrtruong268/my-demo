@@ -240,7 +240,7 @@ export default {
     watch: {
         suaYeuCau: {
             handler(suaYeuCau) {
-                if (suaYeuCau) this.YeuCauMuaHang = { ...suaYeuCau.data }
+                if (suaYeuCau) this.YeuCauMuaHang = { ...suaYeuCau }
             },
             deep: true,
         },

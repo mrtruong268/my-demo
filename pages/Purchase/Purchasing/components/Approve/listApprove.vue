@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 import {
     DxDataGrid,
@@ -157,7 +157,7 @@ export default {
         viewApprove,
     },
     computed: {
-        ...mapGetters('pheduyet', ['danhSachPheDuyet']),
+        ...mapState('pheduyet', ['danhSachPheDuyet']),
     },
     methods: {
         viewDetail(e) {

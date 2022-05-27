@@ -1,100 +1,56 @@
 import { v4 as uuidv4 } from 'uuid'
 
 export const state = () => ({
-    muaDuAn: [],
-    danhSachMuaDuAn: [
+    danhSach: [
         {
             id: uuidv4(),
             header: 'Purchase',
             title: 'List of purchase requests',
             listType: 'muahang',
-            data: [],
         },
         {
             id: uuidv4(),
             header: 'Production',
             title: 'List of production requirements',
             listType: 'sanxuat',
-            data: [],
         },
         {
             id: uuidv4(),
             header: 'Approve',
             title: 'List of approve requests',
             listType: 'pheduyet',
-            data: [],
         },
     ],
-    muaNoiBo: [],
-    danhSachMuaNoiBo: [
+    duLieuMoi: [
         {
-            id: uuidv4(),
-            title: 'List of purchase requests',
-            listType: 'muahang',
-            data: [],
+            id: 1,
+            title: 'Create purchase requisition',
+            listType: 'TaoMuaHang',
         },
         {
-            id: uuidv4(),
-            title: 'List of production requirements',
-            listType: 'sanxuat',
-            data: [],
+            id: 2,
+            title: 'Create production requisition',
+            listType: 'TaoSanXuat',
         },
     ],
+    muaHangDuAn: [],
     suaYeuCau: null,
-    isSelected: '',
     listItem: [],
 })
 export const getters = {
-    muaDuAn: (state) => state.muaDuAn,
-    danhSachMuaDuAn: (state) => state.danhSachMuaDuAn,
-    muaNoiBo: (state) => state.muaNoiBo,
-    danhSachMuaNoiBo: (state) => state.danhSachMuaNoiBo,
     suaYeuCau: (state) => state.suaYeuCau,
     danhSachHangHoa: (state) => {
         let objSuaYeuCau = JSON.parse(JSON.stringify(state.suaYeuCau))
         if (!objSuaYeuCau) return []
-        return objSuaYeuCau.data ? objSuaYeuCau.data.yeuCauMuaHangChiTiets : []
+        return objSuaYeuCau ? objSuaYeuCau.yeuCauMuaHangChiTiets : []
     },
 }
 export const mutations = {
     SET_ITEM(state, item) {
-        state.danhSachMuaDuAn.forEach((e) => {
-            if (e.listType === 'muahang') {
-                e.data = item
-            }
-        })
-    },
-    IS_SELECTED(state, newText) {
-        state.isSelected = newText
+        state.muaHangDuAn = item
     },
     EDIT_ITEM(state, item) {
         state.suaYeuCau = item
-    },
-    ADD_LIST(state, newItem) {
-        if (
-            !state.muaDuAn.find((i) => i.id === newItem.id) &&
-            !state.muaNoiBo.find((i) => i.id === newItem.id)
-        ) {
-            state.muaDuAn.push(newItem)
-            state.muaNoiBo.push(newItem)
-        }
-    },
-    CLICK_DELETE(state, itemId) {
-        state.muaDuAn = state.muaDuAn.filter((e) => e.id !== itemId)
-        state.muaNoiBo = state.muaNoiBo.filter((e) => e.id !== itemId)
-    },
-    CLEAR_DATA(state) {
-        state.muaDuAn.splice(0, state.muaDuAn.length)
-        state.muaNoiBo.splice(0, state.muaNoiBo.length)
-    },
-    ADD_OPTION(state) {
-        state.danhSachMuaDuAn.forEach((e) => {
-            if (!state.muaDuAn.find((i) => i.id === e.id)) {
-                if (e.listType === state.isSelected) {
-                    state.muaDuAn.push(e)
-                }
-            }
-        })
     },
     GET_ITEM(state, item) {
         state.listItem = item
@@ -104,7 +60,7 @@ export const actions = {
     async getData({ commit }) {
         try {
             let response = await this.$axios.get('/pr/get-all-of-pr')
-            commit('SET_ITEM', response.data)
+            commit('SET_ITEM', response.data.data)
         } catch (err) {
             console.log(err)
         }
@@ -112,15 +68,14 @@ export const actions = {
 
     async postData({ commit }, newItem) {
         try {
-            let response = await this.$axios.post('/pr/post-pr', newItem)
-            commit('SET_ITEM', response.data)
+            await this.$axios.post('/pr/post-pr', newItem)
         } catch (err) {
             console.log(err)
         }
     },
     async deleteData({ commit }, delId) {
         try {
-            let response = await this.$axios.delete(`/pr/delete-pr?id=${delId}`)
+            await this.$axios.delete(`/pr/delete-pr?id=${delId}`)
         } catch (err) {
             console.log(err)
         }
@@ -135,14 +90,14 @@ export const actions = {
     async getEditData({ commit }, editId) {
         try {
             let response = await this.$axios.get(`/pr/get-pr?id=${editId}`)
-            commit('EDIT_ITEM', response.data)
+            commit('EDIT_ITEM', response.data.data)
         } catch (err) {
             console.log(err)
         }
     },
     async editData({ commit }, editItem) {
         try {
-            let response = await this.$axios.put('/pr/put-pr', editItem)
+            await this.$axios.put('/pr/put-pr', editItem)
         } catch (err) {
             console.log(err)
         }

@@ -247,6 +247,7 @@ export default {
                 diaDiemLamViec: '',
                 phuPhi: '',
                 maChiPhi: '',
+                maDuAn: '',
                 soThamChieu: '',
                 comment: '',
                 tongTienTamTinh: 0,
@@ -266,7 +267,6 @@ export default {
                     },
                 ],
             },
-            tmpObj: {},
         }
     },
     computed: {
@@ -335,6 +335,7 @@ export default {
                 diaDiemLamViec: '',
                 phuPhi: '',
                 maChiPhi: '',
+                maDuAn: '',
                 soThamChieu: '',
                 comment: '',
                 tongTienTamTinh: 0,

@@ -118,11 +118,6 @@
                     data-field="tenHangHoa_DichVu"
                     :caption="$t('Goods, services')"
                 >
-                    <!-- <DxLookup
-                        :data-source="getFilteredCities"
-                        display-expr="Name"
-                        value-expr="ID"
-                    /> -->
                 </DxColumn>
                 <DxColumn data-field="model_MaHieu" :caption="$t('Model')">
                 </DxColumn>
@@ -216,12 +211,12 @@ export default {
         }
     },
     watch: {
-        view() {
-            if (this.view) {
-                this.YeuCauMuaHang = Object.assign({}, this.view)
-            } else {
-                this.YeuCauMuaHang = {}
-            }
+        view: {
+            handler(view) {
+                if (view) this.YeuCauMuaHang = { ...view }
+            },
+            deep: true,
+            immediate: true,
         },
     },
     methods: {

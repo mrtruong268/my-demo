@@ -54,7 +54,7 @@ export default {
                             id: 0,
                             tenNcc: 'NCC 1',
                             tenMatHang: '',
-                            soLuong: 0,
+                            soLuong: 1,
                             donGia: 0,
                             vat: 0,
                             tongTien: 0,

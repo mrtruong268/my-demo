@@ -1,9 +1,7 @@
 export const state = () => ({
     danhSachPheDuyet: [],
 })
-export const getters = {
-    danhSachPheDuyet: (state) => state.danhSachPheDuyet,
-}
+export const getters = {}
 export const mutations = {
     SET_ITEM(state, newData) {
         state.danhSachPheDuyet = newData

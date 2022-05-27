@@ -17,6 +17,7 @@
             </div>
             <div class="row align-center">
                 <div
+                    id="btn-new"
                     v-for="item in dataNew"
                     :key="item.id"
                     style="cursor: pointer; padding: 4px 0"
@@ -147,6 +148,7 @@ export default {
     },
     computed: {
         ...mapState(['isSelected']),
+        ...mapState('muahang', ['danhSach']),
     },
     methods: {
         toggle() {
@@ -172,9 +174,13 @@ export default {
             let result = confirm('Are you sure to close all tabs?')
             if (result) this.dataTab.splice(0, this.dataTab.length)
         },
-        titleClick() {
-            // this.$store.dispatch('muahang/getData')
-            // this.$store.dispatch('pheduyet/getApprove')
+        titleClick(e) {
+            let check = e.itemData.listType
+            if (check == 'muahang') {
+                this.$store.dispatch('muahang/getData')
+            } else if (check == 'pheduyet') {
+                this.$store.dispatch('pheduyet/getApprove')
+            }
         },
         addOption() {
             this.list.forEach((e) => {
@@ -226,6 +232,9 @@ export default {
     padding: 4px 0;
 }
 .btn-list:hover {
+    background-color: #e7e7e7;
+}
+#btn-new:hover {
     background-color: #e7e7e7;
 }
 </style>

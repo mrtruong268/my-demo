@@ -9,7 +9,7 @@
         </div>
         <DxDataGrid
             id="gridContainer"
-            :data-source="dataProp.data"
+            :data-source="muaHangDuAn"
             :show-borders="true"
             height="100%"
             remote-operations="true"
@@ -156,9 +156,9 @@ import DxButton from 'devextreme-vue/button'
 import Popup from '~/components/popup.vue'
 import editPurchase from './editPurchase.vue'
 import viewDetail from './viewDetail.vue'
+import { mapState } from 'vuex'
 
 export default {
-    props: ['dataProp'],
     components: {
         DxDataGrid,
         DxColumn,
@@ -177,6 +177,9 @@ export default {
             isClick: null,
             details: null,
         }
+    },
+    computed: {
+        ...mapState('muahang', ['muaHangDuAn']),
     },
     methods: {
         reload() {
