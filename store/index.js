@@ -116,7 +116,7 @@ export const state = () => ({
     token: '',
     userInfo: {},
     excelFile: null,
-    isSelected: 0,
+    isSelected: '',
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
@@ -194,7 +194,7 @@ export const actions = {
             let response = await this.$axios.get(
                 `/staff/get-staff-by-username?username=${username}`
             )
-            commit('GET_USER', response.data.data || {})
+            commit('GET_USER', response.data.data)
         } catch (err) {
             console.log(err)
         }

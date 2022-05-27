@@ -8,22 +8,22 @@
             :list="danhSach"
         >
             <template slot-scope="{ itemProp }">
-                <div v-if="itemProp.listType === 1">
+                <div v-if="itemProp.listType === 'projects'">
                     <listProject :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 2">
+                <div v-else-if="itemProp.listType === 'partners'">
                     <listPartner :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 3">
+                <div v-else-if="itemProp.listType === 'customers'">
                     <listCustomer :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 4">
+                <div v-else-if="itemProp.listType === 'categories'">
                     <listCategory :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 5">
+                <div v-else-if="itemProp.listType === 'companies'">
                     <listCompany :dataProp="itemProp.data" />
                 </div>
-                <div v-else-if="itemProp.listType === 6">
+                <div v-else-if="itemProp.listType === 'views'">
                     <listView :dataProp="itemProp.data" />
                 </div>
                 <div v-else>
@@ -100,37 +100,37 @@ export default {
                 {
                     id: this.idv4(),
                     title: 'List of projects',
-                    listType: 1,
+                    listType: 'projects',
                     data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of partners',
-                    listType: 2,
+                    listType: 'partners',
                     data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of customers',
-                    listType: 3,
+                    listType: 'customers',
                     data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of categories',
-                    listType: 4,
+                    listType: 'categories',
                     data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of companies',
-                    listType: 5,
+                    listType: 'companies',
                     data: [],
                 },
                 {
                     id: this.idv4(),
                     title: 'List of project views',
-                    listType: 6,
+                    listType: 'views',
                     data: [],
                 },
             ],
@@ -175,6 +175,7 @@ export default {
         }
     },
     computed: {
+        ...mapState(['isSelected']),
         ...mapState('quanly', [
             'dataProject',
             'dataPartner',
@@ -184,31 +185,18 @@ export default {
             'dataView',
         ]),
     },
-    methods: {
-        toDashboard() {
-            let newObj = {
-                id: this.idv4(),
-                title: 'Dashboard',
-                listType: 7,
-                data: [],
-            }
-            if (!this.duLieuTab.find((i) => i.id === newObj.id)) {
-                this.duLieuTab.push(newObj)
-            }
-        },
-    },
+    methods: {},
     created() {
-        this.toDashboard()
         this.danhSach.forEach((e) => {
-            e.listType == 1
+            e.listType == 'projects'
                 ? (e.data = this.dataProject)
-                : e.listType == 2
+                : e.listType == 'partners'
                 ? (e.data = this.dataPartner)
-                : e.listType == 3
+                : e.listType == 'customers'
                 ? (e.data = this.dataCustomer)
-                : e.listType == 4
+                : e.listType == 'categories'
                 ? (e.data = this.dataCategory)
-                : e.listType == 5
+                : e.listType == 'companies'
                 ? (e.data = this.dataCompany)
                 : (e.data = this.dataView)
         })

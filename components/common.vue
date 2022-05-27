@@ -187,7 +187,10 @@ export default {
         },
     },
     created() {
-        if (this.isSelected !== 0) this.addOption()
+        if (this.isSelected !== '') this.addOption()
+    },
+    beforeDestroy() {
+        this.$store.commit('IS_SELECTED', '')
     },
 }
 </script>

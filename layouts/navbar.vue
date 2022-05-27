@@ -283,12 +283,10 @@ export default {
             this.$router.replace(this.switchLocalePath(e))
         },
         goCategory() {
-            this.$store.commit('IS_SELECTED', 4)
+            this.$store.commit('IS_SELECTED', 'categories')
             this.clickRouter('ProjectManagement', this.routeParams)
         },
-        goDashboard() {
-            this.clickRouter('ProjectManagement', this.routeParams)
-        },
+        goDashboard() {},
         signOut() {
             this.$store.commit('GET_TOKEN', '')
             this.$cookies.remove('cookieToken')
@@ -302,7 +300,8 @@ export default {
         },
     },
     created() {
-        this.user = this.parseJwt(this.$cookies.get('cookieToken'))
+        let tokennn = this.$cookies.get('cookieToken')
+        this.user = this.parseJwt(tokennn)
         this.$store.dispatch('getUser', this.user.name)
         this.selectedValue = this.$i18n.locale
     },
