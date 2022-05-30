@@ -38,15 +38,6 @@ import { mapState } from 'vuex'
 
 export default {
     layout: 'commonLayout',
-    middleware(context) {
-        let acccesToken = context.route.query.access_token
-        if (acccesToken !== '') {
-            context.app.$cookies.set('cookieToken2', acccesToken, {
-                path: '/',
-                maxAge: 60 * 60 * 24 * 7,
-            })
-        } else return
-    },
     data() {
         return {
             listPurchase: [
@@ -111,7 +102,7 @@ export default {
     methods: {
         onClick(e) {
             this.clickRouter(e.to, this.routeParams)
-            this.$store.commit('muahang/IS_SELECTED', e.type)
+            this.$store.commit('IS_SELECTED', e.type)
         },
     },
 }

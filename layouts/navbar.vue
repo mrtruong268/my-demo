@@ -290,7 +290,6 @@ export default {
         signOut() {
             this.$store.commit('GET_TOKEN', '')
             this.$cookies.remove('cookieToken')
-            this.$cookies.remove('cookieToken2')
             this.clickRouter('login')
         },
         parseJwt(token) {

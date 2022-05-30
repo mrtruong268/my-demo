@@ -295,7 +295,10 @@ export default {
         },
         clickAdd() {
             // let result = this.validationGroup.validate()
-            if (this.checkArray()) {
+            if (
+                this.checkArray() &&
+                confirm('Are you sure to submit?') == true
+            ) {
                 this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
                 this.resetData()
             }

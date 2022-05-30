@@ -221,8 +221,10 @@ export default {
     },
     methods: {
         duyet() {
-            this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
-            this.$emit('hiddenPopup')
+            if (confirm('Are you sure to submit?') == true) {
+                this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
+                this.$emit('hiddenPopup')
+            }
         },
         khongDuyet() {
             this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)

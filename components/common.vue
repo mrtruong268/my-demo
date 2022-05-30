@@ -142,13 +142,12 @@ export default {
     },
     data() {
         return {
-            selectedItem: null,
+            selectedItem: {},
             fullscreen: false,
         }
     },
     computed: {
         ...mapState(['isSelected']),
-        ...mapState('muahang', ['danhSach']),
     },
     methods: {
         toggle() {

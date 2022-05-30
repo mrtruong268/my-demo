@@ -280,7 +280,11 @@ export default {
             let checkEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets.some(
                 (e) => e.tenHangHoa_DichVu !== ''
             )
-            if (result.isValid && checkEmpty) {
+            if (
+                result.isValid &&
+                checkEmpty &&
+                confirm('Are you sure to submit?') == true
+            ) {
                 setTimeout(() => {
                     this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
                 }, 100)
