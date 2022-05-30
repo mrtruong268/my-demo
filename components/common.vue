@@ -162,7 +162,7 @@ export default {
             this.selectedItem = e
         },
         closeButtonHandler(itemDel) {
-            let result = confirm('Are you sure to close tab?')
+            let result = confirm('Do you want to close tab?')
             if (result)
                 this.dataTab = this.dataTab.filter((e) => e.id !== itemDel.id)
         },
@@ -170,7 +170,7 @@ export default {
             return this.dataTab.length > 0
         },
         clearTab() {
-            let result = confirm('Are you sure to close all tabs?')
+            let result = confirm('Do you want to close all tabs?')
             if (result) this.dataTab.splice(0, this.dataTab.length)
         },
         titleClick(e) {

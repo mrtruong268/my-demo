@@ -221,7 +221,7 @@ export default {
     },
     methods: {
         duyet() {
-            if (confirm('Are you sure to submit?') == true) {
+            if (confirm('Do you want to submit?') == true) {
                 this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
                 this.$emit('hiddenPopup')
             }

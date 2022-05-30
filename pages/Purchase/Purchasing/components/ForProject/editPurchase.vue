@@ -142,7 +142,6 @@
                 :show-borders="true"
                 height="calc(100vh - 450px)"
                 :ref="dataGridRefKey"
-                :remote-operations="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 :hover-state-enabled="true"
@@ -154,8 +153,8 @@
                     :allow-deleting="true"
                     :useIcons="true"
                     :confirm-delete="false"
-                    new-row-position="last"
                     mode="cell"
+                    new-row-position="last"
                 />
                 <DxPaging :enabled="false" />
                 <DxColumn
@@ -214,6 +213,7 @@ import {
 import { mapGetters, mapState } from 'vuex'
 import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
 import DxValidationGroup from 'devextreme-vue/validation-group'
+import { DxAutocomplete } from 'devextreme-vue/autocomplete'
 
 export default {
     components: {
@@ -229,6 +229,7 @@ export default {
         DxValidator,
         DxRequiredRule,
         DxValidationGroup,
+        DxAutocomplete,
     },
     data() {
         return {
@@ -263,7 +264,7 @@ export default {
         },
         editorPreparing(e) {
             let arrTmp = []
-            this.listItem.forEach((e) => arrTmp.push(e.name))
+            this.listItem.forEach((x) => arrTmp.push(x.name))
             if (e.dataField === 'tenHangHoa_DichVu') {
                 e.editorName = 'dxAutocomplete'
                 e.editorOptions = {
@@ -273,22 +274,52 @@ export default {
                         e.setValue(ev.value)
                     },
                 }
+                let found = this.listItem.find((q) => q.name == e.value)
+                if (typeof found !== 'undefined') {
+                    this.danhSachHangHoa.forEach((y) => {
+                        y.model_MaHieu = found.model
+                        y.donVi = found.donViTinh
+                        y.donGiaTamTinh = found.donGiaVND
+                    })
+                } else {
+                    this.danhSachHangHoa.forEach((y) => {
+                        y.model_MaHieu = ''
+                        y.donVi = ''
+                        y.donGiaTamTinh = 0
+                    })
+                }
             }
+        },
+        checkArray() {
+            let conditionsArray = []
+            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach(
+                (e) =>
+                    (conditionsArray = [
+                        e.tenHangHoa_DichVu !== '',
+                        e.model_MaHieu !== '',
+                        e.xuatXu_Hang !== '',
+                        e.donVi !== '',
+                    ])
+            )
+            return !conditionsArray.includes(false)
         },
         clickSave() {
             let result = this.validationGroup.validate()
-            let checkEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets.some(
-                (e) => e.tenHangHoa_DichVu !== ''
-            )
-            if (
-                result.isValid &&
-                checkEmpty &&
-                confirm('Are you sure to submit?') == true
-            ) {
-                setTimeout(() => {
-                    this.$store.dispatch('muahang/editData', this.YeuCauMuaHang)
-                }, 100)
-                this.$emit('invisible')
+            let result2 = confirm('Do you want to submit?')
+            if (result2) {
+                if (result.isValid && this.checkArray()) {
+                    setTimeout(() => {
+                        this.$store.dispatch(
+                            'muahang/editData',
+                            this.YeuCauMuaHang
+                        )
+                        this.$emit('invisible')
+                    }, 200)
+                } else {
+                    this.$toast.error(
+                        `Failed! One or more validation errors occurred`
+                    )
+                }
             }
         },
         customFormat(e) {
@@ -300,6 +331,9 @@ export default {
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
         },
+    },
+    created() {
+        this.$store.dispatch('muahang/getItems')
     },
 }
 </script>

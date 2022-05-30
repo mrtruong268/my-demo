@@ -135,7 +135,6 @@
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
                 height="100%"
-                remote-operations="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 :ref="dataGridRefKey"
@@ -250,7 +249,6 @@ export default {
                 maDuAn: '',
                 soThamChieu: '',
                 comment: '',
-                tongTienTamTinh: 0,
                 yeuCauMuaHangChiTiets: [
                     {
                         id: 0,
@@ -260,7 +258,6 @@ export default {
                         model_MaHieu: '',
                         soLuong: 0,
                         donVi: '',
-                        soTienTamTinh: 0,
                         donGiaTamTinh: 0,
                         maHangMucTrienKhai: '',
                         ghiChu: '',
@@ -294,13 +291,22 @@ export default {
             return !conditionsArray.includes(false)
         },
         clickAdd() {
+            var result = confirm('Do you want to submit?')
             // let result = this.validationGroup.validate()
-            if (
-                this.checkArray() &&
-                confirm('Are you sure to submit?') == true
-            ) {
-                this.$store.dispatch('muahang/postData', this.YeuCauMuaHang)
-                this.resetData()
+            if (result) {
+                if (this.checkArray()) {
+                    setTimeout(() => {
+                        this.$store.dispatch(
+                            'muahang/postData',
+                            this.YeuCauMuaHang
+                        )
+                        this.resetData()
+                    }, 200)
+                } else {
+                    this.$toast.error(
+                        `Failed! One or more validation errors occurred`
+                    )
+                }
             }
         },
         calculateAmount(e) {
@@ -314,7 +320,7 @@ export default {
         },
         editorPreparing(e) {
             let arrTmp = []
-            this.listItem.forEach((e) => arrTmp.push(e.name))
+            this.listItem.forEach((x) => arrTmp.push(x.name))
             if (e.dataField === 'tenHangHoa_DichVu') {
                 e.editorName = 'dxAutocomplete'
                 e.editorOptions = {
@@ -323,6 +329,20 @@ export default {
                     onValueChanged: function (ev) {
                         e.setValue(ev.value)
                     },
+                }
+                let found = this.listItem.find((q) => q.name == e.value)
+                if (typeof found !== 'undefined') {
+                    this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach((y) => {
+                        y.model_MaHieu = found.model
+                        y.donVi = found.donViTinh
+                        y.donGiaTamTinh = found.donGiaVND
+                    })
+                } else {
+                    this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach((y) => {
+                        y.model_MaHieu = ''
+                        y.donVi = ''
+                        y.donGiaTamTinh = 0
+                    })
                 }
             }
         },
@@ -341,7 +361,6 @@ export default {
                 maDuAn: '',
                 soThamChieu: '',
                 comment: '',
-                tongTienTamTinh: 0,
                 yeuCauMuaHangChiTiets: [
                     {
                         id: 0,
@@ -351,7 +370,6 @@ export default {
                         model_MaHieu: '',
                         soLuong: 0,
                         donVi: '',
-                        soTienTamTinh: 0,
                         donGiaTamTinh: 0,
                         maHangMucTrienKhai: '',
                         ghiChu: '',

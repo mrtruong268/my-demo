@@ -20,7 +20,7 @@ export default {
             {
                 rel: 'icon',
                 type: 'image/x-icon',
-                href: 'logo2.png',
+                href: 'favicon.ico',
             },
         ],
     },

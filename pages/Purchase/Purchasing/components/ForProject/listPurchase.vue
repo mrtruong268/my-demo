@@ -12,6 +12,7 @@
             :data-source="muaHangDuAn"
             :show-borders="true"
             height="100%"
+            :noDataText="$t('No data to display')"
             remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
@@ -202,7 +203,7 @@ export default {
             this.isClick = 'edit'
         },
         clickDelete(e) {
-            if (confirm('Are you sure to delete?') == true) {
+            if (confirm('Do you want to delete?') == true) {
                 this.$store.dispatch('muahang/deleteData', e.data.id)
                 this.reload()
             }

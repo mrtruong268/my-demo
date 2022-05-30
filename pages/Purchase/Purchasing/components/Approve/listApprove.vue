@@ -12,6 +12,7 @@
             :data-source="danhSachPheDuyet.data"
             :show-borders="true"
             height="100%"
+            :noDataText="$t('No data to display')"
             remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"

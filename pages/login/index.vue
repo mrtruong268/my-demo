@@ -133,7 +133,10 @@ export default {
             this.signIn()
         },
         signIn() {
-            if (this.$cookies.get('cookieToken')) this.clickRouter('')
+            if (this.$cookies.get('cookieToken')) {
+                this.clickRouter('')
+                this.$toast.success('Login successful!')
+            }
         },
     },
     watch: {

@@ -1,9 +1,9 @@
 <template>
     <div class="main">
         <div class="header row align-center">
-            <div class="xs4" style="border-right: 1px solid #ddd">
+            <div class="xs4 container-xs" style="border-right: 1px solid black">
                 <div class="row align-center">
-                    <div class="mx-3">
+                    <div class="mx-2">
                         <img
                             src="~assets/logo.png"
                             width="90px"
@@ -29,11 +29,11 @@
                 </h1>
             </div>
             <div class="xs2 right-content">
-                <div class="ddd">
+                <div class="top">
                     <p>Form: VNAS-TC-MH</p>
                     <p>ĐNMH-000000</p>
                 </div>
-                <div class="sss">
+                <div class="bot">
                     <p>Khổ giấy: A4</p>
                 </div>
             </div>
@@ -205,7 +205,7 @@
                 <div class="footer-content">
                     <p>
                         Trạng thái:
-                        <span>{{ yc.approvalStatus }}</span>
+                        <span>{{ yc.approvalStatus }} by VNAS App</span>
                     </p>
                     <p>
                         Người duyệt:
@@ -298,21 +298,21 @@ export default {
 
 <style scoped>
 .header {
-    border: 1px solid #ddd;
+    border: 1px solid black;
 }
 .border-box {
     margin: 0 auto;
 }
 .right-content {
     font-style: italic;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid black;
 }
-.ddd {
-    padding: 4px 0;
-    border-bottom: 1px solid #ddd;
+.top {
+    padding: 6px;
+    border-bottom: 1px solid black;
 }
-.sss {
-    padding: 4px 0;
+.bot {
+    padding: 6px;
 }
 .footer-content p {
     font-weight: bold;
@@ -321,7 +321,7 @@ export default {
     font-weight: normal;
 }
 .footer-content {
-    border: 1px solid #ddd;
+    border: 1px solid black;
     padding: 8px;
 }
 </style>
