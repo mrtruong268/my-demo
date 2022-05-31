@@ -107,6 +107,7 @@
                 id="gridContainer"
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
+                :show-column-lines="true"
                 :ref="dataGridRefKey"
                 :hover-state-enabled="true"
                 :remote-operations="true"

@@ -20,9 +20,6 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                 >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.chucVu"
@@ -140,11 +137,12 @@
                 id="gridContainer"
                 :data-source="danhSachHangHoa"
                 :show-borders="true"
-                height="calc(100vh - 450px)"
-                :ref="dataGridRefKey"
+                :show-column-lines="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 :hover-state-enabled="true"
+                height="calc(100vh - 450px)"
+                :ref="dataGridRefKey"
                 @saved="saved"
                 @editorPreparing="editorPreparing"
             >
@@ -263,30 +261,24 @@ export default {
             this.YeuCauMuaHang.yeuCauMuaHangChiTiets = tmpData
         },
         editorPreparing(e) {
-            let arrTmp = []
-            this.listItem.forEach((x) => arrTmp.push(x.name))
+            console.log(this.danhSachHangHoa)
             if (e.dataField === 'tenHangHoa_DichVu') {
                 e.editorName = 'dxAutocomplete'
                 e.editorOptions = {
-                    items: arrTmp,
+                    items: this.listItem,
+                    valueExpr: 'name',
                     value: e.value,
-                    onValueChanged: function (ev) {
+                    onValueChanged(ev) {
                         e.setValue(ev.value)
                     },
-                }
-                let found = this.listItem.find((q) => q.name == e.value)
-                if (typeof found !== 'undefined') {
-                    this.danhSachHangHoa.forEach((y) => {
-                        y.model_MaHieu = found.model
-                        y.donVi = found.donViTinh
-                        y.donGiaTamTinh = found.donGiaVND
-                    })
-                } else {
-                    this.danhSachHangHoa.forEach((y) => {
-                        y.model_MaHieu = ''
-                        y.donVi = ''
-                        y.donGiaTamTinh = 0
-                    })
+                    onSelectionChanged(x) {
+                        let itemSelect = x.selectedItem
+                        if (itemSelect.model == null) return
+                        e.row.data.model_MaHieu = itemSelect.model
+                        // e.row.data.xuatXu_Hang = itemSelect.hangSanXuatID
+                        e.row.data.donVi = itemSelect.donViTinh
+                        e.row.data.donGiaTamTinh = itemSelect.donGiaVND
+                    },
                 }
             }
         },

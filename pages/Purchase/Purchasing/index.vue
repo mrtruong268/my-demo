@@ -59,7 +59,6 @@ export default {
         }
     },
     computed: {
-        ...mapState(['isSelected']),
         ...mapState('muahang', ['danhSach', 'duLieuMoi']),
     },
 }

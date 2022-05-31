@@ -10,13 +10,16 @@
         <DxDataGrid
             id="gridContainer"
             :data-source="danhSachPheDuyet.data"
+            :show-column-lines="true"
+            :show-row-lines="true"
             :show-borders="true"
+            :row-alternation-enabled="true"
             height="100%"
             :noDataText="$t('No data to display')"
             remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
-            :hover-state-enabled="true"
+            :hover-state-enabled="false"
         >
             <DxHeaderFilter :visible="true" />
             <DxFilterRow :visible="true" />

@@ -149,6 +149,7 @@
             <DxDataGrid
                 id="gridContainer"
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
+                :show-column-lines="true"
                 :show-borders="true"
                 height="100%"
                 :remote-operations="false"

@@ -134,9 +134,12 @@
                 id="gridContainer"
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
-                height="100%"
+                :show-column-lines="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
+                height="100%"
+                key-expr="itemId"
+                :noDataText="$t('No data to display')"
                 :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
@@ -249,20 +252,7 @@ export default {
                 maDuAn: '',
                 soThamChieu: '',
                 comment: '',
-                yeuCauMuaHangChiTiets: [
-                    {
-                        id: 0,
-                        ycmhId: 0,
-                        tenHangHoa_DichVu: '',
-                        xuatXu_Hang: '',
-                        model_MaHieu: '',
-                        soLuong: 0,
-                        donVi: '',
-                        donGiaTamTinh: 0,
-                        maHangMucTrienKhai: '',
-                        ghiChu: '',
-                    },
-                ],
+                yeuCauMuaHangChiTiets: [],
             },
         }
     },
@@ -275,7 +265,20 @@ export default {
     },
     methods: {
         addRow() {
-            return this.$refs[this.dataGridRefKey].instance.addRow()
+            let tmpAdd = {
+                itemId: this.idv4(),
+                id: 0,
+                ycmhId: 0,
+                tenHangHoa_DichVu: '',
+                xuatXu_Hang: '',
+                model_MaHieu: '',
+                soLuong: 0,
+                donVi: '',
+                donGiaTamTinh: 0,
+                maHangMucTrienKhai: '',
+                ghiChu: '',
+            }
+            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.push(tmpAdd)
         },
         checkArray() {
             let conditionsArray = []
@@ -319,33 +322,27 @@ export default {
             }).format(e)
         },
         editorPreparing(e) {
-            let arrTmp = []
-            this.listItem.forEach((x) => arrTmp.push(x.name))
             if (e.dataField === 'tenHangHoa_DichVu') {
                 e.editorName = 'dxAutocomplete'
                 e.editorOptions = {
-                    items: arrTmp,
+                    items: this.listItem,
+                    valueExpr: 'name',
                     value: e.value,
-                    onValueChanged: function (ev) {
+                    onValueChanged(ev) {
                         e.setValue(ev.value)
                     },
-                }
-                let found = this.listItem.find((q) => q.name == e.value)
-                if (typeof found !== 'undefined') {
-                    this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach((y) => {
-                        y.model_MaHieu = found.model
-                        y.donVi = found.donViTinh
-                        y.donGiaTamTinh = found.donGiaVND
-                    })
-                } else {
-                    this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach((y) => {
-                        y.model_MaHieu = ''
-                        y.donVi = ''
-                        y.donGiaTamTinh = 0
-                    })
+                    onSelectionChanged(x) {
+                        let itemSelect = x.selectedItem
+                        if (itemSelect.model == null) return
+                        e.row.data.model_MaHieu = itemSelect.model
+                        // e.row.data.xuatXu_Hang = itemSelect.hangSanXuatID
+                        e.row.data.donVi = itemSelect.donViTinh
+                        e.row.data.donGiaTamTinh = itemSelect.donGiaVND
+                    },
                 }
             }
         },
+
         resetData() {
             this.YeuCauMuaHang = {
                 id: 0,
@@ -361,20 +358,7 @@ export default {
                 maDuAn: '',
                 soThamChieu: '',
                 comment: '',
-                yeuCauMuaHangChiTiets: [
-                    {
-                        id: 0,
-                        ycmhId: 0,
-                        tenHangHoa_DichVu: '',
-                        xuatXu_Hang: '',
-                        model_MaHieu: '',
-                        soLuong: 0,
-                        donVi: '',
-                        donGiaTamTinh: 0,
-                        maHangMucTrienKhai: '',
-                        ghiChu: '',
-                    },
-                ],
+                yeuCauMuaHangChiTiets: [],
             }
         },
     },
