@@ -186,16 +186,16 @@ export default {
 
 <style scoped>
 .none {
-    color: white;
-    background-color: red;
+    color: red;
+    /* background-color: red; */
 }
 .approval {
-    color: white;
-    background-color: #acdf87;
+    color: #acdf87;
+    /* background-color: #acdf87; */
 }
 .revise {
-    color: white;
-    background-color: orange;
+    color: orange;
+    /* background-color: orange; */
 }
 .submit {
     color: orange;

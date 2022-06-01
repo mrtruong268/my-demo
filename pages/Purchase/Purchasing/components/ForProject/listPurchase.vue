@@ -106,7 +106,7 @@
             <template #buttons-cell="{ data }">
                 <div class="row justify-center">
                     <div
-                        v-if="data.data.approvalState == 'TGD_DUYET'"
+                        v-if="data.data.approvalState == 'MH_DUYET'"
                         class="mdi mdi-printer button"
                         @click="clickPrint(data)"
                     ></div>
@@ -114,6 +114,14 @@
                         v-else
                         class="mdi mdi-file-check button"
                         @click="clickApprove(data)"
+                    ></div>
+                    <div
+                        v-if="
+                            data.data.approvalState !== 'DANG_TAO' &&
+                            data.data.approvalState !== 'SUBMITED'
+                        "
+                        class="mdi mdi-file-remove button"
+                        @click="clickNoApprove(data)"
                     ></div>
                     <div
                         class="mdi mdi-eye button"
@@ -195,6 +203,9 @@ export default {
             this.$store.dispatch('pheduyet/submitApprove', e.data.id)
             this.reload()
         },
+        clickNoApprove(e) {
+            console.log(e)
+        },
         clickView(e) {
             this.popupVisible = !this.popupVisible
             this.details = e.data
@@ -227,16 +238,16 @@ export default {
 
 <style scoped>
 .none {
-    color: white;
-    background-color: red;
+    color: red;
+    /* background-color: red; */
 }
 .approval {
-    color: white;
-    background-color: #acdf87;
+    color: #acdf87;
+    /* background-color: #acdf87; */
 }
 .revise {
-    color: white;
-    background-color: orange;
+    color: orange;
+    /* background-color: orange; */
 }
 .submit {
     color: orange;
