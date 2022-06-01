@@ -34,7 +34,7 @@
             </div>
         </div>
         <div>
-            <div class="row justify-end" v-show="dataTab.length > 0">
+            <div class="row justify-end" v-show="tabData.length > 0">
                 <DxButton
                     type="normal"
                     styling-mode="text"
@@ -65,7 +65,7 @@
                             />
                         </div>
                         <DxTabPanel
-                            :data-source="dataTab"
+                            :data-source="tabData"
                             :height="fullscreen ? 'auto' : 'calc(80vh - 180px)'"
                             :defer-rendering="false"
                             :show-nav-buttons="true"
@@ -128,11 +128,11 @@ export default {
         },
         list: {
             type: Array,
-            default: null,
+            default: [],
         },
         dataNew: {
             type: Array,
-            default: null,
+            default: [],
         },
     },
     components: {
@@ -144,6 +144,7 @@ export default {
         return {
             selectedItem: {},
             fullscreen: false,
+            tabData: this.dataTab,
         }
     },
     computed: {
@@ -154,9 +155,9 @@ export default {
             this.fullscreen = !this.fullscreen
         },
         onItemClick(e) {
-            if (!this.dataTab.find((i) => i.listType === e.listType)) {
-                if (!this.dataTab.find((i) => i.id === e.id)) {
-                    this.dataTab.push(e)
+            if (!this.tabData.find((i) => i.listType === e.listType)) {
+                if (!this.tabData.find((i) => i.id === e.id)) {
+                    this.tabData.push(e)
                 }
             }
             this.selectedItem = e
@@ -164,14 +165,14 @@ export default {
         closeButtonHandler(itemDel) {
             let result = confirm('Do you want to close tab?')
             if (result)
-                this.dataTab = this.dataTab.filter((e) => e.id !== itemDel.id)
+                this.tabData = this.tabData.filter((e) => e.id !== itemDel.id)
         },
         showCloseButton() {
-            return this.dataTab.length > 0
+            return this.tabData.length > 0
         },
         clearTab() {
             let result = confirm('Do you want to close all tabs?')
-            if (result) this.dataTab.splice(0, this.dataTab.length)
+            if (result) this.tabData.splice(0, this.tabData.length)
         },
         titleClick(e) {
             let check = e.itemData.listType
@@ -183,9 +184,9 @@ export default {
         },
         addOption() {
             this.list.forEach((e) => {
-                if (!this.dataTab.find((i) => i.id === e.id)) {
+                if (!this.tabData.find((i) => i.id === e.id)) {
                     if (e.listType === this.isSelected) {
-                        this.dataTab.push(e)
+                        this.tabData.push(e)
                     }
                 }
             })
