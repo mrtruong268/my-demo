@@ -205,6 +205,7 @@ export default {
         },
         clickUnApprove(e) {
             this.$store.dispatch('pheduyet/unApprove', e.data.id)
+            this.reload()
         },
         clickView(e) {
             this.popupVisible = !this.popupVisible
