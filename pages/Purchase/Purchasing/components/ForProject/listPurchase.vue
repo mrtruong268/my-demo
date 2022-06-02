@@ -111,7 +111,7 @@
                         @click="clickPrint(data)"
                     ></div>
                     <div
-                        v-else
+                        v-if="data.data.approvalState == 'DANG_TAO'"
                         class="mdi mdi-file-check button"
                         @click="clickApprove(data)"
                     ></div>
