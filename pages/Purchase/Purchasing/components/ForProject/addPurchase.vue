@@ -8,6 +8,7 @@
                     :label="$t('Name')"
                     label-mode="floating"
                     class="xs2 mr-3"
+                    :read-only="true"
                 >
                     <!-- <DxValidator>
                         <DxRequiredRule />
@@ -19,6 +20,7 @@
                     :label="$t('Employee code')"
                     label-mode="floating"
                     class="xs2 mr-3"
+                    :read-only="true"
                 >
                     <!-- <DxValidator>
                         <DxRequiredRule />
@@ -30,6 +32,7 @@
                     :label="$t('Position')"
                     label-mode="floating"
                     class="xs2 mr-3"
+                    :read-only="true"
                 >
                     <!-- <DxValidator>
                         <DxRequiredRule />
@@ -41,27 +44,29 @@
                     :label="$t('Department')"
                     label-mode="floating"
                     class="xs2 mr-3"
+                    :read-only="true"
                 >
                     <!-- <DxValidator>
                         <DxRequiredRule />
                     </DxValidator> -->
                 </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.phuPhi"
+                <DxSelectBox
+                    :items="loaiPhuPhi"
                     styling-mode="outlined"
                     :label="$t('Surcharge')"
                     label-mode="floating"
                     class="xs2 mr-3"
-                >
-                    <!-- <DxValidator>
+                    @selectionChanged="selectPhuPhi"
+                />
+                <!-- <DxValidator>
                         <DxRequiredRule validationMessageMode="auto" />
                     </DxValidator> -->
-                </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.maChiPhi"
                     styling-mode="outlined"
                     :label="$t('Expense code')"
                     label-mode="floating"
+                    :read-only="true"
                     class="xs2"
                 >
                     <!-- <DxValidator>
@@ -79,6 +84,7 @@
                     :label="$t('Submission date')"
                     label-mode="floating"
                     class="xs2 mr-3"
+                    :read-only="true"
                 />
                 <DxDateBox
                     v-model="YeuCauMuaHang.ngayCanHang"
@@ -96,28 +102,28 @@
                     :label="$t('Work location')"
                     label-mode="floating"
                     class="xs-4 mr-3"
+                    :read-only="true"
                 >
                     <!-- <DxValidator>
                         <DxRequiredRule />
                     </DxValidator> -->
                 </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.maDuAn"
+                <DxSelectBox
+                    :items="projectCode"
                     styling-mode="outlined"
                     :label="$t('Project code')"
                     label-mode="floating"
                     class="xs2 mr-3"
-                >
-                    <!-- <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator> -->
-                </DxTextBox>
+                    @selectionChanged="selectDuAn"
+                    :ref="selectBoxRefKey"
+                />
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
                     styling-mode="outlined"
                     :label="$t('Reference number')"
                     label-mode="floating"
                     class="xs2"
+                    :read-only="true"
                 >
                     <!-- <DxValidator>
                         <DxRequiredRule />
@@ -138,7 +144,6 @@
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 height="100%"
-                key-expr="itemId"
                 :noDataText="$t('No data to display')"
                 :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
@@ -174,7 +179,9 @@
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
-                />
+                >
+                    <DxLookup :data-source="hangMucTrienKhai" />
+                </DxColumn>
                 <DxColumn
                     data-field="ghiChu"
                     :caption="$t('Note')"
@@ -211,6 +218,7 @@ import {
     DxDataGrid,
     DxColumn,
     DxPaging,
+    DxLookup,
     DxEditing,
 } from 'devextreme-vue/data-grid'
 import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
@@ -227,6 +235,7 @@ export default {
         DxColumn,
         DxPaging,
         DxNumberBox,
+        DxLookup,
         DxButton,
         DxEditing,
         DxValidator,
@@ -238,6 +247,7 @@ export default {
         return {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
+            selectBoxRefKey: 'BoxRefKey',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -254,11 +264,23 @@ export default {
                 comment: '',
                 yeuCauMuaHangChiTiets: [],
             },
+            loaiPhuPhi: ['Phát sinh', 'Theo tính toán'],
         }
     },
+    watch: {
+        refNumber: {
+            handler(refNumber) {
+                if (refNumber) {
+                    this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
+                    this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
+                }
+            },
+            immediate: true,
+        },
+    },
     computed: {
-        ...mapState('muahang', ['listItem']),
-        ...mapState(['userInfo']),
+        ...mapState('muahang', ['listItem', 'refNumber']),
+        ...mapState(['userInfo', 'projectCode', 'hangMucTrienKhai']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
         },
@@ -266,7 +288,6 @@ export default {
     methods: {
         addRow() {
             let tmpAdd = {
-                itemId: this.idv4(),
                 id: 0,
                 ycmhId: 0,
                 tenHangHoa_DichVu: '',
@@ -312,6 +333,14 @@ export default {
                 }
             }
         },
+        selectDuAn(e) {
+            this.YeuCauMuaHang.maDuAn = e.selectedItem
+            this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
+            this.$store.dispatch('getHangMuc', e.selectedItem)
+        },
+        selectPhuPhi(e) {
+            this.YeuCauMuaHang.phuPhi = e.selectedItem
+        },
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
         },
@@ -335,14 +364,13 @@ export default {
                         let itemSelect = x.selectedItem
                         if (itemSelect.model == null) return
                         e.row.data.model_MaHieu = itemSelect.model
-                        // e.row.data.xuatXu_Hang = itemSelect.hangSanXuatID
+                        e.row.data.xuatXu_Hang = itemSelect.tenHangSanXuat
                         e.row.data.donVi = itemSelect.donViTinh
                         e.row.data.donGiaTamTinh = itemSelect.donGiaVND
                     },
                 }
             }
         },
-
         resetData() {
             this.YeuCauMuaHang = {
                 id: 0,
@@ -352,7 +380,7 @@ export default {
                 phongBan: this.userInfo.phongBan,
                 ngayDeTrinh: new Date().toISOString(),
                 ngayCanHang: new Date().toISOString(),
-                diaDiemLamViec: '',
+                diaDiemLamViec: this.userInfo.diaDiemLamViec,
                 phuPhi: '',
                 maChiPhi: '',
                 maDuAn: '',
@@ -364,10 +392,12 @@ export default {
     },
     created() {
         this.$store.dispatch('muahang/getItems')
+        this.$store.dispatch('getProjectCode')
         this.YeuCauMuaHang.tenNhanVien = this.userInfo.tenNhanVien
         this.YeuCauMuaHang.maNhanVien = this.userInfo.maNhanVien
         this.YeuCauMuaHang.chucVu = this.userInfo.chucVu
         this.YeuCauMuaHang.phongBan = this.userInfo.phongBan
+        this.YeuCauMuaHang.diaDiemLamViec = this.userInfo.diaDiemLamViec
     },
 }
 </script>

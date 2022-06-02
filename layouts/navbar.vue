@@ -304,6 +304,9 @@ export default {
         this.$store.dispatch('getUser', this.user.name)
         this.selectedValue = this.$i18n.locale
     },
+    beforeDestroy() {
+        this.$store.commit('GET_USER', {})
+    },
 }
 </script>
 

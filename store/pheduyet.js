@@ -40,4 +40,14 @@ export const actions = {
             console.log(err)
         }
     },
+    async unApprove({ commit }, newItem) {
+        try {
+            let response = await this.$axios.get(
+                `/pr/undo-approve-pr?ycmhId=${newItem}`
+            )
+            commit('SET_ITEM', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
 }

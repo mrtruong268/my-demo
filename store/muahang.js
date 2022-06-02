@@ -36,6 +36,7 @@ export const state = () => ({
     muaHangDuAn: [],
     suaYeuCau: null,
     listItem: [],
+    refNumber: {},
 })
 export const getters = {
     suaYeuCau: (state) => state.suaYeuCau,
@@ -54,6 +55,9 @@ export const mutations = {
     },
     GET_ITEM(state, item) {
         state.listItem = item
+    },
+    GET_REF_NUM(state, item) {
+        state.refNumber = item
     },
 }
 export const actions = {
@@ -106,6 +110,16 @@ export const actions = {
         try {
             let response = await this.$axios.get('/item/get-items')
             commit('GET_ITEM', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getRefNumber({ commit }, maDuAn) {
+        try {
+            let response = await this.$axios.get(
+                `/pr/get-ref-number?maduan=${maDuAn}`
+            )
+            commit('GET_REF_NUM', response.data.data)
         } catch (err) {
             console.log(err)
         }

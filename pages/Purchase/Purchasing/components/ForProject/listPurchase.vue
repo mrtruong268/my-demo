@@ -121,7 +121,7 @@
                             data.data.approvalState !== 'SUBMITED'
                         "
                         class="mdi mdi-file-remove button"
-                        @click="clickNoApprove(data)"
+                        @click="clickUnApprove(data)"
                     ></div>
                     <div
                         class="mdi mdi-eye button"
@@ -203,8 +203,8 @@ export default {
             this.$store.dispatch('pheduyet/submitApprove', e.data.id)
             this.reload()
         },
-        clickNoApprove(e) {
-            console.log(e)
+        clickUnApprove(e) {
+            this.$store.dispatch('pheduyet/unApprove', e.data.id)
         },
         clickView(e) {
             this.popupVisible = !this.popupVisible

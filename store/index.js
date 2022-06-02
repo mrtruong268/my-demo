@@ -117,6 +117,8 @@ export const state = () => ({
     userInfo: {},
     excelFile: null,
     isSelected: '',
+    projectCode: [],
+    hangMucTrienKhai: [],
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
@@ -143,6 +145,12 @@ export const mutations = {
     },
     GET_USER(state, item) {
         state.userInfo = item
+    },
+    GET_PROJECT(state, item) {
+        state.projectCode = item
+    },
+    GET_HANG_MUC(state, item) {
+        state.hangMucTrienKhai = item
     },
     EXCEL_FILE(state, item) {
         state.excelFile = item
@@ -195,6 +203,26 @@ export const actions = {
                 `/staff/get-staff-by-username?username=${username}`
             )
             commit('GET_USER', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async getProjectCode({ commit }) {
+        try {
+            let response = await this.$axios.get(`/project/get-project-codes`)
+            commit('GET_PROJECT', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async getHangMuc({ commit }, hangMuc) {
+        try {
+            let response = await this.$axios.get(
+                `/project/get-dev-cate?maduan=${hangMuc}`
+            )
+            commit('GET_HANG_MUC', response.data.data)
         } catch (err) {
             console.log(err)
         }
