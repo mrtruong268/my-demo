@@ -84,13 +84,6 @@ export const actions = {
             console.log(err)
         }
     },
-    async deletePrItem({ commit }, delId) {
-        try {
-            await this.$axios.delete(`/pr/delete-pr-item?id=${delId}`)
-        } catch (err) {
-            console.log(err)
-        }
-    },
     async getEditData({ commit }, editId) {
         try {
             let response = await this.$axios.get(`/pr/get-pr?id=${editId}`)
