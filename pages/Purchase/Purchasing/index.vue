@@ -1,5 +1,5 @@
 <template>
-    <div class="m-80">
+    <div>
         <common
             :headerTitle="$t('Purchase requisition')"
             :classProp="'xs4'"

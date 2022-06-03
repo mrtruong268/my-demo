@@ -237,4 +237,9 @@ export default {
 #btn-new:hover {
     background-color: #e7e7e7;
 }
+@media only screen and (max-width: 739px) {
+    .purchase{
+        margin-top: 10px;
+    }
+}
 </style>

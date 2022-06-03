@@ -8,7 +8,7 @@
                         class="project row align-center mb-3"
                         v-for="item in listPurchase"
                         :key="item.id"
-                        :style="`border-left: 6px solid ${item.color}`"
+                        :style="`border-left: 4px solid ${item.color}`"
                     >
                         <div class="image">
                             <img :src="item.image" class="pa-3" />
@@ -43,7 +43,7 @@ export default {
             listPurchase: [
                 {
                     id: 1,
-                    title: 'Purchasing for projects',
+                    title: 'Purchase for projects',
                     image: require('assets/purchasingForProjects.svg'),
                     color: '#0986c5',
                     subTitle: [
@@ -63,7 +63,7 @@ export default {
                 },
                 {
                     id: 2,
-                    title: 'Purchasing for non-projects',
+                    title: 'Purchase for non-projects',
                     image: require('assets/purchasingNoneProjects.svg'),
                     color: '#b5222d',
                     subTitle: [
@@ -83,7 +83,7 @@ export default {
                 },
                 {
                     id: 3,
-                    title: 'Purchasing approval',
+                    title: 'Purchase approval',
                     image: require('assets/purchasingApprove.svg'),
                     color: '#87a248',
                     subTitle: [
@@ -122,7 +122,7 @@ export default {
 }
 .image img {
     max-width: 100%;
-    height: 100%;
+    height: auto;
 }
 .gridBox {
     display: flex;
@@ -166,6 +166,9 @@ export default {
     }
     .image img {
         max-width: 60%;
+    }
+    .project:nth-child(3) img {
+        padding: 19px 0;
     }
     .chip {
         padding: 0;

@@ -79,9 +79,9 @@
                                         {{ userInfo.username }}</span
                                     >
                                 </div>
-                                <div class="icon">
-                                    <i class="mdi mdi-account"></i>
-                                </div>
+                                <img
+                                    :src="`http://data.vnas.com.vn:108/avatar/${userInfo.avatarUrl}`"
+                                />
                             </div>
                             <div class="dropdown-content2">
                                 <!-- <p>{{ $t('Update avatar') }}</p>
@@ -219,7 +219,20 @@
                     <div class="mdi mdi-magnify btn-icon"></div>
                 </div>
                 <div class="py-3">
-                    <div class="mdi mdi-dots-vertical btn-icon"></div>
+                    <div class="dropdown3">
+                        <div class="row align-center">
+                            <img
+                                :src="`http://data.vnas.com.vn:108/avatar/${userInfo.avatarUrl}`"
+                            />
+                        </div>
+                        <div class="dropdown-content3">
+                            <!-- <p>{{ $t('Update avatar') }}</p>
+                                <p>{{ $t('Change password') }}</p> -->
+                            <p @click="signOut">
+                                {{ $t('Log out') }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -357,15 +370,7 @@ export default {
     border-radius: 24px;
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
 }
-.icon {
-    background-color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-}
-.icon i {
-    font-size: 28px;
-    color: #c2c0bf;
-}
+
 .notification {
     position: relative;
     display: inline-block;
@@ -444,6 +449,9 @@ export default {
     color: white;
     font-size: 30px;
 }
+
+/* drop1 */
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -484,6 +492,13 @@ export default {
     color: #0986c5;
     transition: all 0.2s linear 0s;
 }
+.user-guide {
+    display: flex;
+    align-items: center;
+}
+
+/* drop2 */
+
 .dropdown2 {
     position: relative;
     display: inline-block;
@@ -501,10 +516,6 @@ export default {
     right: 0;
     z-index: 2;
 }
-.user-guide {
-    display: flex;
-    align-items: center;
-}
 .dropdown-content2 p {
     color: white;
     padding: 20px 16px;
@@ -521,6 +532,49 @@ export default {
 .dropdown2:hover .dropdown-content2 {
     display: block;
 }
+
+.dropdown2 img {
+    width: 36px;
+    height: auto;
+}
+
+/* drop3 */
+
+.dropdown3 {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content3 {
+    display: none;
+    position: absolute;
+    background-image: linear-gradient(0deg, #0986c5 0%, #48c0bc 100%);
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    right: 0;
+    z-index: 2;
+}
+.dropdown-content3 p {
+    color: white;
+    padding: 10px 6px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.2s linear 0s;
+    cursor: pointer;
+}
+.dropdown-content3 p:hover {
+    background-color: #ddd;
+    transition: all 0.2s linear 0s;
+    color: #0986c5;
+}
+.dropdown3:hover .dropdown-content3 {
+    display: block;
+}
+.dropdown3 img {
+    width: 36px;
+    height: auto;
+}
+
 .selectbox {
     background-color: white;
     border-radius: 4px;

@@ -43,17 +43,15 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.phuPhi"
+                <DxSelectBox
+                    :items="loaiPhuPhi"
+                    :value="YeuCauMuaHang.phuPhi"
                     styling-mode="outlined"
                     :label="$t('Surcharge')"
                     label-mode="floating"
                     class="xs2 mr-3"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
+                    @selectionChanged="selectPhuPhi"
+                />
                 <DxTextBox
                     v-model="YeuCauMuaHang.maChiPhi"
                     styling-mode="outlined"
@@ -98,17 +96,16 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.maDuAn"
+                <DxSelectBox
+                    :items="projectCode"
                     styling-mode="outlined"
+                    :value="YeuCauMuaHang.maDuAn"
                     :label="$t('Project code')"
                     label-mode="floating"
                     class="xs2 mr-3"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
+                    @selectionChanged="selectDuAn"
+                    :ref="selectBoxRefKey"
+                />
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
                     styling-mode="outlined"
@@ -141,6 +138,7 @@
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 :hover-state-enabled="true"
+                :noDataText="$t('No data to display')"
                 height="calc(100vh - 450px)"
                 :ref="dataGridRefKey"
                 @saved="saved"
@@ -177,7 +175,9 @@
                 <DxColumn
                     data-field="maHangMucTrienKhai"
                     :caption="$t('Deployment category')"
-                />
+                >
+                    <DxLookup :data-source="hangMucTrienKhai" />
+                </DxColumn>
                 <DxColumn
                     data-field="ghiChu"
                     :caption="$t('Note')"
@@ -205,6 +205,7 @@ import DxButton from 'devextreme-vue/button'
 import {
     DxDataGrid,
     DxColumn,
+    DxLookup,
     DxPaging,
     DxEditing,
 } from 'devextreme-vue/data-grid'
@@ -223,6 +224,7 @@ export default {
         DxPaging,
         DxNumberBox,
         DxButton,
+        DxLookup,
         DxEditing,
         DxValidator,
         DxRequiredRule,
@@ -234,6 +236,7 @@ export default {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
             YeuCauMuaHang: {},
+            loaiPhuPhi: ['Phát sinh', 'Theo tính toán'],
         }
     },
     watch: {
@@ -243,9 +246,19 @@ export default {
             },
             deep: true,
         },
+        refNumber: {
+            handler(refNumber) {
+                if (refNumber) {
+                    this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
+                    this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
+                }
+            },
+            immediate: true,
+        },
     },
     computed: {
-        ...mapState('muahang', ['listItem']),
+        ...mapState('muahang', ['listItem', 'refNumber']),
+        ...mapState(['projectCode', 'hangMucTrienKhai']),
         ...mapGetters('muahang', ['suaYeuCau', 'danhSachHangHoa']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
@@ -275,7 +288,7 @@ export default {
                         let itemSelect = x.selectedItem
                         if (itemSelect.model == null) return
                         e.row.data.model_MaHieu = itemSelect.model
-                        // e.row.data.xuatXu_Hang = itemSelect.hangSanXuatID
+                        e.row.data.xuatXu_Hang = itemSelect.tenHangSanXuat
                         e.row.data.donVi = itemSelect.donViTinh
                         e.row.data.donGiaTamTinh = itemSelect.donGiaVND
                     },
@@ -294,6 +307,14 @@ export default {
                     ])
             )
             return !conditionsArray.includes(false)
+        },
+        selectDuAn(e) {
+            this.YeuCauMuaHang.maDuAn = e.selectedItem
+            this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
+            this.$store.dispatch('getHangMuc', e.selectedItem)
+        },
+        selectPhuPhi(e) {
+            this.YeuCauMuaHang.phuPhi = e.selectedItem
         },
         clickSave() {
             let result = this.validationGroup.validate()
@@ -326,6 +347,7 @@ export default {
     },
     created() {
         this.$store.dispatch('muahang/getItems')
+        this.$store.dispatch('getProjectCode')
     },
 }
 </script>
