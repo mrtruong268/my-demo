@@ -240,7 +240,7 @@ export const actions = {
             let url = window.URL.createObjectURL(new Blob([response.data]))
             let link = document.createElement('a')
             link.href = url
-            link.setAttribute('download', 'De-Nghi-Mua-Hang.xlsx')
+            link.setAttribute('download', 'De-Nghi-Mua-Hang.pdf')
             document.body.appendChild(link)
             link.click()
         } catch (err) {
