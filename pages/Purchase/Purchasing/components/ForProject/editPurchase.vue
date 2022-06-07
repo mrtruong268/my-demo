@@ -304,6 +304,9 @@ export default {
                         e.model_MaHieu !== '',
                         e.xuatXu_Hang !== '',
                         e.donVi !== '',
+                        e.soTienTamTinh !== '',
+                        e.donGiaTamTinh !== '',
+                        e.maHangMucTrienKhai !== '',
                     ])
             )
             return !conditionsArray.includes(false)

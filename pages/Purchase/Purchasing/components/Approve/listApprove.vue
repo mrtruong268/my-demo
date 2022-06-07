@@ -115,7 +115,7 @@
             :showPopup="popupVisible"
             :showTitle="true"
             :title="$t('View details')"
-            :width="'80%'"
+            :width="'90%'"
         >
             <template #main>
                 <viewApprove :view="editItem" @hiddenPopup="hidePopup" />

@@ -115,6 +115,10 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectDuAn"
+                    :search-enabled="true"
+                    search-mode="contains"
+                    :search-timeout="200"
+                    :min-search-length="0"
                     :ref="selectBoxRefKey"
                 />
                 <DxTextBox
@@ -309,7 +313,11 @@ export default {
                         e.tenHangHoa_DichVu !== '',
                         e.model_MaHieu !== '',
                         e.xuatXu_Hang !== '',
+                        e.soLuong !== '',
                         e.donVi !== '',
+                        e.donGiaTamTinh !== '',
+                        e.maHangMucTrienKhai !== '',
+                        e.soTienTamTinh !== '',
                     ])
             )
             return !conditionsArray.includes(false)

@@ -116,10 +116,7 @@
                         @click="clickApprove(data)"
                     ></div>
                     <div
-                        v-if="
-                            data.data.approvalState !== 'DANG_TAO' &&
-                            data.data.approvalState !== 'SUBMITED'
-                        "
+                        v-if="data.data.approvalState !== 'DANG_TAO'"
                         class="mdi mdi-file-remove button"
                         @click="clickUnApprove(data)"
                     ></div>

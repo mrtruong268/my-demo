@@ -1,8 +1,8 @@
 <template>
     <div>
+        <!-- :data-source="dataProp" -->
         <DxDataGrid
             id="gridContainer"
-            :data-source="dataProp"
             :show-borders="true"
             height="100%"
             remote-operations="true"
@@ -25,10 +25,7 @@
                 :caption="$t('Distributor name')"
                 :group-index="0"
             />
-            <DxColumn
-                data-field="tenMatHang"
-                :caption="$t('Items name')"
-            />
+            <DxColumn data-field="tenMatHang" :caption="$t('Items name')" />
             <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
             <DxColumn
                 data-field="donGia"
@@ -77,7 +74,6 @@ import {
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
 export default {
-    props: ['dataProp'],
     components: {
         DxDataGrid,
         DxColumn,
@@ -108,6 +104,10 @@ export default {
                 currency: 'VND',
             }).format(e)
         },
+    },
+    created() {
+        this.$store.dispatch('phanphoi/getSupplier')
+        this.$store.dispatch('phanphoi/getApprovalPr')
     },
 }
 </script>

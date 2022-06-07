@@ -185,9 +185,7 @@ export default {
         addOption() {
             this.list.forEach((e) => {
                 if (!this.tabData.find((i) => i.id === e.id)) {
-                    if (e.listType === this.isSelected) {
-                        this.tabData.push(e)
-                    }
+                    if (e.listType === this.isSelected) this.tabData.push(e)
                 }
             })
         },
@@ -238,7 +236,7 @@ export default {
     background-color: #e7e7e7;
 }
 @media only screen and (max-width: 739px) {
-    .purchase{
+    .purchase {
         margin-top: 10px;
     }
 }

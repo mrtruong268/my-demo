@@ -9,10 +9,10 @@
         >
             <template slot-scope="{ itemProp }">
                 <div v-if="itemProp.listType == 1">
-                    <listDistribution :dataProp="itemProp.data" />
+                    <listOfUnit />
                 </div>
                 <div v-else>
-                    <listGoods :dataProp="itemProp.data" />
+                    <listOfItems />
                 </div>
             </template>
         </common>
@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
-import Common from '~/components/common.vue'
-import ListDistribution from './components/listDistribution.vue'
-import ListGoods from './components/listGoods.vue'
+import common from '~/components/common'
+import listOfUnit from './components/listOfUnit'
+import listOfItems from './components/listOfItems'
 
 export default {
     props: {
@@ -37,47 +37,19 @@ export default {
     },
     layout: 'commonLayout',
     components: {
-        Common,
-        ListDistribution,
-        ListGoods,
+        common,
+        listOfUnit,
+        listOfItems,
     },
     data() {
         return {
             duLieuTab: [],
-            danhSach: [
-                {
-                    id: this.idv4(),
-                    title: 'List of units participating in the bid',
-                    listType: 1,
-                    data: [
-                        {
-                            id: 0,
-                            tenNcc: 'NCC 1',
-                            tenMatHang: '',
-                            soLuong: 1,
-                            donGia: 0,
-                            vat: 0,
-                            tongTien: 0,
-                            tongTienGomVat: 0,
-                            thoiGianGiaoHang: new Date(),
-                            thoiGianBaoHanh: new Date(),
-                            dieuKhoan: '',
-                            ghiChu: '',
-                        },
-                    ],
-                },
-                {
-                    id: this.idv4(),
-                    title: 'List of items by supplier',
-                    listType: 2,
-                    data: [],
-                },
-            ],
-            duLieuMoi: [],
         }
     },
+    computed: {
+        ...mapState('phanphoi', ['danhSach', 'duLieuMoi']),
+    },
     methods: {},
-    created() {},
 }
 </script>
 

@@ -39,7 +39,7 @@
                 :label="$t('Surcharge')"
                 label-mode="floating"
                 :read-only="true"
-                class="xs2 mr-3"
+                class="xs1 mr-3"
             />
             <DxTextBox
                 v-model="YeuCauMuaHang.maChiPhi"
@@ -47,7 +47,7 @@
                 :label="$t('Expense code')"
                 label-mode="floating"
                 :read-only="true"
-                class="xs2"
+                class="xs3"
             />
         </div>
         <div class="row align-center mb-3">
@@ -87,7 +87,7 @@
                 :label="$t('Project code')"
                 label-mode="floating"
                 :read-only="true"
-                class="xs2 mr-3"
+                class="xs1 mr-3"
             >
             </DxTextBox>
             <DxTextBox
@@ -96,7 +96,7 @@
                 :label="$t('Reference number')"
                 label-mode="floating"
                 :read-only="true"
-                class="xs2"
+                class="xs3"
             />
         </div>
         <div class="mb-3">
