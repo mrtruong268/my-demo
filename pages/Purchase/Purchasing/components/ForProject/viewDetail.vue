@@ -116,11 +116,20 @@
                         />
                     </div>
                     <div class="row align-center justify-space-between">
+                        <p>Mã dự án:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.maDuAn"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
                         <p>Mã chi phí:</p>
                         <DxTextBox
                             v-model="YeuCauMuaHang.maChiPhi"
                             styling-mode="underlined"
                             :read-only="true"
+                            :width="220"
                         />
                     </div>
                     <div class="row align-center justify-space-between">
@@ -129,14 +138,7 @@
                             v-model="YeuCauMuaHang.soThamChieu"
                             styling-mode="underlined"
                             :read-only="true"
-                        />
-                    </div>
-                    <div class="row align-center justify-space-between">
-                        <p>Mã dự án:</p>
-                        <DxTextBox
-                            v-model="YeuCauMuaHang.maDuAn"
-                            styling-mode="underlined"
-                            :read-only="true"
+                            :width="220"
                         />
                     </div>
                 </div>
