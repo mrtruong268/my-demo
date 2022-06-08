@@ -104,18 +104,19 @@
                 cell-template="buttons-cell"
             />
             <template #buttons-cell="{ data }">
-                <p
-                    class="mdi mdi-eye font-24"
-                    style="cursor: pointer"
+                <DxButton
+                    icon="mdi mdi-eye"
+                    :hint="$t('Xem và phê duyệt')"
                     @click="viewDetail(data)"
-                ></p>
+                />
             </template>
         </DxDataGrid>
         <popup
             :showPopup="popupVisible"
-            :showTitle="true"
+            :showTitle="false"
+            :closeOut="true"
             :title="$t('View details')"
-            :width="'90%'"
+            :width="'80%'"
         >
             <template #main>
                 <viewApprove :view="editItem" @hiddenPopup="hidePopup" />

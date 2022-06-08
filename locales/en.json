@@ -41,13 +41,13 @@
     "Username": "Username",
     "Password": "Password",
     "Type captcha code": "Type captcha code",
-    "Purchasing for projects": "Purchasing for projects",
+    "Purchase for projects": "Purchase for projects",
     "Purchase requisition": "Purchase requisition",
     "Create purchase requisition": "Create purchase requisition",
     "Production requisition": "Production requisition",
     "Create production requisition": "Create production requisition",
-    "Purchasing for non-projects": "Purchasing for non-projects",
-    "Purchasing approval": "Purchasing approval",
+    "Purchase for non-projects": "Purchase for non-projects",
+    "Purchase approval": "Purchase approval",
     "Approve": "Approve",
     "Purchase form": "Purchase form",
     "Name": "Name",
@@ -86,5 +86,7 @@
     "Distributor name": "Distributor name",
     "Delivery time": "Delivery time",
     "Warranty period": "Warranty period",
-    "Rules": "Rules"
+    "Rules": "Rules",
+    "Incurred": "Incurred",
+    "Calculations": "Calculations"
 }

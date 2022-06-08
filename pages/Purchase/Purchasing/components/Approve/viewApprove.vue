@@ -1,155 +1,232 @@
 <template>
-    <div>
-        <div class="row align-center justify-space-between mb-3">
-            <DxTextBox
-                v-model="YeuCauMuaHang.tenNhanVien"
-                styling-mode="outlined"
-                :label="$t('Name')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.maNhanVien"
-                styling-mode="outlined"
-                :label="$t('Employee code')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.chucVu"
-                styling-mode="outlined"
-                :label="$t('Position')"
-                :read-only="true"
-                label-mode="floating"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.phongBan"
-                styling-mode="outlined"
-                :label="$t('Department')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.phuPhi"
-                styling-mode="outlined"
-                :label="$t('Surcharge')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs2 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.maChiPhi"
-                styling-mode="outlined"
-                :label="$t('Expense code')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs3"
-            />
+    <div class="main">
+        <div class="header row align-center">
+            <div class="xs4 container-xs" style="border-right: 1px solid black">
+                <div class="row align-center">
+                    <div class="mx-2">
+                        <img
+                            src="~assets/logo.png"
+                            width="90px"
+                            height="auto"
+                        />
+                    </div>
+                    <div>
+                        <p class="font-12" style="font-weight: bold">
+                            CÔNG TY TNHH VIỆT NAM AUTO SOLUTIONS
+                        </p>
+                        <p class="font-12">
+                            Thôn An Trai, xã Vân Canh, Huyện Hoài Đức, Thành phố
+                            Hà Nội
+                        </p>
+                        <p class="font-12">MST: 0106515898</p>
+                    </div>
+                </div>
+            </div>
+            <div class="xs6 text-xs-center" style="">
+                <h1>
+                    PHIẾU ĐỀ NGHỊ MUA <br />
+                    HÀNG HÓA,DỊCH VỤ
+                </h1>
+            </div>
+            <div class="xs2 right-content">
+                <div class="top">
+                    <p>Form: VNAS-TC-MH</p>
+                    <p>ĐNMH-000000</p>
+                </div>
+                <div class="bot">
+                    <p>Khổ giấy: A4</p>
+                </div>
+            </div>
         </div>
-        <div class="row align-center mb-3">
-            <DxDateBox
-                v-model="YeuCauMuaHang.ngayDeTrinh"
-                displayFormat="dd/MM/yyyy"
-                :use-mask-behavior="true"
-                validationMessageMode="always"
-                styling-mode="outlined"
-                :label="$t('Submission date')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs2 mr-3"
-            />
-            <DxDateBox
-                v-model="YeuCauMuaHang.ngayCanHang"
-                displayFormat="dd/MM/yyyy"
-                :use-mask-behavior="true"
-                validationMessageMode="always"
-                styling-mode="outlined"
-                :label="$t('Delivery date')"
-                class="xs2 mr-3"
-                :read-only="true"
-                label-mode="floating"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.diaDiemLamViec"
-                styling-mode="outlined"
-                :label="$t('Work location')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs-4 mr-3"
-            />
-            <DxTextBox
-                v-model="YeuCauMuaHang.maDuAn"
-                styling-mode="outlined"
-                :label="$t('Project code')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs2 mr-3"
-            >
-            </DxTextBox>
-            <DxTextBox
-                v-model="YeuCauMuaHang.soThamChieu"
-                styling-mode="outlined"
-                :label="$t('Reference number')"
-                label-mode="floating"
-                :read-only="true"
-                class="xs3"
-            />
+        <div class="info-user header">
+            <div class="row">
+                <div class="xs4 mr-4">
+                    <div class="row align-center justify-space-between">
+                        <p>Tên:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.tenNhanVien"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
+                        <p>Mã nhân viên:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.maNhanVien"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
+                        <p>Ngày đệ trình:</p>
+                        <DxDateBox
+                            v-model="YeuCauMuaHang.ngayDeTrinh"
+                            displayFormat="dd/MM/yyyy"
+                            :use-mask-behavior="true"
+                            validationMessageMode="always"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
+                        <p>Ngày giao hàng:</p>
+                        <DxDateBox
+                            v-model="YeuCauMuaHang.ngayCanHang"
+                            displayFormat="dd/MM/yyyy"
+                            :use-mask-behavior="true"
+                            validationMessageMode="always"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                </div>
+                <div class="xs4 mr-4">
+                    <div class="row align-center justify-space-between">
+                        <p>Chức vụ:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.chucVu"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
+                        <p>Phòng/Ban:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.phongBan"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
+                        <p>Địa điểm làm việc:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.diaDiemLamViec"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                </div>
+                <div class="xs4">
+                    <div class="row align-center justify-space-between">
+                        <p>Phụ phí:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.phuPhi"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
+                        <p>Mã dự án:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.maDuAn"
+                            styling-mode="underlined"
+                            :read-only="true"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
+                        <p>Mã chi phí:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.maChiPhi"
+                            styling-mode="underlined"
+                            :read-only="true"
+                            :width="220"
+                        />
+                    </div>
+                    <div class="row align-center justify-space-between">
+                        <p>Số tham chiếu:</p>
+                        <DxTextBox
+                            v-model="YeuCauMuaHang.soThamChieu"
+                            styling-mode="underlined"
+                            :read-only="true"
+                            :width="220"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-center">
+            <h3 class="my-2">DANH SÁCH HÀNG HÓA, DỊCH VỤ CẦN MUA</h3>
         </div>
         <div class="mb-3">
-            <div class="row justify-center">
-                <h3 class="mb-3">{{ $t('List of goods and services') }}</h3>
-            </div>
             <DxDataGrid
                 id="gridContainer"
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
-                :show-borders="true"
                 :show-column-lines="true"
-                :ref="dataGridRefKey"
-                :hover-state-enabled="true"
-                :remote-operations="true"
+                :show-borders="true"
+                height="100%"
+                :remote-operations="false"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
+                :ref="dataGridRefKey"
             >
-                <DxPaging :enabled="false" />
+                <DxPaging :enabled="true" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    :caption="$t('Goods, services')"
-                >
-                </DxColumn>
-                <DxColumn data-field="model_MaHieu" :caption="$t('Model')">
-                </DxColumn>
-                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')">
-                </DxColumn>
-                <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
-                <DxColumn data-field="donVi" :caption="$t('Unit')"> </DxColumn>
-                <DxColumn
-                    data-field="donGiaTamTinh"
-                    :caption="$t('Estimated unit')"
-                    :format="customFormat"
+                    caption="Tên hàng hóa, dịch vụ"
                 />
+                <DxColumn data-field="model_MaHieu" caption="Mã hiệu" />
+                <DxColumn data-field="xuatXu_Hang" caption="Xuất xứ" />
+                <DxColumn data-field="soLuong" caption="Số lượng" />
+                <DxColumn data-field="donVi" caption="Đơn vị" />
+                <!-- <DxColumn
+                    data-field="donGiaTamTinh"
+                    caption=""
+                    :format="customFormat"
+                /> -->
                 <DxColumn
                     data-field="soTienTamTinh"
-                    :caption="$t('Estimated amount')"
+                    caption="Số tiền tạm tính"
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
-                    :caption="$t('Deployment category')"
+                    caption="Mã hạng mục triển khai"
                 />
-                <DxColumn data-field="ghiChu" :caption="$t('Note')" />
+                <DxColumn data-field="ghiChu" caption="Ghi chú" width="250" />
+                <DxSummary>
+                    <DxTotalItem
+                        column="tenHangHoa_DichVu"
+                        summary-type="count"
+                        display-format="Tổng tiền:"
+                    />
+                    <DxTotalItem
+                        column="soTienTamTinh"
+                        summary-type="sum"
+                        display-format="{0}"
+                        :valueFormat="customFormat"
+                    />
+                </DxSummary>
             </DxDataGrid>
         </div>
+        <div class="row align-center mb-2">
+            <div
+                v-for="yc in YeuCauMuaHang.duyetYCMHs"
+                :key="yc.id"
+                class="xs3"
+            >
+                <div class="footer-content">
+                    <p>
+                        Trạng thái:
+                        <span>{{ yc.approvalStatus }} by VNAS App</span>
+                    </p>
+                    <p>
+                        Người duyệt:
+                        <span>{{ yc.tenNhanVien }}</span>
+                    </p>
+                    <p>
+                        Thời gian duyệt:
+                        <span>{{ timestamp(yc.ngayDuyet) }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
         <div>
-            <h3 class="mb-3">{{ $t('Comment') }}</h3>
+            <h3 class="mb-2">{{ $t('Comment') }}</h3>
             <DxTextArea
                 v-model="YeuCauMuaHang.comment"
                 styling-mode="outlined"
-                :height="120"
+                :height="80"
             />
             <div class="row justify-end align-center mt-3">
                 <DxButton
@@ -161,7 +238,7 @@
                     @click="khongDuyet"
                 />
                 <DxButton
-                    type="default"
+                    type="success"
                     icon="check"
                     :text="$t('Approve')"
                     styling-mode="outlined"
@@ -176,16 +253,18 @@
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
-import DxTextArea from 'devextreme-vue/text-area'
 import DxDateBox from 'devextreme-vue/date-box'
+import DxTextArea from 'devextreme-vue/text-area'
 import DxButton from 'devextreme-vue/button'
 import {
     DxDataGrid,
     DxColumn,
     DxPaging,
     DxEditing,
+    DxSummary,
+    DxTotalItem,
 } from 'devextreme-vue/data-grid'
-
+import moment from 'moment'
 export default {
     props: {
         view: {
@@ -199,17 +278,13 @@ export default {
         DxDateBox,
         DxDataGrid,
         DxColumn,
+        DxTextArea,
         DxPaging,
         DxNumberBox,
         DxButton,
         DxEditing,
-        DxTextArea,
-    },
-    data() {
-        return {
-            dataGridRefKey: 'datagridValid',
-            YeuCauMuaHang: {},
-        }
+        DxSummary,
+        DxTotalItem,
     },
     watch: {
         view: {
@@ -220,6 +295,12 @@ export default {
             immediate: true,
         },
     },
+    data() {
+        return {
+            dataGridRefKey: 'my-data-grid',
+            YeuCauMuaHang: {},
+        }
+    },
     methods: {
         duyet() {
             if (confirm('Do you want to submit?') == true) {
@@ -228,8 +309,13 @@ export default {
             }
         },
         khongDuyet() {
-            this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
-            this.$emit('hiddenPopup')
+            if (confirm('Do you want to submit?') == true) {
+                this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
+                this.$emit('hiddenPopup')
+            }
+        },
+        timestamp(date) {
+            return moment(date).format('HH:mm DD-MM-YYYY')
         },
         customFormat(e) {
             return new Intl.NumberFormat('vi-VN', {
@@ -245,11 +331,31 @@ export default {
 </script>
 
 <style scoped>
-.btn-add {
-    font-size: 28px;
+.header {
+    border: 1px solid black;
 }
-.xs-4 {
-    flex-basis: 34.5%;
-    max-width: 34.5%;
+.border-box {
+    margin: 0 auto;
+}
+.right-content {
+    font-style: italic;
+    border-left: 1px solid black;
+}
+.top {
+    padding: 6px;
+    border-bottom: 1px solid black;
+}
+.bot {
+    padding: 6px;
+}
+.footer-content p {
+    font-weight: bold;
+}
+.footer-content span {
+    font-weight: normal;
+}
+.footer-content {
+    border: 1px solid black;
+    padding: 8px;
 }
 </style>

@@ -41,13 +41,13 @@
     "Username": "Tài khoản",
     "Password": "Mật khẩu",
     "Type captcha code": "Nhập mã captcha code",
-    "Purchasing for projects": "Mua hàng dự án",
+    "Purchase for projects": "Mua hàng dự án",
     "Purchase requisition": "Yêu cầu mua hàng",
     "Create purchase requisition": "Tạo yêu cầu mua hàng",
     "Production requisition": "Yêu cầu sản xuất",
     "Create production requisition": "Tạo yêu cầu sản xuất",
-    "Purchasing for non-projects": "Mua hàng nội bộ",
-    "Purchasing approval": "Phê duyệt mua hàng",
+    "Purchase for non-projects": "Mua hàng nội bộ",
+    "Purchase approval": "Phê duyệt mua hàng",
     "Approve": "Phê duyệt",
     "Purchase form": "Hình thức mua hàng",
     "Name": "Họ và tên",
@@ -86,5 +86,7 @@
     "Distributor name": "Tên nhà phân phối",
     "Delivery time": "Thời gian giao hàng",
     "Warranty period": "Thời gian bảo hành",
-    "Rules": "Điều khoản"
+    "Rules": "Điều khoản",
+    "Incurred": "Phát sinh",
+    "Calculations": "Theo tính toán"
 }

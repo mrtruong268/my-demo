@@ -324,6 +324,7 @@ export default {
     font-weight: normal;
 }
 .footer-content {
+    height: 16vh;
     border: 1px solid black;
     padding: 8px;
 }

@@ -10,7 +10,7 @@ import 'vue-toast-notification/dist/theme-sugar.css'
 const mixin = {
     methods: {
         clickRouter(link, param) {
-            param === 'vi'
+            param === 'en'
                 ? this.$router.push(`/${param}` + `/${link}`)
                 : this.$router.push(`/${link}`)
         },

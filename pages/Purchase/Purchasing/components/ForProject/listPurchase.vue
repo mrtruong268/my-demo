@@ -105,33 +105,48 @@
             />
             <template #buttons-cell="{ data }">
                 <div class="row justify-center">
-                    <div
-                        v-if="data.data.approvalState == 'MH_DUYET'"
-                        class="mdi mdi-printer button"
-                        @click="clickPrint(data)"
-                    ></div>
-                    <div
-                        v-if="data.data.approvalState == 'DANG_TAO'"
-                        class="mdi mdi-file-check button"
-                        @click="clickApprove(data)"
-                    ></div>
-                    <div
-                        v-if="data.data.approvalState !== 'DANG_TAO'"
-                        class="mdi mdi-file-remove button"
-                        @click="clickUnApprove(data)"
-                    ></div>
-                    <div
-                        class="mdi mdi-eye button"
-                        @click="clickView(data)"
-                    ></div>
-                    <div
-                        class="mdi mdi-pencil button"
-                        @click="clickEdit(data)"
-                    ></div>
-                    <div
-                        class="mdi mdi-delete button"
-                        @click="clickDelete(data)"
-                    ></div>
+                    <div>
+                        <DxButton
+                            icon="mdi mdi-printer"
+                            :hint="$t('In')"
+                            @click="clickPrint(data)"
+                        />
+                    </div>
+                    <div v-if="data.data.approvalState == 'DANG_TAO'">
+                        <DxButton
+                            icon="mdi mdi-file-check"
+                            :hint="$t('Yêu cầu phê duyệt')"
+                            @click="clickApprove(data)"
+                        />
+                    </div>
+                    <div v-else>
+                        <DxButton
+                            icon="mdi mdi-file-remove"
+                            :hint="$t('Yêu cầu hoàn duyệt')"
+                            @click="clickUnApprove(data)"
+                        />
+                    </div>
+                    <div>
+                        <DxButton
+                            icon="mdi mdi-eye"
+                            :hint="$t('Xem chi tiết yêu cầu')"
+                            @click="clickView(data)"
+                        />
+                    </div>
+                    <div>
+                        <DxButton
+                            icon="mdi mdi-pencil"
+                            :hint="$t('Sửa yêu cầu')"
+                            @click="clickEdit(data)"
+                        />
+                    </div>
+                    <div>
+                        <DxButton
+                            icon="mdi mdi-delete"
+                            :hint="$t('Xoá yêu cầu')"
+                            @click="clickDelete(data)"
+                        />
+                    </div>
                 </div>
             </template>
         </DxDataGrid>

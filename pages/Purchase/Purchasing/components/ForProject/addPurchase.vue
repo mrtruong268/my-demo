@@ -268,7 +268,7 @@ export default {
                 comment: '',
                 yeuCauMuaHangChiTiets: [],
             },
-            loaiPhuPhi: ['Phát sinh', 'Theo tính toán'],
+            loaiPhuPhi: [this.$t('Incurred'), this.$t('Calculations')],
         }
     },
     watch: {
@@ -316,8 +316,8 @@ export default {
                         e.soLuong !== '',
                         e.donVi !== '',
                         e.donGiaTamTinh !== '',
-                        e.maHangMucTrienKhai !== '',
                         e.soTienTamTinh !== '',
+                        e.maHangMucTrienKhai !== '',
                     ])
             )
             return !conditionsArray.includes(false)

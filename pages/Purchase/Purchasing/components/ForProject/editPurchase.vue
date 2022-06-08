@@ -104,7 +104,6 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectDuAn"
-                    :ref="selectBoxRefKey"
                 />
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
@@ -236,7 +235,7 @@ export default {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
             YeuCauMuaHang: {},
-            loaiPhuPhi: ['Phát sinh', 'Theo tính toán'],
+            loaiPhuPhi: [this.$t('Incurred'), this.$t('Calculations')],
         }
     },
     watch: {
@@ -303,9 +302,10 @@ export default {
                         e.tenHangHoa_DichVu !== '',
                         e.model_MaHieu !== '',
                         e.xuatXu_Hang !== '',
+                        e.soLuong !== '',
                         e.donVi !== '',
-                        e.soTienTamTinh !== '',
                         e.donGiaTamTinh !== '',
+                        e.soTienTamTinh !== '',
                         e.maHangMucTrienKhai !== '',
                     ])
             )

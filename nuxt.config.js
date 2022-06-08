@@ -48,23 +48,23 @@ export default {
     i18n: {
         locales: [
             {
-                code: 'en',
-                name: 'Eng',
-                language: 'English',
-            },
-            {
                 code: 'vi',
                 name: 'Vie',
                 language: 'Vietnamese',
             },
+            {
+                code: 'en',
+                name: 'Eng',
+                language: 'English',
+            },
         ],
-        defaultLocale: 'en',
+        defaultLocale: 'vi',
         vueI18n: i18n,
-        detectBrowserLanguage: {
-            useCookie: true,
-            cookieKey: 'i18n_redirected',
-            redirectOn: 'root', // recommended
-        },
+        // detectBrowserLanguage: {
+        //     useCookie: true,
+        //     cookieKey: 'i18n_redirected',
+        //     redirectOn: 'root', // recommended
+        // },
     },
     build: {},
 }
