@@ -221,29 +221,12 @@
                 </div>
             </div>
         </div>
-        <div>
-            <h3 class="mb-2">{{ $t('Bình luận') }}</h3>
-            <DxTextArea
-                v-model="YeuCauMuaHang.comment"
-                styling-mode="outlined"
-                :height="80"
-            />
-            <div class="row justify-end align-center mt-3">
-                <DxButton
-                    :text="$t('Không duyệt')"
-                    class="mr-3"
-                    type="danger"
-                    icon="close"
-                    styling-mode="outlined"
-                    @click="khongDuyet"
-                />
-                <DxButton
-                    type="success"
-                    icon="check"
-                    :text="$t('Phê duyệt')"
-                    styling-mode="outlined"
-                    @click="duyet"
-                />
+        <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id">
+            <div v-if="yc.approvalStatus == 'MustRevise'">
+                <p style="font-weight: bold">
+                    (Lý do không duyệt:
+                    <span style="font-weight: normal">{{ yc.comment }})</span>
+                </p>
             </div>
         </div>
     </div>
@@ -254,7 +237,6 @@ import DxSelectBox from 'devextreme-vue/select-box'
 import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
 import DxDateBox from 'devextreme-vue/date-box'
-import DxTextArea from 'devextreme-vue/text-area'
 import DxButton from 'devextreme-vue/button'
 import {
     DxDataGrid,
@@ -278,7 +260,6 @@ export default {
         DxDateBox,
         DxDataGrid,
         DxColumn,
-        DxTextArea,
         DxPaging,
         DxNumberBox,
         DxButton,
@@ -302,18 +283,6 @@ export default {
         }
     },
     methods: {
-        duyet() {
-            if (confirm('Do you want to submit?') == true) {
-                this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
-                this.$emit('hiddenPopup')
-            }
-        },
-        khongDuyet() {
-            if (confirm('Do you want to submit?') == true) {
-                this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
-                this.$emit('hiddenPopup')
-            }
-        },
         timestamp(date) {
             return moment(date).format('HH:mm DD-MM-YYYY')
         },
@@ -355,6 +324,7 @@ export default {
     font-weight: normal;
 }
 .footer-content {
+    height: 16vh;
     border: 1px solid black;
     padding: 8px;
 }

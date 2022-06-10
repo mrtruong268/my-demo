@@ -71,7 +71,7 @@
                             :show-nav-buttons="true"
                             :repaint-changes-only="true"
                             :selectedItem="selectedItem"
-                            :noDataText="$t('No data to display')"
+                            :noDataText="$t('Không có dữ liệu')"
                             item-title-template="title"
                             item-template="itemTemplate"
                             @titleClick="titleClick"
@@ -176,9 +176,9 @@ export default {
         },
         titleClick(e) {
             let check = e.itemData.listType
-            if (check == 'muahang') {
+            if (check == 'mhda') {
                 this.$store.dispatch('muahang/getData')
-            } else if (check == 'pheduyet') {
+            } else if (check == 'pd') {
                 this.$store.dispatch('pheduyet/getApprove')
             }
         },

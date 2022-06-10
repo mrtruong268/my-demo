@@ -4,7 +4,7 @@
             <DxButton
                 icon="mdi mdi-reload"
                 @click="clickReload"
-                :text="$t('Reload')"
+                :text="$t('Tải lại dữ liệu')"
             />
         </div>
         <DxDataGrid
@@ -15,7 +15,7 @@
             :show-borders="true"
             :row-alternation-enabled="true"
             height="100%"
-            :noDataText="$t('No data to display')"
+            :noDataText="$t('Không có dữ liệu')"
             remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
@@ -26,37 +26,37 @@
             <DxPaging :enabled="false" />
             <DxColumn
                 data-field="id"
-                :caption="$t('No')"
+                :caption="$t('Số')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="tenNhanVien"
-                :caption="$t('Name')"
+                :caption="$t('Họ và tên')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="maNhanVien"
-                :caption="$t('Employee code')"
+                :caption="$t('Mã nhân viên')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="soThamChieu"
-                :caption="$t('Reference number')"
+                :caption="$t('Số tham chiếu')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="chucVu"
-                :caption="$t('Position')"
+                :caption="$t('Chức vụ')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="phongBan"
-                :caption="$t('Department')"
+                :caption="$t('Phòng ban')"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="ngayDeTrinh"
-                :caption="$t('Submission date')"
+                :caption="$t('Ngày đệ trình')"
                 format="dd/MM/yyyy"
                 data-type="date"
                 :allow-header-filtering="false"
@@ -64,7 +64,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="approvalState"
-                :caption="$t('Approval state')"
+                :caption="$t('Bước phê duyệt')"
                 cell-template="cellTemplate"
             />
             <template #cellTemplate="{ data }">
@@ -83,7 +83,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="approvalStatus"
-                :caption="$t('Approval status')"
+                :caption="$t('Trạng thái phê duyệt')"
                 cell-template="cellTemplate2"
             />
             <template #cellTemplate2="{ data }">
@@ -106,7 +106,7 @@
             <template #buttons-cell="{ data }">
                 <DxButton
                     icon="mdi mdi-eye"
-                    :hint="$t('Xem và phê duyệt')"
+                    :hint="$t('Phê duyệt')"
                     @click="viewDetail(data)"
                 />
             </template>
@@ -115,7 +115,7 @@
             :showPopup="popupVisible"
             :showTitle="false"
             :closeOut="true"
-            :title="$t('View details')"
+            :title="$t('Xem chi tiết')"
             :width="'80%'"
         >
             <template #main>

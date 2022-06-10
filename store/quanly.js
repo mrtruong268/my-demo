@@ -90,25 +90,25 @@ export const state = () => ({
     statusItem: [
         {
             id: 'ongoing',
-            title: 'Ongoing projects',
+            title: 'Dự án đang thực hiện',
             image: require('assets/ongoingIcon.svg'),
             data: [],
         },
         {
             id: 'finish',
-            title: 'Finished projects',
+            title: 'Dự án đã kết thúc',
             image: require('assets/finishedIcon.svg'),
             data: [],
         },
         {
             id: 'closed',
-            title: 'Closed projects',
+            title: 'Dự án đã đóng',
             image: require('assets/closedIcon2.svg'),
             data: [],
         },
         {
             id: 'pending',
-            title: 'Pending projects',
+            title: 'Dự án chưa giải quyết',
             image: require('assets/pendingIcon.png'),
             data: [],
         },
@@ -116,13 +116,13 @@ export const state = () => ({
 })
 export const getters = {}
 export const mutations = {
-    SET_ITEM(state, item) {
-        state.DanhSachQuanLy.forEach((e) => {
-            if (e.listType === 'muahang') {
-                e.data = item
-            }
-        })
-    },
+    // SET_ITEM(state, item) {
+    //     state.DanhSachQuanLy.forEach((e) => {
+    //         if (e.listType === 'muahang') {
+    //             e.data = item
+    //         }
+    //     })
+    // },
 
     PROJECT_STATUS(state) {
         state.statusItem.forEach((i) => {

@@ -11,12 +11,9 @@ export default function ({ app, $axios, redirect }) {
         }
     })
     $axios.onResponse((response) => {
-        if (response.data.success === false) {
+        if (!response.data.success && !response.data.status) {
             Vue.$toast.error(response.data.message)
-        } else if (
-            response.data.success === true &&
-            response.config.method !== 'get'
-        ) {
+        } else if (response.data.success && response.config.method !== 'get') {
             Vue.$toast.success(response.data.message)
         }
     })

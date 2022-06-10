@@ -4,21 +4,21 @@ export const state = () => ({
     ChucNang: [
         {
             id: uuidv4(),
-            title: 'Project management',
+            title: 'Quản lý dự án',
             to: 'ProjectManagement',
             color: '#940726',
             image: require('assets/icon-project-management.png'),
         },
         {
             id: uuidv4(),
-            title: 'Cash flow analysis',
+            title: 'Phân tích dòng tiền',
             to: '',
             color: '#C83213',
             image: require('assets/cash.gif'),
         },
         {
             id: uuidv4(),
-            title: 'Purchase',
+            title: 'Mua hàng',
             to: 'Purchase',
             color: '#90AA1D',
             image: require('assets/buy.gif'),
@@ -32,14 +32,14 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            title: 'Distribution list',
+            title: 'Danh sách nhà phân phối',
             to: 'distribution',
             color: '#008AC1',
             image: require('assets/list.png'),
         },
         {
             id: uuidv4(),
-            title: 'Work place',
+            title: 'Địa điểm làm việc',
             to: '',
             color: '#2B585F',
             image: require('assets/wp.gif'),

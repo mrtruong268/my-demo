@@ -17,7 +17,7 @@
                         <div class="search">
                             <input
                                 type="search"
-                                :placeholder="$t('Search')"
+                                :placeholder="$t('Tìm kiếm')"
                                 class="search-box"
                             />
                             <i class="mdi mdi-magnify btn-search"></i>
@@ -69,25 +69,33 @@
                         </div>
                         <div class="user-guide mr-2">
                             <i class="mdi mdi-information btn-guide"></i>
-                            <p style="color: #0986c5">{{ $t('User guide') }}</p>
+                            <p style="color: #0986c5">{{ $t('Hướng dẫn sử dụng') }}</p>
                         </div>
                         <div class="dropdown2">
                             <div class="row align-center">
                                 <div class="mr-2">
                                     <span
-                                        >{{ $t('Hi!') }}
+                                        >{{ $t('Xin chào!') }}
                                         {{ userInfo.username }}</span
                                     >
                                 </div>
                                 <img
+                                    v-if="userInfo.hasOwnProperty('avatarUrl')"
                                     :src="`http://data.vnas.com.vn:108/avatar/${userInfo.avatarUrl}`"
+                                />
+                                <img
+                                    v-else
+                                    src="~assets/avatar2.png"
+                                    style="border-radius: 50%"
                                 />
                             </div>
                             <div class="dropdown-content2">
-                                <!-- <p>{{ $t('Update avatar') }}</p>
-                                <p>{{ $t('Change password') }}</p> -->
+                                <!-- <p>{{ $t('Update avatar') }}</p> -->
+                                <p @click="changePass">
+                                    {{ $t('Thay đổi mật khẩu') }}
+                                </p>
                                 <p @click="signOut">
-                                    {{ $t('Log out') }}
+                                    {{ $t('Đăng xuất') }}
                                 </p>
                             </div>
                         </div>
@@ -110,28 +118,28 @@
                                 @click="clickRouter('', routeParams)"
                             >
                                 <i class="mdi mdi-home" />
-                                {{ $t('Home') }}
+                                {{ $t('Trang chủ') }}
                             </li>
                             <li
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="clickRouter('user', routeParams)"
                             >
                                 <i class="mdi mdi-account" />
-                                {{ $t('User') }}
+                                {{ $t('Người dùng') }}
                             </li>
                             <li
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="clickRouter('UserGroup', routeParams)"
                             >
                                 <i class="mdi mdi-account-group" />
-                                {{ $t('Group') }}
+                                {{ $t('Nhóm') }}
                             </li>
                             <li
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="goCategory"
                             >
                                 <i class="mdi mdi-view-list" />
-                                {{ $t('Category') }}
+                                {{ $t('Phân loại') }}
                             </li>
                             <li
                                 class="color-fff list-mobile px-4 py-2"
@@ -140,7 +148,7 @@
                                 <i
                                     class="mdi mdi-file-table-box-multiple-outline"
                                 />
-                                {{ $t('Dashboard') }}
+                                {{ $t('Bảng tổng hợp') }}
                             </li>
                         </ul>
                     </div>
@@ -226,10 +234,10 @@
                             />
                         </div>
                         <div class="dropdown-content3">
-                            <!-- <p>{{ $t('Update avatar') }}</p>
-                                <p>{{ $t('Change password') }}</p> -->
+                            <!-- <p>{{ $t('Cập nhật ảnh đại diện') }}</p>
+                                <p>{{ $t('Thay đổi mật khẩu') }}</p> -->
                             <p @click="signOut">
-                                {{ $t('Log out') }}
+                                {{ $t('Đăng xuất') }}
                             </p>
                         </div>
                     </div>
@@ -300,6 +308,9 @@ export default {
             this.clickRouter('ProjectManagement', this.routeParams)
         },
         goDashboard() {},
+        changePass() {
+            window.open('https://data.vnas.com.vn/identityserver/Account/Login')
+        },
         signOut() {
             this.$store.commit('GET_TOKEN', '')
             this.$cookies.remove('cookieToken')

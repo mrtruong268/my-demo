@@ -4,7 +4,7 @@
             <DxButton
                 icon="mdi mdi-reload"
                 @click="reload"
-                :text="$t('Tải lại dữ liệu')"
+                :text="$t('Reload')"
             />
         </div>
         <DxDataGrid
@@ -15,7 +15,7 @@
             :show-borders="true"
             :row-alternation-enabled="true"
             height="100%"
-            :noDataText="$t('Không có dữ liệu')"
+            :noDataText="$t('No data to display')"
             remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
@@ -27,35 +27,35 @@
             <DxPaging :enabled="false" />
             <DxColumn
                 data-field="id"
-                :caption="$t('Số')"
+                :caption="$t('No')"
                 alignment="center"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 :allow-header-filtering="false"
                 data-field="tenNhanVien"
-                :caption="$t('Họ và tên')"
+                :caption="$t('Name')"
             />
             <DxColumn
                 :allow-header-filtering="false"
                 data-field="phongBan"
-                :caption="$t('Phòng ban')"
+                :caption="$t('Department')"
             />
             <DxColumn
                 :allow-header-filtering="false"
                 data-field="soThamChieu"
-                :caption="$t('Số tham chiếu')"
+                :caption="$t('Reference number')"
             />
             <DxColumn
                 data-field="ngayDeTrinh"
-                :caption="$t('Ngày đệ trình')"
+                :caption="$t('Submission date')"
                 data-type="date"
                 format="dd/MM/yyyy"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 data-field="ngayCanHang"
-                :caption="$t('Ngày cần hàng')"
+                :caption="$t('Delivery date')"
                 format="dd/MM/yyyy"
                 data-type="date"
                 :allow-header-filtering="false"
@@ -63,7 +63,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="approvalState"
-                :caption="$t('Bước phê duyệt')"
+                :caption="$t('Approval state')"
                 cell-template="cellTemplate"
             />
             <template #cellTemplate="{ data }">
@@ -82,7 +82,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="approvalStatus"
-                :caption="$t('Trạng thái phê duyệt')"
+                :caption="$t('Approval status')"
                 cell-template="cellTemplate2"
             />
             <template #cellTemplate2="{ data }">
@@ -115,7 +115,7 @@
                     <div v-if="data.data.approvalState == 'DANG_TAO'">
                         <DxButton
                             icon="mdi mdi-file-check"
-                            :hint="$t('Phê duyệt mua hàng')"
+                            :hint="$t('Yêu cầu phê duyệt')"
                             @click="clickApprove(data)"
                         />
                     </div>
@@ -129,14 +129,14 @@
                     <div>
                         <DxButton
                             icon="mdi mdi-eye"
-                            :hint="$t('Xem chi tiết')"
+                            :hint="$t('Xem chi tiết yêu cầu')"
                             @click="clickView(data)"
                         />
                     </div>
                     <div>
                         <DxButton
                             icon="mdi mdi-pencil"
-                            :hint="$t('Yêu cầu chỉnh sửa')"
+                            :hint="$t('Sửa yêu cầu')"
                             @click="clickEdit(data)"
                         />
                     </div>
@@ -154,7 +154,7 @@
             :showPopup="popupVisible"
             :showTitle="isClick == 'edit' ? true : false"
             :closeOut="isClick == 'edit' ? false : true"
-            :title="isClick == 'edit' ? $t('Yêu cầu chỉnh sửa') : $t('')"
+            :title="isClick == 'edit' ? $t('Edit requisition') : $t('')"
             :width="'80%'"
         >
             <template #main>
@@ -176,11 +176,11 @@ import {
     DxHeaderFilter,
     DxFilterRow,
 } from 'devextreme-vue/data-grid'
-import DxButton from 'devextreme-vue/button'
-import Popup from '~/components/popup.vue'
-import editPurchase from './editPurchase.vue'
-import viewDetail from './viewDetail.vue'
 import { mapState } from 'vuex'
+import DxButton from 'devextreme-vue/button'
+import Popup from '~/components/popup'
+import editPurchase from './editPurchaseNp'
+import viewDetail from './viewDetailNp.vue'
 
 export default {
     components: {
@@ -203,12 +203,12 @@ export default {
         }
     },
     computed: {
-        ...mapState('muahang', ['muaHangDuAn']),
+        ...mapState('muahang', ['muaHangNgoaiDuAn']),
     },
     methods: {
         reload() {
             setTimeout(() => {
-                this.$store.dispatch('muahang/getData')
+                this.$store.dispatch('muahang/getDataNp')
             }, 200)
         },
         clickApprove(e) {
@@ -226,12 +226,12 @@ export default {
         },
         clickEdit(e) {
             this.popupVisible = !this.popupVisible
-            this.$store.dispatch('muahang/getEditData', e.data.id)
+            this.$store.dispatch('muahang/getEditDataNp', e.data.id)
             this.isClick = 'edit'
         },
         clickDelete(e) {
             if (confirm('Do you want to delete?') == true) {
-                this.$store.dispatch('muahang/deleteData', e.data.id)
+                this.$store.dispatch('muahang/deleteDataNp', e.data.id)
                 this.reload()
             }
         },
@@ -244,7 +244,7 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('muahang/getData')
+        this.$store.dispatch('muahang/getDataNp')
     },
 }
 </script>

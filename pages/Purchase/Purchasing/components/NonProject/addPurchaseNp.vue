@@ -5,7 +5,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.tenNhanVien"
                     styling-mode="outlined"
-                    :label="$t('Họ và tên')"
+                    :label="$t('Name')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -17,7 +17,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.maNhanVien"
                     styling-mode="outlined"
-                    :label="$t('Mã nhân viên')"
+                    :label="$t('Employee code')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -29,7 +29,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.chucVu"
                     styling-mode="outlined"
-                    :label="$t('Chức vụ')"
+                    :label="$t('Position')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -41,7 +41,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.phongBan"
                     styling-mode="outlined"
-                    :label="$t('Phòng ban')"
+                    :label="$t('Department')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -53,7 +53,7 @@
                 <DxSelectBox
                     :items="loaiPhuPhi"
                     styling-mode="outlined"
-                    :label="$t('Phụ phí')"
+                    :label="$t('Surcharge')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectPhuPhi"
@@ -64,7 +64,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.maChiPhi"
                     styling-mode="outlined"
-                    :label="$t('Mã chi phí')"
+                    :label="$t('Expense code')"
                     label-mode="floating"
                     :read-only="true"
                     class="xs2"
@@ -81,7 +81,7 @@
                     :use-mask-behavior="true"
                     validationMessageMode="always"
                     styling-mode="outlined"
-                    :label="$t('Ngày đệ trình')"
+                    :label="$t('Submission date')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -92,14 +92,14 @@
                     :use-mask-behavior="true"
                     validationMessageMode="always"
                     styling-mode="outlined"
-                    :label="$t('Ngày cần hàng')"
+                    :label="$t('Delivery date')"
                     class="xs2 mr-3"
                     label-mode="floating"
                 />
                 <DxTextBox
                     v-model="YeuCauMuaHang.diaDiemLamViec"
                     styling-mode="outlined"
-                    :label="$t('Địa điểm làm việc')"
+                    :label="$t('Work location')"
                     label-mode="floating"
                     class="xs-4 mr-3"
                     :read-only="true"
@@ -111,7 +111,7 @@
                 <DxSelectBox
                     :items="projectCode"
                     styling-mode="outlined"
-                    :label="$t('Mã dự án')"
+                    :label="$t('Project code')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectDuAn"
@@ -124,7 +124,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
                     styling-mode="outlined"
-                    :label="$t('Số tham chiếu')"
+                    :label="$t('Reference number')"
                     label-mode="floating"
                     class="xs2"
                     :read-only="true"
@@ -138,7 +138,7 @@
 
         <div>
             <div class="row mb-2 justify-center">
-                <h3>{{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}</h3>
+                <h3>{{ $t('List of goods and services') }}</h3>
             </div>
             <DxDataGrid
                 id="gridContainer"
@@ -148,7 +148,7 @@
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 height="100%"
-                :noDataText="$t('Không có dữ liệu')"
+                :noDataText="$t('No data to display')"
                 :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
@@ -163,32 +163,32 @@
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    :caption="$t('Hàng hóa, dịch vụ')"
+                    :caption="$t('Goods, services')"
                 />
-                <DxColumn data-field="model_MaHieu" :caption="$t('Mã hiệu')" />
-                <DxColumn data-field="xuatXu_Hang" :caption="$t('Xuất xứ')" />
-                <DxColumn data-field="soLuong" :caption="$t('Số lượng')" />
-                <DxColumn data-field="donVi" :caption="$t('Đơn vị')" />
+                <DxColumn data-field="model_MaHieu" :caption="$t('Model')" />
+                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')" />
+                <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
+                <DxColumn data-field="donVi" :caption="$t('Unit')" />
                 <DxColumn
                     data-field="donGiaTamTinh"
-                    :caption="$t('Đơn giá')"
+                    :caption="$t('Estimated unit')"
                     :format="customFormat"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
-                    :caption="$t('Tổng tiền')"
+                    :caption="$t('Estimated amount')"
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
                 <DxColumn
                     data-field="maHangMucTrienKhai"
-                    :caption="$t('Mã hạng mục triển khai')"
+                    :caption="$t('Deployment category')"
                 >
                     <DxLookup :data-source="hangMucTrienKhai" />
                 </DxColumn>
                 <DxColumn
                     data-field="ghiChu"
-                    :caption="$t('Ghi chú')"
+                    :caption="$t('Note')"
                     width="250"
                 />
             </DxDataGrid>
@@ -197,13 +197,13 @@
                 :use-submit-behavior="true"
                 @click="addRow"
                 styling-mode="text"
-                :text="$t('Thêm')"
+                :text="$t('Add')"
             />
         </div>
 
         <div class="row justify-end">
             <DxButton
-                :text="$t('Lưu')"
+                :text="$t('Save')"
                 type="default"
                 styling-mode="contained"
                 @click="clickAdd"
@@ -268,7 +268,7 @@ export default {
                 comment: '',
                 yeuCauMuaHangChiTiets: [],
             },
-            loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
+            loaiPhuPhi: [this.$t('Incurred'), this.$t('Calculations')],
         }
     },
     watch: {

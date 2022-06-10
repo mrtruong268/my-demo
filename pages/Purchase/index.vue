@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="main">
-            <h2 class="text-xs-center mb-3">{{ $t('Purchase') }}</h2>
+            <h2 class="text-xs-center mb-3">{{ $t('Mua hàng') }}</h2>
             <transition name="fade" appear>
                 <div>
                     <div
@@ -43,55 +43,55 @@ export default {
             listPurchase: [
                 {
                     id: 1,
-                    title: 'Purchase for projects',
+                    title: 'Mua hàng dự án',
                     image: require('assets/purchasingForProjects.svg'),
                     color: '#0986c5',
                     subTitle: [
                         {
                             id: 1,
-                            des: 'Purchase requisition',
+                            des: 'Yêu cầu mua hàng',
                             to: 'Purchase/Purchasing',
-                            type: 'muahang',
+                            type: 'mhda',
                         },
                         {
                             id: 2,
-                            des: 'Production requisition',
+                            des: 'Yêu cầu sản xuất',
                             to: 'Purchase/Purchasing',
-                            type: 'sanxuat',
+                            type: 'sx',
                         },
                     ],
                 },
                 {
                     id: 2,
-                    title: 'Purchase for non-projects',
+                    title: 'Mua hàng ngoài dự án',
                     image: require('assets/purchasingNoneProjects.svg'),
                     color: '#b5222d',
                     subTitle: [
                         {
                             id: 1,
-                            des: 'Purchase requisition',
+                            des: 'Yêu cầu mua hàng',
                             to: 'Purchase/Purchasing',
-                            type: 'muahang',
+                            type: 'mhnda',
                         },
                         {
                             id: 2,
-                            des: 'Production requisition',
+                            des: 'Yêu cầu sản xuất',
                             to: 'Purchase/Purchasing',
-                            type: 'sanxuat',
+                            type: 'sx',
                         },
                     ],
                 },
                 {
                     id: 3,
-                    title: 'Purchase approval',
+                    title: 'Phê duyệt mua hàng',
                     image: require('assets/purchasingApprove.svg'),
                     color: '#87a248',
                     subTitle: [
                         {
                             id: 1,
-                            des: 'Approve',
+                            des: 'Phê duyệt',
                             to: 'Purchase/Purchasing',
-                            type: 'pheduyet',
+                            type: 'pd',
                         },
                     ],
                 },

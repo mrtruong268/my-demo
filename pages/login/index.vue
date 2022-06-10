@@ -7,14 +7,23 @@
                         <div class="describe xs7">
                             <img src="~assets/robot1.svg" alt="" />
                             <h3 class="pt-5 pb-4">
-                                {{ $t('SOFTWARE DEVELOPED BY VNAS GROUP') }}
+                                {{
+                                    $t(
+                                        'PHẦN MỀM ĐƯỢC PHÁT TRIỂN BỞI VNAS GROUP'
+                                    )
+                                }}
                             </h3>
                             <div class="font-14">
-                                <p class="mb-1">{{ $t('Contact') + ' :' }}</p>
+                                <p class="mb-1">
+                                    {{ $t('Các kênh hỗ trợ') + ' :' }}
+                                </p>
                                 <p class="mb-1">
                                     {{ $t('Email') }}: info@vnas.com.vn
                                 </p>
-                                <p>{{ $t('Hotline') }}: +(84) 904 576 993</p>
+                                <p>
+                                    {{ $t('Đường dây nóng') }}: +(84) 904 576
+                                    993
+                                </p>
                             </div>
                         </div>
                         <div @keyup.enter="submit" class="login-form xs5">
@@ -29,7 +38,7 @@
                                             <h3 class="my-5">
                                                 {{
                                                     $t(
-                                                        'MANAGEMENT SOFTWARE SYSTEM'
+                                                        'HỆ THỐNG PHẦN MỀM QUẢN LÝ'
                                                     )
                                                 }}
                                             </h3>
@@ -37,7 +46,7 @@
                                     </div>
                                     <div>
                                         <p class="login-info mb-3">
-                                            {{ $t('Username') }}
+                                            {{ $t('Tài khoản') }}
                                         </p>
                                         <DxTextBox
                                             stylingMode="filled"
@@ -47,7 +56,7 @@
                                     </div>
                                     <div>
                                         <p class="login-info my-3">
-                                            {{ $t('Password') }}
+                                            {{ $t('Mật khẩu') }}
                                         </p>
                                         <DxTextBox
                                             stylingMode="filled"
@@ -70,7 +79,7 @@
                                         type="submit"
                                         @click="submit"
                                     >
-                                        {{ $t('Log in') }}
+                                        {{ $t('Đăng nhập') }}
                                     </button>
                                 </div>
                             </div>

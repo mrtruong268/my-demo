@@ -4,49 +4,74 @@ export const state = () => ({
     danhSach: [
         {
             id: uuidv4(),
-            header: 'Purchase',
-            title: 'List of purchase requests',
-            listType: 'muahang',
+            header: 'Mua hàng',
+            title: 'Danh sách yêu cầu mua hàng',
+            listType: 'mhda',
         },
         {
             id: uuidv4(),
-            header: 'Production',
-            title: 'List of production requirements',
-            listType: 'sanxuat',
+            header: 'Mua hàng ngoài dự án',
+            title: 'Danh sách yêu cầu mua hàng ngoài dự án',
+            listType: 'mhnda',
         },
         {
             id: uuidv4(),
-            header: 'Approve',
-            title: 'List of approve requests',
-            listType: 'pheduyet',
+            header: 'Sản xuất',
+            title: 'Danh sách yêu cầu sản xuất',
+            listType: 'sx',
+        },
+        {
+            id: uuidv4(),
+            header: 'Phê duyệt',
+            title: 'Danh sách phê duyệt yêu cầu',
+            listType: 'pd',
         },
     ],
     duLieuMoi: [
         {
             id: 1,
-            title: 'Create purchase requisition',
-            listType: 'TaoMuaHang',
+            title: 'Tạo yêu cầu mua hàng',
+            listType: 'tmhda',
         },
         {
             id: 2,
-            title: 'Create production requisition',
-            listType: 'TaoSanXuat',
+            title: 'Tạo yêu cầu mua hàng',
+            listType: 'tmhnda',
+        },
+        {
+            id: 3,
+            title: 'Tạo yêu cầu sản xuất',
+            listType: 'tsx',
         },
     ],
     muaHangDuAn: [],
+    muaHangNgoaiDuAn: [],
     suaYeuCau: null,
+    suaYeuCauKhac: null,
     listItem: [],
+    listItemKhac: [],
     refNumber: {},
 })
 export const getters = {
+    // mua hang du an
+
     suaYeuCau: (state) => state.suaYeuCau,
     danhSachHangHoa: (state) => {
         let objSuaYeuCau = JSON.parse(JSON.stringify(state.suaYeuCau))
         if (!objSuaYeuCau) return []
         return objSuaYeuCau ? objSuaYeuCau.yeuCauMuaHangChiTiets : []
     },
+    // mua hang ngoai du an
+
+    suaYeuCauKhac: (state) => state.suaYeuCauKhac,
+    danhSachHangHoaKhac: (state) => {
+        let objSuaYeuCau = JSON.parse(JSON.stringify(state.suaYeuCauKhac))
+        if (!objSuaYeuCau) return []
+        return objSuaYeuCau ? objSuaYeuCau.yeuCauMuaHangChiTiets : []
+    },
 }
 export const mutations = {
+    // mua hang du an
     SET_ITEM(state, item) {
         state.muaHangDuAn = item
     },
@@ -56,11 +81,26 @@ export const mutations = {
     GET_ITEM(state, item) {
         state.listItem = item
     },
+
+    // mua hang ngoai du an
+    SET_ITEM_NP(state, item) {
+        state.muaHangNgoaiDuAn = item
+    },
+    EDIT_ITEM_NP(state, item) {
+        state.suaYeuCauKhac = item
+    },
+    GET_ITEM_NP(state, item) {
+        state.listItemKhac = item
+    },
+
+    // lay so tham chieu
     GET_REF_NUM(state, item) {
         state.refNumber = item
     },
 }
 export const actions = {
+    // mua hang du an
+
     async getData({ commit }) {
         try {
             let response = await this.$axios.get('/pr/get-all-of-pr')
@@ -113,6 +153,55 @@ export const actions = {
                 `/pr/get-ref-number?maduan=${maDuAn}`
             )
             commit('GET_REF_NUM', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    // mua hang ngoai du an
+
+    async getDataNp({ commit }) {
+        try {
+            let response = await this.$axios.get('/ipr/get-all-of-pr')
+            commit('SET_ITEM_NP', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async postDataNp({ commit }, newItem) {
+        try {
+            await this.$axios.post('/ipr/post-pr', newItem)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async deleteDataNp({ commit }, delId) {
+        try {
+            await this.$axios.delete(`/ipr/delete-pr?id=${delId}`)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getEditDataNp({ commit }, editId) {
+        try {
+            let response = await this.$axios.get(`/ipr/get-pr?id=${editId}`)
+            commit('EDIT_ITEM_NP', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async editDataNp({ commit }, editItem) {
+        try {
+            await this.$axios.put('/ipr/put-pr', editItem)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getItemsNp({ commit }) {
+        try {
+            let response = await this.$axios.get('/item/get-items')
+            commit('GET_ITEM_NP', response.data.data)
         } catch (err) {
             console.log(err)
         }
