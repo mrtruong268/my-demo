@@ -4,14 +4,14 @@ export const state = () => ({
     danhSach: [
         {
             id: uuidv4(),
-            header: 'Mua hàng',
-            title: 'Danh sách yêu cầu mua hàng',
+            header: 'Mua hàng dự án',
+            title: 'Danh sách mua hàng dự án',
             listType: 'mhda',
         },
         {
             id: uuidv4(),
             header: 'Mua hàng ngoài dự án',
-            title: 'Danh sách yêu cầu mua hàng ngoài dự án',
+            title: 'Danh sách mua hàng ngoài dự án',
             listType: 'mhnda',
         },
         {

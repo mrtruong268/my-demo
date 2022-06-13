@@ -69,15 +69,15 @@
                         </div>
                         <div class="user-guide mr-2">
                             <i class="mdi mdi-information btn-guide"></i>
-                            <p style="color: #0986c5">{{ $t('Hướng dẫn sử dụng') }}</p>
+                            <p style="color: #0986c5">
+                                {{ $t('Hướng dẫn sử dụng') }}
+                            </p>
                         </div>
                         <div class="dropdown2">
                             <div class="row align-center">
-                                <div class="mr-2">
-                                    <span
-                                        >{{ $t('Xin chào!') }}
-                                        {{ userInfo.username }}</span
-                                    >
+                                <span>{{ $t('Xin chào!') }} </span>
+                                <div class="mx-2 user-name">
+                                    {{ userInfo.username }}
                                 </div>
                                 <img
                                     v-if="userInfo.hasOwnProperty('avatarUrl')"
@@ -459,6 +459,14 @@ export default {
 .btn-nav-mobile {
     color: white;
     font-size: 30px;
+}
+
+.user-name {
+    font-style: italic;
+    text-decoration: underline;
+    color: #0986c5;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 /* drop1 */

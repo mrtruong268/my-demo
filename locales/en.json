@@ -24,8 +24,8 @@
     "Mua hàng": "Purchase",
     "Sản xuất": "Production",
     "Phân tích dòng tiền": "Cash flow analysis",
-    "Danh sách yêu cầu mua hàng": "List of purchase requests",
-    "Danh sách yêu cầu mua hàng ngoài dự án": "List of purchase off-project",
+    "Danh sách mua hàng dự án": "List of project purchase",
+    "Danh sách mua hàng ngoài dự án": "List of purchase off-project",
     "Danh sách yêu cầu sản xuất": "List of production requirements",
     "Danh sách phê duyệt yêu cầu": "List of approve requests",
     "Danh sách dự án": "List of projects",
@@ -34,7 +34,6 @@
     "Danh sách phân loại": "List of categories",
     "Danh sách công ty": "List of companies",
     "Danh sách hiển thị dự án": "List of project views",
-    "Mua hàng ngoài dự án": "Purchase for off-projects",
     "PHẦN MỀM ĐƯỢC PHÁT TRIỂN BỞI VNAS GROUP": "SOFTWARE DEVELOPED BY VNAS GROUP",
     "Các kênh hỗ trợ": "Contact",
     "Email": "Email",
@@ -43,6 +42,7 @@
     "Tài khoản": "Username",
     "Mật khẩu": "Password",
     "Mua hàng dự án": "Purchase for projects",
+    "Mua hàng ngoài dự án": "Purchase for off-projects",
     "Yêu cầu mua hàng": "Purchase requisition",
     "Tạo yêu cầu mua hàng": "Create purchase requisition",
     "Yêu cầu sản xuất": "Production requisition",
@@ -79,7 +79,6 @@
     "Dự án đã kết thúc": "Finished projects",
     "Dự án đã đóng": "Closed projects",
     "Dự án chưa giải quyết": "Pending projects",
-    "Yêu cầu chỉnh sửa": "Edit requisition",
     "Xem chi tiết": "View details",
     "Tên nhà phân phối": "Distributor name",
     "Thời gian giao hàng": "Delivery time",
@@ -88,6 +87,7 @@
     "Phát sinh": "Incurred",
     "Theo tính toán": "Calculations",
     "In": "Print",
+    "Sửa": "Edit",
     "Yêu cầu hoàn duyệt": "Unapprove requisition",
-    "Xoá yêu cầu": "Delete"
+    "Xoá": "Delete"
 }

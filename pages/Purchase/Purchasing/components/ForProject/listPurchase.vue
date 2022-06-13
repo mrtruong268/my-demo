@@ -136,14 +136,14 @@
                     <div>
                         <DxButton
                             icon="mdi mdi-pencil"
-                            :hint="$t('Yêu cầu chỉnh sửa')"
+                            :hint="$t('Sửa')"
                             @click="clickEdit(data)"
                         />
                     </div>
                     <div>
                         <DxButton
                             icon="mdi mdi-delete"
-                            :hint="$t('Xoá yêu cầu')"
+                            :hint="$t('Xoá')"
                             @click="clickDelete(data)"
                         />
                     </div>
@@ -154,7 +154,7 @@
             :showPopup="popupVisible"
             :showTitle="isClick == 'edit' ? true : false"
             :closeOut="isClick == 'edit' ? false : true"
-            :title="isClick == 'edit' ? $t('Yêu cầu chỉnh sửa') : $t('')"
+            :title="isClick == 'edit' ? $t('Sửa') : $t('')"
             :width="'80%'"
         >
             <template #main>

@@ -59,56 +59,6 @@ export const state = () => ({
             image: '',
         },
     ],
-    ThongBao: [
-        {
-            id: 1,
-            title: 'Tất cả',
-            data: [
-                {
-                    id: 1,
-                    title: 'Phê duyệt yêu cầu mua hàng',
-                    time: '1 ngày trước',
-                    image: require('assets/logo.png'),
-                },
-                {
-                    id: 2,
-                    title: 'Phê duyệt yêu cầu mua hàng',
-                    time: '1 ngày trước',
-                    image: require('assets/logo.png'),
-                },
-                {
-                    id: 3,
-                    title: 'Phê duyệt yêu cầu mua hàng',
-                    time: '1 ngày trước',
-                    image: require('assets/logo.png'),
-                },
-                {
-                    id: 4,
-                    title: 'Phê duyệt yêu cầu mua hàng',
-                    time: '1 ngày trước',
-                    image: require('assets/logo.png'),
-                },
-            ],
-        },
-        {
-            id: 2,
-            title: 'Chưa đọc',
-            data: [
-                {
-                    id: 1,
-                    title: 'Phê duyệt yêu cầu mua hàng',
-                    time: '1 ngày trước',
-                    image: require('assets/file_tk-02.jpg'),
-                },
-                {
-                    id: 2,
-                    title: 'Phê duyệt yêu cầu mua hàng',
-                    time: '1 ngày trước',
-                    image: require('assets/file_tk-02.jpg'),
-                },
-            ],
-        },
-    ],
     routeParams: '',
     DanhSachChucVu: [],
     DanhSachCongTy: [],
@@ -240,7 +190,11 @@ export const actions = {
             let url = window.URL.createObjectURL(new Blob([response.data]))
             let link = document.createElement('a')
             link.href = url
-            link.setAttribute('download', 'De-Nghi-Mua-Hang.pdf')
+            if (response.data.type === 'application/pdf') {
+                link.setAttribute('download', 'De-Nghi-Mua-Hang.pdf')
+            } else {
+                link.setAttribute('download', 'De-Nghi-Mua-Hang.xlsx')
+            }
             document.body.appendChild(link)
             link.click()
         } catch (err) {
