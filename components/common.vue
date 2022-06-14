@@ -194,6 +194,10 @@ export default {
                 this.$store.dispatch('muahang/getData')
             } else if (check == 'pd') {
                 this.$store.dispatch('pheduyet/getApprove')
+            } else if (check == 'mhnda') {
+                this.$store.dispatch('muahang/getDataNp')
+            } else if (check == 'pdnda') {
+                this.$store.dispatch('pheduyet/getApproveNp')
             }
         },
         addOption() {

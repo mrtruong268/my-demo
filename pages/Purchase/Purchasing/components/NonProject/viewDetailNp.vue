@@ -162,7 +162,7 @@
                 <DxPaging :enabled="true" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    caption="Tên hàng hóa, dịch vụ"
+                    caption="Hàng hóa, dịch vụ"
                 />
                 <DxColumn data-field="model_MaHieu" caption="Mã hiệu" />
                 <DxColumn data-field="xuatXu_Hang" caption="Xuất xứ" />
@@ -213,7 +213,7 @@
                 </div>
             </div>
             <div
-                v-for="yc in YeuCauMuaHang.duyetYCMHs"
+                v-for="yc in YeuCauMuaHang.duyetYCMHsNoiBo"
                 :key="yc.id"
                 class="xs3"
             >
@@ -246,7 +246,7 @@
                 </div>
             </div>
         </div>
-        <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id">
+        <div v-for="yc in YeuCauMuaHang.duyetYCMHsNoiBo" :key="yc.id">
             <div v-if="yc.approvalStatus == 'MustRevise'">
                 <p style="font-weight: bold">
                     (Lý do không duyệt:
