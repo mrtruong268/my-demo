@@ -8,7 +8,14 @@
                 <div v-for="item in list" :key="item.id" :class="classProp">
                     <p class="header">{{ $t(item.header) }}</p>
                     <div @click="onItemClick(item)" class="btn-list row">
-                        <i class="mdi mdi-format-list-numbered mr-1" />
+                        <i
+                            v-if="
+                                item.listType == 'pd' ||
+                                item.listType == 'pdnda'
+                            "
+                            class="mdi mdi-file-sign mr-1"
+                        />
+                        <i v-else class="mdi mdi-format-list-numbered mr-1" />
                         <p class="font-14">
                             {{ $t(item.title) }}
                         </p>
@@ -25,7 +32,14 @@
                     @click="onItemClick(item)"
                 >
                     <div class="row">
-                        <i class="mdi mdi-plus-circle mr-1" />
+                        <i
+                            v-if="
+                                item.listType == 'pd' ||
+                                item.listType == 'pdnda'
+                            "
+                            class="mdi mdi-file-sign mr-1"
+                        />
+                        <i v-else class="mdi mdi-plus-circle mr-1" />
                         <p class="font-14">
                             {{ $t(item.title) }}
                         </p>
@@ -66,7 +80,7 @@
                         </div>
                         <DxTabPanel
                             :data-source="tabData"
-                            :height="fullscreen ? 'auto' : 'calc(80vh - 180px)'"
+                            :height="fullscreen ? 'auto' : 'calc(80vh - 150px)'"
                             :defer-rendering="false"
                             :show-nav-buttons="true"
                             :repaint-changes-only="true"

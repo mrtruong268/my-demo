@@ -5,7 +5,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.tenNhanVien"
                     styling-mode="outlined"
-                    :label="$t('Name')"
+                    :label="$t('Họ và tên')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -17,7 +17,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.maNhanVien"
                     styling-mode="outlined"
-                    :label="$t('Employee code')"
+                    :label="$t('Mã nhân viên')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -29,7 +29,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.chucVu"
                     styling-mode="outlined"
-                    :label="$t('Position')"
+                    :label="$t('Chức vụ')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -41,7 +41,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.phongBan"
                     styling-mode="outlined"
-                    :label="$t('Department')"
+                    :label="$t('Phòng ban')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -53,7 +53,7 @@
                 <DxSelectBox
                     :items="loaiPhuPhi"
                     styling-mode="outlined"
-                    :label="$t('Surcharge')"
+                    :label="$t('Phụ phí')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectPhuPhi"
@@ -64,7 +64,7 @@
                 <DxTextBox
                     v-model="YeuCauMuaHang.maChiPhi"
                     styling-mode="outlined"
-                    :label="$t('Expense code')"
+                    :label="$t('Mã chi phí')"
                     label-mode="floating"
                     :read-only="true"
                     class="xs2"
@@ -81,7 +81,7 @@
                     :use-mask-behavior="true"
                     validationMessageMode="always"
                     styling-mode="outlined"
-                    :label="$t('Submission date')"
+                    :label="$t('Ngày đệ trình')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -92,14 +92,14 @@
                     :use-mask-behavior="true"
                     validationMessageMode="always"
                     styling-mode="outlined"
-                    :label="$t('Delivery date')"
+                    :label="$t('Ngày cần hàng')"
                     class="xs2 mr-3"
                     label-mode="floating"
                 />
                 <DxTextBox
                     v-model="YeuCauMuaHang.diaDiemLamViec"
                     styling-mode="outlined"
-                    :label="$t('Work location')"
+                    :label="$t('Địa điểm làm việc')"
                     label-mode="floating"
                     class="xs-4 mr-3"
                     :read-only="true"
@@ -108,25 +108,12 @@
                         <DxRequiredRule />
                     </DxValidator> -->
                 </DxTextBox>
-                <DxSelectBox
-                    :items="projectCode"
-                    styling-mode="outlined"
-                    :label="$t('Project code')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                    @selectionChanged="selectDuAn"
-                    :search-enabled="true"
-                    search-mode="contains"
-                    :search-timeout="200"
-                    :min-search-length="0"
-                    :ref="selectBoxRefKey"
-                />
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
                     styling-mode="outlined"
-                    :label="$t('Reference number')"
+                    :label="$t('Số tham chiếu')"
                     label-mode="floating"
-                    class="xs2"
+                    class="xs-4"
                     :read-only="true"
                 >
                     <!-- <DxValidator>
@@ -138,17 +125,17 @@
 
         <div>
             <div class="row mb-2 justify-center">
-                <h3>{{ $t('List of goods and services') }}</h3>
+                <h3>{{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}</h3>
             </div>
             <DxDataGrid
                 id="gridContainer"
-                :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
+                :data-source="YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets"
                 :show-borders="true"
                 :show-column-lines="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 height="100%"
-                :noDataText="$t('No data to display')"
+                :noDataText="$t('Không có dữ liệu')"
                 :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
@@ -163,32 +150,26 @@
                 <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    :caption="$t('Goods, services')"
+                    :caption="$t('Hàng hóa, dịch vụ')"
                 />
-                <DxColumn data-field="model_MaHieu" :caption="$t('Model')" />
-                <DxColumn data-field="xuatXu_Hang" :caption="$t('Origin')" />
-                <DxColumn data-field="soLuong" :caption="$t('Quantity')" />
-                <DxColumn data-field="donVi" :caption="$t('Unit')" />
+                <DxColumn data-field="model_MaHieu" :caption="$t('Mã hiệu')" />
+                <DxColumn data-field="xuatXu_Hang" :caption="$t('Xuất xứ')" />
+                <DxColumn data-field="soLuong" :caption="$t('Số lượng')" />
+                <DxColumn data-field="donVi" :caption="$t('Đơn vị')" />
                 <DxColumn
                     data-field="donGiaTamTinh"
-                    :caption="$t('Estimated unit')"
+                    :caption="$t('Đơn giá')"
                     :format="customFormat"
                 />
                 <DxColumn
                     data-field="soTienTamTinh"
-                    :caption="$t('Estimated amount')"
+                    :caption="$t('Tổng tiền')"
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
                 <DxColumn
-                    data-field="maHangMucTrienKhai"
-                    :caption="$t('Deployment category')"
-                >
-                    <DxLookup :data-source="hangMucTrienKhai" />
-                </DxColumn>
-                <DxColumn
                     data-field="ghiChu"
-                    :caption="$t('Note')"
+                    :caption="$t('Ghi chú')"
                     width="250"
                 />
             </DxDataGrid>
@@ -197,13 +178,13 @@
                 :use-submit-behavior="true"
                 @click="addRow"
                 styling-mode="text"
-                :text="$t('Add')"
+                :text="$t('Thêm')"
             />
         </div>
 
         <div class="row justify-end">
             <DxButton
-                :text="$t('Save')"
+                :text="$t('Lưu')"
                 type="default"
                 styling-mode="contained"
                 @click="clickAdd"
@@ -263,28 +244,27 @@ export default {
                 diaDiemLamViec: '',
                 phuPhi: '',
                 maChiPhi: '',
-                maDuAn: '',
                 soThamChieu: '',
                 comment: '',
-                yeuCauMuaHangChiTiets: [],
+                yeuCauMuaHangNoiBoChiTiets: [],
             },
-            loaiPhuPhi: [this.$t('Incurred'), this.$t('Calculations')],
+            loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
         }
     },
     watch: {
-        refNumber: {
-            handler(refNumber) {
-                if (refNumber) {
-                    this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
-                    this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
+        refNumberNp: {
+            handler(refNumberNp) {
+                if (refNumberNp) {
+                    this.YeuCauMuaHang.soThamChieu = refNumberNp.soThamChieu
+                    this.YeuCauMuaHang.maChiPhi = refNumberNp.maChiPhi
                 }
             },
             immediate: true,
         },
     },
     computed: {
-        ...mapState('muahang', ['listItem', 'refNumber']),
-        ...mapState(['userInfo', 'projectCode', 'hangMucTrienKhai']),
+        ...mapState('muahang', ['listItemNp', 'refNumberNp']),
+        ...mapState(['userInfo']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
         },
@@ -300,24 +280,20 @@ export default {
                 soLuong: 0,
                 donVi: '',
                 donGiaTamTinh: 0,
-                maHangMucTrienKhai: '',
                 ghiChu: '',
             }
-            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.push(tmpAdd)
+            this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.push(tmpAdd)
         },
         checkArray() {
             let conditionsArray = []
-            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach(
+            this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
                 (e) =>
                     (conditionsArray = [
                         e.tenHangHoa_DichVu !== '',
-                        e.model_MaHieu !== '',
-                        e.xuatXu_Hang !== '',
                         e.soLuong !== '',
                         e.donVi !== '',
                         e.donGiaTamTinh !== '',
                         e.soTienTamTinh !== '',
-                        e.maHangMucTrienKhai !== '',
                     ])
             )
             return !conditionsArray.includes(false)
@@ -329,7 +305,7 @@ export default {
                 if (this.checkArray()) {
                     setTimeout(() => {
                         this.$store.dispatch(
-                            'muahang/postData',
+                            'muahang/postDataNp',
                             this.YeuCauMuaHang
                         )
                         this.resetData()
@@ -340,11 +316,6 @@ export default {
                     )
                 }
             }
-        },
-        selectDuAn(e) {
-            this.YeuCauMuaHang.maDuAn = e.selectedItem
-            this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
-            this.$store.dispatch('getHangMuc', e.selectedItem)
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
@@ -362,7 +333,7 @@ export default {
             if (e.dataField === 'tenHangHoa_DichVu') {
                 e.editorName = 'dxAutocomplete'
                 e.editorOptions = {
-                    items: this.listItem,
+                    items: this.listItemNp,
                     valueExpr: 'name',
                     value: e.value,
                     onValueChanged(ev) {
@@ -390,22 +361,23 @@ export default {
                 ngayCanHang: new Date().toISOString(),
                 diaDiemLamViec: this.userInfo.diaDiemLamViec,
                 phuPhi: '',
-                maChiPhi: '',
-                maDuAn: '',
-                soThamChieu: '',
+                maChiPhi: this.refNumberNp.maChiPhi,
+                soThamChieu: this.refNumberNp.soThamChieu,
                 comment: '',
-                yeuCauMuaHangChiTiets: [],
+                yeuCauMuaHangNoiBoChiTiets: [],
             }
         },
     },
     created() {
-        this.$store.dispatch('muahang/getItems')
-        this.$store.dispatch('getProjectCode')
+        this.$store.dispatch('muahang/getItemsNp')
+        this.$store.dispatch('muahang/getRefNumberNp')
         this.YeuCauMuaHang.tenNhanVien = this.userInfo.tenNhanVien
         this.YeuCauMuaHang.maNhanVien = this.userInfo.maNhanVien
         this.YeuCauMuaHang.chucVu = this.userInfo.chucVu
         this.YeuCauMuaHang.phongBan = this.userInfo.phongBan
         this.YeuCauMuaHang.diaDiemLamViec = this.userInfo.diaDiemLamViec
+        this.YeuCauMuaHang.soThamChieu = this.refNumberNp.soThamChieu
+        this.YeuCauMuaHang.maChiPhi = this.refNumberNp.maChiPhi
     },
 }
 </script>

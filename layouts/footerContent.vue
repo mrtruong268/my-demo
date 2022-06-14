@@ -4,13 +4,13 @@
         <div class="footer-header row justify-start">
             <div v-for="item in statusItem" :key="item.id">
                 <div class="row align-center mr-5">
-                    <img :src="item.image" width="28px" height="28px" />
+                    <!-- <img :src="item.image" width="28px" height="28px" />
                     <div class="info-project">
                         <p>{{ $t(item.title) }}</p>
                         <span>
                             {{ item.data.length }}
                         </span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

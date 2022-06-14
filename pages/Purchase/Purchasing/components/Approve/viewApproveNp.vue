@@ -199,7 +199,7 @@
                 </DxSummary>
             </DxDataGrid>
         </div>
-        <div class="row align-center mb-2">
+        <div class="row align-center mb-1">
             <div
                 class="footer-content column justify-space-between text-xs-center xs3"
             >
@@ -246,12 +246,31 @@
                 </div>
             </div>
         </div>
-        <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id">
-            <div v-if="yc.approvalStatus == 'MustRevise'">
-                <p style="font-weight: bold">
-                    (Lý do không duyệt:
-                    <span style="font-weight: normal">{{ yc.comment }})</span>
-                </p>
+        <div class="row align-center">
+            <div class="xs10 row align-center">
+                <h3 class="xs1">{{ $t('Ghi chú') }}:</h3>
+                <DxTextBox
+                    class="xs11"
+                    v-model="YeuCauMuaHang.comment"
+                    styling-mode="underlined"
+                />
+            </div>
+            <div class="row justify-end align-center xs4">
+                <DxButton
+                    :text="$t('Không duyệt')"
+                    class="mr-3"
+                    type="danger"
+                    icon="close"
+                    styling-mode="outlined"
+                    @click="khongDuyet"
+                />
+                <DxButton
+                    type="success"
+                    icon="check"
+                    :text="$t('Phê duyệt')"
+                    styling-mode="outlined"
+                    @click="duyet"
+                />
             </div>
         </div>
     </div>
@@ -262,6 +281,7 @@ import DxSelectBox from 'devextreme-vue/select-box'
 import DxNumberBox from 'devextreme-vue/number-box'
 import DxTextBox from 'devextreme-vue/text-box'
 import DxDateBox from 'devextreme-vue/date-box'
+import DxTextArea from 'devextreme-vue/text-area'
 import DxButton from 'devextreme-vue/button'
 import {
     DxDataGrid,
@@ -272,6 +292,7 @@ import {
     DxTotalItem,
 } from 'devextreme-vue/data-grid'
 import moment from 'moment'
+
 export default {
     props: {
         view: {
@@ -285,18 +306,13 @@ export default {
         DxDateBox,
         DxDataGrid,
         DxColumn,
+        DxTextArea,
         DxPaging,
         DxNumberBox,
         DxButton,
         DxEditing,
         DxSummary,
         DxTotalItem,
-    },
-    data() {
-        return {
-            dataGridRefKey: 'my-data-grid',
-            YeuCauMuaHang: {},
-        }
     },
     watch: {
         view: {
@@ -307,7 +323,31 @@ export default {
             immediate: true,
         },
     },
+    data() {
+        return {
+            dataGridRefKey: 'my-data-grid',
+            YeuCauMuaHang: {},
+        }
+    },
     methods: {
+        duyet() {
+            if (confirm('Do you want to submit?') == true) {
+                this.$store.dispatch(
+                    'pheduyet/postApproveNp',
+                    this.YeuCauMuaHang
+                )
+                this.$emit('hiddenPopup')
+            }
+        },
+        khongDuyet() {
+            if (confirm('Do you want to submit?') == true) {
+                this.$store.dispatch(
+                    'pheduyet/postReviseNp',
+                    this.YeuCauMuaHang
+                )
+                this.$emit('hiddenPopup')
+            }
+        },
         timestamp(date) {
             return moment(date).format('HH:mm DD-MM-YYYY')
         },
@@ -349,7 +389,7 @@ export default {
     font-weight: normal;
 }
 .footer-content {
-    height: 16vh;
+    height: 100px;
     border: 1px solid black;
     padding: 8px;
 }

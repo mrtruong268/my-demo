@@ -16,14 +16,8 @@ export const state = () => ({
         },
         {
             id: uuidv4(),
-            header: 'Sản xuất',
-            title: 'Danh sách yêu cầu sản xuất',
-            listType: 'sx',
-        },
-        {
-            id: uuidv4(),
             header: 'Phê duyệt',
-            title: 'Danh sách phê duyệt yêu cầu',
+            title: 'Phê duyệt mua hàng dự án',
             listType: 'pd',
         },
     ],
@@ -35,22 +29,23 @@ export const state = () => ({
         },
         {
             id: 2,
-            title: 'Tạo yêu cầu mua hàng',
+            title: 'Tạo yêu cầu(Ngoài dự án)',
             listType: 'tmhnda',
         },
         {
             id: 3,
-            title: 'Tạo yêu cầu sản xuất',
-            listType: 'tsx',
+            title: 'Phê duyệt mua hàng ngoài dự án',
+            listType: 'pdnda',
         },
     ],
     muaHangDuAn: [],
     muaHangNgoaiDuAn: [],
     suaYeuCau: null,
-    suaYeuCauKhac: null,
+    suaYeuCauNp: null,
     listItem: [],
-    listItemKhac: [],
+    listItemNp: [],
     refNumber: {},
+    refNumberNp: {},
 })
 export const getters = {
     // mua hang du an
@@ -63,11 +58,11 @@ export const getters = {
     },
     // mua hang ngoai du an
 
-    suaYeuCauKhac: (state) => state.suaYeuCauKhac,
-    danhSachHangHoaKhac: (state) => {
-        let objSuaYeuCau = JSON.parse(JSON.stringify(state.suaYeuCauKhac))
+    suaYeuCauNp: (state) => state.suaYeuCauNp,
+    danhSachHangHoaNp: (state) => {
+        let objSuaYeuCau = JSON.parse(JSON.stringify(state.suaYeuCauNp))
         if (!objSuaYeuCau) return []
-        return objSuaYeuCau ? objSuaYeuCau.yeuCauMuaHangChiTiets : []
+        return objSuaYeuCau ? objSuaYeuCau.yeuCauMuaHangNoiBoChiTiets : []
     },
 }
 export const mutations = {
@@ -81,21 +76,22 @@ export const mutations = {
     GET_ITEM(state, item) {
         state.listItem = item
     },
+    GET_REF_NUM(state, item) {
+        state.refNumber = item
+    },
 
     // mua hang ngoai du an
     SET_ITEM_NP(state, item) {
         state.muaHangNgoaiDuAn = item
     },
     EDIT_ITEM_NP(state, item) {
-        state.suaYeuCauKhac = item
+        state.suaYeuCauNp = item
     },
     GET_ITEM_NP(state, item) {
-        state.listItemKhac = item
+        state.listItemNp = item
     },
-
-    // lay so tham chieu
-    GET_REF_NUM(state, item) {
-        state.refNumber = item
+    GET_REF_NUM_NP(state, item) {
+        state.refNumberNp = item
     },
 }
 export const actions = {
@@ -200,8 +196,16 @@ export const actions = {
     },
     async getItemsNp({ commit }) {
         try {
-            let response = await this.$axios.get('/item/get-items')
+            let response = await this.$axios.get('/iitem/get-items')
             commit('GET_ITEM_NP', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getRefNumberNp({ commit }) {
+        try {
+            let response = await this.$axios.get(`/ipr/get-ref-number`)
+            commit('GET_REF_NUM_NP', response.data.data)
         } catch (err) {
             console.log(err)
         }

@@ -14,7 +14,7 @@
             :show-row-lines="true"
             :show-borders="true"
             :row-alternation-enabled="true"
-            height="100%"
+            height="auto"
             :noDataText="$t('Không có dữ liệu')"
             remote-operations="true"
             :allow-column-resizing="true"
@@ -63,7 +63,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="approvalState"
-                :caption="$t('Bước phê duyệt')"
+                :caption="$t('Bước duyệt')"
                 cell-template="cellTemplate"
             />
             <template #cellTemplate="{ data }">
@@ -82,7 +82,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="approvalStatus"
-                :caption="$t('Trạng thái phê duyệt')"
+                :caption="$t('Trạng thái duyệt')"
                 cell-template="cellTemplate2"
             />
             <template #cellTemplate2="{ data }">
@@ -114,7 +114,7 @@
                     </div>
                     <div v-if="data.data.approvalState == 'DANG_TAO'">
                         <DxButton
-                            icon="mdi mdi-file-check"
+                            icon="mdi mdi-file-sign"
                             :hint="$t('Phê duyệt mua hàng')"
                             @click="clickApprove(data)"
                         />
@@ -162,7 +162,7 @@
                     v-if="isClick == 'edit'"
                     @invisible="hiddenPopup"
                 />
-                <viewDetail v-else :view="details" />
+                <viewDetail v-else :view="viewItem" />
             </template>
         </popup>
     </div>
@@ -199,7 +199,7 @@ export default {
             dataGridRefKey: 'datagridValid',
             popupVisible: false,
             isClick: null,
-            details: null,
+            viewItem: null,
         }
     },
     computed: {
@@ -221,7 +221,7 @@ export default {
         },
         clickView(e) {
             this.popupVisible = !this.popupVisible
-            this.details = e.data
+            this.viewItem = e.data
             this.isClick = 'view'
         },
         clickEdit(e) {
@@ -280,5 +280,10 @@ export default {
     transition: all 0.2s linear 0s;
     background-color: #ddd;
     border-radius: 50%;
+}
+>>> .dx-datagrid .dx-row > td{
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 20px;
 }
 </style>

@@ -153,7 +153,7 @@
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-column-lines="true"
                 :show-borders="true"
-                height="100%"
+                height="calc(100vh - 470px)"
                 :remote-operations="false"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
@@ -162,7 +162,7 @@
                 <DxPaging :enabled="true" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
-                    caption="Tên hàng hóa, dịch vụ"
+                    caption="Hàng hóa, dịch vụ"
                 />
                 <DxColumn data-field="model_MaHieu" caption="Mã hiệu" />
                 <DxColumn data-field="xuatXu_Hang" caption="Xuất xứ" />
@@ -201,23 +201,46 @@
         </div>
         <div class="row align-center mb-2">
             <div
+                class="footer-content column justify-space-between text-xs-center xs3"
+            >
+                <p style="text-decoration: underline">Người yêu cầu:</p>
+                <div>
+                    <span>{{ YeuCauMuaHang.tenNhanVien }}</span>
+                    <p>
+                        Thời gian:
+                        <span>{{ timestamp(YeuCauMuaHang.ngayDeTrinh) }}</span>
+                    </p>
+                </div>
+            </div>
+            <div
                 v-for="yc in YeuCauMuaHang.duyetYCMHs"
                 :key="yc.id"
                 class="xs3"
             >
-                <div class="footer-content">
-                    <p>
-                        Trạng thái:
-                        <span>{{ yc.approvalStatus }} by VNAS App</span>
+                <div
+                    class="footer-content column justify-space-between text-xs-center"
+                >
+                    <p style="text-decoration: underline">
+                        {{
+                            yc.approvalState == 'TBP_DUYET'
+                                ? 'Trưởng bộ phận'
+                                : yc.approvalState == 'GDTC_DUYET'
+                                ? 'Bộ phận tài chính'
+                                : yc.approvalState == 'TGD_DUYET'
+                                ? 'Ban giám đốc'
+                                : yc.approvalState == 'MH_DUYET'
+                                ? 'Bộ phận mua hàng'
+                                : ''
+                        }}:
                     </p>
-                    <p>
-                        Người duyệt:
+                    <p>{{ yc.approvalStatus == 'Approval' ? '(Đã ký)' : '' }}</p>
+                    <div>
                         <span>{{ yc.tenNhanVien }}</span>
-                    </p>
-                    <p>
-                        Thời gian duyệt:
-                        <span>{{ timestamp(yc.ngayDuyet) }}</span>
-                    </p>
+                        <p>
+                            Thời gian:
+                            <span>{{ timestamp(yc.ngayDuyet) }}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -324,7 +347,7 @@ export default {
     font-weight: normal;
 }
 .footer-content {
-    height: 16vh;
+    height: 14vh;
     border: 1px solid black;
     padding: 8px;
 }

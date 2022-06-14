@@ -2,7 +2,7 @@
     <div>
         <common
             :headerTitle="'Yêu cầu mua hàng'"
-            :classProp="'xs3'"
+            :classProp="'xs4'"
             :list="danhSach"
             :dataTab="duLieuTab"
             :dataNew="duLieuMoi"
@@ -14,19 +14,13 @@
                 <div v-else-if="itemProp.listType === 'mhnda'">
                     <listPurchaseNp />
                 </div>
-                <div v-else-if="itemProp.listType === 'sx'">
-                    <!-- <listProduct  /> -->
-                </div>
                 <div v-else-if="itemProp.listType === 'pd'">
                     <listApprove />
                 </div>
                 <div v-else>
                     <addPurchase v-if="itemProp.listType === 'tmhda'" />
-                    <addPurchaseNp v-if="itemProp.listType === 'tmhnda'" />
-                    <!-- <addProduction
-                        v-else-if="item.listType === 'TaoSanXuat'"
-                        :dataProp="item.data"
-                    /> -->
+                    <addPurchaseNp v-else-if="itemProp.listType === 'tmhnda'" />
+                    <listApproveNp v-else-if="itemProp.listType === 'pdnda'" />
                 </div>
             </template>
         </common>
@@ -42,6 +36,7 @@ import listPurchaseNp from './components/NonProject/listPurchaseNp'
 import addPurchaseNp from './components/NonProject/addPurchaseNp'
 import listApprove from './components/Approve/listApprove'
 import addPurchase from './components/ForProject/addPurchase'
+import listApproveNp from './components/Approve/listApproveNp'
 
 export default {
     props: {
@@ -56,10 +51,11 @@ export default {
     components: {
         Common,
         ListPurchase,
-        addPurchaseNp,
-        addPurchase,
-        listApprove,
         listPurchaseNp,
+        addPurchase,
+        addPurchaseNp,
+        listApprove,
+        listApproveNp,
     },
     data() {
         return {

@@ -28,7 +28,8 @@
                                 @click="openNoti"
                             ></i>
                             <div id="myDropdown" class="notification-content">
-                                <DxTabPanel
+                                <notification />
+                                <!-- <DxTabPanel
                                     :data-source="ThongBao"
                                     :selectedItem="selectedItem"
                                     :defer-rendering="false"
@@ -64,7 +65,7 @@
                                             </div>
                                         </div>
                                     </template>
-                                </DxTabPanel>
+                                </DxTabPanel> -->
                             </div>
                         </div>
                         <div class="user-guide mr-2">
@@ -255,9 +256,17 @@ import DxSelectBox from 'devextreme-vue/select-box'
 import DxTextBox from 'devextreme-vue/text-box'
 import DxTabPanel from 'devextreme-vue/tab-panel'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
+import notification from '../components/notification'
 
 export default {
-    components: { DxButton, DxSelectBox, DxTextBox, DxTabPanel, DxScrollView },
+    components: {
+        DxButton,
+        DxSelectBox,
+        DxTextBox,
+        DxTabPanel,
+        DxScrollView,
+        notification,
+    },
     data() {
         return {
             selectedValue: '',

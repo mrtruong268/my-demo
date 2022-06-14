@@ -9,12 +9,12 @@
         </div>
         <DxDataGrid
             id="gridContainer"
-            :data-source="danhSachPheDuyet.data"
+            :data-source="danhSachPheDuyetNp.data"
             :show-column-lines="true"
             :show-row-lines="true"
             :show-borders="true"
             :row-alternation-enabled="true"
-            height="auto"
+            height="100%"
             :noDataText="$t('Không có dữ liệu')"
             remote-operations="true"
             :allow-column-resizing="true"
@@ -119,7 +119,7 @@
             :width="'80%'"
         >
             <template #main>
-                <viewApprove :view="editItem" @hiddenPopup="hidePopup" />
+                <viewApproveNp :view="viewItem" @hiddenPopup="hidePopup" />
             </template>
         </popup>
     </div>
@@ -139,14 +139,14 @@ import {
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
 import popup from '~/components/popup.vue'
-import viewApprove from './viewApprove.vue'
+import viewApproveNp from './viewApproveNp.vue'
 
 export default {
     layout: 'commonLayout',
     data() {
         return {
             popupVisible: false,
-            editItem: {},
+            viewItem: {},
         }
     },
     components: {
@@ -159,19 +159,19 @@ export default {
         DxFilterRow,
         DxButton,
         popup,
-        viewApprove,
+        viewApproveNp,
     },
     computed: {
-        ...mapState('pheduyet', ['danhSachPheDuyet']),
+        ...mapState('pheduyet', ['danhSachPheDuyetNp']),
     },
     methods: {
         viewDetail(e) {
-            this.editItem = e.data
+            this.viewItem = e.data
             this.popupVisible = !this.popupVisible
         },
         clickReload() {
             setTimeout(() => {
-                this.$store.dispatch('pheduyet/getApprove')
+                this.$store.dispatch('pheduyet/getApproveNp')
             }, 200)
         },
         hidePopup() {
@@ -180,7 +180,7 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('pheduyet/getApprove')
+        this.$store.dispatch('pheduyet/getApproveNp')
     },
 }
 </script>
