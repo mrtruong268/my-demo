@@ -20,6 +20,9 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                 >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.chucVu"
@@ -51,7 +54,11 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectPhuPhi"
-                />
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxSelectBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.maChiPhi"
                     styling-mode="outlined"
@@ -74,7 +81,11 @@
                     :label="$t('Ngày đệ trình')"
                     label-mode="floating"
                     class="xs2 mr-3"
-                />
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxDateBox>
                 <DxDateBox
                     v-model="YeuCauMuaHang.ngayCanHang"
                     displayFormat="dd/MM/yyyy"
@@ -84,7 +95,11 @@
                     :label="$t('Ngày cần hàng')"
                     class="xs2 mr-3"
                     label-mode="floating"
-                />
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxDateBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.diaDiemLamViec"
                     styling-mode="outlined"

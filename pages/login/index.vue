@@ -139,7 +139,9 @@ export default {
                 formData.append(e, form[e])
             })
             this.$store.dispatch('login', formData)
-            this.signIn()
+            setTimeout(() => {
+                this.signIn()
+            }, 10)
         },
         signIn() {
             if (this.$cookies.get('cookieToken')) {

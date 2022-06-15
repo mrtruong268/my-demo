@@ -10,9 +10,9 @@
                     class="xs2 mr-3"
                     :read-only="true"
                 >
-                    <!-- <DxValidator>
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
+                    </DxValidator>
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.maNhanVien"
@@ -22,9 +22,9 @@
                     class="xs2 mr-3"
                     :read-only="true"
                 >
-                    <!-- <DxValidator>
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
+                    </DxValidator>
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.chucVu"
@@ -34,9 +34,9 @@
                     class="xs2 mr-3"
                     :read-only="true"
                 >
-                    <!-- <DxValidator>
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
+                    </DxValidator>
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.phongBan"
@@ -46,9 +46,9 @@
                     class="xs2 mr-3"
                     :read-only="true"
                 >
-                    <!-- <DxValidator>
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
+                    </DxValidator>
                 </DxTextBox>
                 <DxSelectBox
                     :items="loaiPhuPhi"
@@ -57,10 +57,11 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectPhuPhi"
-                />
-                <!-- <DxValidator>
-                        <DxRequiredRule validationMessageMode="auto" />
-                    </DxValidator> -->
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxSelectBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.maChiPhi"
                     styling-mode="outlined"
@@ -69,9 +70,9 @@
                     :read-only="true"
                     class="xs2"
                 >
-                    <!-- <DxValidator>
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
+                    </DxValidator>
                 </DxTextBox>
             </div>
             <div class="row align-center mb-2">
@@ -85,7 +86,11 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
-                />
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxDateBox>
                 <DxDateBox
                     v-model="YeuCauMuaHang.ngayCanHang"
                     displayFormat="dd/MM/yyyy"
@@ -95,7 +100,11 @@
                     :label="$t('Ngày cần hàng')"
                     class="xs2 mr-3"
                     label-mode="floating"
-                />
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxDateBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.diaDiemLamViec"
                     styling-mode="outlined"
@@ -104,9 +113,9 @@
                     class="xs-4 mr-3"
                     :read-only="true"
                 >
-                    <!-- <DxValidator>
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
+                    </DxValidator>
                 </DxTextBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
@@ -116,9 +125,9 @@
                     class="xs-4"
                     :read-only="true"
                 >
-                    <!-- <DxValidator>
+                    <DxValidator>
                         <DxRequiredRule />
-                    </DxValidator> -->
+                    </DxValidator>
                 </DxTextBox>
             </div>
         </DxValidationGroup>
@@ -300,9 +309,9 @@ export default {
         },
         clickAdd() {
             var result = confirm('Do you want to submit?')
-            // let result = this.validationGroup.validate()
+            let checkEmpty = this.validationGroup.validate()
             if (result) {
-                if (this.checkArray()) {
+                if (this.checkArray() && checkEmpty.isValid) {
                     setTimeout(() => {
                         this.$store.dispatch(
                             'muahang/postDataNp',

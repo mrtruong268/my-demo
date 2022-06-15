@@ -199,7 +199,8 @@
                 </DxSummary>
             </DxDataGrid>
         </div>
-        <div class="row align-center mb-2">
+
+        <div class="row align-center mb-1">
             <div
                 class="footer-content column justify-space-between text-xs-center xs3"
             >
@@ -213,9 +214,10 @@
                 </div>
             </div>
             <div
+                class="xs3"
                 v-for="yc in YeuCauMuaHang.duyetYCMHs"
                 :key="yc.id"
-                class="xs3"
+                :style="yc.approvalState === 'NVTC_DUYET' ? 'display:none' : ''"
             >
                 <div
                     class="footer-content column justify-space-between text-xs-center"
@@ -233,7 +235,9 @@
                                 : ''
                         }}:
                     </p>
-                    <p>{{ yc.approvalStatus == 'Approval' ? '(Đã ký)' : '' }}</p>
+                    <p>
+                        {{ yc.approvalStatus == 'Approval' ? '(Approval by VNAS App)' : '' }}
+                    </p>
                     <div>
                         <span>{{ yc.tenNhanVien }}</span>
                         <p>
@@ -244,6 +248,7 @@
                 </div>
             </div>
         </div>
+
         <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id">
             <div v-if="yc.approvalStatus == 'MustRevise'">
                 <p style="font-weight: bold">

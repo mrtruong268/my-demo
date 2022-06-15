@@ -29,43 +29,6 @@
                             ></i>
                             <div id="myDropdown" class="notification-content">
                                 <notification />
-                                <!-- <DxTabPanel
-                                    :data-source="ThongBao"
-                                    :selectedItem="selectedItem"
-                                    :defer-rendering="false"
-                                    :show-nav-buttons="true"
-                                    :repaint-changes-only="true"
-                                    item-title-template="title"
-                                    item-template="itemTemplate"
-                                >
-                                    <template #title="{ data: item }">
-                                        <div id="tabTitle">
-                                            <p>
-                                                {{ item.title }} ({{
-                                                    item.data.length
-                                                }})
-                                            </p>
-                                        </div>
-                                    </template>
-                                    <template #itemTemplate="{ data: item }">
-                                        <div>
-                                            <div
-                                                v-for="e in item.data"
-                                                :key="e.id"
-                                                class="notification-main row align-center"
-                                                @click="clickClose"
-                                            >
-                                                <img :src="e.image" />
-                                                <div class="main-right">
-                                                    <p>
-                                                        {{ e.title }}
-                                                    </p>
-                                                    <span>{{ e.time }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </DxTabPanel> -->
                             </div>
                         </div>
                         <div class="user-guide mr-2">

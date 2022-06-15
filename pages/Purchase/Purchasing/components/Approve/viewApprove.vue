@@ -216,6 +216,7 @@
                 v-for="yc in YeuCauMuaHang.duyetYCMHs"
                 :key="yc.id"
                 class="xs3"
+                :style="yc.approvalState === 'NVTC_DUYET' ? 'display:none' : ''"
             >
                 <div
                     class="footer-content column justify-space-between text-xs-center"
@@ -234,7 +235,7 @@
                         }}:
                     </p>
                     <p>
-                        {{ yc.approvalStatus == 'Approval' ? '(Đã ký)' : '' }}
+                        {{ yc.approvalStatus == 'Approval' ? '(Approval by VNAS App)' : '' }}
                     </p>
                     <div>
                         <span>{{ yc.tenNhanVien }}</span>

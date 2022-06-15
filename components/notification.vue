@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <div>{{ countNoti }}</div> -->
+        <!-- <div>{{ dataSrc }}</div> -->
     </div>
 </template>
 
@@ -9,24 +9,24 @@ import { mapState } from 'vuex'
 
 export default {
     data() {
-        return {}
+        return {
+            dataSrc: [],
+        }
     },
     computed: {
         ...mapState('pheduyet', ['danhSachPheDuyet']),
-        countNoti() {
-            return this.danhSachPheDuyet.data.length
-        },
     },
     watch: {
-        danhSachPheDuyet(newCount, oldCount) {
-            // Our fancy notification (2).
-            console.log(`${newCount}, ${oldCount}`)
+        danhSachPheDuyet: {
+            handler(newValue, oldValue) {
+                if (newValue) {
+                    this.dataSrc.push(newValue.data)
+                }
+            },
+            deep: true,
         },
     },
     methods: {},
-    created() {
-        this.$store.dispatch('pheduyet/getApprove')
-    },
 }
 </script>
 
