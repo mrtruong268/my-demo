@@ -53,12 +53,12 @@ export default {
                             to: 'Purchase/Purchasing',
                             type: 'mhda',
                         },
-                        {
-                            id: 2,
-                            des: 'Yêu cầu sản xuất',
-                            to: 'Purchase/Purchasing',
-                            type: 'sx',
-                        },
+                        // {
+                        //     id: 2,
+                        //     des: 'Yêu cầu sản xuất',
+                        //     to: 'Purchase/Purchasing',
+                        //     type: 'sx',
+                        // },
                     ],
                 },
                 {
@@ -73,12 +73,12 @@ export default {
                             to: 'Purchase/Purchasing',
                             type: 'mhnda',
                         },
-                        {
-                            id: 2,
-                            des: 'Yêu cầu sản xuất',
-                            to: 'Purchase/Purchasing',
-                            type: 'sx',
-                        },
+                        // {
+                        //     id: 2,
+                        //     des: 'Yêu cầu sản xuất',
+                        //     to: 'Purchase/Purchasing',
+                        //     type: 'sx',
+                        // },
                     ],
                 },
                 {

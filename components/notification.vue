@@ -1,6 +1,8 @@
 <template>
     <div>
-        <!-- <div>{{ dataSrc }}</div> -->
+        <!-- <div v-for="item in dataSrc" :key="item.id">
+            {{ item.tenNhanVien }}
+        </div> -->
     </div>
 </template>
 
@@ -10,23 +12,24 @@ import { mapState } from 'vuex'
 export default {
     data() {
         return {
-            dataSrc: [],
+            dataSrc: this.danhSachPheDuyet,
         }
     },
     computed: {
         ...mapState('pheduyet', ['danhSachPheDuyet']),
     },
     watch: {
-        danhSachPheDuyet: {
-            handler(newValue, oldValue) {
-                if (newValue) {
-                    this.dataSrc.push(newValue.data)
-                }
+        dataSrc: {
+            handler(dataSrc) {
+                if (dataSrc) console.log(dataSrc)
             },
             deep: true,
         },
     },
     methods: {},
+    created() {
+        this.$store.dispatch('pheduyet/getApprove')
+    },
 }
 </script>
 

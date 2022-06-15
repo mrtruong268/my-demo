@@ -201,4 +201,16 @@ export const actions = {
             console.log(err)
         }
     },
+
+    async upFile({ commit }, uploadItem) {
+        try {
+            await this.$axios.post('/pr/import-from-excel', uploadItem, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+        } catch (error) {
+            console.log(err)
+        }
+    },
 }

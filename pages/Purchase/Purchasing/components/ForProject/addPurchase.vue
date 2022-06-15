@@ -111,7 +111,6 @@
                     :label="$t('Địa điểm làm việc')"
                     label-mode="floating"
                     class="xs-4 mr-3"
-                    :read-only="true"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -150,8 +149,23 @@
         </DxValidationGroup>
 
         <div>
-            <div class="row mb-2 justify-center">
+            <div class="row mb-2 justify-space-between align-center">
                 <h3>{{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}</h3>
+                <div>
+                    <input
+                        type="file"
+                        id="file"
+                        ref="file"
+                        @change="handleFileUpload()"
+                    />
+                    <DxButton
+                        :text="$t('Tải lên')"
+                        type="normal"
+                        styling-mode="contained"
+                        @click="submitFile()"
+                        height="30px"
+                    />
+                </div>
             </div>
             <DxDataGrid
                 id="gridContainer"
@@ -282,6 +296,7 @@ export default {
                 yeuCauMuaHangChiTiets: [],
             },
             loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
+            file: '',
         }
     },
     watch: {
@@ -338,8 +353,13 @@ export default {
         clickAdd() {
             var result = confirm('Do you want to submit?')
             let checkEmpty = this.validationGroup.validate()
+            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets
             if (result) {
-                if (this.checkArray() && checkEmpty.isValid) {
+                if (
+                    this.checkArray() &&
+                    checkEmpty.isValid &&
+                    isArrEmpty.length > 0
+                ) {
                     setTimeout(() => {
                         this.$store.dispatch(
                             'muahang/postData',
@@ -391,6 +411,14 @@ export default {
                     },
                 }
             }
+        },
+        submitFile() {
+            let formData = new FormData()
+            formData.append('file', this.file)
+            if (this.file !== '') this.$store.dispatch('upFile', formData)
+        },
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0]
         },
         resetData() {
             this.YeuCauMuaHang = {

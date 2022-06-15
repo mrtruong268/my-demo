@@ -340,8 +340,13 @@ export default {
         clickSave() {
             let result = this.validationGroup.validate()
             let result2 = confirm('Do you want to submit?')
+            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets
             if (result2) {
-                if (result.isValid && this.checkArray()) {
+                if (
+                    result.isValid &&
+                    this.checkArray() &&
+                    isArrEmpty.length > 0
+                ) {
                     setTimeout(() => {
                         this.$store.dispatch(
                             'muahang/editData',

@@ -111,7 +111,6 @@
                     :label="$t('Địa điểm làm việc')"
                     label-mode="floating"
                     class="xs-4 mr-3"
-                    :read-only="true"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -310,8 +309,13 @@ export default {
         clickAdd() {
             var result = confirm('Do you want to submit?')
             let checkEmpty = this.validationGroup.validate()
+            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets
             if (result) {
-                if (this.checkArray() && checkEmpty.isValid) {
+                if (
+                    this.checkArray() &&
+                    checkEmpty.isValid &&
+                    isArrEmpty.length > 0
+                ) {
                     setTimeout(() => {
                         this.$store.dispatch(
                             'muahang/postDataNp',
