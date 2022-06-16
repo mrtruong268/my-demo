@@ -65,10 +65,10 @@ export const state = () => ({
     DanhSachPhongBan: [],
     token: '',
     userInfo: {},
-    excelFile: null,
     isSelected: '',
     projectCode: [],
     hangMucTrienKhai: [],
+    dataExcel: null,
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
@@ -102,8 +102,8 @@ export const mutations = {
     GET_HANG_MUC(state, item) {
         state.hangMucTrienKhai = item
     },
-    EXCEL_FILE(state, item) {
-        state.excelFile = item
+    GET_DATA_EXCEL(state, item) {
+        state.dataExcel = item
     },
 }
 
@@ -186,14 +186,13 @@ export const actions = {
                     responseType: 'blob',
                 }
             )
-            commit('EXCEL_FILE', response.data.data)
             let url = window.URL.createObjectURL(new Blob([response.data]))
             let link = document.createElement('a')
             link.href = url
             if (response.data.type === 'application/pdf') {
-                link.setAttribute('download', 'De-Nghi-Mua-Hang.pdf')
+                link.setAttribute('download', 'DNMH.pdf')
             } else {
-                link.setAttribute('download', 'De-Nghi-Mua-Hang.xlsx')
+                link.setAttribute('download', 'DNMH.xlsx')
             }
             document.body.appendChild(link)
             link.click()
@@ -201,14 +200,40 @@ export const actions = {
             console.log(err)
         }
     },
-
-    async upFile({ commit }, uploadItem) {
+    async exportExcelNp({ commit }, exportId) {
         try {
-            await this.$axios.post('/pr/import-from-excel', uploadItem, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
+            let response = await this.$axios.get(
+                `/ipr/export-pr?id=${exportId}`,
+                {
+                    responseType: 'blob',
+                }
+            )
+            let url = window.URL.createObjectURL(new Blob([response.data]))
+            let link = document.createElement('a')
+            link.href = url
+            if (response.data.type === 'application/pdf') {
+                link.setAttribute('download', 'DNMH-Ngoai-Du-An.pdf')
+            } else {
+                link.setAttribute('download', 'DNMH-Ngoai-Du-An.xlsx')
+            }
+            document.body.appendChild(link)
+            link.click()
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async uploadExcel({ commit }, uploadItem) {
+        try {
+            let response = await this.$axios.post(
+                '/pr/import-from-excel',
+                uploadItem,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            commit('GET_DATA_EXCEL', response.data.data)
         } catch (error) {
             console.log(err)
         }

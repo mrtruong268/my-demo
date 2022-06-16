@@ -34,7 +34,7 @@
                     <p>ĐNMH-000000</p>
                 </div>
                 <div class="bot">
-                    <p>Khổ giấy: A4</p>
+                    <p>Số: {{ YeuCauMuaHang.id }}</p>
                 </div>
             </div>
         </div>
@@ -145,7 +145,7 @@
             </div>
         </div>
         <div class="row justify-center">
-            <h3 class="my-2">DANH SÁCH HÀNG HÓA, DỊCH VỤ CẦN MUA</h3>
+            <h3 class="my-1">DANH SÁCH HÀNG HÓA, DỊCH VỤ CẦN MUA</h3>
         </div>
         <div class="mb-3">
             <DxDataGrid
@@ -199,7 +199,7 @@
                 </DxSummary>
             </DxDataGrid>
         </div>
-        <div class="row align-center mb-1">
+        <div class="row align-center mb-2">
             <div
                 class="footer-content column justify-space-between text-xs-center xs3"
             >
@@ -235,7 +235,11 @@
                         }}:
                     </p>
                     <p>
-                        {{ yc.approvalStatus == 'Approval' ? '(Approval by VNAS App)' : '' }}
+                        {{
+                            yc.approvalStatus == 'Approval'
+                                ? '(Approval by VNAS App)'
+                                : ''
+                        }}
                     </p>
                     <div>
                         <span>{{ yc.tenNhanVien }}</span>

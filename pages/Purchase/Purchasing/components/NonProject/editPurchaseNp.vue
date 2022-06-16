@@ -1,139 +1,195 @@
 <template>
     <div>
-        <DxValidationGroup :ref="formValidation">
-            <div class="row align-center justify-space-between mb-3">
-                <DxTextBox
-                    v-model="YeuCauMuaHang.tenNhanVien"
-                    styling-mode="outlined"
-                    :label="$t('Họ và tên')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.maNhanVien"
-                    styling-mode="outlined"
-                    :label="$t('Mã nhân viên')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.chucVu"
-                    styling-mode="outlined"
-                    :label="$t('Chức vụ')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.phongBan"
-                    styling-mode="outlined"
-                    :label="$t('Phòng ban')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
-                <DxSelectBox
-                    :items="loaiPhuPhi"
-                    :value="YeuCauMuaHang.phuPhi"
-                    styling-mode="outlined"
-                    :label="$t('Phụ phí')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                    @selectionChanged="selectPhuPhi"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxSelectBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.maChiPhi"
-                    styling-mode="outlined"
-                    :label="$t('Mã chi phí')"
-                    label-mode="floating"
-                    class="xs2"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
+        <div class="header row align-center">
+            <div class="xs4 container-xs" style="border-right: 1px solid black">
+                <div class="row align-center">
+                    <div class="mx-2">
+                        <img
+                            src="~assets/logo.png"
+                            width="90px"
+                            height="auto"
+                        />
+                    </div>
+                    <div>
+                        <p class="font-12" style="font-weight: bold">
+                            CÔNG TY TNHH VIỆT NAM AUTO SOLUTIONS
+                        </p>
+                        <p class="font-12">
+                            Thôn An Trai, xã Vân Canh, Huyện Hoài Đức, Thành phố
+                            Hà Nội
+                        </p>
+                        <p class="font-12">MST: 0106515898</p>
+                    </div>
+                </div>
             </div>
-            <div class="row align-center mb-3">
-                <DxDateBox
-                    v-model="YeuCauMuaHang.ngayDeTrinh"
-                    displayFormat="dd/MM/yyyy"
-                    :use-mask-behavior="true"
-                    validationMessageMode="always"
-                    styling-mode="outlined"
-                    :label="$t('Ngày đệ trình')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxDateBox>
-                <DxDateBox
-                    v-model="YeuCauMuaHang.ngayCanHang"
-                    displayFormat="dd/MM/yyyy"
-                    :use-mask-behavior="true"
-                    validationMessageMode="always"
-                    styling-mode="outlined"
-                    :label="$t('Ngày cần hàng')"
-                    class="xs2 mr-3"
-                    label-mode="floating"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxDateBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.diaDiemLamViec"
-                    styling-mode="outlined"
-                    :label="$t('Địa điểm làm việc')"
-                    label-mode="floating"
-                    class="xs-4 mr-3"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.soThamChieu"
-                    styling-mode="outlined"
-                    :label="$t('Số tham chiếu')"
-                    label-mode="floating"
-                    class="xs-4"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
+            <div class="xs6 text-xs-center" style="">
+                <h1>
+                    PHIẾU ĐỀ NGHỊ MUA <br />
+                    HÀNG HÓA,DỊCH VỤ
+                </h1>
             </div>
-        </DxValidationGroup>
+            <div class="xs2 right-content">
+                <div class="top">
+                    <p>Form: VNAS-TC-MH</p>
+                    <p>ĐNMH-000000</p>
+                </div>
+                <div class="bot">
+                    <p>Số: {{ YeuCauMuaHang.id }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="header">
+            <DxValidationGroup :ref="formValidation">
+                <div class="row">
+                    <div class="xs4 mr-4">
+                        <div class="row align-center justify-space-between">
+                            <p>Tên:</p>
+                            <DxTextBox
+                                v-model="YeuCauMuaHang.tenNhanVien"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxTextBox>
+                        </div>
+                        <div class="row align-center justify-space-between">
+                            <p>Mã nhân viên:</p>
+                            <DxTextBox
+                                v-model="YeuCauMuaHang.maNhanVien"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxTextBox>
+                        </div>
+                        <div class="row align-center justify-space-between">
+                            <p>Ngày đệ trình:</p>
+                            <DxDateBox
+                                v-model="YeuCauMuaHang.ngayDeTrinh"
+                                displayFormat="dd/MM/yyyy"
+                                :use-mask-behavior="true"
+                                validationMessageMode="always"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxDateBox>
+                        </div>
+                        <div class="row align-center justify-space-between">
+                            <p>Ngày giao hàng:</p>
+                            <DxDateBox
+                                v-model="YeuCauMuaHang.ngayCanHang"
+                                displayFormat="dd/MM/yyyy"
+                                :use-mask-behavior="true"
+                                validationMessageMode="always"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxDateBox>
+                        </div>
+                    </div>
+                    <div class="xs4 mr-4">
+                        <div class="row align-center justify-space-between">
+                            <p>Chức vụ:</p>
+                            <DxTextBox
+                                v-model="YeuCauMuaHang.chucVu"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxTextBox>
+                        </div>
+                        <div class="row align-center justify-space-between">
+                            <p>Phòng/Ban:</p>
+                            <DxTextBox
+                                v-model="YeuCauMuaHang.phongBan"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxTextBox>
+                        </div>
+                        <div class="row align-center justify-space-between">
+                            <p>Địa điểm làm việc:</p>
+                            <DxTextBox
+                                v-model="YeuCauMuaHang.diaDiemLamViec"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxTextBox>
+                        </div>
+                    </div>
+                    <div class="xs4">
+                        <div class="row align-center justify-space-between">
+                            <p>Phụ phí:</p>
+                            <DxSelectBox
+                                :items="loaiPhuPhi"
+                                :value="YeuCauMuaHang.phuPhi"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                                @selectionChanged="selectPhuPhi"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxSelectBox>
+                        </div>
+                        <div class="row align-center justify-space-between">
+                            <p>Mã chi phí:</p>
+                            <DxTextBox
+                                v-model="YeuCauMuaHang.maChiPhi"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxTextBox>
+                        </div>
+                        <div class="row align-center justify-space-between">
+                            <p>Số tham chiếu:</p>
+                            <DxTextBox
+                                v-model="YeuCauMuaHang.soThamChieu"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxTextBox>
+                        </div>
+                    </div>
+                </div>
+            </DxValidationGroup>
+        </div>
 
         <div class="mb-3">
-            <div class="row justify-space-between">
+            <div class="row justify-space-between align-center">
                 <h3>{{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}</h3>
-                <DxButton
-                    icon="mdi mdi-plus"
-                    class="mb-2"
-                    @click="addRow"
-                    :text="$t('Thêm')"
-                />
+                <div v-if="disable == false && allowEdit == true">
+                    <DxButton
+                        icon="mdi mdi-plus"
+                        styling-mode="text"
+                        @click="addRow"
+                        hint="Thêm hàng hoá"
+                    />
+                </div>
             </div>
             <DxDataGrid
                 id="gridContainer"
@@ -144,20 +200,19 @@
                 :column-auto-width="true"
                 :hover-state-enabled="true"
                 :noDataText="$t('Không có dữ liệu')"
-                height="calc(100vh - 450px)"
+                height="calc(100vh - 470px)"
                 :ref="dataGridRefKey"
                 @saved="saved"
                 @editorPreparing="editorPreparing"
             >
                 <DxEditing
-                    :allow-updating="true"
-                    :allow-deleting="true"
+                    :allow-updating="allowEdit"
+                    :allow-deleting="allowEdit"
                     :useIcons="true"
                     :confirm-delete="false"
                     mode="cell"
                     new-row-position="last"
                 />
-                <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
                     :caption="$t('Hàng hóa, dịch vụ')"
@@ -182,15 +237,108 @@
                     :caption="$t('Ghi chú')"
                     width="250"
                 />
+                <DxSummary>
+                    <DxTotalItem
+                        column="tenHangHoa_DichVu"
+                        summary-type="count"
+                        display-format="Tổng tiền:"
+                    />
+                    <DxTotalItem
+                        column="soTienTamTinh"
+                        summary-type="sum"
+                        display-format="{0}"
+                        :valueFormat="customFormat"
+                    />
+                </DxSummary>
             </DxDataGrid>
         </div>
-        <div class="row justify-end">
-            <DxButton
-                :text="$t('Lưu')"
-                type="default"
-                styling-mode="contained"
-                @click="clickSave"
-            />
+        <div class="row align-center mb-2">
+            <div
+                class="footer-content column justify-space-between text-xs-center xs3"
+            >
+                <p style="text-decoration: underline">Người yêu cầu:</p>
+                <div>
+                    <span>{{ YeuCauMuaHang.tenNhanVien }}</span>
+                    <p>
+                        Thời gian:
+                        <span>{{ timestamp(YeuCauMuaHang.ngayDeTrinh) }}</span>
+                    </p>
+                </div>
+            </div>
+            <div
+                v-for="yc in YeuCauMuaHang.duyetYCMHsNoiBo"
+                :key="yc.id"
+                class="xs3"
+                :style="yc.approvalState === 'NVTC_DUYET' ? 'display:none' : ''"
+            >
+                <div
+                    class="footer-content column justify-space-between text-xs-center"
+                >
+                    <p style="text-decoration: underline">
+                        {{
+                            yc.approvalState == 'TBP_DUYET'
+                                ? 'Trưởng bộ phận'
+                                : yc.approvalState == 'GDTC_DUYET'
+                                ? 'Bộ phận tài chính'
+                                : yc.approvalState == 'TGD_DUYET'
+                                ? 'Ban giám đốc'
+                                : yc.approvalState == 'MH_DUYET'
+                                ? 'Bộ phận mua hàng'
+                                : ''
+                        }}:
+                    </p>
+                    <p>
+                        {{
+                            yc.approvalStatus == 'Approval'
+                                ? '(Approval by VNAS App)'
+                                : ''
+                        }}
+                    </p>
+                    <div>
+                        <span>{{ yc.tenNhanVien }}</span>
+                        <p>
+                            Thời gian:
+                            <span>{{ timestamp(yc.ngayDuyet) }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-for="yc in YeuCauMuaHang.duyetYCMHsNoiBo" :key="yc.id">
+            <div v-if="yc.approvalStatus == 'MustRevise'">
+                <p style="font-weight: bold">
+                    (Lý do không duyệt:
+                    <span style="font-weight: normal">{{ yc.comment }})</span>
+                </p>
+            </div>
+        </div>
+        <div class="row justify-space-between">
+            <div>
+                <DxButton
+                    :text="$t('Đóng')"
+                    type="default"
+                    styling-mode="text"
+                    @click="clickClose"
+                />
+            </div>
+            <div class="row justify-end">
+                <DxButton
+                    :text="$t('Sửa')"
+                    type="normal"
+                    styling-mode="contained"
+                    @click="checkEdit"
+                />
+                <div v-if="disable == false && allowEdit == true">
+                    <DxButton
+                        :text="$t('Lưu')"
+                        type="default"
+                        styling-mode="contained"
+                        class="ml-3"
+                        @click="clickSave"
+                    />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -205,13 +353,16 @@ import {
     DxDataGrid,
     DxColumn,
     DxLookup,
+    DxSummary,
     DxPaging,
+    DxTotalItem,
     DxEditing,
 } from 'devextreme-vue/data-grid'
 import { mapGetters, mapState } from 'vuex'
 import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
 import DxValidationGroup from 'devextreme-vue/validation-group'
 import { DxAutocomplete } from 'devextreme-vue/autocomplete'
+import moment from 'moment'
 
 export default {
     components: {
@@ -220,9 +371,11 @@ export default {
         DxDateBox,
         DxDataGrid,
         DxColumn,
+        DxTotalItem,
         DxPaging,
         DxNumberBox,
         DxButton,
+        DxSummary,
         DxLookup,
         DxEditing,
         DxValidator,
@@ -236,6 +389,8 @@ export default {
             formValidation: 'formValid',
             YeuCauMuaHang: {},
             loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
+            disable: true,
+            allowEdit: false,
         }
     },
     watch: {
@@ -245,11 +400,11 @@ export default {
             },
             deep: true,
         },
-        refNumber: {
-            handler(refNumber) {
-                if (refNumber) {
-                    this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
-                    this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
+        refNumberNp: {
+            handler(refNumberNp) {
+                if (refNumberNp) {
+                    this.YeuCauMuaHang.soThamChieu = refNumberNp.soThamChieu
+                    this.YeuCauMuaHang.maChiPhi = refNumberNp.maChiPhi
                 }
             },
             immediate: true,
@@ -265,6 +420,10 @@ export default {
     methods: {
         addRow() {
             return this.$refs[this.dataGridRefKey].instance.addRow()
+        },
+        checkEdit() {
+            this.disable = !this.disable
+            this.allowEdit = !this.allowEdit
         },
         saved() {
             let tmpData =
@@ -295,14 +454,7 @@ export default {
         checkArray() {
             let conditionsArray = []
             this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
-                (e) =>
-                    (conditionsArray = [
-                        e.tenHangHoa_DichVu !== '',
-                        e.soLuong !== '',
-                        e.donVi !== '',
-                        e.donGiaTamTinh !== '',
-                        e.soTienTamTinh !== '',
-                    ])
+                (e) => (conditionsArray = [e.tenHangHoa_DichVu !== ''])
             )
             return !conditionsArray.includes(false)
         },
@@ -324,7 +476,7 @@ export default {
                             'muahang/editDataNp',
                             this.YeuCauMuaHang
                         )
-                        this.$emit('invisible')
+                        this.clickClose()
                     }, 200)
                 } else {
                     this.$toast.error(
@@ -332,6 +484,11 @@ export default {
                     )
                 }
             }
+        },
+        clickClose() {
+            this.disable = true
+            this.allowEdit = false
+            this.$emit('invisible')
         },
         customFormat(e) {
             return new Intl.NumberFormat('vi-VN', {
@@ -342,6 +499,9 @@ export default {
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
         },
+        timestamp(date) {
+            return moment(date).format('HH:mm DD-MM-YYYY')
+        },
     },
     created() {
         this.$store.dispatch('muahang/getItemsNp')
@@ -350,8 +510,33 @@ export default {
 </script>
 
 <style scoped>
-.btn-add {
-    font-size: 28px;
+.header {
+    border: 1px solid black;
+}
+.border-box {
+    margin: 0 auto;
+}
+.right-content {
+    font-style: italic;
+    border-left: 1px solid black;
+}
+.top {
+    padding: 6px;
+    border-bottom: 1px solid black;
+}
+.bot {
+    padding: 6px;
+}
+.footer-content p {
+    font-weight: bold;
+}
+.footer-content span {
+    font-weight: normal;
+}
+.footer-content {
+    height: 100px;
+    border: 1px solid black;
+    padding: 8px;
 }
 .xs-4 {
     flex-basis: 34.6%;

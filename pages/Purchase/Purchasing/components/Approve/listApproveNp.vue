@@ -16,14 +16,21 @@
             :row-alternation-enabled="true"
             height="100%"
             :noDataText="$t('Không có dữ liệu')"
-            remote-operations="true"
+            :remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
             :hover-state-enabled="false"
         >
+            <DxPaging :page-size="8" />
+            <DxScrolling mode="standard" row-rendering-mode="standard" />
+            <DxPager
+                :visible="true"
+                :show-page-size-selector="false"
+                :show-info="false"
+                :show-navigation-buttons="true"
+            />
             <DxHeaderFilter :visible="true" />
             <DxFilterRow :visible="true" />
-            <DxPaging :enabled="false" />
             <DxColumn
                 data-field="id"
                 :caption="$t('Số')"
@@ -62,38 +69,26 @@
                 :allow-header-filtering="false"
             />
             <DxColumn
-                :allow-header-filtering="true"
-                data-field="approvalState"
-                :caption="$t('Bước duyệt')"
-                cell-template="cellTemplate"
+                data-field="thoiDiemDuyet"
+                :caption="$t('Thời gian duyệt')"
+                format="HH:mm dd/MM/yyyy"
+                data-type="date"
+                :allow-header-filtering="false"
             />
-            <template #cellTemplate="{ data }">
-                <div
-                    :class="
-                        data.value === 'DANG_TAO'
-                            ? ''
-                            : data.value === 'SUBMITED'
-                            ? 'submit'
-                            : 'approve'
-                    "
-                >
-                    {{ data.value }}
-                </div>
-            </template>
             <DxColumn
                 :allow-header-filtering="true"
-                data-field="approvalStatus"
+                data-field="trangThaiDuyet"
                 :caption="$t('Trạng thái duyệt')"
                 cell-template="cellTemplate2"
             />
             <template #cellTemplate2="{ data }">
                 <div
                     :class="
-                        data.value === 'None'
-                            ? 'none'
-                            : data.value === 'Approval'
-                            ? 'approval'
-                            : 'revise'
+                        data.value === 'Đang lập'
+                            ? ''
+                            : data.value === 'Chờ duyệt'
+                            ? 'submit'
+                            : 'approve'
                     "
                 >
                     {{ data.value }}
@@ -133,6 +128,8 @@ import {
     DxColumn,
     DxPaging,
     DxEditing,
+    DxScrolling,
+    DxPager,
     DxSelection,
     DxHeaderFilter,
     DxFilterRow,
@@ -153,6 +150,8 @@ export default {
         DxDataGrid,
         DxColumn,
         DxPaging,
+        DxScrolling,
+        DxPager,
         DxEditing,
         DxSelection,
         DxHeaderFilter,
@@ -186,23 +185,11 @@ export default {
 </script>
 
 <style scoped>
-.none {
-    color: red;
-    /* background-color: red; */
-}
-.approval {
-    color: #acdf87;
-    /* background-color: #acdf87; */
-}
-.revise {
-    color: orange;
-    /* background-color: orange; */
-}
 .submit {
     color: orange;
 }
 .approve {
-    color: #acdf87;
+    color: #009900;
 }
 >>> .dx-datagrid .dx-row > td {
     padding: 8px 16px;

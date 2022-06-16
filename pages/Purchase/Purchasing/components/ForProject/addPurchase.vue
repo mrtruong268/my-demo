@@ -38,18 +38,36 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+                
+                <DxSelectBox
+                    v-if="userInfo.listOfNhanVienPhongBan.length > 1"
+                    :data-source="userInfo.listOfNhanVienPhongBan"
+                    display-expr="tenPhongBan"
+                    styling-mode="outlined"
+                    :label="$t('Phòng ban')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                    @selectionChanged="selectPhongBan"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxSelectBox>
+
                 <DxTextBox
                     v-model="YeuCauMuaHang.phongBan"
                     styling-mode="outlined"
                     :label="$t('Phòng ban')"
                     label-mode="floating"
-                    class="xs2 mr-3"
                     :read-only="true"
+                    class="xs2 mr-3"
+                    v-else
                 >
                     <DxValidator>
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+
                 <DxSelectBox
                     :items="loaiPhuPhi"
                     styling-mode="outlined"
@@ -159,7 +177,7 @@
                         @change="handleFileUpload()"
                     />
                     <DxButton
-                        :text="$t('Tải lên')"
+                        :text="$t('Nhập')"
                         type="normal"
                         styling-mode="contained"
                         @click="submitFile()"
@@ -176,9 +194,18 @@
                 :column-auto-width="true"
                 height="100%"
                 :noDataText="$t('Không có dữ liệu')"
+                :remote-operations="true"
                 :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
+                <DxPaging :page-size="5" />
+                <DxScrolling mode="standard" row-rendering-mode="standard" />
+                <DxPager
+                    :visible="true"
+                    :show-page-size-selector="false"
+                    :show-info="false"
+                    :show-navigation-buttons="true"
+                />
                 <DxEditing
                     :allow-updating="true"
                     :allow-deleting="true"
@@ -187,7 +214,6 @@
                     mode="cell"
                     new-row-position="last"
                 />
-                <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
                     :caption="$t('Hàng hóa, dịch vụ')"
@@ -219,22 +245,21 @@
                     width="250"
                 />
             </DxDataGrid>
-            <DxButton
-                icon="mdi mdi-plus"
-                :use-submit-behavior="true"
-                @click="addRow"
-                styling-mode="text"
-                :text="$t('Thêm')"
-            />
-        </div>
-
-        <div class="row justify-end">
-            <DxButton
-                :text="$t('Lưu')"
-                type="default"
-                styling-mode="contained"
-                @click="clickAdd"
-            />
+            <div class="row justify-space-between">
+                <DxButton
+                    icon="mdi mdi-plus"
+                    :use-submit-behavior="true"
+                    @click="addRow"
+                    styling-mode="text"
+                    :text="$t('Thêm')"
+                />
+                <DxButton
+                    :text="$t('Lưu')"
+                    type="default"
+                    styling-mode="contained"
+                    @click="clickAdd"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -248,6 +273,8 @@ import DxButton from 'devextreme-vue/button'
 import {
     DxDataGrid,
     DxColumn,
+    DxScrolling,
+    DxPager,
     DxPaging,
     DxLookup,
     DxEditing,
@@ -264,6 +291,8 @@ export default {
         DxDateBox,
         DxDataGrid,
         DxColumn,
+        DxScrolling,
+        DxPager,
         DxPaging,
         DxNumberBox,
         DxLookup,
@@ -309,10 +338,25 @@ export default {
             },
             immediate: true,
         },
+        dataExcel: {
+            handler(dataExcel) {
+                if (dataExcel) {
+                    this.YeuCauMuaHang.yeuCauMuaHangChiTiets = JSON.parse(
+                        JSON.stringify(dataExcel.yeuCauMuaHangChiTiets)
+                    )
+                }
+            },
+            deep: true,
+        },
     },
     computed: {
         ...mapState('muahang', ['listItem', 'refNumber']),
-        ...mapState(['userInfo', 'projectCode', 'hangMucTrienKhai']),
+        ...mapState([
+            'userInfo',
+            'projectCode',
+            'hangMucTrienKhai',
+            'dataExcel',
+        ]),
         validationGroup() {
             return this.$refs[this.formValidation].instance
         },
@@ -379,6 +423,9 @@ export default {
             this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
             this.$store.dispatch('getHangMuc', e.selectedItem)
         },
+        selectPhongBan(e) {
+            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+        },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
         },
@@ -412,10 +459,10 @@ export default {
                 }
             }
         },
-        submitFile() {
+        async submitFile() {
             let formData = new FormData()
             formData.append('file', this.file)
-            if (this.file !== '') this.$store.dispatch('upFile', formData)
+            if (this.file !== '') this.$store.dispatch('uploadExcel', formData)
         },
         handleFileUpload() {
             this.file = this.$refs.file.files[0]

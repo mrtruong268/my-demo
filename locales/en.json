@@ -2,6 +2,7 @@
     "Chọn ngôn ngữ": "Select language",
     "Tìm kiếm": "Search",
     "Xóa": "Clear",
+    "Đóng": "Close",
     "Tải lại dữ liệu": "Reload",
     "Không có dữ liệu": "No data to display",
     "Hướng dẫn sử dụng": "User guide",
@@ -91,5 +92,6 @@
     "In": "Print",
     "Sửa": "Edit",
     "Yêu cầu hoàn duyệt": "Unapprove requisition",
-    "Xoá": "Delete"
+    "Xoá": "Delete",
+    "Thời gian duyệt": "Approval time"
 }

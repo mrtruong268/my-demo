@@ -14,17 +14,24 @@
             :show-row-lines="true"
             :show-borders="true"
             :row-alternation-enabled="true"
-            height="100%"
+            height="auto"
             :noDataText="$t('Không có dữ liệu')"
-            remote-operations="true"
+            :remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
             :hover-state-enabled="false"
             :ref="dataGridRefKey"
         >
+            <DxPaging :page-size="8" />
+            <DxScrolling mode="standard" row-rendering-mode="standard" />
+            <DxPager
+                :visible="true"
+                :show-page-size-selector="false"
+                :show-info="false"
+                :show-navigation-buttons="true"
+            />
             <DxHeaderFilter :visible="true" />
             <DxFilterRow :visible="true" />
-            <DxPaging :enabled="false" />
             <DxColumn
                 data-field="id"
                 :caption="$t('Số')"
@@ -62,37 +69,18 @@
             />
             <DxColumn
                 :allow-header-filtering="true"
-                data-field="approvalState"
-                :caption="$t('Bước duyệt')"
-                cell-template="cellTemplate"
-            />
-            <template #cellTemplate="{ data }">
-                <div
-                    :class="
-                        data.value === 'DANG_TAO'
-                            ? ''
-                            : data.value === 'SUBMITED'
-                            ? 'submit'
-                            : 'approve'
-                    "
-                >
-                    {{ data.value }}
-                </div>
-            </template>
-            <DxColumn
-                :allow-header-filtering="true"
-                data-field="approvalStatus"
+                data-field="trangThaiDuyet"
                 :caption="$t('Trạng thái duyệt')"
                 cell-template="cellTemplate2"
             />
             <template #cellTemplate2="{ data }">
                 <div
                     :class="
-                        data.value === 'None'
-                            ? 'none'
-                            : data.value === 'Approval'
-                            ? 'approval'
-                            : 'revise'
+                        data.value === 'Đang lập'
+                            ? ''
+                            : data.value === 'Chờ duyệt'
+                            ? 'submit'
+                            : 'approve'
                     "
                 >
                     {{ data.value }}
@@ -130,13 +118,6 @@
                         <DxButton
                             icon="mdi mdi-eye"
                             :hint="$t('Xem chi tiết')"
-                            @click="clickView(data)"
-                        />
-                    </div>
-                    <div>
-                        <DxButton
-                            icon="mdi mdi-pencil"
-                            :hint="$t('Sửa')"
                             @click="clickEdit(data)"
                         />
                     </div>
@@ -152,17 +133,12 @@
         </DxDataGrid>
         <popup
             :showPopup="popupVisible"
-            :showTitle="isClick == 'edit' ? true : false"
-            :closeOut="isClick == 'edit' ? false : true"
-            :title="isClick == 'edit' ? $t('Sửa') : $t('')"
+            :showTitle="false"
+            :closeOut="false"
             :width="'80%'"
         >
             <template #main>
-                <editPurchaseNp
-                    v-if="isClick == 'edit'"
-                    @invisible="hiddenPopup"
-                />
-                <viewDetailNp v-else :view="viewItem" />
+                <editPurchaseNp @invisible="hiddenPopup" />
             </template>
         </popup>
     </div>
@@ -172,33 +148,34 @@
 import {
     DxDataGrid,
     DxColumn,
-    DxPaging,
     DxHeaderFilter,
     DxFilterRow,
+    DxScrolling,
+    DxPager,
+    DxPaging,
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
 import Popup from '~/components/popup.vue'
 import editPurchaseNp from './editPurchaseNp.vue'
-import viewDetailNp from './viewDetailNp.vue'
 import { mapState } from 'vuex'
 
 export default {
     components: {
         DxDataGrid,
         DxColumn,
+        DxScrolling,
+        DxPager,
         DxPaging,
         DxHeaderFilter,
         DxFilterRow,
         DxButton,
         Popup,
-        viewDetailNp,
         editPurchaseNp,
     },
     data() {
         return {
             dataGridRefKey: 'datagridValid',
             popupVisible: false,
-            isClick: null,
             viewItem: null,
         }
     },
@@ -219,11 +196,6 @@ export default {
             this.$store.dispatch('pheduyet/unApproveNp', e.data.id)
             this.reload()
         },
-        clickView(e) {
-            this.popupVisible = !this.popupVisible
-            this.viewItem = e.data
-            this.isClick = 'view'
-        },
         clickEdit(e) {
             this.popupVisible = !this.popupVisible
             this.$store.dispatch('muahang/getEditDataNp', e.data.id)
@@ -236,7 +208,7 @@ export default {
             }
         },
         clickPrint(e) {
-            this.$store.dispatch('exportExcel', e.data.id)
+            this.$store.dispatch('exportExcelNp', e.data.id)
         },
         hiddenPopup() {
             this.popupVisible = !this.popupVisible
@@ -250,23 +222,11 @@ export default {
 </script>
 
 <style scoped>
-.none {
-    color: red;
-    /* background-color: red; */
-}
-.approval {
-    color: #acdf87;
-    /* background-color: #acdf87; */
-}
-.revise {
-    color: orange;
-    /* background-color: orange; */
-}
 .submit {
     color: orange;
 }
 .approve {
-    color: #acdf87;
+    color: #009900;
 }
 .button {
     font-size: 24px;

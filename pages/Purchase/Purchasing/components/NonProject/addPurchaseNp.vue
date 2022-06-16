@@ -38,13 +38,29 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+                <DxSelectBox
+                    v-if="userInfo.listOfNhanVienPhongBan.length > 1"
+                    :data-source="userInfo.listOfNhanVienPhongBan"
+                    display-expr="tenPhongBan"
+                    styling-mode="outlined"
+                    :label="$t('Phòng ban')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                    @selectionChanged="selectPhongBan"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxSelectBox>
+
                 <DxTextBox
                     v-model="YeuCauMuaHang.phongBan"
                     styling-mode="outlined"
                     :label="$t('Phòng ban')"
                     label-mode="floating"
-                    class="xs2 mr-3"
                     :read-only="true"
+                    class="xs2 mr-3"
+                    v-else
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -132,8 +148,23 @@
         </DxValidationGroup>
 
         <div>
-            <div class="row mb-2 justify-center">
+            <div class="row mb-2 justify-space-between align-center">
                 <h3>{{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}</h3>
+                <div>
+                    <input
+                        type="file"
+                        id="file"
+                        ref="file"
+                        @change="handleFileUpload()"
+                    />
+                    <DxButton
+                        :text="$t('Nhập')"
+                        type="normal"
+                        styling-mode="contained"
+                        @click="submitFile()"
+                        height="30px"
+                    />
+                </div>
             </div>
             <DxDataGrid
                 id="gridContainer"
@@ -143,10 +174,19 @@
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 height="100%"
+                :remote-operations="true"
                 :noDataText="$t('Không có dữ liệu')"
                 :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
+                <DxPaging :page-size="5" />
+                <DxScrolling mode="standard" row-rendering-mode="standard" />
+                <DxPager
+                    :visible="true"
+                    :show-page-size-selector="false"
+                    :show-info="false"
+                    :show-navigation-buttons="true"
+                />
                 <DxEditing
                     :allow-updating="true"
                     :allow-deleting="true"
@@ -155,7 +195,6 @@
                     mode="cell"
                     new-row-position="last"
                 />
-                <DxPaging :enabled="false" />
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
                     :caption="$t('Hàng hóa, dịch vụ')"
@@ -181,22 +220,21 @@
                     width="250"
                 />
             </DxDataGrid>
-            <DxButton
-                icon="mdi mdi-plus"
-                :use-submit-behavior="true"
-                @click="addRow"
-                styling-mode="text"
-                :text="$t('Thêm')"
-            />
-        </div>
-
-        <div class="row justify-end">
-            <DxButton
-                :text="$t('Lưu')"
-                type="default"
-                styling-mode="contained"
-                @click="clickAdd"
-            />
+            <div class="row justify-space-between">
+                <DxButton
+                    icon="mdi mdi-plus"
+                    :use-submit-behavior="true"
+                    @click="addRow"
+                    styling-mode="text"
+                    :text="$t('Thêm')"
+                />
+                <DxButton
+                    :text="$t('Lưu')"
+                    type="default"
+                    styling-mode="contained"
+                    @click="clickAdd"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -210,6 +248,8 @@ import DxButton from 'devextreme-vue/button'
 import {
     DxDataGrid,
     DxColumn,
+    DxScrolling,
+    DxPager,
     DxPaging,
     DxLookup,
     DxEditing,
@@ -226,6 +266,8 @@ export default {
         DxDateBox,
         DxDataGrid,
         DxColumn,
+        DxScrolling,
+        DxPager,
         DxPaging,
         DxNumberBox,
         DxLookup,
@@ -257,6 +299,7 @@ export default {
                 yeuCauMuaHangNoiBoChiTiets: [],
             },
             loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
+            file: '',
         }
     },
     watch: {
@@ -269,6 +312,13 @@ export default {
             },
             immediate: true,
         },
+        // dataExcel: {
+        //     handler(dataExcel) {
+        //         if (dataExcel) {
+        //         }
+        //     },
+        //     deep: true,
+        // },
     },
     computed: {
         ...mapState('muahang', ['listItemNp', 'refNumberNp']),
@@ -299,9 +349,7 @@ export default {
                     (conditionsArray = [
                         e.tenHangHoa_DichVu !== '',
                         e.soLuong !== '',
-                        e.donVi !== '',
                         e.donGiaTamTinh !== '',
-                        e.soTienTamTinh !== '',
                     ])
             )
             return !conditionsArray.includes(false)
@@ -341,6 +389,14 @@ export default {
                 style: 'currency',
                 currency: 'VND',
             }).format(e)
+        },
+        async submitFile() {
+            let formData = new FormData()
+            formData.append('file', this.file)
+            if (this.file !== '') return
+        },
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0]
         },
         editorPreparing(e) {
             if (e.dataField === 'tenHangHoa_DichVu') {

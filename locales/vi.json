@@ -2,6 +2,7 @@
     "Chọn ngôn ngữ": "Chọn ngôn ngữ",
     "Tìm kiếm": "Tìm kiếm",
     "Xóa": "Xóa",
+    "Đóng": "Đóng",
     "Tải lại dữ liệu": "Tải lại dữ liệu",
     "Không có dữ liệu": "Không có dữ liệu để hiển thị",
     "Hướng dẫn sử dụng": "Hướng dẫn sử dụng",
@@ -91,5 +92,6 @@
     "Theo tính toán": "Theo tính toán",
     "In": "In",
     "Yêu cầu hoàn duyệt": "Yêu cầu hoàn duyệt",
-    "Xoá": "Xoá"
+    "Xoá": "Xoá",
+    "Thời gian duyệt": "Thời gian duyệt"
 }
