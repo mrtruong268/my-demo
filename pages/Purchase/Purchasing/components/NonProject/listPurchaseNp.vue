@@ -68,6 +68,13 @@
                 :allow-header-filtering="false"
             />
             <DxColumn
+                data-field="thoiDiemDuyet"
+                :caption="$t('Thời gian duyệt')"
+                format="HH:mm dd/MM/yyyy"
+                data-type="date"
+                :allow-header-filtering="false"
+            />
+            <DxColumn
                 :allow-header-filtering="true"
                 data-field="trangThaiDuyet"
                 :caption="$t('Trạng thái duyệt')"

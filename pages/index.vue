@@ -76,7 +76,7 @@ export default {
         clickTo(item) {
             if (item.title === '1Office') {
                 window.open('https://hrvnas.1office.vn/')
-            } else if (item.title === 'Project management') {
+            } else if (item.title === 'Quản lý dự án') {
                 window.open('https://data.vnas.com.vn/')
             } else {
                 this.clickRouter(item.to, this.routeParams)

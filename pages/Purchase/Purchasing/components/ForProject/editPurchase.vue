@@ -1,5 +1,27 @@
 <template>
     <div>
+        <div class="row justify-end">
+            <div>
+                <div class="row">
+                    <div
+                        @click="checkEdit"
+                        class="font-24 btn-tool mdi mdi-pencil mr-2"
+                    ></div>
+                    <div v-if="disable == false && allowEdit == true">
+                        <div
+                            @click="clickSave"
+                            class="font-24 btn-tool mdi mdi-check mx-2"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div
+                    @click="clickClose"
+                    class="font-24 btn-tool mdi mdi-close"
+                ></div>
+            </div>
+        </div>
         <div class="header row align-center">
             <div class="xs4 container-xs" style="border-right: 1px solid black">
                 <div class="row align-center">
@@ -10,19 +32,39 @@
                             height="auto"
                         />
                     </div>
-                    <div>
+                    <div v-if="mnv.includes('VNASWO')">
                         <p class="font-12" style="font-weight: bold">
-                            CÔNG TY TNHH VIỆT NAM AUTO SOLUTIONS
+                            Công ty cổ phần VNAS Workshop
                         </p>
                         <p class="font-12">
-                            Thôn An Trai, xã Vân Canh, Huyện Hoài Đức, Thành phố
-                            Hà Nội
+                            Điểm công nghiệp Di Trạch, Di Trạch, Hoài Đức, Hà
+                            Nội
                         </p>
-                        <p class="font-12">MST: 0106515898</p>
+                        <p class="font-12">MST: 0109687775</p>
+                    </div>
+                    <div v-else-if="mnv.includes('VNASSE')">
+                        <p class="font-12" style="font-weight: bold">
+                            Công ty cổ phần VNAS SERVICES
+                        </p>
+                        <p class="font-12">
+                            Xóm 12, Thôn Hậu Ái, Xã Vân Canh, Huyện Hoài Đức,
+                            Thành Phố Hà Nội
+                        </p>
+                        <p class="font-12">MST: 0109529056</p>
+                    </div>
+                    <div v-else>
+                        <p class="font-12" style="font-weight: bold">
+                            Công ty Cổ phần tập đoàn Việt Nam Auto Solutions
+                        </p>
+                        <p class="font-12">
+                            Số 16, ngách 53/59/50 đường Ngọa Long, phường Minh
+                            Khai, Bắc Từ Liêm, Hà Nội
+                        </p>
+                        <p class="font-12">MST: 0108326399</p>
                     </div>
                 </div>
             </div>
-            <div class="xs6 text-xs-center" style="">
+            <div class="xs6 text-xs-center">
                 <h1>
                     PHIẾU ĐỀ NGHỊ MUA <br />
                     HÀNG HÓA,DỊCH VỤ
@@ -195,9 +237,11 @@
             </DxValidationGroup>
         </div>
 
-        <div class="mb-3">
+        <div>
             <div class="row justify-space-between align-center">
-                <h3>{{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}</h3>
+                <h3 class="my-1">
+                    {{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}
+                </h3>
                 <div v-if="disable == false && allowEdit == true">
                     <DxButton
                         icon="mdi mdi-plus"
@@ -274,7 +318,7 @@
                 </DxSummary>
             </DxDataGrid>
         </div>
-        <div class="row align-center mb-2">
+        <div class="row align-center">
             <div
                 class="footer-content column justify-space-between text-xs-center xs3"
             >
@@ -288,7 +332,7 @@
                 </div>
             </div>
             <div
-                class="xs3"
+                :class="yc.approvalStatus !== 'Approval' ? 'hide xs3' : 'xs3'"
                 v-for="yc in YeuCauMuaHang.duyetYCMHs"
                 :key="yc.id"
                 :style="yc.approvalState === 'NVTC_DUYET' ? 'display:none' : ''"
@@ -327,39 +371,15 @@
             </div>
         </div>
 
-        <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id">
+        <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id" class="mt-2">
             <div v-if="yc.approvalStatus == 'MustRevise'">
                 <p style="font-weight: bold">
-                    (Lý do không duyệt:
-                    <span style="font-weight: normal">{{ yc.comment }})</span>
+                    (Lịch sử duyệt:
+                    <span style="font-weight: normal"
+                        >Đã huỷ duyệt bởi: {{ yc.tenNhanVien }} vào lúc
+                        {{ timestamp(yc.ngayDuyet) }})</span
+                    >
                 </p>
-            </div>
-        </div>
-        <div class="row justify-space-between">
-            <div>
-                <DxButton
-                    :text="$t('Đóng')"
-                    type="default"
-                    styling-mode="text"
-                    @click="clickClose"
-                />
-            </div>
-            <div class="row justify-end">
-                <DxButton
-                    :text="$t('Sửa')"
-                    type="normal"
-                    styling-mode="contained"
-                    @click="checkEdit"
-                />
-                <div v-if="disable == false && allowEdit == true">
-                    <DxButton
-                        :text="$t('Lưu')"
-                        type="default"
-                        styling-mode="contained"
-                        class="ml-3"
-                        @click="clickSave"
-                    />
-                </div>
             </div>
         </div>
     </div>
@@ -413,12 +433,16 @@ export default {
             loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
             disable: true,
             allowEdit: false,
+            mnv: '',
         }
     },
     watch: {
         suaYeuCau: {
             handler(suaYeuCau) {
-                if (suaYeuCau) this.YeuCauMuaHang = { ...suaYeuCau }
+                if (suaYeuCau) {
+                    this.YeuCauMuaHang = { ...suaYeuCau }
+                    this.mnv = this.YeuCauMuaHang.maNhanVien
+                }
             },
             deep: true,
         },
@@ -552,6 +576,18 @@ export default {
 .header {
     border: 1px solid black;
 }
+.btn-tool {
+    background-color: #ddd;
+    padding: 0 4px;
+    border-radius: 50%;
+    transition: all 0.2s linear 0s;
+    cursor: pointer;
+}
+.btn-tool:hover {
+    transition: all 0.2s linear 0s;
+    background-color: black;
+    color: #ddd;
+}
 .border-box {
     margin: 0 auto;
 }
@@ -560,11 +596,11 @@ export default {
     border-left: 1px solid black;
 }
 .top {
-    padding: 6px;
+    padding: 9px;
     border-bottom: 1px solid black;
 }
 .bot {
-    padding: 6px;
+    padding: 9px;
 }
 .footer-content p {
     font-weight: bold;
@@ -580,5 +616,8 @@ export default {
 .xs-4 {
     flex-basis: 34.6%;
     max-width: 34.6%;
+}
+.hide {
+    display: none;
 }
 </style>

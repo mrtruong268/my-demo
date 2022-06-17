@@ -85,6 +85,10 @@
                                 {{ $t('Trang chủ') }}
                             </li>
                             <li
+                                v-if="
+                                    userInfo.username ==
+                                    'Admin                                             '
+                                "
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="clickRouter('user', routeParams)"
                             >
@@ -92,13 +96,17 @@
                                 {{ $t('Người dùng') }}
                             </li>
                             <li
+                                v-if="
+                                    userInfo.username ==
+                                    'Admin                                             '
+                                "
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="clickRouter('UserGroup', routeParams)"
                             >
                                 <i class="mdi mdi-account-group" />
                                 {{ $t('Nhóm') }}
                             </li>
-                            <li
+                            <!-- <li
                                 class="color-fff list-mobile px-4 py-2"
                                 @click="goCategory"
                             >
@@ -113,7 +121,7 @@
                                     class="mdi mdi-file-table-box-multiple-outline"
                                 />
                                 {{ $t('Bảng tổng hợp') }}
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>

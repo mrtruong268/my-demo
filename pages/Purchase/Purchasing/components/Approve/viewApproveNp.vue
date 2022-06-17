@@ -1,5 +1,11 @@
 <template>
-    <div class="main">
+    <div>
+        <div class="row justify-end">
+            <div
+                class="font-24 btn-tool mdi mdi-close"
+                @click="clickClose"
+            ></div>
+        </div>
         <div class="header row align-center">
             <div class="xs4 container-xs" style="border-right: 1px solid black">
                 <div class="row align-center">
@@ -10,15 +16,35 @@
                             height="auto"
                         />
                     </div>
-                    <div>
+                    <div v-if="mnv.includes('VNASWO')">
                         <p class="font-12" style="font-weight: bold">
-                            CÔNG TY TNHH VIỆT NAM AUTO SOLUTIONS
+                            Công ty cổ phần VNAS Workshop
                         </p>
                         <p class="font-12">
-                            Thôn An Trai, xã Vân Canh, Huyện Hoài Đức, Thành phố
-                            Hà Nội
+                            Điểm công nghiệp Di Trạch, Di Trạch, Hoài Đức, Hà
+                            Nội
                         </p>
-                        <p class="font-12">MST: 0106515898</p>
+                        <p class="font-12">MST: 0109687775</p>
+                    </div>
+                    <div v-else-if="mnv.includes('VNASSE')">
+                        <p class="font-12" style="font-weight: bold">
+                            Công ty cổ phần VNAS SERVICES
+                        </p>
+                        <p class="font-12">
+                            Xóm 12, Thôn Hậu Ái, Xã Vân Canh, Huyện Hoài Đức,
+                            Thành Phố Hà Nội
+                        </p>
+                        <p class="font-12">MST: 0109529056</p>
+                    </div>
+                    <div v-else>
+                        <p class="font-12" style="font-weight: bold">
+                            Công ty Cổ phần tập đoàn Việt Nam Auto Solutions
+                        </p>
+                        <p class="font-12">
+                            Số 16, ngách 53/59/50 đường Ngọa Long, phường Minh
+                            Khai, Bắc Từ Liêm, Hà Nội
+                        </p>
+                        <p class="font-12">MST: 0108326399</p>
                     </div>
                 </div>
             </div>
@@ -147,13 +173,13 @@
         <div class="row justify-center">
             <h3 class="my-1">DANH SÁCH HÀNG HÓA, DỊCH VỤ CẦN MUA</h3>
         </div>
-        <div class="mb-3">
+        <div>
             <DxDataGrid
                 id="gridContainer"
                 :data-source="YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets"
                 :show-column-lines="true"
                 :show-borders="true"
-                height="calc(100vh - 470px)"
+                height="calc(100vh - 500px)"
                 :remote-operations="false"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
@@ -215,7 +241,7 @@
             <div
                 v-for="yc in YeuCauMuaHang.duyetYCMHsNoiBo"
                 :key="yc.id"
-                class="xs3"
+                :class="yc.approvalStatus !== 'Approval' ? 'hide xs3' : 'xs3'"
                 :style="yc.approvalState === 'NVTC_DUYET' ? 'display:none' : ''"
             >
                 <div
@@ -322,16 +348,19 @@ export default {
     watch: {
         view: {
             handler(view) {
-                if (view) this.YeuCauMuaHang = { ...view }
+                if (view) {
+                    this.YeuCauMuaHang = { ...view }
+                    this.mnv = this.YeuCauMuaHang.maNhanVien
+                }
             },
             deep: true,
-            immediate: true,
         },
     },
     data() {
         return {
             dataGridRefKey: 'my-data-grid',
             YeuCauMuaHang: {},
+            mnv: '',
         }
     },
     methods: {
@@ -353,6 +382,9 @@ export default {
                 this.$emit('hiddenPopup')
             }
         },
+        clickClose() {
+            this.$emit('hiddenPopup')
+        },
         timestamp(date) {
             return moment(date).format('HH:mm DD-MM-YYYY')
         },
@@ -373,6 +405,18 @@ export default {
 .header {
     border: 1px solid black;
 }
+.btn-tool {
+    background-color: #ddd;
+    padding: 0 4px;
+    border-radius: 50%;
+    transition: all 0.2s linear 0s;
+    cursor: pointer;
+}
+.btn-tool:hover {
+    transition: all 0.2s linear 0s;
+    background-color: black;
+    color: #ddd;
+}
 .border-box {
     margin: 0 auto;
 }
@@ -381,11 +425,11 @@ export default {
     border-left: 1px solid black;
 }
 .top {
-    padding: 6px;
+    padding: 9px;
     border-bottom: 1px solid black;
 }
 .bot {
-    padding: 6px;
+    padding: 9px;
 }
 .footer-content p {
     font-weight: bold;
@@ -397,5 +441,8 @@ export default {
     height: 100px;
     border: 1px solid black;
     padding: 8px;
+}
+.hide {
+    display: none;
 }
 </style>

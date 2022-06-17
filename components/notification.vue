@@ -30,7 +30,7 @@ export default {
     },
     methods: {},
     created() {
-        this.$store.dispatch('pheduyet/getApprove')
+        // this.$store.dispatch('pheduyet/getApprove')
     },
 }
 </script>

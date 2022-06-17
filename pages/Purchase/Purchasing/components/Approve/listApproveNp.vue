@@ -109,7 +109,7 @@
         <popup
             :showPopup="popupVisible"
             :showTitle="false"
-            :closeOut="true"
+            :closeOut="false"
             :title="$t('Xem chi tiết')"
             :width="'80%'"
         >
