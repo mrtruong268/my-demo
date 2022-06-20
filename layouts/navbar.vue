@@ -27,8 +27,11 @@
                                 class="mdi mdi-bell-badge btn-drop"
                                 @click="openNoti"
                             ></i>
+                            <div class="count-noti">
+                                {{ dataNoti.length }}
+                            </div>
                             <div id="myDropdown" class="notification-content">
-                                <notification />
+                                <notification :data="dataNoti" />
                             </div>
                         </div>
                         <div class="user-guide mr-2">
@@ -221,7 +224,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import DxButton from 'devextreme-vue/button'
 import DxSelectBox from 'devextreme-vue/select-box'
 import DxTextBox from 'devextreme-vue/text-box'
@@ -243,10 +246,23 @@ export default {
             selectedValue: '',
             selectedItem: null,
             user: {},
+            dataNoti: [],
         }
+    },
+    watch: {
+        danhSachPheDuyet: {
+            handler(danhSachPheDuyet) {
+                if (danhSachPheDuyet) {
+                    this.dataNoti = danhSachPheDuyet.data.filter((e) => {
+                        return e.trangThaiDuyet == 'Chờ duyệt'
+                    })
+                }
+            },
+        },
     },
     computed: {
         ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'userInfo']),
+        ...mapState('pheduyet', ['danhSachPheDuyet']),
     },
     methods: {
         openNav() {
@@ -297,12 +313,15 @@ export default {
             this.clickRouter('login')
         },
         parseJwt(token) {
-            var base64Payload = token.split('.')[1]
-            var payload = Buffer.from(base64Payload, 'base64')
-            return JSON.parse(payload.toString())
+            if (typeof token !== 'undefined') {
+                var base64Payload = token.split('.')[1]
+                var payload = Buffer.from(base64Payload, 'base64')
+                return JSON.parse(payload.toString())
+            }
         },
     },
     created() {
+        this.$store.dispatch('pheduyet/getApprove')
         let tokennn = this.$cookies.get('cookieToken')
         this.user = this.parseJwt(tokennn)
         this.$store.dispatch('getUser', this.user.name)
@@ -353,6 +372,18 @@ export default {
     top: 5px;
     right: 10px;
     color: #cccccc;
+}
+.btn-drop {
+    position: relative;
+}
+.count-noti {
+    position: absolute;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    padding: 0 5px;
+    bottom: -4px;
+    right: -4px;
 }
 .btn-login {
     color: white;

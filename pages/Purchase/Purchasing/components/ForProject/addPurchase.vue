@@ -38,7 +38,7 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
-                
+
                 <DxSelectBox
                     v-if="userInfo.listOfNhanVienPhongBan.length > 1"
                     :data-source="userInfo.listOfNhanVienPhongBan"
@@ -334,6 +334,9 @@ export default {
                 if (refNumber) {
                     this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
                     this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
+                } else {
+                    this.YeuCauMuaHang.soThamChieu = ''
+                    this.YeuCauMuaHang.maChiPhi = ''
                 }
             },
             immediate: true,

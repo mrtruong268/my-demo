@@ -213,7 +213,7 @@ export default {
             }
         },
         clickPrint(e) {
-            this.$store.dispatch('exportExcel', e.data.id)
+            this.$store.dispatch('exportExcel', e.data)
         },
         hiddenPopup() {
             this.popupVisible = !this.popupVisible

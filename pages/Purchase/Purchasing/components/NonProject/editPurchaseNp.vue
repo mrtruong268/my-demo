@@ -308,12 +308,27 @@
                 </div>
             </div>
             <div
-                :class="yc.approvalStatus !== 'Approval' ? 'hide xs3' : 'xs3'"
+                :class="yc.approvalStatus === 'MustRevise' ? 'hide xs3' : 'xs3'"
                 v-for="yc in YeuCauMuaHang.duyetYCMHsNoiBo"
                 :key="yc.id"
-                :style="yc.approvalState === 'NVTC_DUYET' ? 'display:none' : ''"
+                :style="
+                    yc.approvalState === 'NVTC_DUYET'
+                        ? 'display:none'
+                        : yc.approvalState === 'MH_DUYET'
+                        ? 'display:none'
+                        : ''
+                "
             >
                 <div
+                    v-if="
+                        yc.approvalState === 'TBP_DUYET' &&
+                        yc.approvalStatus === 'None'
+                    "
+                >
+                    <p>{{ yc.tenNhanVien }}...</p>
+                </div>
+                <div
+                    v-else
                     class="footer-content column justify-space-between text-xs-center"
                 >
                     <p style="text-decoration: underline">
@@ -324,7 +339,7 @@
                                 ? 'Bộ phận tài chính'
                                 : yc.approvalState == 'TGD_DUYET'
                                 ? 'Ban giám đốc'
-                                : yc.approvalState == 'MH_DUYET'
+                                : yc.approvalState == 'PMH_DUYET'
                                 ? 'Bộ phận mua hàng'
                                 : ''
                         }}:
@@ -332,7 +347,7 @@
                     <p>
                         {{
                             yc.approvalStatus == 'Approval'
-                                ? '(Approval by VNAS App)'
+                                ? '(Approved by VNAS App)'
                                 : ''
                         }}
                     </p>

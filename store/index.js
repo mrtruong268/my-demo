@@ -178,10 +178,10 @@ export const actions = {
         }
     },
 
-    async exportExcel({ commit }, exportId) {
+    async exportExcel({ commit }, exportItem) {
         try {
             let response = await this.$axios.get(
-                `/pr/export-pr?id=${exportId}`,
+                `/pr/export-pr?id=${exportItem.id}`,
                 {
                     responseType: 'blob',
                 }
@@ -190,9 +190,15 @@ export const actions = {
             let link = document.createElement('a')
             link.href = url
             if (response.data.type === 'application/pdf') {
-                link.setAttribute('download', 'DNMH.pdf')
+                link.setAttribute(
+                    'download',
+                    `DNMH(${exportItem.soThamChieu}).pdf`
+                )
             } else {
-                link.setAttribute('download', 'DNMH.xlsx')
+                link.setAttribute(
+                    'download',
+                    `DNMH(${exportItem.soThamChieu}).xlsx`
+                )
             }
             document.body.appendChild(link)
             link.click()
@@ -200,10 +206,10 @@ export const actions = {
             console.log(err)
         }
     },
-    async exportExcelNp({ commit }, exportId) {
+    async exportExcelNp({ commit }, exportItem) {
         try {
             let response = await this.$axios.get(
-                `/ipr/export-pr?id=${exportId}`,
+                `/ipr/export-pr?id=${exportItem.id}`,
                 {
                     responseType: 'blob',
                 }
@@ -212,9 +218,15 @@ export const actions = {
             let link = document.createElement('a')
             link.href = url
             if (response.data.type === 'application/pdf') {
-                link.setAttribute('download', 'DNMH-Ngoai-Du-An.pdf')
+                link.setAttribute(
+                    'download',
+                    `DNMH(${exportItem.soThamChieu}).pdf`
+                )
             } else {
-                link.setAttribute('download', 'DNMH-Ngoai-Du-An.xlsx')
+                link.setAttribute(
+                    'download',
+                    `DNMH(${exportItem.soThamChieu}).xlsx`
+                )
             }
             document.body.appendChild(link)
             link.click()

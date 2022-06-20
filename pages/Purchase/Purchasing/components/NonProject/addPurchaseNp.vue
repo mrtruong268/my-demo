@@ -308,17 +308,13 @@ export default {
                 if (refNumberNp) {
                     this.YeuCauMuaHang.soThamChieu = refNumberNp.soThamChieu
                     this.YeuCauMuaHang.maChiPhi = refNumberNp.maChiPhi
+                } else {
+                    this.YeuCauMuaHang.soThamChieu = ''
+                    this.YeuCauMuaHang.maChiPhi = ''
                 }
             },
             immediate: true,
         },
-        // dataExcel: {
-        //     handler(dataExcel) {
-        //         if (dataExcel) {
-        //         }
-        //     },
-        //     deep: true,
-        // },
     },
     computed: {
         ...mapState('muahang', ['listItemNp', 'refNumberNp']),
