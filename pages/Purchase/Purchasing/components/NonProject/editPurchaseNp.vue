@@ -493,32 +493,30 @@ export default {
             this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
                 (e) => (conditionsArray = [e.tenHangHoa_DichVu !== ''])
             )
-            return !conditionsArray.includes(false)
+            return conditionsArray.includes(true)
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
         },
         clickSave() {
-            let result = this.validationGroup.validate()
             let result2 = confirm('Do you want to submit?')
+            let result = this.validationGroup.validate()
             let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets
             if (result2) {
-                if (
-                    result.isValid &&
-                    this.checkArray() &&
-                    isArrEmpty.length > 0
-                ) {
+                if (result.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
-                        this.$store.dispatch(
-                            'muahang/editDataNp',
-                            this.YeuCauMuaHang
-                        )
-                        this.clickClose()
-                    }, 200)
-                } else {
-                    this.$toast.error(
-                        `Failed! One or more validation errors occurred`
-                    )
+                        if (this.checkArray()) {
+                            this.$store.dispatch(
+                                'muahang/editDataNp',
+                                this.YeuCauMuaHang
+                            )
+                            this.clickClose()
+                        } else {
+                            this.$toast.error(
+                                `Failed! One or more validation errors occurred`
+                            )
+                        }
+                    }, 300)
                 }
             }
         },

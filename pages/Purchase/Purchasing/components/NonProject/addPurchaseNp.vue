@@ -348,29 +348,27 @@ export default {
                         e.donGiaTamTinh !== '',
                     ])
             )
-            return !conditionsArray.includes(false)
+            return conditionsArray.includes(true)
         },
         clickAdd() {
             var result = confirm('Do you want to submit?')
             let checkEmpty = this.validationGroup.validate()
             let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets
             if (result) {
-                if (
-                    this.checkArray() &&
-                    checkEmpty.isValid &&
-                    isArrEmpty.length > 0
-                ) {
+                if (checkEmpty.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
-                        this.$store.dispatch(
-                            'muahang/postDataNp',
-                            this.YeuCauMuaHang
-                        )
-                        this.resetData()
-                    }, 200)
-                } else {
-                    this.$toast.error(
-                        `Failed! One or more validation errors occurred`
-                    )
+                        if (this.checkArray()) {
+                            this.$store.dispatch(
+                                'muahang/postDataNp',
+                                this.YeuCauMuaHang
+                            )
+                            this.resetData()
+                        } else {
+                            this.$toast.error(
+                                `Failed! One or more validation errors occurred`
+                            )
+                        }
+                    }, 300)
                 }
             }
         },

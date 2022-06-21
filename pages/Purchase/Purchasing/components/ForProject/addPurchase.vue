@@ -339,7 +339,6 @@ export default {
                     this.YeuCauMuaHang.maChiPhi = ''
                 }
             },
-            immediate: true,
         },
         dataExcel: {
             handler(dataExcel) {
@@ -362,6 +361,9 @@ export default {
         ]),
         validationGroup() {
             return this.$refs[this.formValidation].instance
+        },
+        selectBox() {
+            return this.$refs[this.selectBoxRefKey].instance
         },
     },
     methods: {
@@ -391,40 +393,40 @@ export default {
                         e.soLuong !== '',
                         e.donVi !== '',
                         e.donGiaTamTinh !== '',
-                        e.soTienTamTinh !== '',
                         e.maHangMucTrienKhai !== '',
+                        e.soTienTamTinh !== '',
                     ])
             )
-            return !conditionsArray.includes(false)
+            return conditionsArray.includes(true)
         },
         clickAdd() {
             var result = confirm('Do you want to submit?')
             let checkEmpty = this.validationGroup.validate()
             let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets
             if (result) {
-                if (
-                    this.checkArray() &&
-                    checkEmpty.isValid &&
-                    isArrEmpty.length > 0
-                ) {
+                if (checkEmpty.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
-                        this.$store.dispatch(
-                            'muahang/postData',
-                            this.YeuCauMuaHang
-                        )
-                        this.resetData()
-                    }, 200)
-                } else {
-                    this.$toast.error(
-                        `Failed! One or more validation errors occurred`
-                    )
+                        if (this.checkArray()) {
+                            this.$store.dispatch(
+                                'muahang/postData',
+                                this.YeuCauMuaHang
+                            )
+                            this.resetData()
+                        } else {
+                            this.$toast.error(
+                                `Failed! One or more validation errors occurred`
+                            )
+                        }
+                    }, 300)
                 }
             }
         },
         selectDuAn(e) {
             this.YeuCauMuaHang.maDuAn = e.selectedItem
-            this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
-            this.$store.dispatch('getHangMuc', e.selectedItem)
+            if (e.selectedItem !== null) {
+                this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
+                this.$store.dispatch('getHangMuc', e.selectedItem)
+            }
         },
         selectPhongBan(e) {
             this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
@@ -471,6 +473,7 @@ export default {
             this.file = this.$refs.file.files[0]
         },
         resetData() {
+            this.selectBox.reset()
             this.YeuCauMuaHang = {
                 id: 0,
                 tenNhanVien: this.userInfo.tenNhanVien,

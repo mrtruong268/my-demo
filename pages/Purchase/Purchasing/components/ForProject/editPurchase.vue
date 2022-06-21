@@ -196,10 +196,11 @@
                             <p>Mã dự án:</p>
                             <DxSelectBox
                                 :items="projectCode"
-                                styling-mode="underlined"
                                 :value="YeuCauMuaHang.maDuAn"
+                                styling-mode="underlined"
                                 :read-only="disable"
                                 @selectionChanged="selectDuAn"
+                                :ref="selectBoxRefKey"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -442,6 +443,7 @@ export default {
         return {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
+            selectBoxRefKey: 'BoxRefKey',
             YeuCauMuaHang: {},
             loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
             disable: true,
@@ -457,16 +459,16 @@ export default {
                     this.mnv = this.YeuCauMuaHang.maNhanVien
                 }
             },
+            immediate: true,
             deep: true,
         },
         refNumber: {
             handler(refNumber) {
-                if (refNumber) {
+                if (refNumber && this.disable == false) {
                     this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
                     this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
                 }
             },
-            immediate: true,
         },
     },
     computed: {
@@ -475,6 +477,9 @@ export default {
         ...mapGetters('muahang', ['suaYeuCau', 'danhSachHangHoa']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
+        },
+        selectBox() {
+            return this.$refs[this.selectBoxRefKey].instance
         },
     },
     methods: {
@@ -522,41 +527,41 @@ export default {
                         e.soLuong !== '',
                         e.donVi !== '',
                         e.donGiaTamTinh !== '',
-                        e.soTienTamTinh !== '',
                         e.maHangMucTrienKhai !== '',
+                        e.soTienTamTinh !== '',
                     ])
             )
-            return !conditionsArray.includes(false)
+            return conditionsArray.includes(true)
         },
         selectDuAn(e) {
             this.YeuCauMuaHang.maDuAn = e.selectedItem
-            this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
-            this.$store.dispatch('getHangMuc', e.selectedItem)
+            if (e.selectedItem !== null) {
+                this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
+                this.$store.dispatch('getHangMuc', e.selectedItem)
+            }
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
         },
         clickSave() {
-            let result = this.validationGroup.validate()
             let result2 = confirm('Do you want to submit?')
+            let result = this.validationGroup.validate()
             let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets
             if (result2) {
-                if (
-                    result.isValid &&
-                    this.checkArray() &&
-                    isArrEmpty.length > 0
-                ) {
+                if (result.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
-                        this.$store.dispatch(
-                            'muahang/editData',
-                            this.YeuCauMuaHang
-                        )
-                        this.clickClose()
-                    }, 200)
-                } else {
-                    this.$toast.error(
-                        `Failed! One or more validation errors occurred`
-                    )
+                        if (this.checkArray()) {
+                            this.$store.dispatch(
+                                'muahang/editData',
+                                this.YeuCauMuaHang
+                            )
+                            this.clickClose()
+                        } else {
+                            this.$toast.error(
+                                `Failed! One or more validation errors occurred`
+                            )
+                        }
+                    }, 300)
                 }
             }
         },
