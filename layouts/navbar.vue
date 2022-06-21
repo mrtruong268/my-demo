@@ -27,11 +27,14 @@
                                 class="mdi mdi-bell-badge btn-drop"
                                 @click="openNoti"
                             ></i>
-                            <div class="count-noti">
-                                {{ dataNoti.length }}
+                            <div
+                                class="count-noti"
+                                v-if="danhSachPheDuyet.data !== undefined"
+                            >
+                                {{ danhSachPheDuyet.data.length }}
                             </div>
                             <div id="myDropdown" class="notification-content">
-                                <notification :data="dataNoti" />
+                                <notification :data="danhSachPheDuyet.data" />
                             </div>
                         </div>
                         <div class="user-guide mr-2">
@@ -246,19 +249,7 @@ export default {
             selectedValue: '',
             selectedItem: null,
             user: {},
-            dataNoti: [],
         }
-    },
-    watch: {
-        danhSachPheDuyet: {
-            handler(danhSachPheDuyet) {
-                if (danhSachPheDuyet) {
-                    this.dataNoti = danhSachPheDuyet.data.filter((e) => {
-                        return e.trangThaiDuyet == 'Chờ duyệt'
-                    })
-                }
-            },
-        },
     },
     computed: {
         ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'userInfo']),
@@ -303,7 +294,6 @@ export default {
             this.$store.commit('IS_SELECTED', 'categories')
             this.clickRouter('ProjectManagement', this.routeParams)
         },
-        goDashboard() {},
         changePass() {
             window.open('https://data.vnas.com.vn/identityserver/Account/Login')
         },
