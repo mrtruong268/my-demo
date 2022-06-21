@@ -435,6 +435,7 @@ export default {
                     this.mnv = this.YeuCauMuaHang.maNhanVien
                 }
             },
+            immediate: true,
             deep: true,
         },
         refNumberNp: {
