@@ -6,64 +6,7 @@
                 @click="clickClose"
             ></div>
         </div>
-        <div class="header row align-center">
-            <div class="xs4 container-xs" style="border-right: 1px solid black">
-                <div class="row align-center">
-                    <div class="mx-2">
-                        <img
-                            src="~assets/logo.png"
-                            width="90px"
-                            height="auto"
-                        />
-                    </div>
-                    <div v-if="mnv.includes('VNASWO')">
-                        <p class="font-12" style="font-weight: bold">
-                            Công ty cổ phần VNAS Workshop
-                        </p>
-                        <p class="font-12">
-                            Điểm công nghiệp Di Trạch, Di Trạch, Hoài Đức, Hà
-                            Nội
-                        </p>
-                        <p class="font-12">MST: 0109687775</p>
-                    </div>
-                    <div v-else-if="mnv.includes('VNASSE')">
-                        <p class="font-12" style="font-weight: bold">
-                            Công ty cổ phần VNAS SERVICES
-                        </p>
-                        <p class="font-12">
-                            Xóm 12, Thôn Hậu Ái, Xã Vân Canh, Huyện Hoài Đức,
-                            Thành Phố Hà Nội
-                        </p>
-                        <p class="font-12">MST: 0109529056</p>
-                    </div>
-                    <div v-else>
-                        <p class="font-12" style="font-weight: bold">
-                            Công ty Cổ phần tập đoàn Việt Nam Auto Solutions
-                        </p>
-                        <p class="font-12">
-                            Số 16, ngách 53/59/50 đường Ngọa Long, phường Minh
-                            Khai, Bắc Từ Liêm, Hà Nội
-                        </p>
-                        <p class="font-12">MST: 0108326399</p>
-                    </div>
-                </div>
-            </div>
-            <div class="xs6 text-xs-center" style="">
-                <h1>
-                    PHIẾU ĐỀ NGHỊ MUA <br />
-                    HÀNG HÓA,DỊCH VỤ
-                </h1>
-            </div>
-            <div class="xs2 right-content">
-                <div class="top">
-                    <p>Form: VNAS-TC-MH</p>
-                    <p>ĐNMH-000000</p>
-                </div>
-                <div class="bot">
-                    <p>Số: {{ YeuCauMuaHang.id }}</p>
-                </div>
-            </div>
-        </div>
+        <dnmh :maNhanVien="mnv" :ycmh="YeuCauMuaHang" />
         <div class="info-user header">
             <div class="row">
                 <div class="xs4 mr-4">
@@ -337,6 +280,7 @@ import {
     DxSummary,
     DxTotalItem,
 } from 'devextreme-vue/data-grid'
+import dnmh from '~/components/dnmh.vue'
 import moment from 'moment'
 
 export default {
@@ -359,6 +303,7 @@ export default {
         DxEditing,
         DxSummary,
         DxTotalItem,
+        dnmh,
     },
     watch: {
         view: {

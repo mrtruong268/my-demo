@@ -33,8 +33,15 @@
                             >
                                 {{ danhSachPheDuyet.data.length }}
                             </div>
-                            <div id="myDropdown" class="notification-content">
-                                <notification :data="danhSachPheDuyet.data" />
+                            <div
+                                id="myDropdown"
+                                class="notification-content"
+                                @click="autoUpdate"
+                            >
+                                <notification
+                                    :data="danhSachPheDuyet.data"
+                                    @close="clickClose"
+                                />
                             </div>
                         </div>
                         <div class="user-guide mr-2">
@@ -268,6 +275,12 @@ export default {
             toggle.classList.toggle('active')
             sidebar.classList.toggle('active')
         },
+        autoUpdate() {
+            var self = this
+            setInterval(() => {
+                self.$store.dispatch('pheduyet/getApprove')
+            }, 60000)
+        },
         openNoti() {
             let myDropdown = document.getElementById('myDropdown')
             myDropdown.classList.toggle('show')
@@ -316,6 +329,7 @@ export default {
         this.user = this.parseJwt(tokennn)
         this.$store.dispatch('getUser', this.user.name)
         this.selectedValue = this.$i18n.locale
+        this.autoUpdate()
     },
     beforeDestroy() {
         this.$store.commit('GET_USER', {})
@@ -371,7 +385,8 @@ export default {
     color: white;
     background-color: red;
     border-radius: 50%;
-    padding: 0 5px;
+    padding: 1px;
+    font-size: 13px;
     bottom: -4px;
     right: -4px;
 }

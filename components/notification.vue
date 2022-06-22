@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="item in data" :key="item.id">
+        <div v-for="item in dataReverse" :key="item.id">
             <div class="main-noti" @click="clickApprove">
                 <div class="row">
                     <img src="~assets/approve.png" alt="" class="mx-4" />
@@ -8,7 +8,9 @@
                         <p>
                             Phê duyệt cho <span>{{ item.tenNhanVien }}</span>
                         </p>
-                        <p>Trạng thái: {{ item.trangThaiDuyet }}</p>
+                        <p>
+                            Trạng thái: <span>{{ item.trangThaiDuyet }}</span>
+                        </p>
                         <p>
                             Thời gian yêu cầu: {{ timestamp(item.ngayDeTrinh) }}
                         </p>
@@ -21,16 +23,40 @@
 
 <script>
 import moment from 'moment'
-
 export default {
-    props: ['data'],
+    props: {
+        data: {
+            type: Array,
+            default() {
+                return []
+            },
+        },
+    },
+    data() {
+        return {
+            dataReverse: [],
+        }
+    },
+    watch: {
+        data: {
+            handler(data) {
+                if (data) {
+                    this.dataReverse = [...data]
+                    return this.dataReverse.reverse()
+                } else {
+                    this.$store.dispatch('pheduyet/getApprove')
+                }
+            },
+        },
+    },
     methods: {
         timestamp(date) {
             return moment(date).format('HH:mm DD-MM-YYYY')
         },
         clickApprove() {
-            this.clickRouter('Purchase/Purchasing', this.routeParams)
             this.$store.commit('IS_SELECTED', 'pd')
+            this.clickRouter('Purchase/Purchasing', this.routeParams)
+            this.$emit('close')
         },
     },
 }
@@ -50,7 +76,7 @@ img {
 .main-noti:hover {
     background-color: #ddd;
     transition: all 0.2s linear 0s;
-    border-bottom: 1px solid #808080;
+    border-bottom: 1px solid #ddd;
 }
 .item-noti span {
     font-weight: bold;
