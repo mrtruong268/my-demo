@@ -34,7 +34,7 @@
         <div class="xs2 right-content">
             <div class="top">
                 <p>Form: VNAS-TC-MH</p>
-                <p>ĐNMH-{{ ycmh.id }}</p>
+                <p>ĐNMH-000000</p>
             </div>
             <div class="bot">
                 <p>Khổ giấy: A4</p>
