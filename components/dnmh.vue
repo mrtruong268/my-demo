@@ -24,6 +24,16 @@
                     </p>
                     <p class="font-12">MST: 0109529056</p>
                 </div>
+                <div v-else-if="maNhanVien.includes('VNASG')">
+                    <p class="font-12" style="font-weight: bold">
+                        Công ty Cổ phần tập đoàn Việt Nam Auto Solutions
+                    </p>
+                    <p class="font-12">
+                        Số 16, ngách 53/59/50 đường Ngọa Long, phường Minh Khai,
+                        Bắc Từ Liêm, Hà Nội
+                    </p>
+                    <p class="font-12">MST: 0108326399</p>
+                </div>
                 <div v-else>
                     <p class="font-12" style="font-weight: bold">
                         Công ty TNHH Việt Nam Auto Solutions
