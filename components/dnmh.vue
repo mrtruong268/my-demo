@@ -5,7 +5,7 @@
                 <div class="mx-2">
                     <img src="~assets/logo.png" width="90px" height="auto" />
                 </div>
-                <div v-if="maNhanVien.includes('VNASWO')">
+                <div v-if="mnv.includes('VNASWO')">
                     <p class="font-12" style="font-weight: bold">
                         Công ty cổ phần VNAS Workshop
                     </p>
@@ -14,12 +14,33 @@
                     </p>
                     <p class="font-12">MST: 0109687775</p>
                 </div>
+                <div v-else-if="mnv.includes('VNASSE')">
+                    <p class="font-12" style="font-weight: bold">
+                        Công ty cổ phần VNAS SERVICES
+                    </p>
+                    <p class="font-12">
+                        Xóm 12, Thôn Hậu Ái, Xã Vân Canh, Huyện Hoài Đức, Thành
+                        Phố Hà Nội
+                    </p>
+                    <p class="font-12">MST: 0109529056</p>
+                </div>
+                <div v-else-if="mnv.includes('VNASG')">
+                    <p class="font-12" style="font-weight: bold">
+                        Công ty Cổ phần tập đoàn Việt Nam Auto Solutions
+                    </p>
+                    <p class="font-12">
+                        Số 16, ngách 53/59/50 đường Ngọa Long, phường Minh Khai,
+                        Bắc Từ Liêm, Hà Nội
+                    </p>
+                    <p class="font-12">MST: 0108326399</p>
+                </div>
                 <div v-else>
                     <p class="font-12" style="font-weight: bold">
                         Công ty TNHH Việt Nam Auto Solutions
                     </p>
                     <p class="font-12">
-                        Thôn An Trai, Xã Vân Canh, Huyện Hoài Đức, TP Hà Nội
+                        Thôn An Trai, Xã Vân Canh, Huyện Hoài Đức, Thành Phố Hà
+                        Nội
                     </p>
                     <p class="font-12">MST: 0106515898</p>
                 </div>
