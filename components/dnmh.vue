@@ -58,7 +58,7 @@
                 <p>ĐNMH-210325</p>
             </div>
             <div class="bot">
-                <p>Khổ giấy: A4 - Số: {{ ycmh.id }}</p>
+                <p>Số: {{ ycmh.id }}</p>
             </div>
         </div>
     </div>

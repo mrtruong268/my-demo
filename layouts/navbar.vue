@@ -29,19 +29,20 @@
                             ></i>
                             <div
                                 class="count-noti"
-                                v-if="danhSachPheDuyet.data !== undefined"
+                                v-if="
+                                    typeof danhSachPheDuyet.data !==
+                                        'undefined' &&
+                                    typeof danhSachPheDuyetNp.data !==
+                                        'undefined'
+                                "
                             >
-                                {{ danhSachPheDuyet.data.length }}
+                                {{
+                                    danhSachPheDuyetNp.data.length +
+                                    danhSachPheDuyet.data.length
+                                }}
                             </div>
-                            <div
-                                id="myDropdown"
-                                class="notification-content"
-                                @click="autoUpdate"
-                            >
-                                <notification
-                                    :data="danhSachPheDuyet.data"
-                                    @close="clickClose"
-                                />
+                            <div id="myDropdown" class="notification-content">
+                                <notification @close="clickClose" />
                             </div>
                         </div>
                         <div class="user-guide mr-2">
@@ -260,7 +261,7 @@ export default {
     },
     computed: {
         ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'userInfo']),
-        ...mapState('pheduyet', ['danhSachPheDuyet']),
+        ...mapState('pheduyet', ['danhSachPheDuyet', 'danhSachPheDuyetNp']),
     },
     methods: {
         openNav() {
@@ -274,11 +275,6 @@ export default {
             }
             toggle.classList.toggle('active')
             sidebar.classList.toggle('active')
-        },
-        autoUpdate() {
-            setInterval(() => {
-                this.$store.dispatch('pheduyet/getApprove')
-            }, 60000)
         },
         openNoti() {
             let myDropdown = document.getElementById('myDropdown')
@@ -323,14 +319,18 @@ export default {
         },
     },
     mounted() {
-        this.$store.dispatch('pheduyet/getApprove')
-        this.autoUpdate()
+        setInterval(() => {
+            this.$store.dispatch('pheduyet/getApprove')
+            this.$store.dispatch('pheduyet/getApproveNp')
+        }, 59000)
     },
     created() {
         let tokennn = this.$cookies.get('cookieToken')
         this.user = this.parseJwt(tokennn)
         this.$store.dispatch('getUser', this.user.name)
         this.selectedValue = this.$i18n.locale
+        this.$store.dispatch('pheduyet/getApprove')
+        this.$store.dispatch('pheduyet/getApproveNp')
     },
     beforeDestroy() {
         this.$store.commit('GET_USER', {})
@@ -610,7 +610,6 @@ export default {
     width: 36px;
     height: auto;
 }
-
 .selectbox {
     background-color: white;
     border-radius: 4px;

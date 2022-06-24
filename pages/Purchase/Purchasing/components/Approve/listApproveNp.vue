@@ -180,7 +180,7 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('pheduyet/getApproveNp')
+        this.clickReload()
     },
 }
 </script>
