@@ -182,6 +182,14 @@
                         styling-mode="contained"
                         @click="submitFile()"
                         height="30px"
+                        class="mr-2"
+                    />
+                    <DxButton
+                        :text="$t('Tải mẫu Excel')"
+                        type="default"
+                        styling-mode="contained"
+                        @click="$store.dispatch('downloadExcel')"
+                        height="30px"
                     />
                 </div>
             </div>
@@ -394,7 +402,6 @@ export default {
                         e.donVi !== '',
                         e.donGiaTamTinh !== '',
                         e.maHangMucTrienKhai !== '',
-                        e.soTienTamTinh !== '',
                     ])
             )
             return conditionsArray.includes(true)
@@ -414,10 +421,12 @@ export default {
                             this.resetData()
                         } else {
                             this.$toast.error(
-                                `Failed! One or more validation errors occurred`
+                                `Failed! Not enough information to save`
                             )
                         }
                     }, 300)
+                } else {
+                    this.$toast.error(`Failed! Not enough information to save!`)
                 }
             }
         },

@@ -14,19 +14,20 @@
             :show-row-lines="true"
             :show-borders="true"
             :row-alternation-enabled="true"
-            height="100%"
+            height="auto"
             :noDataText="$t('Không có dữ liệu')"
             :remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
             :hover-state-enabled="false"
         >
-            <DxPaging :page-size="8" />
+            <DxPaging :page-size="30" />
             <DxScrolling mode="standard" row-rendering-mode="standard" />
             <DxPager
                 :visible="true"
-                :show-page-size-selector="false"
-                :show-info="false"
+                :allowed-page-sizes="[15, 30, 'all']"
+                :show-page-size-selector="true"
+                :show-info="true"
                 :show-navigation-buttons="true"
             />
             <DxHeaderFilter :visible="true" />

@@ -262,83 +262,15 @@
                 </DxSummary>
             </DxDataGrid>
         </div>
-        <div class="row align-center">
-            <div
-                class="footer-content column justify-space-between text-xs-center xs3"
-            >
-                <p style="text-decoration: underline">Người yêu cầu:</p>
-                <div>
-                    <span>{{ YeuCauMuaHang.tenNhanVien }}</span>
-                    <p>
-                        Thời gian:
-                        <span>{{ timestamp(YeuCauMuaHang.ngayDeTrinh) }}</span>
-                    </p>
-                </div>
-            </div>
-            <div
-                :class="yc.approvalStatus === 'MustRevise' ? 'hide xs3' : 'xs3'"
-                v-for="yc in YeuCauMuaHang.duyetYCMHs"
-                :key="yc.id"
-                :style="
-                    yc.approvalState === 'NVTC_DUYET'
-                        ? 'display:none'
-                        : yc.approvalState === 'MH_DUYET'
-                        ? 'display:none'
-                        : ''
-                "
-            >
-                <div
-                    v-if="
-                        yc.approvalState === 'TBP_DUYET' &&
-                        yc.approvalStatus === 'None'
-                    "
-                >
-                    <p>{{ yc.tenNhanVien }}...</p>
-                </div>
-                <div
-                    v-else
-                    class="footer-content column justify-space-between text-xs-center"
-                >
-                    <p style="text-decoration: underline">
-                        {{
-                            yc.approvalState == 'TBP_DUYET'
-                                ? 'Trưởng bộ phận'
-                                : yc.approvalState == 'GDTC_DUYET'
-                                ? 'Bộ phận tài chính'
-                                : yc.approvalState == 'TGD_DUYET'
-                                ? 'Ban giám đốc'
-                                : yc.approvalState == 'PMH_DUYET'
-                                ? 'Bộ phận mua hàng'
-                                : ''
-                        }}:
-                    </p>
-                    <p>
-                        {{
-                            yc.approvalStatus == 'Approval'
-                                ? '(Approved by VNAS App)'
-                                : ''
-                        }}
-                    </p>
-                    <div>
-                        <span>{{ yc.tenNhanVien }}</span>
-                        <p>
-                            Thời gian:
-                            <span>{{ timestamp(yc.ngayDuyet) }}</span>
-                        </p>
+        <lichSuDuyet :ycmh="YeuCauMuaHang" />
+        <div class="row">
+            <div class="mr-1" style="font-weight: bold">Lịch sử huỷ duyệt:</div>
+            <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id">
+                <div v-if="yc.approvalStatus == 'MustRevise'" class="row">
+                    <div class="mr-2">
+                        ({{ yc.tenNhanVien }}: {{ yc.comment }})
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div v-for="yc in YeuCauMuaHang.duyetYCMHs" :key="yc.id" class="mt-2">
-            <div v-if="yc.approvalStatus == 'MustRevise'">
-                <p style="font-weight: bold">
-                    (Lịch sử duyệt:
-                    <span style="font-weight: normal"
-                        >Đã huỷ duyệt bởi: {{ yc.tenNhanVien }} vào lúc
-                        {{ timestamp(yc.ngayDuyet) }})</span
-                    >
-                </p>
             </div>
         </div>
     </div>
@@ -362,8 +294,9 @@ import { mapGetters, mapState } from 'vuex'
 import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
 import DxValidationGroup from 'devextreme-vue/validation-group'
 import { DxAutocomplete } from 'devextreme-vue/autocomplete'
-import moment from 'moment'
 import dnmh from '~/components/dnmh.vue'
+import lichSuDuyet from '~/components/lichSuDuyet.vue'
+import moment from 'moment'
 
 export default {
     components: {
@@ -383,6 +316,7 @@ export default {
         DxValidationGroup,
         DxAutocomplete,
         dnmh,
+        lichSuDuyet,
     },
     data() {
         return {
@@ -414,6 +348,7 @@ export default {
                     this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
                 }
             },
+            immediate: true,
         },
     },
     computed: {
@@ -473,7 +408,6 @@ export default {
                         e.donVi !== '',
                         e.donGiaTamTinh !== '',
                         e.maHangMucTrienKhai !== '',
-                        e.soTienTamTinh !== '',
                     ])
             )
             return conditionsArray.includes(true)
@@ -503,10 +437,12 @@ export default {
                             this.clickClose()
                         } else {
                             this.$toast.error(
-                                `Failed! One or more validation errors occurred`
+                                `Failed! Not enough information to save`
                             )
                         }
                     }, 300)
+                } else {
+                    this.$toast.error(`Failed! Not enough information to save`)
                 }
             }
         },
@@ -525,7 +461,7 @@ export default {
             return e.soLuong * e.donGiaTamTinh
         },
         timestamp(date) {
-            return moment(date).format('HH:mm DD-MM-YYYY')
+            return moment(date).format('DD-MM-YYYY')
         },
     },
     created() {
@@ -565,22 +501,8 @@ export default {
 .bot {
     padding: 9px;
 }
-.footer-content p {
-    font-weight: bold;
-}
-.footer-content span {
-    font-weight: normal;
-}
-.footer-content {
-    height: 100px;
-    border: 1px solid black;
-    padding: 8px;
-}
 .xs-4 {
     flex-basis: 34.6%;
     max-width: 34.6%;
-}
-.hide {
-    display: none;
 }
 </style>

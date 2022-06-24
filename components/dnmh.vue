@@ -55,10 +55,10 @@
         <div class="xs2 right-content">
             <div class="top">
                 <p>Form: VNAS-TC-MH</p>
-                <p>ĐNMH-000000</p>
+                <p>ĐNMH-210325</p>
             </div>
             <div class="bot">
-                <p>Khổ giấy: A4</p>
+                <p>Khổ giấy: A4 - Số: {{ ycmh.id }}</p>
             </div>
         </div>
     </div>

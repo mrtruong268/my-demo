@@ -22,18 +22,21 @@
             :hover-state-enabled="false"
             :ref="dataGridRefKey"
         >
-            <DxPaging :page-size="8" />
+            <DxPaging :page-size="30" />
             <DxScrolling mode="standard" row-rendering-mode="standard" />
             <DxPager
                 :visible="true"
-                :show-page-size-selector="false"
-                :show-info="false"
-                :show-navigation-buttons="true"
+                :allowed-page-sizes="[15, 30, 'all']"
+                :show-page-size-selector="true"
+                :show-info="true"
+                :show-navigation-buttons="false"
             />
+            <DxColumnFixing :enabled="true" />
             <DxHeaderFilter :visible="true" />
             <DxFilterRow :visible="true" />
             <DxColumn
                 data-field="id"
+                :fixed="true"
                 :caption="$t('Số')"
                 alignment="center"
                 :allow-header-filtering="false"
@@ -42,11 +45,19 @@
                 :allow-header-filtering="false"
                 data-field="tenNhanVien"
                 :caption="$t('Họ và tên')"
+                :fixed="true"
             />
             <DxColumn
-                :allow-header-filtering="false"
+                :allow-header-filtering="true"
                 data-field="phongBan"
                 :caption="$t('Phòng ban')"
+                :fixed="true"
+            />
+            <DxColumn
+                :allow-header-filtering="true"
+                data-field="maDuAn"
+                :fixed="true"
+                :caption="$t('Mã dự án')"
             />
             <DxColumn
                 :allow-header-filtering="false"
@@ -160,6 +171,7 @@ import {
     DxScrolling,
     DxPager,
     DxPaging,
+    DxColumnFixing,
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
 import Popup from '~/components/popup.vue'
@@ -172,6 +184,7 @@ export default {
         DxColumn,
         DxScrolling,
         DxPager,
+        DxColumnFixing,
         DxPaging,
         DxHeaderFilter,
         DxFilterRow,

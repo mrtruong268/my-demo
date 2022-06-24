@@ -163,6 +163,14 @@
                         styling-mode="contained"
                         @click="submitFile()"
                         height="30px"
+                        class="mr-2"
+                    />
+                    <DxButton
+                        :text="$t('Tải mẫu Excel')"
+                        type="default"
+                        styling-mode="contained"
+                        @click="$store.dispatch('downloadExcelNp')"
+                        height="30px"
                     />
                 </div>
             </div>
@@ -315,10 +323,20 @@ export default {
             },
             immediate: true,
         },
+        dataExcelNp: {
+            handler(dataExcelNp) {
+                if (dataExcelNp) {
+                    this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets = JSON.parse(
+                        JSON.stringify(dataExcelNp.yeuCauMuaHangNoiBoChiTiets)
+                    )
+                }
+            },
+            deep: true,
+        },
     },
     computed: {
         ...mapState('muahang', ['listItemNp', 'refNumberNp']),
-        ...mapState(['userInfo']),
+        ...mapState(['userInfo', 'dataExcelNp']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
         },
@@ -341,12 +359,7 @@ export default {
         checkArray() {
             let conditionsArray = []
             this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
-                (e) =>
-                    (conditionsArray = [
-                        e.tenHangHoa_DichVu !== '',
-                        e.soLuong !== '',
-                        e.donGiaTamTinh !== '',
-                    ])
+                (e) => (conditionsArray = [e.tenHangHoa_DichVu !== ''])
             )
             return conditionsArray.includes(true)
         },
@@ -365,10 +378,12 @@ export default {
                             this.resetData()
                         } else {
                             this.$toast.error(
-                                `Failed! One or more validation errors occurred`
+                                `Failed! Not enough information to save!`
                             )
                         }
                     }, 300)
+                } else {
+                    this.$toast.error(`Failed! Not enough information to save!`)
                 }
             }
         },
@@ -387,7 +402,8 @@ export default {
         async submitFile() {
             let formData = new FormData()
             formData.append('file', this.file)
-            if (this.file !== '') return
+            if (this.file !== '')
+                this.$store.dispatch('uploadExcelNp', formData)
         },
         handleFileUpload() {
             this.file = this.$refs.file.files[0]

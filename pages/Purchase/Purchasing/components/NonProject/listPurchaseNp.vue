@@ -22,12 +22,14 @@
             :hover-state-enabled="false"
             :ref="dataGridRefKey"
         >
-            <DxPaging :page-size="8" />
+            <DxPaging :page-size="30" />
+            <DxColumnFixing :enabled="true" />
             <DxScrolling mode="standard" row-rendering-mode="standard" />
             <DxPager
                 :visible="true"
-                :show-page-size-selector="false"
-                :show-info="false"
+                :allowed-page-sizes="[15, 30, 'all']"
+                :show-page-size-selector="true"
+                :show-info="true"
                 :show-navigation-buttons="true"
             />
             <DxHeaderFilter :visible="true" />
@@ -35,17 +37,20 @@
             <DxColumn
                 data-field="id"
                 :caption="$t('Số')"
+                :fixed="true"
                 alignment="center"
                 :allow-header-filtering="false"
             />
             <DxColumn
                 :allow-header-filtering="false"
                 data-field="tenNhanVien"
+                :fixed="true"
                 :caption="$t('Họ và tên')"
             />
             <DxColumn
-                :allow-header-filtering="false"
+                :allow-header-filtering="true"
                 data-field="phongBan"
+                :fixed="true"
                 :caption="$t('Phòng ban')"
             />
             <DxColumn
@@ -159,6 +164,7 @@ import {
     DxFilterRow,
     DxScrolling,
     DxPager,
+    DxColumnFixing,
     DxPaging,
 } from 'devextreme-vue/data-grid'
 import DxButton from 'devextreme-vue/button'
@@ -171,6 +177,7 @@ export default {
         DxDataGrid,
         DxColumn,
         DxScrolling,
+        DxColumnFixing,
         DxPager,
         DxPaging,
         DxHeaderFilter,

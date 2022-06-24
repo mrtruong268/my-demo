@@ -20,8 +20,8 @@ export default function ({ app, $axios, redirect }) {
     })
     $axios.onError((error) => {
         if (error.response.status === 401) {
-            Vue.$toast.error(`Failed! Unauthorized`)
             app.$cookies.remove('cookieToken')
+            Vue.$toast.error(`Failed! Unauthorized`)
             return redirect('/login')
         } else {
             Vue.$toast.error(`Failed! ${error.message}`)

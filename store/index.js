@@ -69,6 +69,7 @@ export const state = () => ({
     projectCode: [],
     hangMucTrienKhai: [],
     dataExcel: null,
+    dataExcelNp: null,
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
@@ -104,6 +105,9 @@ export const mutations = {
     },
     GET_DATA_EXCEL(state, item) {
         state.dataExcel = item
+    },
+    GET_DATA_EXCELNP(state, item) {
+        state.dataExcelNp = item
     },
 }
 
@@ -247,6 +251,52 @@ export const actions = {
             )
             commit('GET_DATA_EXCEL', response.data.data)
         } catch (error) {
+            console.log(err)
+        }
+    },
+    async uploadExcelNp({ commit }, uploadItem) {
+        try {
+            let response = await this.$axios.post(
+                '/ipr/import-from-excel',
+                uploadItem,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            commit('GET_DATA_EXCELNP', response.data.data)
+        } catch (error) {
+            console.log(err)
+        }
+    },
+    async downloadExcel({ commit }) {
+        try {
+            let response = await this.$axios.get('/pr/download-pr-template', {
+                responseType: 'blob',
+            })
+            let url = window.URL.createObjectURL(new Blob([response.data]))
+            let link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', `DNMH_TEMPLATE.xlsx`)
+            document.body.appendChild(link)
+            link.click()
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async downloadExcelNp({ commit }) {
+        try {
+            let response = await this.$axios.get('/ipr/download-pr-template', {
+                responseType: 'blob',
+            })
+            let url = window.URL.createObjectURL(new Blob([response.data]))
+            let link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', `DNMH_TEMPLATE.xlsx`)
+            document.body.appendChild(link)
+            link.click()
+        } catch (err) {
             console.log(err)
         }
     },

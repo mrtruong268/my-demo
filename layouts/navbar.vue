@@ -276,9 +276,8 @@ export default {
             sidebar.classList.toggle('active')
         },
         autoUpdate() {
-            var self = this
             setInterval(() => {
-                self.$store.dispatch('pheduyet/getApprove')
+                this.$store.dispatch('pheduyet/getApprove')
             }, 60000)
         },
         openNoti() {
@@ -323,13 +322,15 @@ export default {
             }
         },
     },
-    created() {
+    mounted() {
         this.$store.dispatch('pheduyet/getApprove')
+        this.autoUpdate()
+    },
+    created() {
         let tokennn = this.$cookies.get('cookieToken')
         this.user = this.parseJwt(tokennn)
         this.$store.dispatch('getUser', this.user.name)
         this.selectedValue = this.$i18n.locale
-        this.autoUpdate()
     },
     beforeDestroy() {
         this.$store.commit('GET_USER', {})

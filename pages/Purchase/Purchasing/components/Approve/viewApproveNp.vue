@@ -168,73 +168,9 @@
                 </DxSummary>
             </DxDataGrid>
         </div>
-        <div class="row align-center mb-2">
-            <div
-                class="footer-content column justify-space-between text-xs-center xs3"
-            >
-                <p style="text-decoration: underline">Người yêu cầu:</p>
-                <div>
-                    <span>{{ YeuCauMuaHang.tenNhanVien }}</span>
-                    <p>
-                        Thời gian:
-                        <span>{{ timestamp(YeuCauMuaHang.ngayDeTrinh) }}</span>
-                    </p>
-                </div>
-            </div>
-            <div
-                v-for="yc in YeuCauMuaHang.duyetYCMHsNoiBo"
-                :key="yc.id"
-                :class="yc.approvalStatus === 'MustRevise' ? 'hide xs3' : 'xs3'"
-                :style="
-                    yc.approvalState === 'NVTC_DUYET'
-                        ? 'display:none'
-                        : yc.approvalState === 'MH_DUYET'
-                        ? 'display:none'
-                        : ''
-                "
-            >
-                <div
-                    v-if="
-                        yc.approvalState === 'TBP_DUYET' &&
-                        yc.approvalStatus === 'None'
-                    "
-                >
-                    <p>{{ yc.tenNhanVien }}...</p>
-                </div>
-                <div
-                    v-else
-                    class="footer-content column justify-space-between text-xs-center"
-                >
-                    <p style="text-decoration: underline">
-                        {{
-                            yc.approvalState == 'TBP_DUYET'
-                                ? 'Trưởng bộ phận'
-                                : yc.approvalState == 'GDTC_DUYET'
-                                ? 'Bộ phận tài chính'
-                                : yc.approvalState == 'TGD_DUYET'
-                                ? 'Ban giám đốc'
-                                : yc.approvalState == 'PMH_DUYET'
-                                ? 'Bộ phận mua hàng'
-                                : ''
-                        }}:
-                    </p>
-                    <p>
-                        {{
-                            yc.approvalStatus == 'Approval'
-                                ? '(Approved by VNAS App)'
-                                : ''
-                        }}
-                    </p>
-                    <div>
-                        <span>{{ yc.tenNhanVien }}</span>
-                        <p>
-                            Thời gian:
-                            <span>{{ timestamp(yc.ngayDuyet) }}</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <lichSuDuyet :ycmh="YeuCauMuaHang" />
+
         <div class="row align-center">
             <div class="xs10 row align-center">
                 <h3 class="xs1">{{ $t('Ghi chú') }}:</h3>
@@ -281,7 +217,7 @@ import {
     DxTotalItem,
 } from 'devextreme-vue/data-grid'
 import dnmh from '~/components/dnmh.vue'
-import moment from 'moment'
+import lichSuDuyet from '~/components/lichSuDuyet.vue'
 
 export default {
     props: {
@@ -304,6 +240,7 @@ export default {
         DxSummary,
         DxTotalItem,
         dnmh,
+        lichSuDuyet,
     },
     watch: {
         view: {
@@ -344,9 +281,6 @@ export default {
         },
         clickClose() {
             this.$emit('hiddenPopup')
-        },
-        timestamp(date) {
-            return moment(date).format('HH:mm DD-MM-YYYY')
         },
         customFormat(e) {
             return new Intl.NumberFormat('vi-VN', {

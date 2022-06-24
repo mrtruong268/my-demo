@@ -80,7 +80,7 @@
                         </div>
                         <DxTabPanel
                             :data-source="tabData"
-                            :height="fullscreen ? 'auto' : 'calc(80vh - 140px)'"
+                            :height="fullscreen ? 'auto' : 'calc(80vh - 124px)'"
                             :defer-rendering="false"
                             :show-nav-buttons="true"
                             :repaint-changes-only="true"

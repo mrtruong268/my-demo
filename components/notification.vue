@@ -43,15 +43,13 @@ export default {
                 if (data) {
                     this.dataReverse = [...data]
                     return this.dataReverse.reverse()
-                } else {
-                    this.$store.dispatch('pheduyet/getApprove')
                 }
             },
         },
     },
     methods: {
         timestamp(date) {
-            return moment(date).format('HH:mm DD-MM-YYYY')
+            return moment(date).format('DD-MM-YYYY')
         },
         clickApprove() {
             this.$store.commit('IS_SELECTED', 'pd')
