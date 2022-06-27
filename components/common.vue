@@ -71,7 +71,7 @@
                     <div :class="fullscreen ? 'fullscreen' : ''">
                         <div v-if="fullscreen" class="row justify-end">
                             <DxButton
-                                :text="$t('Close')"
+                                :text="$t('Đóng')"
                                 type="normal"
                                 styling-mode="text"
                                 icon="mdi mdi-close"

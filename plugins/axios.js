@@ -11,12 +11,20 @@ export default function ({ app, $axios, redirect }) {
         }
     })
     $axios.onResponse((response) => {
-        if (response.data.success === false || response.data.status === false) {
-            Vue.$toast.error(response.data.message)
-        } else if (response.config.method !== 'get') {
-            if (response.data.success === true || response.data.status === true)
-                Vue.$toast.success(response.data.message)
-        }
+        if (response.data.errorCode !== 404) {
+            if (
+                response.data.success === false ||
+                response.data.status === false
+            ) {
+                Vue.$toast.error(response.data.message)
+            } else if (response.config.method !== 'get') {
+                if (
+                    response.data.success === true ||
+                    response.data.status === true
+                )
+                    Vue.$toast.success(response.data.message)
+            }
+        } else return
     })
     $axios.onError((error) => {
         if (error.response.status === 401) {

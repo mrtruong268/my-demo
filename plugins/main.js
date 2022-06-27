@@ -3,8 +3,8 @@ import 'devextreme/dist/css/dx.material.blue.light.css'
 import Vue from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import VueToast from 'vue-toast-notification'
-// import 'vue-toast-notification/dist/theme-sugar.css'
-import 'vue-toast-notification/dist/theme-default.css';
+import 'vue-toast-notification/dist/theme-sugar.css'
+// import 'vue-toast-notification/dist/theme-default.css';
 // import { UserManager } from 'oidc-client'
 
 const mixin = {

@@ -69,7 +69,7 @@
                 <DxSelectBox
                     :items="loaiPhuPhi"
                     styling-mode="outlined"
-                    :label="$t('Phụ phí')"
+                    :label="$t('Chi phí')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectPhuPhi"
@@ -306,7 +306,12 @@ export default {
                 comment: '',
                 yeuCauMuaHangNoiBoChiTiets: [],
             },
-            loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
+            loaiPhuPhi: [
+                this.$t('VNAS Group'),
+                this.$t('VNAS Solutions'),
+                this.$t('VNAS Services'),
+                this.$t('VNAS Workshop'),
+            ],
             file: '',
         }
     },

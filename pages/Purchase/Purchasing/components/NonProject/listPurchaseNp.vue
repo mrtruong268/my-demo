@@ -32,7 +32,7 @@
                 :show-info="true"
                 :show-navigation-buttons="true"
             />
-            <DxHeaderFilter :visible="true" />
+            <DxHeaderFilter :visible="true" :allow-search="true" />
             <DxFilterRow :visible="true" />
             <DxColumn
                 data-field="id"

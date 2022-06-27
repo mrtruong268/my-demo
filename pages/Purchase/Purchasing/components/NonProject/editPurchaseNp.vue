@@ -122,7 +122,7 @@
                     </div>
                     <div class="xs4">
                         <div class="row align-center justify-space-between">
-                            <p>Phụ phí:</p>
+                            <p>Chi phí:</p>
                             <DxSelectBox
                                 :items="loaiPhuPhi"
                                 :value="YeuCauMuaHang.phuPhi"
@@ -166,7 +166,9 @@
 
         <div>
             <div class="row justify-space-between align-center">
-                <h3>{{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}</h3>
+                <h3 class="my-2">
+                    {{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}
+                </h3>
                 <div v-if="disable == false && allowEdit == true">
                     <DxButton
                         icon="mdi mdi-plus"
@@ -272,6 +274,7 @@ import DxValidationGroup from 'devextreme-vue/validation-group'
 import { DxAutocomplete } from 'devextreme-vue/autocomplete'
 import dnmh from '~/components/dnmh.vue'
 import lichSuDuyet from '~/components/lichSuDuyet.vue'
+
 import moment from 'moment'
 
 export default {
@@ -300,7 +303,12 @@ export default {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
             YeuCauMuaHang: {},
-            loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
+            loaiPhuPhi: [
+                this.$t('VNAS Group'),
+                this.$t('VNAS Solutions'),
+                this.$t('VNAS Services'),
+                this.$t('VNAS Workshop'),
+            ],
             disable: true,
             allowEdit: false,
             mnv: '',

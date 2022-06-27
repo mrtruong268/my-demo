@@ -2,7 +2,7 @@
     <div>
         <common
             :headerTitle="'Yêu cầu mua hàng'"
-            :classProp="'xs4'"
+            :classProp="'xs3'"
             :list="danhSach"
             :dataTab="duLieuTab"
             :dataNew="duLieuMoi"
@@ -16,6 +16,9 @@
                 </div>
                 <div v-else-if="itemProp.listType === 'pd'">
                     <listApprove />
+                </div>
+                <div v-else-if="itemProp.listType === 'bc'">
+                    <reportApprove />
                 </div>
                 <div v-else>
                     <addPurchase v-if="itemProp.listType === 'tmhda'" />
@@ -37,6 +40,7 @@ import addPurchaseNp from './components/NonProject/addPurchaseNp'
 import listApprove from './components/Approve/listApprove'
 import addPurchase from './components/ForProject/addPurchase'
 import listApproveNp from './components/Approve/listApproveNp'
+import reportApprove from './components/Report/reportApprove.vue'
 
 export default {
     props: {
@@ -56,6 +60,7 @@ export default {
         addPurchaseNp,
         listApprove,
         listApproveNp,
+        reportApprove,
     },
     data() {
         return {

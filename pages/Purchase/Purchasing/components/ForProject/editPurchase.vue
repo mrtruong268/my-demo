@@ -155,7 +155,7 @@
                             <DxTextBox
                                 v-model="YeuCauMuaHang.maChiPhi"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
                                 :width="220"
                             >
                                 <DxValidator>
@@ -168,7 +168,7 @@
                             <DxTextBox
                                 v-model="YeuCauMuaHang.soThamChieu"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
                                 :width="220"
                             >
                                 <DxValidator>
@@ -183,7 +183,7 @@
 
         <div>
             <div class="row justify-space-between align-center">
-                <h3 class="my-1">
+                <h3 class="my-2">
                     {{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}
                 </h3>
                 <div v-if="disable == false && allowEdit == true">

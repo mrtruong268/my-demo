@@ -77,7 +77,7 @@
                 </div>
                 <div class="xs4">
                     <div class="row align-center justify-space-between">
-                        <p>Phụ phí:</p>
+                        <p>Chi phí:</p>
                         <DxTextBox
                             v-model="YeuCauMuaHang.phuPhi"
                             styling-mode="underlined"
@@ -114,7 +114,7 @@
             </div>
         </div>
         <div class="row justify-center">
-            <h3 class="my-1">DANH SÁCH HÀNG HÓA, DỊCH VỤ CẦN MUA</h3>
+            <h3 class="my-2">Danh sách hàng hóa, dịch vụ cần mua</h3>
         </div>
         <div>
             <DxDataGrid

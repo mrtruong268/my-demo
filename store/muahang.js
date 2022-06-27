@@ -20,6 +20,12 @@ export const state = () => ({
             title: 'Phê duyệt mua hàng dự án',
             listType: 'pd',
         },
+        {
+            id: uuidv4(),
+            header: 'Báo cáo',
+            title: 'Báo cáo yêu cầu mua hàng dự án',
+            listType: 'bc',
+        },
     ],
     duLieuMoi: [
         {
@@ -46,6 +52,7 @@ export const state = () => ({
     listItemNp: [],
     refNumber: {},
     refNumberNp: {},
+    baoCaoYcmh: [],
 })
 export const getters = {
     // mua hang du an
@@ -92,6 +99,12 @@ export const mutations = {
     },
     GET_REF_NUM_NP(state, item) {
         state.refNumberNp = item
+    },
+
+    // Bao cao
+
+    SET_ITEM_BC(state, item) {
+        state.baoCaoYcmh = item
     },
 }
 export const actions = {
@@ -206,6 +219,17 @@ export const actions = {
         try {
             let response = await this.$axios.get(`/ipr/get-ref-number`)
             commit('GET_REF_NUM_NP', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    // Bao cao
+
+    async getReportApproval({ commit }) {
+        try {
+            let response = await this.$axios.get('/pr/report-approval-pr-items')
+            commit('SET_ITEM_BC', response.data.data)
         } catch (err) {
             console.log(err)
         }

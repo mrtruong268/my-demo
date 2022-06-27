@@ -23,10 +23,9 @@
                             <i class="mdi mdi-magnify btn-search"></i>
                         </div>
                         <div class="notification mr-4">
-                            <i
-                                class="mdi mdi-bell-badge btn-drop"
-                                @click="openNoti"
-                            ></i>
+                            <div class="btn-drop" @click="openNoti">
+                                <img src="~assets/bell.gif" />
+                            </div>
                             <div
                                 class="count-noti"
                                 v-if="
@@ -380,16 +379,23 @@ export default {
 }
 .btn-drop {
     position: relative;
+    cursor: pointer;
+}
+.btn-drop img {
+    width: 40px;
+    height: auto;
 }
 .count-noti {
     position: absolute;
     color: white;
     background-color: red;
     border-radius: 50%;
-    padding: 1px;
+    width: 14px;
+    height: 14px;
     font-size: 13px;
     bottom: -4px;
     right: -4px;
+    padding: 2px;
 }
 .btn-login {
     color: white;

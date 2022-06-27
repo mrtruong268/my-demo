@@ -8,6 +8,7 @@
         height="auto"
         :width="width"
         :title="title"
+        @contentReady="contentReady"
     >
         <div>
             <slot name="header"></slot>
@@ -49,6 +50,12 @@ export default {
     },
     components: {
         DxPopup,
+    },
+    methods: {
+        contentReady(e) {
+            var contentElement = e.component.content()
+            contentElement.style.padding = '10px 24px'
+        },
     },
 }
 </script>

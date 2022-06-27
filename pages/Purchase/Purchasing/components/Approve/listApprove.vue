@@ -30,7 +30,7 @@
                 :show-info="true"
                 :show-navigation-buttons="true"
             />
-            <DxHeaderFilter :visible="true" />
+            <DxHeaderFilter :visible="true" :allow-search="true" />
             <DxFilterRow :visible="true" />
             <DxColumn
                 data-field="id"
@@ -140,7 +140,6 @@ import popup from '~/components/popup.vue'
 import viewApprove from './viewApprove.vue'
 
 export default {
-    layout: 'commonLayout',
     data() {
         return {
             popupVisible: false,

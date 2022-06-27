@@ -49,7 +49,7 @@ export default {
                     subTitle: [
                         {
                             id: 1,
-                            des: 'Yêu cầu mua hàng',
+                            des: 'Danh sách mua hàng dự án',
                             to: 'Purchase/Purchasing',
                             type: 'mhda',
                         },
@@ -69,7 +69,7 @@ export default {
                     subTitle: [
                         {
                             id: 1,
-                            des: 'Yêu cầu mua hàng',
+                            des: 'Danh sách mua hàng ngoài dự án',
                             to: 'Purchase/Purchasing',
                             type: 'mhnda',
                         },

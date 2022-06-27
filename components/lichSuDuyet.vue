@@ -14,6 +14,8 @@
                 </div>
             </div>
 
+            <!-- duyetYCMHs -->
+
             <div v-if="ycmh.hasOwnProperty('duyetYCMHs')" class="row">
                 <div
                     :class="
@@ -74,6 +76,8 @@
                 </div>
             </div>
 
+            <!-- duyetYCMHsNoiBo -->
+
             <div v-else-if="ycmh.hasOwnProperty('duyetYCMHsNoiBo')" class="row">
                 <div
                     :class="
@@ -95,7 +99,9 @@
                             yc.approvalStatus === 'None'
                         "
                     >
-                        <p>{{ yc.tenNhanVien }}...</p>
+                        <div class="cho-duyet row justify-center align-center">
+                            <p>{{ yc.tenNhanVien }}...</p>
+                        </div>
                     </div>
 
                     <div
@@ -164,6 +170,7 @@ export default {
             : [...this.ycmh.duyetYCMHs]
         for (var i = arrTmp.length - 1; i >= 0; i--) {
             const e = arrTmp[i]
+            if (e.approvalStatus === 'MustRevise') return
             dataReverse.push(e)
             if (e.approvalState === 'TBP_DUYET') break
         }

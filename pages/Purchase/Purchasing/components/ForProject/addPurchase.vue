@@ -75,6 +75,7 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectPhuPhi"
+                    :ref="selectBoxPhuPhi"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -316,6 +317,7 @@ export default {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
             selectBoxRefKey: 'BoxRefKey',
+            selectBoxPhuPhi: 'BoxPhuPhi',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -372,6 +374,9 @@ export default {
         },
         selectBox() {
             return this.$refs[this.selectBoxRefKey].instance
+        },
+        RefPhuPhi() {
+            return this.$refs[this.selectBoxPhuPhi].instance
         },
     },
     methods: {
@@ -483,6 +488,7 @@ export default {
         },
         resetData() {
             this.selectBox.reset()
+            this.RefPhuPhi.reset()
             this.YeuCauMuaHang = {
                 id: 0,
                 tenNhanVien: this.userInfo.tenNhanVien,
