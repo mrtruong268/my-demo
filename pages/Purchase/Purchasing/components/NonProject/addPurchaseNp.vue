@@ -368,7 +368,14 @@ export default {
         checkArray() {
             let conditionsArray = []
             this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
-                (e) => (conditionsArray = [e.tenHangHoa_DichVu !== ''])
+                (e) =>
+                    (conditionsArray = [
+                        e.tenHangHoa_DichVu !== '',
+                        e.model_MaHieu !== '',
+                        e.xuatXu_Hang !== '',
+                        e.soLuong !== '',
+                        e.donVi !== '',
+                    ])
             )
             return !conditionsArray.includes(false)
         },
