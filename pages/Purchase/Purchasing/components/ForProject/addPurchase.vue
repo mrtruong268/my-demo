@@ -208,7 +208,7 @@
                 @editorPreparing="editorPreparing"
             >
                 <DxPaging :page-size="5" />
-                <DxScrolling mode="standard" row-rendering-mode="standard" />
+                <DxScrolling column-rendering-mode="virtual" />
                 <DxPager
                     :visible="true"
                     :show-page-size-selector="false"
@@ -405,11 +405,11 @@ export default {
                         e.xuatXu_Hang !== '',
                         e.soLuong !== '',
                         e.donVi !== '',
-                        e.donGiaTamTinh !== '',
                         e.maHangMucTrienKhai !== '',
+                        e.donGiaTamTinh !== '',
                     ])
             )
-            return conditionsArray.includes(true)
+            return !conditionsArray.includes(false)
         },
         clickAdd() {
             var result = confirm('Do you want to submit?')
@@ -469,7 +469,7 @@ export default {
                     },
                     onSelectionChanged(x) {
                         let itemSelect = x.selectedItem
-                        if (itemSelect.model == null) return
+                        if (itemSelect.model == null) return ''
                         e.row.data.model_MaHieu = itemSelect.model
                         e.row.data.xuatXu_Hang = itemSelect.tenHangSanXuat
                         e.row.data.donVi = itemSelect.donViTinh
@@ -487,8 +487,6 @@ export default {
             this.file = this.$refs.file.files[0]
         },
         resetData() {
-            this.selectBox.reset()
-            this.RefPhuPhi.reset()
             this.YeuCauMuaHang = {
                 id: 0,
                 tenNhanVien: this.userInfo.tenNhanVien,
@@ -505,6 +503,8 @@ export default {
                 comment: '',
                 yeuCauMuaHangChiTiets: [],
             }
+            this.selectBox.reset()
+            this.RefPhuPhi.reset()
         },
     },
     created() {

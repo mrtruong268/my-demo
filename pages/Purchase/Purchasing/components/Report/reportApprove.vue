@@ -22,7 +22,7 @@
             :hover-state-enabled="false"
         >
             <DxPaging :page-size="30" />
-            <DxScrolling mode="standard" row-rendering-mode="standard" />
+            <DxScrolling column-rendering-mode="virtual" />
             <DxPager
                 :visible="true"
                 :allowed-page-sizes="[15, 30, 'all']"

@@ -24,7 +24,7 @@
         >
             <DxPaging :page-size="30" />
             <DxColumnFixing :enabled="true" />
-            <DxScrolling mode="standard" row-rendering-mode="standard" />
+            <DxScrolling column-rendering-mode="virtual" />
             <DxPager
                 :visible="true"
                 :allowed-page-sizes="[15, 30, 'all']"

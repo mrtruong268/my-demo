@@ -73,6 +73,7 @@
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectPhuPhi"
+                    :ref="selectBoxRefKey"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -188,7 +189,7 @@
                 @editorPreparing="editorPreparing"
             >
                 <DxPaging :page-size="5" />
-                <DxScrolling mode="standard" row-rendering-mode="standard" />
+                <DxScrolling column-rendering-mode="virtual" />
                 <DxPager
                     :visible="true"
                     :show-page-size-selector="false"
@@ -345,6 +346,9 @@ export default {
         validationGroup() {
             return this.$refs[this.formValidation].instance
         },
+        selectBox() {
+            return this.$refs[this.selectBoxRefKey].instance
+        },
     },
     methods: {
         addRow() {
@@ -366,7 +370,7 @@ export default {
             this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
                 (e) => (conditionsArray = [e.tenHangHoa_DichVu !== ''])
             )
-            return conditionsArray.includes(true)
+            return !conditionsArray.includes(false)
         },
         clickAdd() {
             var result = confirm('Do you want to submit?')
@@ -450,6 +454,7 @@ export default {
                 comment: '',
                 yeuCauMuaHangNoiBoChiTiets: [],
             }
+            this.selectBox.reset()
         },
     },
     created() {

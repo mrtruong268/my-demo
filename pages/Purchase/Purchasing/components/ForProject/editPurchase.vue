@@ -410,7 +410,7 @@ export default {
                         e.maHangMucTrienKhai !== '',
                     ])
             )
-            return conditionsArray.includes(true)
+            return !conditionsArray.includes(false)
         },
         selectDuAn(e) {
             this.YeuCauMuaHang.maDuAn = e.selectedItem

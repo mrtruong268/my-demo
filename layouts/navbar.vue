@@ -22,7 +22,7 @@
                             />
                             <i class="mdi mdi-magnify btn-search"></i>
                         </div>
-                        <div class="notification mr-4">
+                        <div class="notification mr-3">
                             <div class="btn-drop" @click="openNoti">
                                 <img src="~assets/bell.gif" />
                             </div>
@@ -44,27 +44,34 @@
                                 <notification @close="clickClose" />
                             </div>
                         </div>
-                        <div class="user-guide mr-2">
+                        <!-- <div class="user-guide">
                             <i class="mdi mdi-information btn-guide"></i>
-                            <p style="color: #0986c5">
+                            <p style="color: #0986c5" class="font-14">
                                 {{ $t('Hướng dẫn sử dụng') }}
                             </p>
-                        </div>
+                        </div> -->
                         <div class="dropdown2">
                             <div class="row align-center">
-                                <span>{{ $t('Xin chào!') }} </span>
+                                <!-- <span class="font-14">{{ $t('Chào!') }} </span> -->
+                                <div>
+                                    <img
+                                        v-if="
+                                            userInfo.hasOwnProperty('avatarUrl')
+                                        "
+                                        :src="`http://data.vnas.com.vn:108/avatar/${userInfo.avatarUrl}`"
+                                    />
+                                    <img
+                                        v-else
+                                        src="~assets/avatar2.png"
+                                        style="border-radius: 50%"
+                                    />
+                                </div>
                                 <div class="mx-2 user-name">
                                     {{ userInfo.username }}
                                 </div>
-                                <img
-                                    v-if="userInfo.hasOwnProperty('avatarUrl')"
-                                    :src="`http://data.vnas.com.vn:108/avatar/${userInfo.avatarUrl}`"
-                                />
-                                <img
-                                    v-else
-                                    src="~assets/avatar2.png"
-                                    style="border-radius: 50%"
-                                />
+                                <div>
+                                    <i class="mdi mdi-chevron-down icon-drop" />
+                                </div>
                             </div>
                             <div class="dropdown-content2">
                                 <!-- <p>{{ $t('Update avatar') }}</p> -->
@@ -373,8 +380,8 @@ export default {
     border-radius: 6px;
     position: absolute;
     font-size: 24px;
-    top: 5px;
-    right: 10px;
+    top: 3px;
+    right: 8px;
     color: #cccccc;
 }
 .btn-drop {
@@ -487,9 +494,12 @@ export default {
 .user-name {
     font-style: italic;
     text-decoration: underline;
-    color: #0986c5;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+.icon-drop {
+    color: #dddddd;
+    font-size: 20px;
 }
 
 /* drop1 */
