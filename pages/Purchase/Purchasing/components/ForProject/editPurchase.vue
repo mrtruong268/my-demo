@@ -204,7 +204,7 @@
                 :column-auto-width="true"
                 :hover-state-enabled="true"
                 :noDataText="$t('Không có dữ liệu')"
-                height="calc(100vh - 470px)"
+                height="calc(100vh - 450px)"
                 :ref="dataGridRefKey"
                 @saved="saved"
                 @editorPreparing="editorPreparing"
@@ -294,9 +294,9 @@ import { mapGetters, mapState } from 'vuex'
 import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
 import DxValidationGroup from 'devextreme-vue/validation-group'
 import { DxAutocomplete } from 'devextreme-vue/autocomplete'
+import moment from 'moment'
 import dnmh from '~/components/dnmh.vue'
 import lichSuDuyet from '~/components/lichSuDuyet.vue'
-import moment from 'moment'
 
 export default {
     components: {
@@ -486,23 +486,5 @@ export default {
     transition: all 0.2s linear 0s;
     background-color: black;
     color: #ddd;
-}
-.border-box {
-    margin: 0 auto;
-}
-.right-content {
-    font-style: italic;
-    border-left: 1px solid black;
-}
-.top {
-    padding: 9px;
-    border-bottom: 1px solid black;
-}
-.bot {
-    padding: 9px;
-}
-.xs-4 {
-    flex-basis: 34.6%;
-    max-width: 34.6%;
 }
 </style>

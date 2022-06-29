@@ -1,9 +1,9 @@
 <template>
     <div class="header row align-center">
-        <div class="xs4 container-xs" style="border-right: 1px solid black">
-            <div class="row align-center">
-                <div class="mx-2">
-                    <img src="~assets/logo.png" width="90px" height="auto" />
+        <div class="xs4">
+            <div class="row align-center justify-center px-2">
+                <div class="mr-2">
+                    <img src="~assets/logo.png" width="60px" height="auto" />
                 </div>
                 <div v-if="maNhanVien.includes('VNASWO')">
                     <p class="font-12" style="font-weight: bold">
@@ -16,7 +16,7 @@
                 </div>
                 <div v-else-if="maNhanVien.includes('VNASSE')">
                     <p class="font-12" style="font-weight: bold">
-                        Công ty cổ phần VNAS SERVICES
+                        Công ty cổ phần VNAS Services
                     </p>
                     <p class="font-12">
                         Xóm 12, Thôn Hậu Ái, Xã Vân Canh, Huyện Hoài Đức, Thành
@@ -46,11 +46,11 @@
                 </div>
             </div>
         </div>
-        <div class="xs6 text-xs-center" style="">
-            <h1>
+        <div class="xs6 text-xs-center container-xs" style="border-left: 1px solid black">
+            <h2>
                 PHIẾU ĐỀ NGHỊ MUA <br />
                 HÀNG HÓA,DỊCH VỤ
-            </h1>
+            </h2>
         </div>
         <div class="xs2 right-content">
             <div class="top">

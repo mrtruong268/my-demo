@@ -122,7 +122,7 @@
                 :data-source="YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets"
                 :show-column-lines="true"
                 :show-borders="true"
-                height="calc(100vh - 500px)"
+                height="calc(100vh - 450px)"
                 :remote-operations="false"
                 :allow-column-resizing="true"
                 :column-auto-width="true"

@@ -79,7 +79,7 @@
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="trangThaiDuyet"
-                :caption="$t('Trạng thái duyệt')"
+                :caption="$t('Trạng thái')"
                 cell-template="cellTemplate2"
             />
             <template #cellTemplate2="{ data }">
