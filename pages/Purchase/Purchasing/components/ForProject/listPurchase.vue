@@ -1,10 +1,15 @@
 <template>
     <div>
-        <div class="row justify-end">
+        <div class="row justify-end btn-fix">
+            <DxButton
+                icon="mdi mdi-plus"
+                @click="clickAdd"
+                :text="$t('Tạo mới')"
+            />
             <DxButton
                 icon="mdi mdi-reload"
                 @click="reload"
-                :text="$t('Tải lại dữ liệu')"
+                :text="$t('Tải lại')"
             />
         </div>
         <DxDataGrid
@@ -14,7 +19,6 @@
             :show-row-lines="true"
             :show-borders="true"
             :row-alternation-enabled="true"
-            height="auto"
             :noDataText="$t('Không có dữ liệu')"
             :remote-operations="true"
             :allow-column-resizing="true"
@@ -23,6 +27,7 @@
             :ref="dataGridRefKey"
         >
             <DxPaging :page-size="30" />
+            <DxColumnFixing :enabled="false" />
             <DxScrolling column-rendering-mode="virtual" />
             <DxPager
                 :visible="true"
@@ -31,12 +36,10 @@
                 :show-info="true"
                 :show-navigation-buttons="false"
             />
-            <DxColumnFixing :enabled="true" />
             <DxHeaderFilter :visible="true" :allow-search="true" />
             <DxFilterRow :visible="true" />
             <DxColumn
                 data-field="id"
-                :fixed="true"
                 :caption="$t('Số')"
                 alignment="center"
                 :allow-header-filtering="false"
@@ -45,18 +48,15 @@
                 :allow-header-filtering="false"
                 data-field="tenNhanVien"
                 :caption="$t('Họ và tên')"
-                :fixed="true"
             />
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="phongBan"
                 :caption="$t('Phòng ban')"
-                :fixed="true"
             />
             <DxColumn
                 :allow-header-filtering="true"
                 data-field="maDuAn"
-                :fixed="true"
                 :caption="$t('Mã dự án')"
             />
             <DxColumn
@@ -81,7 +81,7 @@
             <DxColumn
                 data-field="thoiDiemDuyet"
                 :caption="$t('Thời gian duyệt')"
-                format="HH:mm dd/MM/yyyy"
+                :format="timestamp"
                 data-type="date"
                 :allow-header-filtering="false"
             />
@@ -156,7 +156,8 @@
             :width="'80%'"
         >
             <template #main>
-                <editPurchase @invisible="hiddenPopup" />
+                <addPurchase v-if="isAdd === true" @invisible="hiddenPopup" />
+                <editPurchase v-else @invisible="hiddenPopup" />
             </template>
         </popup>
     </div>
@@ -176,7 +177,9 @@ import {
 import DxButton from 'devextreme-vue/button'
 import Popup from '~/components/popup.vue'
 import editPurchase from './editPurchase.vue'
+import addPurchase from './addPurchase.vue'
 import { mapState } from 'vuex'
+import moment from 'moment'
 
 export default {
     components: {
@@ -191,11 +194,13 @@ export default {
         DxButton,
         Popup,
         editPurchase,
+        addPurchase,
     },
     data() {
         return {
             dataGridRefKey: 'datagridValid',
             popupVisible: false,
+            isAdd: false,
         }
     },
     computed: {
@@ -207,6 +212,10 @@ export default {
                 this.$store.dispatch('muahang/getData')
             }, 200)
         },
+        clickAdd() {
+            this.isAdd = true
+            this.popupVisible = !this.popupVisible
+        },
         clickApprove(e) {
             this.$store.dispatch('pheduyet/submitApprove', e.data.id)
             this.reload()
@@ -216,8 +225,10 @@ export default {
             this.reload()
         },
         clickEdit(e) {
+            this.isAdd = false
             this.popupVisible = !this.popupVisible
             this.$store.dispatch('muahang/getEditData', e.data.id)
+            this.$store.dispatch('muahang/checkApprove', e.data.id)
         },
         clickDelete(e) {
             if (confirm('Do you want to delete?') == true) {
@@ -232,6 +243,9 @@ export default {
             this.popupVisible = !this.popupVisible
             this.reload()
         },
+        timestamp(date) {
+            return moment(date).add(7, 'hours').format('HH:mm:ss DD/MM/YYYY')
+        },
     },
     created() {
         this.$store.dispatch('muahang/getData')
@@ -240,6 +254,13 @@ export default {
 </script>
 
 <style scoped>
+#gridContainer {
+    padding-top: 36px;
+}
+.btn-fix {
+    position: fixed;
+    z-index: 1;
+}
 .submit {
     color: orange;
     /* background-color: orange; */
@@ -260,9 +281,9 @@ export default {
     background-color: #ddd;
     border-radius: 50%;
 }
->>> .dx-datagrid .dx-row > td {
+/* >>> .dx-datagrid .dx-row > td {
     padding: 8px 16px;
     font-size: 14px;
     line-height: 20px;
-}
+} */
 </style>

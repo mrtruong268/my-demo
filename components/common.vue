@@ -4,25 +4,17 @@
             {{ $t(headerTitle) }}
         </h3>
         <div class="toolbar">
-            <div class="row align-center justify-space-around">
+            <div class="row align-center justify-start">
                 <div v-for="item in list" :key="item.id" :class="classProp">
-                    <p class="header">{{ $t(item.header) }}</p>
-                    <div @click="onItemClick(item)" class="btn-list row">
-                        <i
-                            v-if="
-                                item.listType == 'pd' ||
-                                item.listType == 'pdnda'
-                            "
-                            class="mdi mdi-file-sign mr-1"
-                        />
-                        <i v-else class="mdi mdi-format-list-numbered mr-1" />
+                    <div @click="onItemClick(item)" class="btn-list row mr-3">
+                        <i class="mdi mdi-format-list-numbered mr-1" />
                         <p class="font-14">
                             {{ $t(item.title) }}
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="row align-center">
+            <!-- <div class="row align-center">
                 <div
                     id="btn-new"
                     v-for="item in dataNew"
@@ -32,20 +24,13 @@
                     @click="onItemClick(item)"
                 >
                     <div class="row">
-                        <i
-                            v-if="
-                                item.listType == 'pd' ||
-                                item.listType == 'pdnda'
-                            "
-                            class="mdi mdi-file-sign mr-1"
-                        />
-                        <i v-else class="mdi mdi-plus-circle mr-1" />
+                        <i class="mdi mdi-plus-circle mr-1" />
                         <p class="font-14">
                             {{ $t(item.title) }}
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div>
             <div class="row justify-end" v-show="tabData.length > 0">
@@ -80,7 +65,7 @@
                         </div>
                         <DxTabPanel
                             :data-source="tabData"
-                            :height="fullscreen ? 'auto' : 'calc(80vh - 124px)'"
+                            :height="fullscreen ? 'auto' : 'calc(80vh - 90px)'"
                             :defer-rendering="false"
                             :show-nav-buttons="true"
                             :repaint-changes-only="true"
@@ -144,10 +129,10 @@ export default {
             type: Array,
             default: [],
         },
-        dataNew: {
-            type: Array,
-            default: [],
-        },
+        // dataNew: {
+        //     type: Array,
+        //     default: [],
+        // },
     },
     components: {
         DxTabPanel,
@@ -235,7 +220,6 @@ export default {
 }
 .toolbar {
     border: 1px solid #e7e7e7;
-    padding: 0 24px;
 }
 .header {
     font-weight: bold;

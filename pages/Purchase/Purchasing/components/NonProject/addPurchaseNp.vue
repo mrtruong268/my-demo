@@ -1,5 +1,13 @@
 <template>
-    <div class="container-md">
+    <div>
+        <div class="row justify-end">
+            <div>
+                <div
+                    @click="clickClose"
+                    class="font-24 btn-tool mdi mdi-close"
+                ></div>
+            </div>
+        </div>
         <DxValidationGroup :ref="formValidation">
             <div class="row align-center justify-space-between mb-3">
                 <DxTextBox
@@ -158,21 +166,12 @@
                         ref="file"
                         @change="handleFileUpload()"
                     />
-                    <DxButton
-                        :text="$t('Nhập')"
-                        type="normal"
-                        styling-mode="contained"
-                        @click="submitFile()"
-                        height="30px"
-                        class="mr-2"
-                    />
-                    <DxButton
-                        :text="$t('Tải mẫu Excel')"
-                        type="default"
-                        styling-mode="contained"
-                        @click="$store.dispatch('downloadExcelNp')"
-                        height="30px"
-                    />
+                    <button class="mr-2" @click="submitFile()">
+                        {{ $t('Nhập') }}
+                    </button>
+                    <button @click="$store.dispatch('downloadExcelNp')">
+                        {{ $t('Tải mẫu Excel') }}
+                    </button>
                 </div>
             </div>
             <DxDataGrid
@@ -182,20 +181,12 @@
                 :show-column-lines="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
-                height="100%"
+                height="calc(100vh - 320px)"
                 :remote-operations="true"
                 :noDataText="$t('Không có dữ liệu')"
                 :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
-                <DxPaging :page-size="5" />
-                <DxScrolling column-rendering-mode="virtual" />
-                <DxPager
-                    :visible="true"
-                    :show-page-size-selector="false"
-                    :show-info="false"
-                    :show-navigation-buttons="true"
-                />
                 <DxEditing
                     :allow-updating="true"
                     :allow-deleting="true"
@@ -229,7 +220,7 @@
                     width="250"
                 />
             </DxDataGrid>
-            <div class="row justify-space-between">
+            <div class="row justify-space-between mt-3">
                 <DxButton
                     icon="mdi mdi-plus"
                     :use-submit-behavior="true"
@@ -391,7 +382,7 @@ export default {
                                 'muahang/postDataNp',
                                 this.YeuCauMuaHang
                             )
-                            this.resetData()
+                            this.clickClose()
                         } else {
                             this.$toast.error(
                                 `Failed! Not enough information to save!`
@@ -444,6 +435,10 @@ export default {
                     },
                 }
             }
+        },
+        clickClose() {
+            this.resetData()
+            this.$emit('invisible')
         },
         resetData() {
             this.YeuCauMuaHang = {
@@ -500,5 +495,17 @@ export default {
 .xs-4 {
     flex-basis: 34.6%;
     max-width: 34.6%;
+}
+.btn-tool {
+    background-color: #ddd;
+    padding: 0 4px;
+    border-radius: 50%;
+    transition: all 0.2s linear 0s;
+    cursor: pointer;
+}
+.btn-tool:hover {
+    transition: all 0.2s linear 0s;
+    background-color: black;
+    color: #ddd;
 }
 </style>

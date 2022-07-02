@@ -24,7 +24,7 @@
                         </div>
                         <div class="notification mr-3">
                             <div class="btn-drop" @click="openNoti">
-                                <img src="~assets/bell.gif" />
+                                <img src="~assets/noti.gif" />
                             </div>
                             <div
                                 class="count-noti"
@@ -389,7 +389,7 @@ export default {
     cursor: pointer;
 }
 .btn-drop img {
-    width: 40px;
+    width: 36px;
     height: auto;
 }
 .count-noti {
@@ -635,7 +635,7 @@ export default {
     top: 0;
     left: -240px;
     width: 240px;
-    max-height: calc(100vh - 10rem);
+    max-height: calc(100vh - 8rem);
     background-image: linear-gradient(90deg, #0986c5 0%, #48c0bc 100%);
     z-index: 1;
     transition: 0.5s;

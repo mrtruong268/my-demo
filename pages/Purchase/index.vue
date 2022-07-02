@@ -3,29 +3,23 @@
         <div class="main">
             <h2 class="text-xs-center mb-3">{{ $t('Mua hàng') }}</h2>
             <transition name="fade" appear>
-                <div>
+                <div class="row justify-center align-stretch">
                     <div
-                        class="project row align-center mb-3"
                         v-for="item in listPurchase"
                         :key="item.id"
-                        :style="`border-left: 4px solid ${item.color}`"
+                        class="item-box xs2 mx-3 pa-3"
+                        @click="onClick(item)"
                     >
-                        <div class="image">
-                            <img :src="item.image" class="pa-3" />
+                        <div class="image-box">
+                            <img :src="item.image" class="py-3" />
                         </div>
-                        <div class="pa-3">
-                            <h3 class="mb-3">{{ $t(item.title) }}</h3>
-                            <div class="gridBox">
-                                <div
-                                    v-for="sub in item.subTitle"
-                                    :key="sub.id"
-                                    class="chip mr-2"
-                                    @click="onClick(sub)"
-                                >
-                                    {{ $t(sub.des) }}
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <h2>
+                                {{ $t(item.title) }}
+                                <i class="mdi mdi-arrow-right" />
+                            </h2>
                         </div>
+                        {{ $t(item.about) }}
                     </div>
                 </div>
             </transition>
@@ -43,57 +37,17 @@ export default {
             listPurchase: [
                 {
                     id: 1,
-                    title: 'Mua hàng dự án',
-                    image: require('assets/purchasingForProjects.svg'),
-                    color: '#0986c5',
-                    subTitle: [
-                        {
-                            id: 1,
-                            des: 'Danh sách mua hàng dự án',
-                            to: 'Purchase/Purchasing',
-                            type: 'mhda',
-                        },
-                        // {
-                        //     id: 2,
-                        //     des: 'Yêu cầu sản xuất',
-                        //     to: 'Purchase/Purchasing',
-                        //     type: 'sx',
-                        // },
-                    ],
+                    title: 'Mua hàng',
+                    image: require('assets/825575.png'),
+                    about: 'Bao gồm danh sách mua hàng và tạo yêu cầu mua hàng',
+                    to: 'Purchase/Purchasing',
                 },
                 {
                     id: 2,
-                    title: 'Mua hàng ngoài dự án',
-                    image: require('assets/purchasingNoneProjects.svg'),
-                    color: '#b5222d',
-                    subTitle: [
-                        {
-                            id: 1,
-                            des: 'Danh sách mua hàng ngoài dự án',
-                            to: 'Purchase/Purchasing',
-                            type: 'mhnda',
-                        },
-                        // {
-                        //     id: 2,
-                        //     des: 'Yêu cầu sản xuất',
-                        //     to: 'Purchase/Purchasing',
-                        //     type: 'sx',
-                        // },
-                    ],
-                },
-                {
-                    id: 3,
-                    title: 'Phê duyệt mua hàng',
-                    image: require('assets/purchasingApprove.svg'),
-                    color: '#87a248',
-                    subTitle: [
-                        {
-                            id: 1,
-                            des: 'Phê duyệt',
-                            to: 'Purchase/Purchasing',
-                            type: 'pd',
-                        },
-                    ],
+                    title: 'Báo cáo',
+                    image: require('assets/Report.png'),
+                    about: 'Bao gồm danh sách mặt hàng cần mua',
+                    to: 'Purchase/Report',
                 },
             ],
         }
@@ -112,39 +66,23 @@ export default {
 .main {
     margin-top: 80px;
 }
-.project {
+.item-box {
+    cursor: pointer;
     border-radius: 9.6px;
+    transition: all 0.2s linear 0s;
+    color: #1a1a1a;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
-.image {
-    border-right: 1px solid #cccccc;
-    text-align: center;
-}
-.image img {
-    max-width: 100%;
-    height: auto;
-}
-.gridBox {
-    display: flex;
-    flex-wrap: wrap;
-}
-.project-main div {
-    color: grey;
-    cursor: pointer;
-}
-.chip {
-    padding: 14px 25px;
-    font-size: 16px;
-    border-radius: 25px;
-    background-color: #f1f1f1;
-    transition: all 0.2s linear 0s;
-    color: #0986c5;
-    cursor: pointer;
-}
-.chip:hover {
+.item-box:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: white;
     background-color: #0986c5;
     transition: all 0.2s linear 0s;
-    color: #f1f1f1;
+    cursor: pointer;
+}
+.image-box img {
+    width: 100px;
+    height: auto;
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -154,28 +92,5 @@ export default {
     opacity: 0;
 }
 @media only screen and (max-width: 739px) {
-    .main {
-        margin-top: 0;
-    }
-    .main h2 {
-        color: #0986c5;
-        font-size: 24px;
-    }
-    .main h3 {
-        font-size: 16px;
-    }
-    .image img {
-        max-width: 60%;
-    }
-    .project:nth-child(3) img {
-        padding: 19px 0;
-    }
-    .chip {
-        padding: 0;
-        font-size: 14px;
-        background-color: white;
-        color: grey;
-        margin-bottom: 4px;
-    }
 }
 </style>

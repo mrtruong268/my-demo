@@ -123,14 +123,15 @@ export default {
     },
     methods: {
         timestamp(date) {
-            return moment(date).format('DD-MM-YYYY')
+            return moment(date).add(7, 'hours').format('HH:mm:ss DD/MM/YYYY')
+
         },
         clickApprove(e) {
             if (e.hasOwnProperty('duyetYCMHsNoiBo')) {
-                this.$store.commit('IS_SELECTED', 'pdnda')
+                this.$store.commit('IS_SELECTED', 'mhnda')
                 this.clickRouter('Purchase/Purchasing', this.routeParams)
             } else {
-                this.$store.commit('IS_SELECTED', 'pd')
+                this.$store.commit('IS_SELECTED', 'mhda')
                 this.clickRouter('Purchase/Purchasing', this.routeParams)
             }
             this.$emit('close')

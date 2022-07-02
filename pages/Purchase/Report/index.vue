@@ -1,16 +1,15 @@
 <template>
     <div>
         <common
-            :headerTitle="'Danh sách mua hàng'"
+            :headerTitle="'Báo cáo'"
+            :classProp="'xs12'"
             :list="danhSach"
             :dataTab="duLieuTab"
+            :dataNew="duLieuMoi"
         >
             <template slot-scope="{ itemProp }">
-                <div v-if="itemProp.listType === 'mhda'">
-                    <listPurchase />
-                </div>
-                <div v-else-if="itemProp.listType === 'mhnda'">
-                    <listPurchaseNp />
+                <div v-if="itemProp.listType === 'dsmhcm'">
+                    <reportApprove />
                 </div>
             </template>
         </common>
@@ -20,9 +19,7 @@
 <script>
 import { mapState } from 'vuex'
 import Common from '~/components/common'
-
-import ListPurchase from './components/ForProject/listPurchase'
-import listPurchaseNp from './components/NonProject/listPurchaseNp'
+import ReportApprove from './components/reportApprove.vue'
 
 export default {
     layout: 'commonLayout',
@@ -36,8 +33,7 @@ export default {
     },
     components: {
         Common,
-        ListPurchase,
-        listPurchaseNp,
+        ReportApprove,
     },
     data() {
         return {
@@ -45,7 +41,7 @@ export default {
         }
     },
     computed: {
-        ...mapState('muahang', ['danhSach']),
+        ...mapState('baocao', ['danhSach', 'duLieuMoi']),
     },
 }
 </script>

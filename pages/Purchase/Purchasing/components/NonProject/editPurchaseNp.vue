@@ -183,6 +183,7 @@
                 :data-source="danhSachHangHoaNp"
                 :show-borders="true"
                 :show-column-lines="true"
+                :show-row-lines="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 :hover-state-enabled="true"
@@ -240,14 +241,40 @@
             </DxDataGrid>
         </div>
         <lichSuDuyet :ycmh="YeuCauMuaHang" />
-        <div class="row">
-            <div class="mr-1" style="font-weight: bold">Lịch sử huỷ duyệt:</div>
-            <div v-for="yc in YeuCauMuaHang.duyetYCMHsNoiBo" :key="yc.id">
-                <div v-if="yc.approvalStatus == 'MustRevise'" class="row">
-                    <div class="mr-2">
-                        ({{ yc.tenNhanVien }}: {{ yc.comment }})
-                    </div>
-                </div>
+        <div
+            v-if="YeuCauMuaHang.approvalStatus === 'MustRevise'"
+            class="row align-center"
+        >
+            <div class="mr-1" style="font-weight: bold">Ghi chú:</div>
+            <div>
+                {{ YeuCauMuaHang.comment }}
+            </div>
+        </div>
+        <div class="row align-center" v-if="isApproveNp == true">
+            <div class="xs10 row align-center">
+                <h3 class="xs1">{{ $t('Ghi chú') }}:</h3>
+                <DxTextBox
+                    class="xs11"
+                    v-model="YeuCauMuaHang.comment"
+                    styling-mode="underlined"
+                />
+            </div>
+            <div class="row justify-end align-center xs4">
+                <DxButton
+                    :text="$t('Không duyệt')"
+                    class="mr-3"
+                    type="danger"
+                    icon="close"
+                    styling-mode="outlined"
+                    @click="khongDuyet"
+                />
+                <DxButton
+                    type="success"
+                    icon="check"
+                    :text="$t('Phê duyệt')"
+                    styling-mode="outlined"
+                    @click="duyet"
+                />
             </div>
         </div>
     </div>
@@ -335,7 +362,7 @@ export default {
         },
     },
     computed: {
-        ...mapState('muahang', ['listItemNp', 'refNumberNp']),
+        ...mapState('muahang', ['listItemNp', 'refNumberNp', 'isApproveNp']),
         ...mapGetters('muahang', ['suaYeuCauNp', 'danhSachHangHoaNp']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
@@ -416,6 +443,24 @@ export default {
                 }
             }
         },
+        duyet() {
+            if (confirm('Do you want to submit?') == true) {
+                this.$store.dispatch(
+                    'pheduyet/postApproveNp',
+                    this.YeuCauMuaHang
+                )
+                this.clickClose()
+            }
+        },
+        khongDuyet() {
+            if (confirm('Do you want to submit?') == true) {
+                this.$store.dispatch(
+                    'pheduyet/postReviseNp',
+                    this.YeuCauMuaHang
+                )
+                this.clickClose()
+            }
+        },
         clickClose() {
             this.disable = true
             this.allowEdit = false
@@ -431,7 +476,7 @@ export default {
             return e.soLuong * e.donGiaTamTinh
         },
         timestamp(date) {
-            return moment(date).format('DD-MM-YYYY')
+            return moment(date).add(7, 'hours').format('HH:mm:ss DD/MM/YYYY')
         },
     },
     created() {
@@ -445,9 +490,9 @@ export default {
     border: 1px solid black;
 }
 .btn-tool {
-    background-color: #ddd;
-    padding: 0 4px;
-    border-radius: 50%;
+    border: 1px solid #ddd;
+    padding: 0 5px;
+    border-radius: 4px;
     transition: all 0.2s linear 0s;
     cursor: pointer;
 }

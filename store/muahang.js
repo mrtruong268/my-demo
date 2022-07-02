@@ -4,44 +4,13 @@ export const state = () => ({
     danhSach: [
         {
             id: uuidv4(),
-            header: 'Mua hàng dự án',
-            title: 'Danh sách mua hàng dự án',
+            title: 'Mua hàng dự án',
             listType: 'mhda',
         },
         {
             id: uuidv4(),
-            header: 'Mua hàng ngoài dự án',
-            title: 'Danh sách mua hàng ngoài dự án',
+            title: 'Mua hàng ngoài dự án',
             listType: 'mhnda',
-        },
-        {
-            id: uuidv4(),
-            header: 'Phê duyệt',
-            title: 'Phê duyệt mua hàng dự án',
-            listType: 'pd',
-        },
-        {
-            id: uuidv4(),
-            header: 'Báo cáo',
-            title: 'Báo cáo yêu cầu mua hàng dự án',
-            listType: 'bc',
-        },
-    ],
-    duLieuMoi: [
-        {
-            id: 1,
-            title: 'Tạo yêu cầu mua hàng',
-            listType: 'tmhda',
-        },
-        {
-            id: 2,
-            title: 'Tạo yêu cầu(Ngoài dự án)',
-            listType: 'tmhnda',
-        },
-        {
-            id: 3,
-            title: 'Phê duyệt mua hàng ngoài dự án',
-            listType: 'pdnda',
         },
     ],
     muaHangDuAn: [],
@@ -53,6 +22,8 @@ export const state = () => ({
     refNumber: {},
     refNumberNp: {},
     baoCaoYcmh: [],
+    isApprove: false,
+    isApproveNp: false,
 })
 export const getters = {
     // mua hang du an
@@ -86,6 +57,9 @@ export const mutations = {
     GET_REF_NUM(state, item) {
         state.refNumber = item
     },
+    IS_APPROVE(state, item) {
+        state.isApprove = item
+    },
 
     // mua hang ngoai du an
     SET_ITEM_NP(state, item) {
@@ -99,6 +73,9 @@ export const mutations = {
     },
     GET_REF_NUM_NP(state, item) {
         state.refNumberNp = item
+    },
+    IS_APPROVE_NP(state, item) {
+        state.isApproveNp = item
     },
 
     // Bao cao
@@ -167,6 +144,17 @@ export const actions = {
         }
     },
 
+    async checkApprove({ commit }, ycID) {
+        try {
+            let response = await this.$axios.get(
+                `/pr/is-approving-pr?ycmhId=${ycID}`
+            )
+            commit('IS_APPROVE', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
     // mua hang ngoai du an
 
     async getDataNp({ commit }) {
@@ -219,6 +207,17 @@ export const actions = {
         try {
             let response = await this.$axios.get(`/ipr/get-ref-number`)
             commit('GET_REF_NUM_NP', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async checkApproveNp({ commit }, ycID) {
+        try {
+            let response = await this.$axios.get(
+                `/ipr/is-approving-pr?ycmhId=${ycID}`
+            )
+            commit('IS_APPROVE_NP', response.data.data)
         } catch (err) {
             console.log(err)
         }

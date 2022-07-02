@@ -2,7 +2,7 @@
     <div class="header row align-center">
         <div class="xs4">
             <div class="row align-center justify-center px-2">
-                <div class="mr-2">
+                <div class="mx-2">
                     <img src="~assets/logo.png" width="60px" height="auto" />
                 </div>
                 <div v-if="maNhanVien.includes('VNASWO')">
@@ -85,10 +85,10 @@ export default {
     border-left: 1px solid black;
 }
 .top {
-    padding: 5px;
+    padding: 3px;
     border-bottom: 1px solid black;
 }
 .bot {
-    padding: 5px;
+    padding: 3px;
 }
 </style>

@@ -159,7 +159,7 @@ export default {
     },
     methods: {
         timestamp(date) {
-            return moment(date).format('DD-MM-YYYY')
+            return moment(date).add(7, 'hours').format('HH:mm:ss DD/MM/YYYY')
         },
     },
     beforeUpdate() {
@@ -187,7 +187,7 @@ export default {
     font-weight: normal;
 }
 .footer-content {
-    height: 100px;
+    height: 90px;
     border: 1px solid #1a1a1a;
     padding: 8px;
 }
@@ -195,7 +195,7 @@ export default {
     display: none;
 }
 .cho-duyet {
-    height: 100px;
+    height: 90px;
     border: 1px solid #1a1a1a;
     margin: 0 auto;
 }
