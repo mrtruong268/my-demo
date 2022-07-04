@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 export default function ({ app, $axios, redirect }) {
     $axios.onRequest((config) => {
-        config.baseURL = 'http://data.vnas.com.vn:108/api'
+        config.baseURL = 'https://data.vnas.com.vn/Purchasing/api'
         var accessToken = app.$cookies.get('cookieToken')
         if (accessToken) {
             config.headers.common['Authorization'] = `Bearer ${accessToken}`

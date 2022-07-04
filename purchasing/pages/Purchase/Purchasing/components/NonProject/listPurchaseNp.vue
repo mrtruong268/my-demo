@@ -148,7 +148,7 @@
             :showPopup="popupVisible"
             :showTitle="false"
             :closeOut="false"
-            :width="'80%'"
+            :width="isAdd === false ? '90%' : '80%'"
         >
             <template #main>
                 <addPurchaseNp v-if="isAdd === true" @invisible="hiddenPopup" />
@@ -239,7 +239,7 @@ export default {
             this.reload()
         },
         timestamp(date) {
-            return moment(date).add(7, 'hours').format('HH:mm:ss DD/MM/YYYY')
+            return moment(date).add(7, 'hours').format('HH:mm DD/MM/YYYY')
         },
     },
     created() {

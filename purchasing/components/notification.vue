@@ -123,7 +123,7 @@ export default {
     },
     methods: {
         timestamp(date) {
-            return moment(date).add(7, 'hours').format('HH:mm:ss DD/MM/YYYY')
+            return moment(date).add(7, 'hours').format('HH:mm DD/MM/YYYY')
 
         },
         clickApprove(e) {

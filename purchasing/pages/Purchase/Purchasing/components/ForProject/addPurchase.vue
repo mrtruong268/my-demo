@@ -46,6 +46,7 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+
                 <DxSelectBox
                     v-if="userInfo.listOfNhanVienPhongBan.length > 1"
                     :data-source="userInfo.listOfNhanVienPhongBan"
@@ -74,14 +75,15 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+
                 <DxSelectBox
                     :items="loaiPhuPhi"
                     styling-mode="outlined"
-                    :label="$t('Chi phí')"
+                    :label="$t('Phụ phí')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     @selectionChanged="selectPhuPhi"
-                    :ref="selectBoxRefKey"
+                    :ref="selectBoxPhuPhi"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -141,12 +143,29 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+                <DxSelectBox
+                    :items="projectCode"
+                    styling-mode="outlined"
+                    :label="$t('Mã dự án')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                    @selectionChanged="selectDuAn"
+                    :search-enabled="true"
+                    search-mode="contains"
+                    :search-timeout="200"
+                    :min-search-length="0"
+                    :ref="selectBoxRefKey"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxSelectBox>
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
                     styling-mode="outlined"
                     :label="$t('Số tham chiếu')"
                     label-mode="floating"
-                    class="xs-4"
+                    class="xs2"
                     :read-only="true"
                 >
                     <DxValidator>
@@ -169,21 +188,21 @@
                     <button class="mr-2" @click="submitFile()">
                         {{ $t('Nhập') }}
                     </button>
-                    <button @click="$store.dispatch('downloadExcelNp')">
+                    <button @click="$store.dispatch('downloadExcel')">
                         {{ $t('Tải mẫu Excel') }}
                     </button>
                 </div>
             </div>
             <DxDataGrid
                 id="gridContainer"
-                :data-source="YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets"
+                :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
                 :show-column-lines="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 height="calc(100vh - 320px)"
-                :remote-operations="true"
                 :noDataText="$t('Không có dữ liệu')"
+                :remote-operations="true"
                 :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
@@ -214,6 +233,12 @@
                     :format="customFormat"
                     :calculate-cell-value="calculateAmount"
                 />
+                <DxColumn
+                    data-field="maHangMucTrienKhai"
+                    :caption="$t('Mã hạng mục triển khai')"
+                >
+                    <DxLookup :data-source="hangMucTrienKhai" />
+                </DxColumn>
                 <DxColumn
                     data-field="ghiChu"
                     :caption="$t('Ghi chú')"
@@ -283,6 +308,7 @@ export default {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
             selectBoxRefKey: 'BoxRefKey',
+            selectBoxPhuPhi: 'BoxPhuPhi',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -294,37 +320,32 @@ export default {
                 diaDiemLamViec: '',
                 phuPhi: '',
                 maChiPhi: '',
+                maDuAn: '',
                 soThamChieu: '',
                 comment: '',
-                yeuCauMuaHangNoiBoChiTiets: [],
+                yeuCauMuaHangChiTiets: [],
             },
-            loaiPhuPhi: [
-                this.$t('VNAS Group'),
-                this.$t('VNAS Solutions'),
-                this.$t('VNAS Services'),
-                this.$t('VNAS Workshop'),
-            ],
+            loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
             file: '',
         }
     },
     watch: {
-        refNumberNp: {
-            handler(refNumberNp) {
-                if (refNumberNp) {
-                    this.YeuCauMuaHang.soThamChieu = refNumberNp.soThamChieu
-                    this.YeuCauMuaHang.maChiPhi = refNumberNp.maChiPhi
+        refNumber: {
+            handler(refNumber) {
+                if (refNumber) {
+                    this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
+                    this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
                 } else {
                     this.YeuCauMuaHang.soThamChieu = ''
                     this.YeuCauMuaHang.maChiPhi = ''
                 }
             },
-            immediate: true,
         },
-        dataExcelNp: {
-            handler(dataExcelNp) {
-                if (dataExcelNp) {
-                    this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets = JSON.parse(
-                        JSON.stringify(dataExcelNp.yeuCauMuaHangNoiBoChiTiets)
+        dataExcel: {
+            handler(dataExcel) {
+                if (dataExcel) {
+                    this.YeuCauMuaHang.yeuCauMuaHangChiTiets = JSON.parse(
+                        JSON.stringify(dataExcel.yeuCauMuaHangChiTiets)
                     )
                 }
             },
@@ -332,13 +353,21 @@ export default {
         },
     },
     computed: {
-        ...mapState('muahang', ['listItemNp', 'refNumberNp']),
-        ...mapState(['userInfo', 'dataExcelNp']),
+        ...mapState('muahang', ['listItem', 'refNumber']),
+        ...mapState([
+            'userInfo',
+            'projectCode',
+            'hangMucTrienKhai',
+            'dataExcel',
+        ]),
         validationGroup() {
             return this.$refs[this.formValidation].instance
         },
         selectBox() {
             return this.$refs[this.selectBoxRefKey].instance
+        },
+        RefPhuPhi() {
+            return this.$refs[this.selectBoxPhuPhi].instance
         },
     },
     methods: {
@@ -352,13 +381,14 @@ export default {
                 soLuong: 0,
                 donVi: '',
                 donGiaTamTinh: 0,
+                maHangMucTrienKhai: '',
                 ghiChu: '',
             }
-            this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.push(tmpAdd)
+            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.push(tmpAdd)
         },
         checkArray() {
-            let conditionsArray = []
-            this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
+            const conditionsArray = []
+            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach(
                 (e) =>
                     (conditionsArray = [
                         e.tenHangHoa_DichVu !== '',
@@ -366,6 +396,8 @@ export default {
                         e.xuatXu_Hang !== '',
                         e.soLuong !== '',
                         e.donVi !== '',
+                        e.maHangMucTrienKhai !== '',
+                        e.donGiaTamTinh !== '',
                     ])
             )
             return !conditionsArray.includes(false)
@@ -373,19 +405,19 @@ export default {
         clickAdd() {
             var result = confirm('Do you want to submit?')
             let checkEmpty = this.validationGroup.validate()
-            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets
+            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets
             if (result) {
                 if (checkEmpty.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
                         if (this.checkArray()) {
                             this.$store.dispatch(
-                                'muahang/postDataNp',
+                                'muahang/postData',
                                 this.YeuCauMuaHang
                             )
                             this.clickClose()
                         } else {
                             this.$toast.error(
-                                `Failed! Not enough information to save!`
+                                `Failed! Not enough information to save`
                             )
                         }
                     }, 300)
@@ -393,6 +425,16 @@ export default {
                     this.$toast.error(`Failed! Not enough information to save!`)
                 }
             }
+        },
+        selectDuAn(e) {
+            this.YeuCauMuaHang.maDuAn = e.selectedItem
+            if (e.selectedItem !== null) {
+                this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
+                this.$store.dispatch('getHangMuc', e.selectedItem)
+            }
+        },
+        selectPhongBan(e) {
+            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
@@ -406,20 +448,11 @@ export default {
                 currency: 'VND',
             }).format(e)
         },
-        async submitFile() {
-            let formData = new FormData()
-            formData.append('file', this.file)
-            if (this.file !== '')
-                this.$store.dispatch('uploadExcelNp', formData)
-        },
-        handleFileUpload() {
-            this.file = this.$refs.file.files[0]
-        },
         editorPreparing(e) {
             if (e.dataField === 'tenHangHoa_DichVu') {
                 e.editorName = 'dxAutocomplete'
                 e.editorOptions = {
-                    items: this.listItemNp,
+                    items: this.listItem,
                     valueExpr: 'name',
                     value: e.value,
                     onValueChanged(ev) {
@@ -427,7 +460,7 @@ export default {
                     },
                     onSelectionChanged(x) {
                         let itemSelect = x.selectedItem
-                        if (itemSelect.model == null) return
+                        if (itemSelect.model == null) return ''
                         e.row.data.model_MaHieu = itemSelect.model
                         e.row.data.xuatXu_Hang = itemSelect.tenHangSanXuat
                         e.row.data.donVi = itemSelect.donViTinh
@@ -435,6 +468,14 @@ export default {
                     },
                 }
             }
+        },
+        async submitFile() {
+            let formData = new FormData()
+            formData.append('file', this.file)
+            if (this.file !== '') this.$store.dispatch('uploadExcel', formData)
+        },
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0]
         },
         clickClose() {
             this.resetData()
@@ -451,24 +492,24 @@ export default {
                 ngayCanHang: new Date().toISOString(),
                 diaDiemLamViec: this.userInfo.diaDiemLamViec,
                 phuPhi: '',
-                maChiPhi: this.refNumberNp.maChiPhi,
-                soThamChieu: this.refNumberNp.soThamChieu,
+                maChiPhi: '',
+                maDuAn: '',
+                soThamChieu: '',
                 comment: '',
-                yeuCauMuaHangNoiBoChiTiets: [],
+                yeuCauMuaHangChiTiets: [],
             }
             this.selectBox.reset()
+            this.RefPhuPhi.reset()
         },
     },
     created() {
-        this.$store.dispatch('muahang/getItemsNp')
-        this.$store.dispatch('muahang/getRefNumberNp')
+        this.$store.dispatch('muahang/getItems')
+        this.$store.dispatch('getProjectCode')
         this.YeuCauMuaHang.tenNhanVien = this.userInfo.tenNhanVien
         this.YeuCauMuaHang.maNhanVien = this.userInfo.maNhanVien
         this.YeuCauMuaHang.chucVu = this.userInfo.chucVu
         this.YeuCauMuaHang.phongBan = this.userInfo.phongBan
         this.YeuCauMuaHang.diaDiemLamViec = this.userInfo.diaDiemLamViec
-        this.YeuCauMuaHang.soThamChieu = this.refNumberNp.soThamChieu
-        this.YeuCauMuaHang.maChiPhi = this.refNumberNp.maChiPhi
     },
 }
 </script>
@@ -497,9 +538,9 @@ export default {
     max-width: 34.6%;
 }
 .btn-tool {
-    background-color: #ddd;
-    padding: 0 4px;
-    border-radius: 50%;
+    border: 1px solid #ddd;
+    padding: 0 5px;
+    border-radius: 4px;
     transition: all 0.2s linear 0s;
     cursor: pointer;
 }

@@ -54,14 +54,13 @@
                             <div class="row align-center">
                                 <!-- <span class="font-14">{{ $t('Chào!') }} </span> -->
                                 <div>
-                                    <img
+                                    <!-- <img
                                         v-if="
                                             userInfo.hasOwnProperty('avatarUrl')
                                         "
-                                        :src="`http://data.vnas.com.vn:108/avatar/${userInfo.avatarUrl}`"
-                                    />
+                                        :src="`https://data.vnas.com.vn/Purchasing/avatar/${userInfo.avatarUrl}`"
+                                    /> -->
                                     <img
-                                        v-else
                                         src="~assets/avatar2.png"
                                         style="border-radius: 50%"
                                     />

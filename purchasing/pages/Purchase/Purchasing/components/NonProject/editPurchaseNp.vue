@@ -252,7 +252,7 @@
         </div>
         <div class="row align-center" v-if="isApproveNp == true">
             <div class="xs10 row align-center">
-                <h3 class="xs1">{{ $t('Ghi chú') }}:</h3>
+                <div class="xs1">{{ $t('Ghi chú') }}:</div>
                 <DxTextBox
                     class="xs11"
                     v-model="YeuCauMuaHang.comment"
@@ -403,7 +403,7 @@ export default {
             }
         },
         checkArray() {
-            let conditionsArray = []
+            const conditionsArray = []
             this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
                 (e) =>
                     (conditionsArray = [
@@ -476,7 +476,7 @@ export default {
             return e.soLuong * e.donGiaTamTinh
         },
         timestamp(date) {
-            return moment(date).add(7, 'hours').format('HH:mm:ss DD/MM/YYYY')
+            return moment(date).add(7, 'hours').format('HH:mm DD/MM/YYYY')
         },
     },
     created() {
