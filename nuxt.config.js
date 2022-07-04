@@ -1,7 +1,13 @@
 import i18n from './config/i18n'
 
 export default {
-    target: 'static',
+    // target: 'static',
+    router: {
+        base: '/purchasing/',
+    },
+    static: {
+        prefix: true,
+    },
     head: {
         title: 'Project manager',
         htmlAttrs: {

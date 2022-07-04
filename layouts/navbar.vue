@@ -52,17 +52,16 @@
                         </div> -->
                         <div class="dropdown2">
                             <div class="row align-center">
-                                <!-- <span class="font-14">{{ $t('Chào!') }} </span> -->
                                 <div>
-                                    <!-- <img
+                                    <img
                                         v-if="
                                             userInfo.hasOwnProperty('avatarUrl')
                                         "
                                         :src="`https://data.vnas.com.vn/Purchasing/avatar/${userInfo.avatarUrl}`"
-                                    /> -->
+                                    />
                                     <img
+                                        v-else
                                         src="~assets/avatar2.png"
-                                        style="border-radius: 50%"
                                     />
                                 </div>
                                 <div class="mx-2 user-name">
