@@ -55,8 +55,8 @@ export default {
     computed: mapState(['routeParams']),
     methods: {
         onClick(e) {
+            this.$store.commit('IS_SELECTED', 'mhda')
             this.clickRouter(e.to, this.routeParams)
-            this.$store.commit('IS_SELECTED', e.type)
         },
     },
 }

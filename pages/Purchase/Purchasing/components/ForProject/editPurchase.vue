@@ -122,7 +122,7 @@
                     </div>
                     <div class="xs4">
                         <div class="row align-center justify-space-between">
-                            <p>Chi phí:</p>
+                            <p>Phụ phí:</p>
                             <DxSelectBox
                                 :items="loaiPhuPhi"
                                 :value="YeuCauMuaHang.phuPhi"
@@ -136,11 +136,27 @@
                             </DxSelectBox>
                         </div>
                         <div class="row align-center justify-space-between">
+                            <p>Mã dự án:</p>
+                            <DxSelectBox
+                                :items="projectCode"
+                                :value="YeuCauMuaHang.maDuAn"
+                                styling-mode="underlined"
+                                :read-only="disable"
+                                @selectionChanged="selectDuAn"
+                                :ref="selectBoxRefKey"
+                            >
+                                <DxValidator>
+                                    <DxRequiredRule />
+                                </DxValidator>
+                            </DxSelectBox>
+                        </div>
+                        <div class="row align-center justify-space-between">
                             <p>Mã chi phí:</p>
                             <DxTextBox
                                 v-model="YeuCauMuaHang.maChiPhi"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
+                                :width="220"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -152,7 +168,8 @@
                             <DxTextBox
                                 v-model="YeuCauMuaHang.soThamChieu"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
+                                :width="220"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -163,7 +180,6 @@
                 </div>
             </DxValidationGroup>
         </div>
-
         <div>
             <div class="row justify-space-between align-center">
                 <h3 class="my-2">
@@ -180,7 +196,7 @@
             </div>
             <DxDataGrid
                 id="gridContainer"
-                :data-source="danhSachHangHoaNp"
+                :data-source="danhSachHangHoa"
                 :show-borders="true"
                 :show-column-lines="true"
                 :show-row-lines="true"
@@ -221,6 +237,12 @@
                     :calculate-cell-value="calculateAmount"
                 />
                 <DxColumn
+                    data-field="maHangMucTrienKhai"
+                    :caption="$t('Mã hạng mục triển khai')"
+                >
+                    <DxLookup :data-source="hangMucTrienKhai" />
+                </DxColumn>
+                <DxColumn
                     data-field="ghiChu"
                     :caption="$t('Ghi chú')"
                     width="250"
@@ -250,31 +272,37 @@
                 {{ YeuCauMuaHang.comment }}
             </div>
         </div>
-        <div class="row align-center" v-if="isApproveNp == true">
-            <div class="xs10 row align-center">
-                <div class="xs1">{{ $t('Ghi chú') }}:</div>
+        <div
+            v-if="isApprove == true"
+            class="row align-center justify-space-between"
+        >
+            <div class="xs1" style="font-weight: bold">
+                {{ $t('Ghi chú') }}:
+            </div>
+            <div class="box2">
                 <DxTextBox
-                    class="xs11"
                     v-model="YeuCauMuaHang.comment"
                     styling-mode="underlined"
                 />
             </div>
-            <div class="row justify-end align-center xs4">
-                <DxButton
-                    :text="$t('Không duyệt')"
-                    class="mr-3"
-                    type="danger"
-                    icon="close"
-                    styling-mode="outlined"
-                    @click="khongDuyet"
-                />
-                <DxButton
-                    type="success"
-                    icon="check"
-                    :text="$t('Phê duyệt')"
-                    styling-mode="outlined"
-                    @click="duyet"
-                />
+            <div>
+                <div class="row justify-end align-center">
+                    <DxButton
+                        :text="$t('Không duyệt')"
+                        class="mr-3"
+                        type="danger"
+                        icon="close"
+                        styling-mode="outlined"
+                        @click="khongDuyet"
+                    />
+                    <DxButton
+                        type="success"
+                        icon="check"
+                        :text="$t('Phê duyệt')"
+                        styling-mode="outlined"
+                        @click="duyet"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -291,7 +319,6 @@ import {
     DxColumn,
     DxLookup,
     DxSummary,
-    DxPaging,
     DxTotalItem,
     DxEditing,
 } from 'devextreme-vue/data-grid'
@@ -311,11 +338,10 @@ export default {
         DxDataGrid,
         DxColumn,
         DxTotalItem,
-        DxPaging,
         DxNumberBox,
         DxButton,
-        DxSummary,
         DxLookup,
+        DxSummary,
         DxEditing,
         DxValidator,
         DxRequiredRule,
@@ -328,44 +354,44 @@ export default {
         return {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
+            selectBoxRefKey: 'BoxRefKey',
             YeuCauMuaHang: {},
-            loaiPhuPhi: [
-                this.$t('VNAS Group'),
-                this.$t('VNAS Solutions'),
-                this.$t('VNAS Services'),
-                this.$t('VNAS Workshop'),
-            ],
+            loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
             disable: true,
             allowEdit: false,
             mnv: '',
         }
     },
     watch: {
-        suaYeuCauNp: {
-            handler(suaYeuCauNp) {
-                if (suaYeuCauNp) {
-                    this.YeuCauMuaHang = { ...suaYeuCauNp }
+        suaYeuCau: {
+            handler(suaYeuCau) {
+                if (suaYeuCau) {
+                    this.YeuCauMuaHang = { ...suaYeuCau }
                     this.mnv = this.YeuCauMuaHang.maNhanVien
                 }
             },
             immediate: true,
             deep: true,
         },
-        refNumberNp: {
-            handler(refNumberNp) {
-                if (refNumberNp) {
-                    this.YeuCauMuaHang.soThamChieu = refNumberNp.soThamChieu
-                    this.YeuCauMuaHang.maChiPhi = refNumberNp.maChiPhi
+        refNumber: {
+            handler(refNumber) {
+                if (refNumber && this.disable == false) {
+                    this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
+                    this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
                 }
             },
             immediate: true,
         },
     },
     computed: {
-        ...mapState('muahang', ['listItemNp', 'refNumberNp', 'isApproveNp']),
-        ...mapGetters('muahang', ['suaYeuCauNp', 'danhSachHangHoaNp']),
+        ...mapState('muahang', ['listItem', 'refNumber', 'isApprove']),
+        ...mapState(['projectCode', 'hangMucTrienKhai']),
+        ...mapGetters('muahang', ['suaYeuCau', 'danhSachHangHoa']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
+        },
+        selectBox() {
+            return this.$refs[this.selectBoxRefKey].instance
         },
     },
     methods: {
@@ -379,13 +405,13 @@ export default {
         saved() {
             let tmpData =
                 this.$refs[this.dataGridRefKey].instance.getDataSource()._items
-            this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets = tmpData
+            this.YeuCauMuaHang.yeuCauMuaHangChiTiets = tmpData
         },
         editorPreparing(e) {
             if (e.dataField === 'tenHangHoa_DichVu') {
                 e.editorName = 'dxAutocomplete'
                 e.editorOptions = {
-                    items: this.listItemNp,
+                    items: this.listItem,
                     valueExpr: 'name',
                     value: e.value,
                     onValueChanged(ev) {
@@ -393,7 +419,7 @@ export default {
                     },
                     onSelectionChanged(x) {
                         let itemSelect = x.selectedItem
-                        if (itemSelect.model == null) return ''
+                        if (itemSelect.model == null) return
                         e.row.data.model_MaHieu = itemSelect.model
                         e.row.data.xuatXu_Hang = itemSelect.tenHangSanXuat
                         e.row.data.donVi = itemSelect.donViTinh
@@ -404,7 +430,7 @@ export default {
         },
         checkArray() {
             const conditionsArray = []
-            this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
+            this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach(
                 (e) =>
                     (conditionsArray = [
                         e.tenHangHoa_DichVu !== '',
@@ -412,9 +438,18 @@ export default {
                         e.xuatXu_Hang !== '',
                         e.soLuong !== '',
                         e.donVi !== '',
+                        e.donGiaTamTinh !== '',
+                        e.maHangMucTrienKhai !== '',
                     ])
             )
             return !conditionsArray.includes(false)
+        },
+        selectDuAn(e) {
+            this.YeuCauMuaHang.maDuAn = e.selectedItem
+            if (e.selectedItem !== null) {
+                this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
+                this.$store.dispatch('getHangMuc', e.selectedItem)
+            }
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
@@ -422,13 +457,13 @@ export default {
         clickSave() {
             let result2 = confirm('Do you want to submit?')
             let result = this.validationGroup.validate()
-            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets
+            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets
             if (result2) {
                 if (result.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
                         if (this.checkArray()) {
                             this.$store.dispatch(
-                                'muahang/editDataNp',
+                                'muahang/editData',
                                 this.YeuCauMuaHang
                             )
                             this.clickClose()
@@ -445,19 +480,13 @@ export default {
         },
         duyet() {
             if (confirm('Do you want to submit?') == true) {
-                this.$store.dispatch(
-                    'pheduyet/postApproveNp',
-                    this.YeuCauMuaHang
-                )
+                this.$store.dispatch('pheduyet/postApprove', this.YeuCauMuaHang)
                 this.clickClose()
             }
         },
         khongDuyet() {
             if (confirm('Do you want to submit?') == true) {
-                this.$store.dispatch(
-                    'pheduyet/postReviseNp',
-                    this.YeuCauMuaHang
-                )
+                this.$store.dispatch('pheduyet/postRevise', this.YeuCauMuaHang)
                 this.clickClose()
             }
         },
@@ -480,7 +509,8 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('muahang/getItemsNp')
+        this.$store.dispatch('muahang/getItems')
+        this.$store.dispatch('getProjectCode')
     },
 }
 </script>
@@ -500,5 +530,9 @@ export default {
     transition: all 0.2s linear 0s;
     background-color: black;
     color: #ddd;
+}
+.box2 {
+    width: 100%;
+    padding-right: 16px;
 }
 </style>
