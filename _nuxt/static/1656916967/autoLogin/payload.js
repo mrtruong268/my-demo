@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/autoLogin", {data:[{}],fetch:{},mutations:[]});

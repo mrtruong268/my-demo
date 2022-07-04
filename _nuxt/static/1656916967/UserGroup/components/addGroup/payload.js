@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/UserGroup/components/addGroup", {data:[{}],fetch:{},mutations:[]});

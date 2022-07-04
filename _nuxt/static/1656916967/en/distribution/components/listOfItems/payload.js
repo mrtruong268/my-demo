@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/en/distribution/components/listOfItems", {data:[{}],fetch:{},mutations:[]});
