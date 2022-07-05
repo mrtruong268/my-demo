@@ -357,7 +357,7 @@ export default {
             this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.push(tmpAdd)
         },
         checkArray() {
-            const conditionsArray = []
+            let conditionsArray = []
             this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets.forEach(
                 (e) =>
                     (conditionsArray = [

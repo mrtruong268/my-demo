@@ -1,26 +1,9 @@
 <template>
     <div>
-        <DxTabPanel
-            height="auto"
-            :data-source="dataTab"
-            :loop="false"
-            :animation-enabled="true"
-            :swipe-enabled="true"
-        >
+        <DxTabPanel height="auto" :data-source="dataTab">
             <template #title="{ data: item }">
-                <div
-                    v-if="
-                        typeof danhSachPheDuyet.data !== 'undefined' &&
-                        typeof danhSachPheDuyetNp.data !== 'undefined'
-                    "
-                >
-                    <span
-                        >{{ item.title }}({{
-                            item.id === 1
-                                ? danhSachPheDuyet.data.length
-                                : danhSachPheDuyetNp.data.length
-                        }})</span
-                    >
+                <div>
+                    {{ item.title }}
                 </div>
             </template>
             <template #item="{ data: item }">
@@ -57,6 +40,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div v-else>
                         <div
                             v-for="item in danhSachPheDuyetNp.data"
@@ -115,17 +99,12 @@ export default {
                     title: 'Mua hàng ngoài dự án',
                 },
             ],
-            dataReverse: [],
         }
     },
     computed: {
         ...mapState('pheduyet', ['danhSachPheDuyet', 'danhSachPheDuyetNp']),
     },
     methods: {
-        timestamp(date) {
-            return moment(date).add(7, 'hours').format('HH:mm DD/MM/YYYY')
-
-        },
         clickApprove(e) {
             if (e.hasOwnProperty('duyetYCMHsNoiBo')) {
                 this.$store.commit('IS_SELECTED', 'mhnda')
@@ -135,6 +114,9 @@ export default {
                 this.clickRouter('Purchase/Purchasing', this.routeParams)
             }
             this.$emit('close')
+        },
+        timestamp(date) {
+            return moment(date).add(7, 'hours').format('HH:mm DD/MM/YYYY')
         },
     },
 }

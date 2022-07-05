@@ -59,10 +59,7 @@
                                         "
                                         :src="`https://data.vnas.com.vn/Purchasing/avatar/${userInfo.avatarUrl}`"
                                     />
-                                    <img
-                                        v-else
-                                        src="~assets/avatar2.png"
-                                    />
+                                    <img v-else src="~assets/avatar2.png" />
                                 </div>
                                 <div class="mx-2 user-name">
                                     {{ userInfo.username }}

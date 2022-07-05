@@ -429,7 +429,7 @@ export default {
             }
         },
         checkArray() {
-            const conditionsArray = []
+            let conditionsArray = []
             this.YeuCauMuaHang.yeuCauMuaHangChiTiets.forEach(
                 (e) =>
                     (conditionsArray = [
@@ -491,6 +491,7 @@ export default {
             }
         },
         clickClose() {
+            this.$store.dispatch('pheduyet/getApprove')
             this.disable = true
             this.allowEdit = false
             this.$emit('invisible')

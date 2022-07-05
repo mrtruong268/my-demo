@@ -1,17 +1,17 @@
 <template>
     <div class="container main">
         <div class="mb-2 row justify-space-between align-center">
-            <h3>{{ $t('List user') }}</h3>
+            <h3>{{ $t('Danh sách người dùng') }}</h3>
             <div>
                 <DxButton
                     icon="mdi mdi-reload"
-                    text="Reload"
+                    :text="$t('Tải lại')"
                     @click="clickReload"
                     type="normal"
                 />
                 <DxButton
                     icon="mdi mdi-plus"
-                    text="Create"
+                    :text="$t('Tạo mới')"
                     @click="clickAdd"
                     type="normal"
                 />
@@ -31,22 +31,22 @@
             <DxGrouping :auto-expand-all="true" />
             <DxPaging :enabled="true" />
             <!-- <DxColumn data-field="id" :caption="$t('No')" /> -->
-            <DxColumn data-field="tenNhanVien" :caption="$t('Name')" />
-            <DxColumn data-field="maNhanVien" :caption="$t('Employee code')" />
+            <DxColumn data-field="tenNhanVien" :caption="$t('Họ và tên')" />
+            <DxColumn data-field="maNhanVien" :caption="$t('Mã nhân viên')" />
             <DxColumn data-field="email" :caption="$t('Email')" />
-            <DxColumn data-field="chucVu" :caption="$t('Position')" />
-            <DxColumn data-field="phongBan" :caption="$t('Department')" />
-            <DxColumn data-field="username" :caption="$t('User name')" />
+            <DxColumn data-field="chucVu" :caption="$t('Chức vụ')" />
+            <DxColumn data-field="phongBan" :caption="$t('Phòng ban')" />
+            <DxColumn data-field="username" :caption="$t('Tài khoản')" />
             <DxColumn
                 data-field="groupName"
                 :group-index="0"
-                :caption="$t('Group')"
+                :caption="$t('Nhóm')"
             />
-            <DxColumn data-field="congTy" :caption="$t('Company')" />
-            <DxColumn data-field="isActive" :caption="$t('Active')" />
+            <DxColumn data-field="congTy" :caption="$t('Công ty')" />
+            <DxColumn data-field="isActive" :caption="$t('Đang hoạt động')" />
             <DxColumn
                 data-field="createdDate"
-                :caption="$t('Created date')"
+                :caption="$t('Thời gian tạo')"
                 data-type="date"
                 format="dd/MM/yyyy"
             />
@@ -133,7 +133,7 @@ export default {
         clickReload() {
             setTimeout(() => {
                 this.$store.dispatch('user/getAllStaff')
-            }, 10)
+            }, 100)
         },
         clickEdit(e) {
             this.editData = e.data
