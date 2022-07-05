@@ -76,6 +76,17 @@
                 </div>
             </template>
         </DxTabPanel>
+        <popup
+            :showPopup="popupVisible"
+            :showTitle="true"
+            :closeOut="true"
+            :title="$t('Phê duyệt')"
+            :width="'80%'"
+        >
+            <template #main>
+                <approve :item="approveItem" />
+            </template>
+        </popup>
     </div>
 </template>
 
@@ -83,9 +94,13 @@
 import { mapState } from 'vuex'
 import DxTabPanel from 'devextreme-vue/tab-panel'
 import moment from 'moment'
+import popup from './popup.vue'
+import approve from './approve.vue'
 export default {
     components: {
         DxTabPanel,
+        popup,
+        approve,
     },
     data() {
         return {
@@ -99,6 +114,8 @@ export default {
                     title: 'Mua hàng ngoài dự án',
                 },
             ],
+            popupVisible: false,
+            approveItem: {},
         }
     },
     computed: {
@@ -106,14 +123,8 @@ export default {
     },
     methods: {
         clickApprove(e) {
-            if (e.hasOwnProperty('duyetYCMHsNoiBo')) {
-                this.$store.commit('IS_SELECTED', 'mhnda')
-                this.clickRouter('Purchase/Purchasing', this.routeParams)
-            } else {
-                this.$store.commit('IS_SELECTED', 'mhda')
-                this.clickRouter('Purchase/Purchasing', this.routeParams)
-            }
-            this.$emit('close')
+            this.popupVisible = !this.popupVisible
+            this.approveItem = e
         },
         timestamp(date) {
             return moment(date).add(7, 'hours').format('HH:mm DD/MM/YYYY')
