@@ -1,97 +1,14 @@
 export const state = () => ({
     DanhSachNhanVien: [],
     DanhSachNhom: [],
-    DanhSachChucNang: [
-        {
-            key: 'Project management',
-            items: [
-                {
-                    id: 1,
-                    title: 'Project',
-                    dataQuyen: [
-                        {
-                            id: 1,
-                            quyen: 'Full control',
-                            allow: true,
-                        },
-                        {
-                            id: 2,
-                            quyen: 'Read',
-                            allow: false,
-                        },
-                        {
-                            id: 3,
-                            quyen: 'White',
-                            allow: false,
-                        },
-                    ],
-                },
-                {
-                    id: 2,
-                    title: 'Partner',
-                    dataQuyen: [
-                        {
-                            id: 1,
-                            quyen: 'Full control',
-                            allow: true,
-                        },
-                        {
-                            id: 2,
-                            quyen: 'Read',
-                            allow: true,
-                        },
-                        {
-                            id: 3,
-                            quyen: 'White',
-                            allow: false,
-                        },
-                    ],
-                },
-                {
-                    id: 3,
-                    title: 'Customer',
-                    dataQuyen: [
-                        {
-                            id: 1,
-                            quyen: 'Full control',
-                            allow: false,
-                        },
-                        {
-                            id: 2,
-                            quyen: 'Read',
-                            allow: false,
-                        },
-                        {
-                            id: 3,
-                            quyen: 'White',
-                            allow: true,
-                        },
-                    ],
-                },
-            ],
-        },
-    ],
-    DanhSachQuyen: [
-        {
-            id: 1,
-            quyen: 'Full control',
-            allow: false,
-        },
-        {
-            id: 2,
-            quyen: 'Read',
-            allow: false,
-        },
-        {
-            id: 3,
-            quyen: 'White',
-            allow: false,
-        },
-    ],
+    DanhSachChucNang: [],
+    DanhSachQuyen: [],
+    DanhSachChucVu: [],
+    DanhSachCongTy: [],
+    DanhSachPhongBan: [],
+    DsPhongBanCongTy: [],
 })
-export const getters = {
-    DanhSachNhom: (state) => state.DanhSachNhom,
-}
+export const getters = {}
 export const mutations = {
     GET_ALL_STAFF(state, item) {
         state.DanhSachNhanVien = item
@@ -99,8 +16,44 @@ export const mutations = {
     GET_ALL_GROUP(state, item) {
         state.DanhSachNhom = item
     },
+    GET_ALL_POSITION(state, item) {
+        state.DanhSachChucVu = item
+    },
+    GET_ALL_COMPANY(state, item) {
+        state.DanhSachCongTy = item
+    },
+    GET_ALL_DIVISION(state, item) {
+        state.DanhSachPhongBan = item
+    },
+    GET_DIVISION_BY_COMPANY(state, item) {
+        state.DsPhongBanCongTy = item
+    },
 }
 export const actions = {
+    async getAllPosition({ commit }) {
+        try {
+            let response = await this.$axios.get('/position/get-all-position')
+            commit('GET_ALL_POSITION', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getAllCompany({ commit }) {
+        try {
+            let response = await this.$axios.get('/company/get-all-company')
+            commit('GET_ALL_COMPANY', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getAllDivision({ commit }) {
+        try {
+            let response = await this.$axios.get('/division/get-all-division')
+            commit('GET_ALL_DIVISION', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
     async getAllStaff({ commit }) {
         try {
             let response = await this.$axios.get('/staff/get-all-staff')
@@ -129,6 +82,16 @@ export const actions = {
         try {
             let response = await this.$axios.get('/group/get-all-group')
             commit('GET_ALL_GROUP', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getDivisionByCom({ commit }, comId) {
+        try {
+            let response = await this.$axios.get(
+                `/division/get-divisions-by-company?CompanyId=${comId}`
+            )
+            commit('GET_DIVISION_BY_COMPANY', response.data.data)
         } catch (err) {
             console.log(err)
         }

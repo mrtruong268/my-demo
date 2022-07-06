@@ -1,7 +1,7 @@
 <template>
     <div class="container main">
         <div class="mb-2 row justify-space-between align-center">
-            <h3>{{ $t('Danh sách người dùng') }}</h3>
+            <h3>{{ $t('Danh sách nhân viên') }}</h3>
             <div>
                 <DxButton
                     icon="mdi mdi-reload"
@@ -21,7 +21,7 @@
             id="gridContainer"
             :data-source="DanhSachNhanVien.data"
             :show-borders="true"
-            height="calc(100vh - 230px)"
+            height="calc(100vh - 190px)"
             :allow-column-resizing="true"
             :column-auto-width="true"
             :hover-state-enabled="true"
@@ -73,9 +73,9 @@
                 <DxTotalItem column="tenNhanVien" summary-type="count" />
             </DxSummary>
         </DxDataGrid>
-        <popup :showPopup="popupVisible" :showTitle="false">
+        <popup :showPopup="popupVisible" :showTitle="false" :width="'50%'">
             <template #header>
-                <h2 class="mb-3">User</h2>
+                <h2 class="mb-3">{{ $t('Nhân viên') }}</h2>
             </template>
             <template #main>
                 <AddUser :edit="editData" @hiddenPopup="hidePopup" />

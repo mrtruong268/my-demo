@@ -59,7 +59,11 @@
                                         "
                                         :src="`https://data.vnas.com.vn/Purchasing/avatar/${userInfo.avatarUrl}`"
                                     />
-                                    <img v-else src="~assets/avatar2.png" />
+                                    <img
+                                        v-else
+                                        src="~assets/avatar2.png"
+                                        style="border-radius: 50%"
+                                    />
                                 </div>
                                 <div class="mx-2 user-name">
                                     {{ userInfo.username }}
@@ -217,7 +221,7 @@
                     <div class="dropdown3">
                         <div class="row align-center">
                             <img
-                                :src="`http://data.vnas.com.vn:108/avatar/${userInfo.avatarUrl}`"
+                                :src="`https://data.vnas.com.vn/Purchasing/avatar/${userInfo.avatarUrl}`"
                             />
                         </div>
                         <div class="dropdown-content3">

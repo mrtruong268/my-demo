@@ -263,7 +263,6 @@ export default {
 }
 .submit {
     color: orange;
-    /* background-color: orange; */
 }
 .approve {
     color: #009900;

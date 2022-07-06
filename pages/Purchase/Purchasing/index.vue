@@ -21,7 +21,7 @@
 import { mapState } from 'vuex'
 import Common from '~/components/common'
 
-import ListPurchase from './components/ForProject/listPurchase'
+import listPurchase from './components/Project/listPurchase'
 import listPurchaseNp from './components/NonProject/listPurchaseNp'
 
 export default {
@@ -36,7 +36,7 @@ export default {
     },
     components: {
         Common,
-        ListPurchase,
+        listPurchase,
         listPurchaseNp,
     },
     data() {

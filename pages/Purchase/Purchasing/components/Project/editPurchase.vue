@@ -419,7 +419,7 @@ export default {
                     },
                     onSelectionChanged(x) {
                         let itemSelect = x.selectedItem
-                        if (itemSelect.model == null) return
+                        if (itemSelect === null) return
                         e.row.data.model_MaHieu = itemSelect.model
                         e.row.data.xuatXu_Hang = itemSelect.tenHangSanXuat
                         e.row.data.donVi = itemSelect.donViTinh

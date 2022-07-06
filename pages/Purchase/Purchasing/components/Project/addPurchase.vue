@@ -248,7 +248,6 @@
             <div class="row justify-space-between mt-3">
                 <DxButton
                     icon="mdi mdi-plus"
-                    :use-submit-behavior="true"
                     @click="addRow"
                     styling-mode="text"
                     :text="$t('Thêm')"
@@ -460,7 +459,7 @@ export default {
                     },
                     onSelectionChanged(x) {
                         let itemSelect = x.selectedItem
-                        if (itemSelect.model == null) return ''
+                        if (itemSelect === null) return
                         e.row.data.model_MaHieu = itemSelect.model
                         e.row.data.xuatXu_Hang = itemSelect.tenHangSanXuat
                         e.row.data.donVi = itemSelect.donViTinh

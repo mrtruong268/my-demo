@@ -46,9 +46,6 @@ export const state = () => ({
         },
     ],
     routeParams: '',
-    DanhSachChucVu: [],
-    DanhSachCongTy: [],
-    DanhSachPhongBan: [],
     token: '',
     userInfo: {},
     isSelected: '',
@@ -67,15 +64,6 @@ export const mutations = {
     },
     LANG_SWITCH(state, lang) {
         state.routeParams = lang
-    },
-    GET_ALL_POSITION(state, item) {
-        state.DanhSachChucVu = item
-    },
-    GET_ALL_COMPANY(state, item) {
-        state.DanhSachCongTy = item
-    },
-    GET_ALL_DIVISION(state, item) {
-        state.DanhSachPhongBan = item
     },
     GET_TOKEN(state, item) {
         state.token = item
@@ -98,30 +86,6 @@ export const mutations = {
 }
 
 export const actions = {
-    async getAllPosition({ commit }) {
-        try {
-            let response = await this.$axios.get('/position/get-all-position')
-            commit('GET_ALL_POSITION', response.data.data)
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    async getAllCompany({ commit }) {
-        try {
-            let response = await this.$axios.get('/company/get-all-company')
-            commit('GET_ALL_COMPANY', response.data.data)
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    async getAllDivision({ commit }) {
-        try {
-            let response = await this.$axios.get('/division/get-all-division')
-            commit('GET_ALL_DIVISION', response.data.data)
-        } catch (err) {
-            console.log(err)
-        }
-    },
     async login({ commit }, item) {
         try {
             let response = await this.$axios.post(
