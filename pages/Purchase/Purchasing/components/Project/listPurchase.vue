@@ -244,7 +244,7 @@ export default {
             this.reload()
         },
         timestamp(date) {
-            return moment(date).add(7, 'hours').format('HH:mm DD/MM/YYYY')
+            return moment(date).format('HH:mm DD/MM/YYYY')
         },
     },
     created() {

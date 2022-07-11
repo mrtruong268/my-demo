@@ -84,7 +84,7 @@
             :width="'80%'"
         >
             <template #main>
-                <approve :item="approveItem" />
+                <approve :item="approveItem" @close="hiddenPopup" />
             </template>
         </popup>
     </div>
@@ -126,8 +126,11 @@ export default {
             this.popupVisible = !this.popupVisible
             this.approveItem = e
         },
+        hiddenPopup() {
+            this.popupVisible = !this.popupVisible
+        },
         timestamp(date) {
-            return moment(date).add(7, 'hours').format('HH:mm DD/MM/YYYY')
+            return moment(date).format('HH:mm DD/MM/YYYY')
         },
     },
 }

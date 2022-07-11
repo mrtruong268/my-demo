@@ -53,28 +53,6 @@
                     class="mb-3 xs6"
                 />
             </div>
-            <div class="row justify-space-between">
-                <!-- <DxTextBox
-                    v-model="NhanVien.chucVu"
-                    styling-mode="outlined"
-                    :label="$t('Chức vụ')"
-                    class="mb-3 mr-3 xs6"
-                    label-mode="floating"
-                    :read-only="true"
-                /> -->
-                <DxSelectBox
-                    v-model="NhanVien.congTy"
-                    :dataSource="DanhSachCongTy"
-                    display-expr="name"
-                    value-expr="name"
-                    styling-mode="outlined"
-                    :label="$t('Công ty')"
-                    label-mode="floating"
-                    class="mb-3 xs12"
-                    :ref="selectBoxRefKey"
-                    @selectionChanged="selectCongTy"
-                />
-            </div>
             <DxDataGrid
                 id="gridContainer"
                 :data-source="phongBanCongTy"
@@ -88,8 +66,8 @@
                 height="calc(100vh - 450px)"
                 :ref="dataGridRefKey"
                 @saved="saved"
+                @editorPreparing="editorPreparing"
             >
-                <!-- @editorPreparing="editorPreparing" -->
                 <DxEditing
                     :allow-updating="true"
                     :allow-deleting="true"
@@ -98,21 +76,9 @@
                     mode="cell"
                     new-row-position="last"
                 />
-                <!-- <DxColumn data-field="tenCongTy" :caption="$t('Công ty')" /> -->
-                <DxColumn data-field="tenPhongBan" :caption="$t('Phòng ban')">
-                    <DxLookup
-                        :data-source="DsPhongBanCongTy"
-                        display-expr="name"
-                        value-expr="name"
-                    />
-                </DxColumn>
-                <DxColumn data-field="tenChucVu" :caption="$t('Chức vụ')">
-                    <DxLookup
-                        :data-source="DanhSachChucVu"
-                        display-expr="ten"
-                        value-expr="ten"
-                    />
-                </DxColumn>
+                <DxColumn data-field="tenCongTy" :caption="$t('Công ty')" />
+                <DxColumn data-field="tenPhongBan" :caption="$t('Phòng ban')" />
+                <DxColumn data-field="tenChucVu" :caption="$t('Chức vụ')" />
                 <DxColumn data-field="kiemNhiem" :caption="$t('Kiêm nhiệm')" />
             </DxDataGrid>
             <div class="row justify-space-between mt-1">
@@ -180,7 +146,6 @@ export default {
     data() {
         return {
             dataGridRefKey: 'datagridValid',
-            selectBoxRefKey: 'BoxRefKey',
             NhanVien: {
                 id: 0,
                 tenNhanVien: '',
@@ -227,9 +192,6 @@ export default {
             'DanhSachNhom',
             'DsPhongBanCongTy',
         ]),
-        selectBox() {
-            return this.$refs[this.selectBoxRefKey].instance
-        },
     },
     methods: {
         addRow() {
@@ -243,7 +205,7 @@ export default {
                 chucVuId: 0,
                 tenChucVu: '',
                 nhanVienId: 0,
-                kiemNhiem: false,
+                kiemNhiem: true,
             }
             this.phongBanCongTy.push(tmpAdd)
         },
@@ -256,34 +218,69 @@ export default {
                 this.$refs[this.dataGridRefKey].instance.getDataSource()._items
             this.NhanVien.listOfNhanVienPhongBan = tmpData
         },
-        selectCongTy(e) {
-            let itemSelect = e.selectedItem
-            if (itemSelect === null) return
-            this.$store.dispatch('user/getDivisionByCom', itemSelect.id)
+        editorPreparing(e) {
+            let self = this
+            if (e.dataField === 'tenCongTy') {
+                e.editorName = 'dxSelectBox'
+                e.editorOptions = {
+                    items: self.DanhSachCongTy,
+                    valueExpr: 'name',
+                    displayExpr: 'name',
+                    value: e.value,
+                    onValueChanged(ev) {
+                        e.setValue(ev.value)
+                    },
+                    onSelectionChanged(x) {
+                        if (x.selectedItem === null) return {}
+                        e.row.data.congTyId = x.selectedItem.id
+                    },
+                    onFocusOut() {
+                        self.$store.dispatch(
+                            'user/getDivisionByCom',
+                            e.row.data.congTyId
+                        )
+                    },
+                }
+            }
+            if (e.dataField === 'tenPhongBan') {
+                e.editorName = 'dxSelectBox'
+                e.editorOptions = {
+                    items: self.DsPhongBanCongTy,
+                    valueExpr: 'name',
+                    displayExpr: 'name',
+                    value: e.value,
+                    onValueChanged(ev) {
+                        e.setValue(ev.value)
+                    },
+                    onFocusIn() {
+                        setTimeout(() => {
+                            self.$store.dispatch(
+                                'user/getDivisionByCom',
+                                e.row.data.congTyId
+                            )
+                        }, 200)
+                    },
+                    onSelectionChanged(pb) {
+                        e.row.data.phongBanId = pb.selectedItem.id
+                    },
+                }
+            }
+            if (e.dataField === 'tenChucVu') {
+                e.editorName = 'dxSelectBox'
+                e.editorOptions = {
+                    items: self.DanhSachChucVu,
+                    valueExpr: 'ten',
+                    displayExpr: 'ten',
+                    value: e.value,
+                    onValueChanged(ev) {
+                        e.setValue(ev.value)
+                    },
+                    onSelectionChanged(cv) {
+                        e.row.data.chucVuId = cv.selectedItem.id
+                    },
+                }
+            }
         },
-        // editorPreparing(e) {
-        //     let self = this
-        //     if (e.dataField === 'tenCongTy') {
-        //         e.editorName = 'dxSelectBox'
-        //         e.editorOptions = {
-        //             dataSource: this.DanhSachCongTy,
-        //             valueExpr: 'name',
-        //             displayExpr: 'name',
-        //             value: e.value,
-        //             onValueChanged(ev) {
-        //                 e.setValue(ev.value)
-        //             },
-        //             onSelectionChanged(x) {
-        //                 let itemSelect = x.selectedItem
-        //                 if (itemSelect === null) return
-        //                 self.$store.dispatch(
-        //                     'user/getDivisionByCom',
-        //                     itemSelect.id
-        //                 )
-        //             },
-        //         }
-        //     }
-        // },
         clickClose() {
             this.phongBanCongTy = []
             this.NhanVien = {
@@ -307,7 +304,6 @@ export default {
                 isActive: true,
                 listOfNhanVienPhongBan: [],
             }
-            this.selectBox.reset()
             this.$emit('hiddenPopup')
         },
     },

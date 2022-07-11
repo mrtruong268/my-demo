@@ -112,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3">
+        <div>
             <DxDataGrid
                 id="gridContainer"
                 :data-source="
@@ -167,6 +167,7 @@
                 </DxSummary>
             </DxDataGrid>
         </div>
+        <lichSuDuyet :ycmh="yeuCauMuaHang" />
         <div class="row align-center justify-space-between">
             <div class="xs1" style="font-weight: bold">
                 {{ $t('Ghi chú') }}:
@@ -250,6 +251,9 @@ export default {
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
         },
+        closePopup() {
+            this.$emit('close')
+        },
         duyet() {
             if (confirm('Do you want to submit?') == true) {
                 if (this.yeuCauMuaHang.hasOwnProperty('duyetYCMHs')) {
@@ -269,6 +273,7 @@ export default {
                         this.$store.dispatch('pheduyet/getApproveNp')
                     }, 100)
                 }
+                this.closePopup()
             }
         },
         khongDuyet() {
@@ -290,6 +295,7 @@ export default {
                         this.$store.dispatch('pheduyet/getApproveNp')
                     }, 100)
                 }
+                this.closePopup()
             }
         },
     },

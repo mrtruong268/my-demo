@@ -198,6 +198,7 @@
                 :data-source="YeuCauMuaHang.yeuCauMuaHangChiTiets"
                 :show-borders="true"
                 :show-column-lines="true"
+                :show-row-lines="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 height="calc(100vh - 320px)"
@@ -331,14 +332,12 @@ export default {
     watch: {
         refNumber: {
             handler(refNumber) {
-                if (refNumber) {
+                if (typeof refNumber !== 'undefined') {
                     this.YeuCauMuaHang.soThamChieu = refNumber.soThamChieu
                     this.YeuCauMuaHang.maChiPhi = refNumber.maChiPhi
-                } else {
-                    this.YeuCauMuaHang.soThamChieu = ''
-                    this.YeuCauMuaHang.maChiPhi = ''
-                }
+                } else return {}
             },
+            immediate: true,
         },
         dataExcel: {
             handler(dataExcel) {

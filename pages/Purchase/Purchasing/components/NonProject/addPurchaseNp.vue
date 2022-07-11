@@ -179,6 +179,7 @@
                 :data-source="YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets"
                 :show-borders="true"
                 :show-column-lines="true"
+                :show-row-lines="true"
                 :allow-column-resizing="true"
                 :column-auto-width="true"
                 height="calc(100vh - 320px)"
@@ -309,13 +310,10 @@ export default {
     watch: {
         refNumberNp: {
             handler(refNumberNp) {
-                if (refNumberNp) {
+                if (typeof refNumberNp !== 'undefined') {
                     this.YeuCauMuaHang.soThamChieu = refNumberNp.soThamChieu
                     this.YeuCauMuaHang.maChiPhi = refNumberNp.maChiPhi
-                } else {
-                    this.YeuCauMuaHang.soThamChieu = ''
-                    this.YeuCauMuaHang.maChiPhi = ''
-                }
+                } else return {}
             },
             immediate: true,
         },
@@ -450,8 +448,8 @@ export default {
                 ngayCanHang: new Date().toISOString(),
                 diaDiemLamViec: this.userInfo.diaDiemLamViec,
                 phuPhi: '',
-                maChiPhi: this.refNumberNp.maChiPhi,
-                soThamChieu: this.refNumberNp.soThamChieu,
+                maChiPhi: '',
+                soThamChieu: '',
                 comment: '',
                 yeuCauMuaHangNoiBoChiTiets: [],
             }
