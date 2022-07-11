@@ -20,7 +20,7 @@
                                 :placeholder="$t('Tìm kiếm')"
                                 class="search-box"
                             />
-                            <i class="mdi mdi-magnify btn-search"></i>
+                            <!-- <i class="mdi mdi-magnify btn-search"></i> -->
                         </div>
                         <div class="notification mr-3">
                             <div class="btn-drop" @click="openNoti">
