@@ -401,6 +401,7 @@ export default {
     font-size: 13px;
     bottom: -4px;
     right: -4px;
+    text-align: center;
     padding: 2px;
 }
 .btn-login {
