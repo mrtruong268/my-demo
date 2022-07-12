@@ -133,10 +133,10 @@ export const actions = {
             console.log(err)
         }
     },
-    async getRefNumber({ commit }, maDuAn) {
+    async getRefNumber({ commit }, payload) {
         try {
             let response = await this.$axios.get(
-                `/pr/get-ref-number?maduan=${maDuAn}`
+                `/pr/get-ref-number?maDuAn=${payload.maDuAn}&phongBanId=${payload.phongBanId}`
             )
             commit('GET_REF_NUM', response.data.data)
         } catch (err) {
@@ -203,9 +203,11 @@ export const actions = {
             console.log(err)
         }
     },
-    async getRefNumberNp({ commit }) {
+    async getRefNumberNp({ commit }, pbId) {
         try {
-            let response = await this.$axios.get(`/ipr/get-ref-number`)
+            let response = await this.$axios.get(
+                `/ipr/get-ref-number?phongBanId=${pbId}`
+            )
             commit('GET_REF_NUM_NP', response.data.data)
         } catch (err) {
             console.log(err)

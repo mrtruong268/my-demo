@@ -26,20 +26,7 @@
                             <div class="btn-drop" @click="openNoti">
                                 <img src="~assets/noti.gif" />
                             </div>
-                            <div
-                                class="count-noti"
-                                v-if="
-                                    typeof danhSachPheDuyet.data !==
-                                        'undefined' &&
-                                    typeof danhSachPheDuyetNp.data !==
-                                        'undefined'
-                                "
-                            >
-                                {{
-                                    danhSachPheDuyetNp.data.length +
-                                    danhSachPheDuyet.data.length
-                                }}
-                            </div>
+                            <div class="count-noti">{{ notiCount }}</div>
                             <div id="myDropdown" class="notification-content">
                                 <notification @close="clickClose" />
                             </div>
@@ -267,6 +254,18 @@ export default {
     computed: {
         ...mapState(['ChucNang', 'ThongBao', 'routeParams', 'userInfo']),
         ...mapState('pheduyet', ['danhSachPheDuyet', 'danhSachPheDuyetNp']),
+        notiCount() {
+            const arr = this.danhSachPheDuyet.data
+            const arrNp = this.danhSachPheDuyetNp.data
+            let count = 0
+            let countNp = 0
+            typeof arr === 'undefined' ? (count = 0) : (count = arr.length)
+            typeof arrNp === 'undefined'
+                ? (countNp = 0)
+                : (countNp = arrNp.length)
+
+            return count + countNp || 0
+        },
     },
     methods: {
         openNav() {

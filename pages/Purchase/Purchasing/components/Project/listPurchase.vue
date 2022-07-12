@@ -24,7 +24,6 @@
             :allow-column-resizing="true"
             :column-auto-width="true"
             :hover-state-enabled="false"
-            :ref="dataGridRefKey"
         >
             <DxPaging :page-size="30" />
             <DxColumnFixing :enabled="false" />
@@ -198,7 +197,6 @@ export default {
     },
     data() {
         return {
-            dataGridRefKey: 'datagridValid',
             popupVisible: false,
             isAdd: false,
         }
@@ -267,22 +265,4 @@ export default {
 .approve {
     color: #009900;
 }
-.button {
-    font-size: 24px;
-    margin-right: 12px;
-    cursor: pointer;
-    transition: all 0.2s linear 0s;
-    color: #4d4d4d;
-}
-.button:hover {
-    font-size: 30px;
-    transition: all 0.2s linear 0s;
-    background-color: #ddd;
-    border-radius: 50%;
-}
-/* >>> .dx-datagrid .dx-row > td {
-    padding: 8px 16px;
-    font-size: 14px;
-    line-height: 20px;
-} */
 </style>

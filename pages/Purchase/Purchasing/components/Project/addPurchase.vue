@@ -22,22 +22,11 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+
                 <DxTextBox
                     v-model="YeuCauMuaHang.maNhanVien"
                     styling-mode="outlined"
                     :label="$t('Mã nhân viên')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                    :read-only="true"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
-                <DxTextBox
-                    v-model="YeuCauMuaHang.chucVu"
-                    styling-mode="outlined"
-                    :label="$t('Chức vụ')"
                     label-mode="floating"
                     class="xs2 mr-3"
                     :read-only="true"
@@ -55,6 +44,7 @@
                     :label="$t('Phòng ban')"
                     label-mode="floating"
                     class="xs2 mr-3"
+                    :ref="selectBoxPhongBan"
                     @selectionChanged="selectPhongBan"
                 >
                     <DxValidator>
@@ -76,14 +66,27 @@
                     </DxValidator>
                 </DxTextBox>
 
+                <DxTextBox
+                    v-model="YeuCauMuaHang.chucVu"
+                    styling-mode="outlined"
+                    :label="$t('Chức vụ')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                    :read-only="true"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+
                 <DxSelectBox
                     :items="loaiPhuPhi"
                     styling-mode="outlined"
                     :label="$t('Phụ phí')"
                     label-mode="floating"
                     class="xs2 mr-3"
-                    @selectionChanged="selectPhuPhi"
                     :ref="selectBoxPhuPhi"
+                    @selectionChanged="selectPhuPhi"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -118,6 +121,7 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxDateBox>
+
                 <DxDateBox
                     v-model="YeuCauMuaHang.ngayCanHang"
                     displayFormat="dd/MM/yyyy"
@@ -132,6 +136,7 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxDateBox>
+
                 <DxTextBox
                     v-model="YeuCauMuaHang.diaDiemLamViec"
                     styling-mode="outlined"
@@ -143,23 +148,25 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+
                 <DxSelectBox
                     :items="projectCode"
                     styling-mode="outlined"
                     :label="$t('Mã dự án')"
                     label-mode="floating"
                     class="xs2 mr-3"
-                    @selectionChanged="selectDuAn"
                     :search-enabled="true"
                     search-mode="contains"
                     :search-timeout="200"
                     :min-search-length="0"
-                    :ref="selectBoxRefKey"
+                    :ref="selectBoxDuAn"
+                    @selectionChanged="selectDuAn"
                 >
                     <DxValidator>
                         <DxRequiredRule />
                     </DxValidator>
                 </DxSelectBox>
+
                 <DxTextBox
                     v-model="YeuCauMuaHang.soThamChieu"
                     styling-mode="outlined"
@@ -204,7 +211,6 @@
                 height="calc(100vh - 320px)"
                 :noDataText="$t('Không có dữ liệu')"
                 :remote-operations="true"
-                :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
                 <DxEditing
@@ -305,10 +311,10 @@ export default {
     },
     data() {
         return {
-            dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
-            selectBoxRefKey: 'BoxRefKey',
+            selectBoxDuAn: 'BoxRefKey',
             selectBoxPhuPhi: 'BoxPhuPhi',
+            selectBoxPhongBan: 'BoxPhongBan',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -327,6 +333,7 @@ export default {
             },
             loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
             file: '',
+            payloads: {},
         }
     },
     watch: {
@@ -361,11 +368,14 @@ export default {
         validationGroup() {
             return this.$refs[this.formValidation].instance
         },
-        selectBox() {
-            return this.$refs[this.selectBoxRefKey].instance
+        refDuAn() {
+            return this.$refs[this.selectBoxDuAn].instance
         },
-        RefPhuPhi() {
+        refPhuPhi() {
             return this.$refs[this.selectBoxPhuPhi].instance
+        },
+        refPhongBan() {
+            return this.$refs[this.selectBoxPhongBan].instance
         },
     },
     methods: {
@@ -400,39 +410,19 @@ export default {
             )
             return !conditionsArray.includes(false)
         },
-        clickAdd() {
-            var result = confirm('Do you want to submit?')
-            let checkEmpty = this.validationGroup.validate()
-            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets
-            if (result) {
-                if (checkEmpty.isValid && isArrEmpty.length > 0) {
-                    setTimeout(() => {
-                        if (this.checkArray()) {
-                            this.$store.dispatch(
-                                'muahang/postData',
-                                this.YeuCauMuaHang
-                            )
-                            this.clickClose()
-                        } else {
-                            this.$toast.error(
-                                `Failed! Not enough information to save`
-                            )
-                        }
-                    }, 300)
-                } else {
-                    this.$toast.error(`Failed! Not enough information to save!`)
-                }
-            }
+        selectPhongBan(e) {
+            if (e.selectedItem === null) return
+            this.payloads.phongBanId = e.selectedItem.phongBanId
+            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+            this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
+            this.$store.dispatch('muahang/getRefNumber', this.payloads)
         },
         selectDuAn(e) {
+            if (e.selectedItem === null) return
+            this.payloads.maDuAn = e.selectedItem
             this.YeuCauMuaHang.maDuAn = e.selectedItem
-            if (e.selectedItem !== null) {
-                this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
-                this.$store.dispatch('getHangMuc', e.selectedItem)
-            }
-        },
-        selectPhongBan(e) {
-            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+            this.$store.dispatch('muahang/getRefNumber', this.payloads)
+            this.$store.dispatch('getHangMuc', e.selectedItem)
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
@@ -475,11 +465,35 @@ export default {
         handleFileUpload() {
             this.file = this.$refs.file.files[0]
         },
-        clickClose() {
-            this.resetData()
-            this.$emit('invisible')
+        clickAdd() {
+            var result = confirm('Do you want to submit?')
+            let checkEmpty = this.validationGroup.validate()
+            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangChiTiets
+            if (result) {
+                if (checkEmpty.isValid && isArrEmpty.length > 0) {
+                    setTimeout(() => {
+                        if (this.checkArray()) {
+                            this.$store.dispatch(
+                                'muahang/postData',
+                                this.YeuCauMuaHang
+                            )
+                            this.clickClose()
+                        } else {
+                            this.$toast.error(
+                                `Failed! Not enough information to save`
+                            )
+                        }
+                    }, 300)
+                } else {
+                    this.$toast.error(`Failed! Not enough information to save!`)
+                }
+            }
         },
         resetData() {
+            this.refDuAn.reset()
+            this.refPhuPhi.reset()
+            if (this.userInfo.listOfNhanVienPhongBan.length > 1)
+                this.refPhongBan.reset()
             this.YeuCauMuaHang = {
                 id: 0,
                 tenNhanVien: this.userInfo.tenNhanVien,
@@ -496,8 +510,10 @@ export default {
                 comment: '',
                 yeuCauMuaHangChiTiets: [],
             }
-            this.selectBox.reset()
-            this.RefPhuPhi.reset()
+        },
+        clickClose() {
+            this.resetData()
+            this.$emit('invisible')
         },
     },
     created() {
@@ -513,24 +529,6 @@ export default {
 </script>
 
 <style scoped>
-.btn-add {
-    font-size: 28px;
-}
-.btn-save {
-    background-color: #0986c5;
-    color: white;
-    padding: 8px 0;
-    width: 60px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.2s linear 0s;
-}
-.btn-save:hover {
-    color: #0986c5;
-    background-color: #f1f1f1;
-    transition: all 0.2s linear 0s;
-}
 .xs-4 {
     flex-basis: 34.6%;
     max-width: 34.6%;

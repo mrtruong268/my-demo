@@ -1,9 +1,20 @@
 <template>
     <div>
-        <DxTabPanel height="auto" :data-source="dataTab">
+        <DxTabPanel
+            height="auto"
+            :data-source="dataTab"
+            :loop="false"
+            :animation-enabled="true"
+            :swipe-enabled="true"
+        >
             <template #title="{ data: item }">
                 <div>
-                    {{ item.title }}
+                    <p>
+                        {{ item.title }}
+                        <span style="font-weight: bold"
+                            >({{ item.id === 1 ? DuAn : ngoaiDuAn }})
+                        </span>
+                    </p>
                 </div>
             </template>
             <template #item="{ data: item }">
@@ -120,6 +131,16 @@ export default {
     },
     computed: {
         ...mapState('pheduyet', ['danhSachPheDuyet', 'danhSachPheDuyetNp']),
+        DuAn() {
+            return typeof this.danhSachPheDuyet.data === 'undefined'
+                ? 0
+                : this.danhSachPheDuyet.data.length
+        },
+        ngoaiDuAn() {
+            return typeof this.danhSachPheDuyetNp.data === 'undefined'
+                ? 0
+                : this.danhSachPheDuyetNp.data.length
+        },
     },
     methods: {
         clickApprove(e) {

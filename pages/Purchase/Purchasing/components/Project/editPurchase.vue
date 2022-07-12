@@ -32,7 +32,7 @@
                             <DxTextBox
                                 v-model="YeuCauMuaHang.tenNhanVien"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -44,7 +44,7 @@
                             <DxTextBox
                                 v-model="YeuCauMuaHang.maNhanVien"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -88,7 +88,7 @@
                             <DxTextBox
                                 v-model="YeuCauMuaHang.chucVu"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -97,7 +97,37 @@
                         </div>
                         <div class="row align-center justify-space-between">
                             <p>Phòng/Ban:</p>
+                            <div v-if="!disable">
+                                <DxSelectBox
+                                    v-if="
+                                        userInfo.listOfNhanVienPhongBan.length >
+                                        1
+                                    "
+                                    :data-source="
+                                        userInfo.listOfNhanVienPhongBan
+                                    "
+                                    display-expr="tenPhongBan"
+                                    styling-mode="underlined"
+                                    @selectionChanged="selectPhongBan"
+                                    :read-only="disable"
+                                >
+                                    <DxValidator>
+                                        <DxRequiredRule />
+                                    </DxValidator>
+                                </DxSelectBox>
+                                <DxTextBox
+                                    v-else
+                                    v-model="YeuCauMuaHang.phongBan"
+                                    styling-mode="underlined"
+                                    :read-only="disable"
+                                >
+                                    <DxValidator>
+                                        <DxRequiredRule />
+                                    </DxValidator>
+                                </DxTextBox>
+                            </div>
                             <DxTextBox
+                                v-else
                                 v-model="YeuCauMuaHang.phongBan"
                                 styling-mode="underlined"
                                 :read-only="disable"
@@ -143,7 +173,6 @@
                                 styling-mode="underlined"
                                 :read-only="disable"
                                 @selectionChanged="selectDuAn"
-                                :ref="selectBoxRefKey"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -354,12 +383,12 @@ export default {
         return {
             dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
-            selectBoxRefKey: 'BoxRefKey',
             YeuCauMuaHang: {},
             loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
             disable: true,
             allowEdit: false,
             mnv: '',
+            payloads: {},
         }
     },
     watch: {
@@ -385,13 +414,10 @@ export default {
     },
     computed: {
         ...mapState('muahang', ['listItem', 'refNumber', 'isApprove']),
-        ...mapState(['projectCode', 'hangMucTrienKhai']),
+        ...mapState(['projectCode', 'hangMucTrienKhai', 'userInfo']),
         ...mapGetters('muahang', ['suaYeuCau', 'danhSachHangHoa']),
         validationGroup() {
             return this.$refs[this.formValidation].instance
-        },
-        selectBox() {
-            return this.$refs[this.selectBoxRefKey].instance
         },
     },
     methods: {
@@ -444,12 +470,20 @@ export default {
             )
             return !conditionsArray.includes(false)
         },
+        selectPhongBan(e) {
+            if (e.selectedItem === null) return
+            this.payloads.phongBanId = e.selectedItem.phongBanId
+            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+            this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
+            this.$store.dispatch('muahang/getRefNumber', this.payloads)
+        },
         selectDuAn(e) {
+            if (e.selectedItem === null) return
+            this.payloads.maDuAn = e.selectedItem
             this.YeuCauMuaHang.maDuAn = e.selectedItem
-            if (e.selectedItem !== null) {
-                this.$store.dispatch('muahang/getRefNumber', e.selectedItem)
-                this.$store.dispatch('getHangMuc', e.selectedItem)
-            }
+            if (this.payloads.phongBanId !== undefined)
+                this.$store.dispatch('muahang/getRefNumber', this.payloads)
+            this.$store.dispatch('getHangMuc', e.selectedItem)
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem

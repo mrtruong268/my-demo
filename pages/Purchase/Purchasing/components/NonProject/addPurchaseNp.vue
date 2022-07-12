@@ -34,6 +34,37 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
+
+                <DxSelectBox
+                    v-if="userInfo.listOfNhanVienPhongBan.length > 1"
+                    :data-source="userInfo.listOfNhanVienPhongBan"
+                    display-expr="tenPhongBan"
+                    styling-mode="outlined"
+                    :label="$t('Phòng ban')"
+                    label-mode="floating"
+                    class="xs2 mr-3"
+                    :ref="selectBoxPhongBan"
+                    @selectionChanged="selectPhongBan"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxSelectBox>
+
+                <DxTextBox
+                    v-else
+                    v-model="YeuCauMuaHang.phongBan"
+                    styling-mode="outlined"
+                    :label="$t('Phòng ban')"
+                    label-mode="floating"
+                    :read-only="true"
+                    class="xs2 mr-3"
+                >
+                    <DxValidator>
+                        <DxRequiredRule />
+                    </DxValidator>
+                </DxTextBox>
+
                 <DxTextBox
                     v-model="YeuCauMuaHang.chucVu"
                     styling-mode="outlined"
@@ -46,42 +77,15 @@
                         <DxRequiredRule />
                     </DxValidator>
                 </DxTextBox>
-                <DxSelectBox
-                    v-if="userInfo.listOfNhanVienPhongBan.length > 1"
-                    :data-source="userInfo.listOfNhanVienPhongBan"
-                    display-expr="tenPhongBan"
-                    styling-mode="outlined"
-                    :label="$t('Phòng ban')"
-                    label-mode="floating"
-                    class="xs2 mr-3"
-                    @selectionChanged="selectPhongBan"
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxSelectBox>
 
-                <DxTextBox
-                    v-model="YeuCauMuaHang.phongBan"
-                    styling-mode="outlined"
-                    :label="$t('Phòng ban')"
-                    label-mode="floating"
-                    :read-only="true"
-                    class="xs2 mr-3"
-                    v-else
-                >
-                    <DxValidator>
-                        <DxRequiredRule />
-                    </DxValidator>
-                </DxTextBox>
                 <DxSelectBox
                     :items="loaiPhuPhi"
                     styling-mode="outlined"
                     :label="$t('Chi phí')"
                     label-mode="floating"
                     class="xs2 mr-3"
+                    :ref="selectBoxPhuPhi"
                     @selectionChanged="selectPhuPhi"
-                    :ref="selectBoxRefKey"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -185,7 +189,6 @@
                 height="calc(100vh - 320px)"
                 :remote-operations="true"
                 :noDataText="$t('Không có dữ liệu')"
-                :ref="dataGridRefKey"
                 @editorPreparing="editorPreparing"
             >
                 <DxEditing
@@ -280,9 +283,9 @@ export default {
     },
     data() {
         return {
-            dataGridRefKey: 'datagridValid',
             formValidation: 'formValid',
-            selectBoxRefKey: 'BoxRefKey',
+            selectBoxPhuPhi: 'BoxRefKey',
+            selectBoxPhongBan: 'BoxPhongBan',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -334,8 +337,11 @@ export default {
         validationGroup() {
             return this.$refs[this.formValidation].instance
         },
-        selectBox() {
-            return this.$refs[this.selectBoxRefKey].instance
+        refPhuPhi() {
+            return this.$refs[this.selectBoxPhuPhi].instance
+        },
+        refPhongBan() {
+            return this.$refs[this.selectBoxPhongBan].instance
         },
     },
     methods: {
@@ -367,29 +373,14 @@ export default {
             )
             return !conditionsArray.includes(false)
         },
-        clickAdd() {
-            var result = confirm('Do you want to submit?')
-            let checkEmpty = this.validationGroup.validate()
-            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets
-            if (result) {
-                if (checkEmpty.isValid && isArrEmpty.length > 0) {
-                    setTimeout(() => {
-                        if (this.checkArray()) {
-                            this.$store.dispatch(
-                                'muahang/postDataNp',
-                                this.YeuCauMuaHang
-                            )
-                            this.clickClose()
-                        } else {
-                            this.$toast.error(
-                                `Failed! Not enough information to save!`
-                            )
-                        }
-                    }, 300)
-                } else {
-                    this.$toast.error(`Failed! Not enough information to save!`)
-                }
-            }
+        selectPhongBan(e) {
+            if (e.selectedItem === null) return
+            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+            this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
+            this.$store.dispatch(
+                'muahang/getRefNumberNp',
+                e.selectedItem.phongBanId
+            )
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
@@ -433,11 +424,34 @@ export default {
                 }
             }
         },
-        clickClose() {
-            this.resetData()
-            this.$emit('invisible')
+        clickAdd() {
+            var result = confirm('Do you want to submit?')
+            let checkEmpty = this.validationGroup.validate()
+            let isArrEmpty = this.YeuCauMuaHang.yeuCauMuaHangNoiBoChiTiets
+            if (result) {
+                if (checkEmpty.isValid && isArrEmpty.length > 0) {
+                    setTimeout(() => {
+                        if (this.checkArray()) {
+                            this.$store.dispatch(
+                                'muahang/postDataNp',
+                                this.YeuCauMuaHang
+                            )
+                            this.clickClose()
+                        } else {
+                            this.$toast.error(
+                                `Failed! Not enough information to save!`
+                            )
+                        }
+                    }, 300)
+                } else {
+                    this.$toast.error(`Failed! Not enough information to save!`)
+                }
+            }
         },
         resetData() {
+            this.refPhuPhi.reset()
+            if (this.userInfo.listOfNhanVienPhongBan.length > 1)
+                this.refPhongBan.reset()
             this.YeuCauMuaHang = {
                 id: 0,
                 tenNhanVien: this.userInfo.tenNhanVien,
@@ -453,42 +467,24 @@ export default {
                 comment: '',
                 yeuCauMuaHangNoiBoChiTiets: [],
             }
-            this.selectBox.reset()
+        },
+        clickClose() {
+            this.resetData()
+            this.$emit('invisible')
         },
     },
     created() {
         this.$store.dispatch('muahang/getItemsNp')
-        this.$store.dispatch('muahang/getRefNumberNp')
         this.YeuCauMuaHang.tenNhanVien = this.userInfo.tenNhanVien
         this.YeuCauMuaHang.maNhanVien = this.userInfo.maNhanVien
         this.YeuCauMuaHang.chucVu = this.userInfo.chucVu
         this.YeuCauMuaHang.phongBan = this.userInfo.phongBan
         this.YeuCauMuaHang.diaDiemLamViec = this.userInfo.diaDiemLamViec
-        this.YeuCauMuaHang.soThamChieu = this.refNumberNp.soThamChieu
-        this.YeuCauMuaHang.maChiPhi = this.refNumberNp.maChiPhi
     },
 }
 </script>
 
 <style scoped>
-.btn-add {
-    font-size: 28px;
-}
-.btn-save {
-    background-color: #0986c5;
-    color: white;
-    padding: 8px 0;
-    width: 60px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.2s linear 0s;
-}
-.btn-save:hover {
-    color: #0986c5;
-    background-color: #f1f1f1;
-    transition: all 0.2s linear 0s;
-}
 .xs-4 {
     flex-basis: 34.6%;
     max-width: 34.6%;

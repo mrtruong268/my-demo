@@ -97,7 +97,37 @@
                         </div>
                         <div class="row align-center justify-space-between">
                             <p>Phòng/Ban:</p>
+                            <div v-if="!disable">
+                                <DxSelectBox
+                                    v-if="
+                                        userInfo.listOfNhanVienPhongBan.length >
+                                        1
+                                    "
+                                    :data-source="
+                                        userInfo.listOfNhanVienPhongBan
+                                    "
+                                    display-expr="tenPhongBan"
+                                    styling-mode="underlined"
+                                    :read-only="disable"
+                                    @selectionChanged="selectPhongBan"
+                                >
+                                    <DxValidator>
+                                        <DxRequiredRule />
+                                    </DxValidator>
+                                </DxSelectBox>
+                                <DxTextBox
+                                    v-else
+                                    v-model="YeuCauMuaHang.phongBan"
+                                    styling-mode="underlined"
+                                    :read-only="disable"
+                                >
+                                    <DxValidator>
+                                        <DxRequiredRule />
+                                    </DxValidator>
+                                </DxTextBox>
+                            </div>
                             <DxTextBox
+                                v-else
                                 v-model="YeuCauMuaHang.phongBan"
                                 styling-mode="underlined"
                                 :read-only="disable"
@@ -369,6 +399,7 @@ export default {
         },
     },
     computed: {
+        ...mapState(['userInfo']),
         ...mapState('muahang', ['listItemNp', 'refNumberNp', 'isApproveNp']),
         ...mapGetters('muahang', ['suaYeuCauNp', 'danhSachHangHoaNp']),
         validationGroup() {
@@ -423,6 +454,15 @@ export default {
             )
             return !conditionsArray.includes(false)
         },
+        selectPhongBan(e) {
+            if (e.selectedItem === null) return
+            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+            this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
+            this.$store.dispatch(
+                'muahang/getRefNumberNp',
+                e.selectedItem.phongBanId
+            )
+        },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
         },
@@ -468,12 +508,6 @@ export default {
                 this.clickClose()
             }
         },
-        clickClose() {
-            this.$store.dispatch('pheduyet/getApproveNp')
-            this.disable = true
-            this.allowEdit = false
-            this.$emit('invisible')
-        },
         customFormat(e) {
             return new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
@@ -485,6 +519,12 @@ export default {
         },
         timestamp(date) {
             return moment(date).format('HH:mm DD/MM/YYYY')
+        },
+        clickClose() {
+            this.$store.dispatch('pheduyet/getApproveNp')
+            this.disable = true
+            this.allowEdit = false
+            this.$emit('invisible')
         },
     },
     created() {
