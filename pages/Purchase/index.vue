@@ -55,7 +55,9 @@ export default {
     computed: mapState(['routeParams']),
     methods: {
         onClick(e) {
-            this.$store.commit('IS_SELECTED', 'mhda')
+            e.id == 1
+                ? this.$store.commit('IS_SELECTED', 'mhda')
+                : this.$store.commit('IS_SELECTED', 'dsmhcm')
             this.clickRouter(e.to, this.routeParams)
         },
     },

@@ -321,6 +321,7 @@ export default {
                 maNhanVien: '',
                 chucVu: '',
                 phongBan: '',
+                phongBanId: 0,
                 ngayDeTrinh: new Date().toISOString(),
                 ngayCanHang: new Date().toISOString(),
                 diaDiemLamViec: '',
@@ -413,6 +414,7 @@ export default {
         selectPhongBan(e) {
             if (e.selectedItem === null) return
             this.payloads.phongBanId = e.selectedItem.phongBanId
+            this.YeuCauMuaHang.phongBanId = e.selectedItem.phongBanId
             this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
             this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
             this.$store.dispatch('muahang/getRefNumber', this.payloads)
@@ -523,6 +525,10 @@ export default {
         this.YeuCauMuaHang.maNhanVien = this.userInfo.maNhanVien
         this.YeuCauMuaHang.chucVu = this.userInfo.chucVu
         this.YeuCauMuaHang.phongBan = this.userInfo.phongBan
+        if (this.userInfo.listOfNhanVienPhongBan.length === 1) {
+            this.YeuCauMuaHang.phongBanId = this.userInfo.phongBanId
+            this.payloads.phongBanId = this.userInfo.phongBanId
+        }
         this.YeuCauMuaHang.diaDiemLamViec = this.userInfo.diaDiemLamViec
     },
 }

@@ -14,6 +14,7 @@
     "Chào!": "Chào!",
     "Không duyệt": "Không duyệt",
     "Thêm": "Thêm",
+    "Nhập": "Nhập",
     "Tạo mới": "Tạo mới",
     "Lưu": "Lưu",
     "Trang chủ": "Trang chủ",
@@ -99,5 +100,6 @@
     "Yêu cầu hoàn duyệt": "Yêu cầu hoàn duyệt",
     "Xoá": "Xoá",
     "Thời gian duyệt": "Thời gian duyệt",
-    "Tải mẫu Excel": "Tải mẫu Excel"
+    "Tải mẫu Excel": "Tải mẫu Excel",
+    "Bao gồm danh sách mua hàng và tạo yêu cầu mua hàng": "Bao gồm danh sách mua hàng và tạo yêu cầu mua hàng"
 }

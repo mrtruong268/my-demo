@@ -263,7 +263,6 @@ export default {
             typeof arrNp === 'undefined'
                 ? (countNp = 0)
                 : (countNp = arrNp.length)
-
             return count + countNp || 0
         },
     },
