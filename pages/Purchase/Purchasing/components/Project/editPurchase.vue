@@ -481,8 +481,12 @@ export default {
             if (e.selectedItem === null) return
             this.payloads.maDuAn = e.selectedItem
             this.YeuCauMuaHang.maDuAn = e.selectedItem
-            if (this.payloads.phongBanId !== undefined)
+            if (this.userInfo.listOfNhanVienPhongBan.length === 1) {
+                this.payloads.phongBanId = this.userInfo.phongBanId
                 this.$store.dispatch('muahang/getRefNumber', this.payloads)
+            } else {
+                this.$store.dispatch('muahang/getRefNumber', this.payloads)
+            }
             this.$store.dispatch('getHangMuc', e.selectedItem)
         },
         selectPhuPhi(e) {
