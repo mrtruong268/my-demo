@@ -99,6 +99,7 @@
                     label-mode="floating"
                     :read-only="true"
                     class="xs2"
+                    :ref="textMaChiPhi"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -174,6 +175,7 @@
                     label-mode="floating"
                     class="xs2"
                     :read-only="true"
+                    :ref="textSoThamChieu"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -315,6 +317,8 @@ export default {
             selectBoxDuAn: 'BoxRefKey',
             selectBoxPhuPhi: 'BoxPhuPhi',
             selectBoxPhongBan: 'BoxPhongBan',
+            textSoThamChieu: 'textSoThamChieu',
+            textMaChiPhi: 'textMaChiPhi',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -377,6 +381,12 @@ export default {
         },
         refPhongBan() {
             return this.$refs[this.selectBoxPhongBan].instance
+        },
+        refThamChieu() {
+            return this.$refs[this.textSoThamChieu].instance
+        },
+        refChiPhi() {
+            return this.$refs[this.textMaChiPhi].instance
         },
     },
     methods: {
@@ -494,8 +504,11 @@ export default {
         resetData() {
             this.refDuAn.reset()
             this.refPhuPhi.reset()
-            if (this.userInfo.listOfNhanVienPhongBan.length > 1)
+            if (this.userInfo.listOfNhanVienPhongBan.length > 1) {
+                this.refChiPhi.reset()
+                this.refThamChieu.reset()
                 this.refPhongBan.reset()
+            }
             this.YeuCauMuaHang = {
                 id: 0,
                 tenNhanVien: this.userInfo.tenNhanVien,
@@ -506,8 +519,8 @@ export default {
                 ngayCanHang: new Date().toISOString(),
                 diaDiemLamViec: this.userInfo.diaDiemLamViec,
                 phuPhi: '',
-                maChiPhi: '',
                 maDuAn: '',
+                maChiPhi: '',
                 soThamChieu: '',
                 comment: '',
                 yeuCauMuaHangChiTiets: [],

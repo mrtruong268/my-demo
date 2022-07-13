@@ -98,6 +98,7 @@
                     label-mode="floating"
                     :read-only="true"
                     class="xs2"
+                    :ref="textMaChiPhi"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -152,6 +153,7 @@
                     label-mode="floating"
                     class="xs-4"
                     :read-only="true"
+                    :ref="textSoThamChieu"
                 >
                     <DxValidator>
                         <DxRequiredRule />
@@ -286,6 +288,8 @@ export default {
             formValidation: 'formValid',
             selectBoxPhuPhi: 'BoxRefKey',
             selectBoxPhongBan: 'BoxPhongBan',
+            textSoThamChieu: 'textSoThamChieu',
+            textMaChiPhi: 'textMaChiPhi',
             YeuCauMuaHang: {
                 id: 0,
                 tenNhanVien: '',
@@ -343,6 +347,12 @@ export default {
         },
         refPhongBan() {
             return this.$refs[this.selectBoxPhongBan].instance
+        },
+        refThamChieu() {
+            return this.$refs[this.textSoThamChieu].instance
+        },
+        refChiPhi() {
+            return this.$refs[this.textMaChiPhi].instance
         },
     },
     methods: {
@@ -452,8 +462,11 @@ export default {
         },
         resetData() {
             this.refPhuPhi.reset()
-            if (this.userInfo.listOfNhanVienPhongBan.length > 1)
+            if (this.userInfo.listOfNhanVienPhongBan.length > 1) {
+                this.refChiPhi.reset()
+                this.refThamChieu.reset()
                 this.refPhongBan.reset()
+            }
             this.YeuCauMuaHang = {
                 id: 0,
                 tenNhanVien: this.userInfo.tenNhanVien,
