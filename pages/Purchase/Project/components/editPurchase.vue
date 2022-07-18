@@ -301,7 +301,7 @@
                 {{ YeuCauMuaHang.comment }}
             </div>
         </div>
-        <div
+        <!-- <div
             v-if="isApprove == true"
             class="row align-center justify-space-between"
         >
@@ -333,7 +333,7 @@
                     />
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

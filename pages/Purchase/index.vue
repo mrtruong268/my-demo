@@ -40,13 +40,13 @@ export default {
                     title: 'Mua hàng',
                     image: require('assets/825575.png'),
                     about: 'Bao gồm danh sách mua hàng và tạo yêu cầu mua hàng',
-                    to: 'Purchase/Purchasing',
+                    to: 'Purchase/Project',
                 },
                 {
                     id: 2,
                     title: 'Báo cáo',
                     image: require('assets/Report.png'),
-                    about: 'Bao gồm danh sách mặt hàng cần mua',
+                    about: '',
                     to: 'Purchase/Report',
                 },
             ],
@@ -56,7 +56,7 @@ export default {
     methods: {
         onClick(e) {
             e.id == 1
-                ? this.$store.commit('IS_SELECTED', 'mhda')
+                ? this.$store.commit('IS_SELECTED', 'all')
                 : this.$store.commit('IS_SELECTED', 'dsmhcm')
             this.clickRouter(e.to, this.routeParams)
         },

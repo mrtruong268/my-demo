@@ -1,6 +1,10 @@
 export const state = () => ({
     danhSachPheDuyet: [],
     danhSachPheDuyetNp: [],
+    danhSachDaDuyet: [],
+    danhSachDaDuyetNp: [],
+    danhSachKhongDuyet: [],
+    danhSachKhongDuyetNp: [],
 })
 export const getters = {}
 export const mutations = {
@@ -8,10 +12,22 @@ export const mutations = {
     SET_ITEM(state, newData) {
         state.danhSachPheDuyet = newData
     },
+    SET_DA_DUYET(state, newData) {
+        state.danhSachDaDuyet = newData
+    },
+    SET_KHONG_DUYET(state, newData) {
+        state.danhSachKhongDuyet = newData
+    },
     // phe duyet noi bo
 
     SET_ITEM_NP(state, newData) {
         state.danhSachPheDuyetNp = newData
+    },
+    SET_DA_DUYET_NP(state, newData) {
+        state.danhSachDaDuyetNp = newData
+    },
+    SET_KHONG_DUYET_NP(state, newData) {
+        state.danhSachKhongDuyetNp = newData
     },
 }
 export const actions = {
@@ -21,6 +37,22 @@ export const actions = {
         try {
             let response = await this.$axios.get('/pr/get-approving-prs')
             commit('SET_ITEM', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getApproved({ commit }) {
+        try {
+            let response = await this.$axios.get('/pr/get-approval-pr')
+            commit('SET_DA_DUYET', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getUnApprove({ commit }) {
+        try {
+            let response = await this.$axios.get('/pr/get-reject-pr')
+            commit('SET_KHONG_DUYET', response.data)
         } catch (err) {
             console.log(err)
         }
@@ -65,6 +97,22 @@ export const actions = {
         try {
             let response = await this.$axios.get('/ipr/get-approving-prs')
             commit('SET_ITEM_NP', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getApprovedNp({ commit }) {
+        try {
+            let response = await this.$axios.get('/ipr/get-approval-pr')
+            commit('SET_DA_DUYET_NP', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getUnApproveNp({ commit }) {
+        try {
+            let response = await this.$axios.get('/ipr/get-reject-pr')
+            commit('SET_KHONG_DUYET_NP', response.data)
         } catch (err) {
             console.log(err)
         }

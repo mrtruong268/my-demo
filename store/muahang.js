@@ -4,13 +4,35 @@ export const state = () => ({
     danhSach: [
         {
             id: uuidv4(),
+            title: 'Tất cả',
+            listType: 'all',
+        },
+        {
+            id: uuidv4(),
+            title: 'Chờ duyệt',
+            listType: 'wait',
+        },
+        {
+            id: uuidv4(),
+            title: 'Đã duyệt',
+            listType: 'approved',
+        },
+        {
+            id: uuidv4(),
+            title: 'Không duyệt',
+            listType: 'reject',
+        },
+    ],
+    headerList: [
+        {
+            id: uuidv4(),
             title: 'Mua hàng dự án',
-            listType: 'mhda',
+            to: 'Purchase/Project',
         },
         {
             id: uuidv4(),
             title: 'Mua hàng ngoài dự án',
-            listType: 'mhnda',
+            to: 'Purchase/NonProject',
         },
     ],
     muaHangDuAn: [],

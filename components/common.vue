@@ -1,8 +1,21 @@
 <template>
     <div class="purchase">
-        <h3 class="text-xs-center mb-2">
-            {{ $t(headerTitle) }}
-        </h3>
+        <div class="mb-2 row align-center">
+            <h3>
+                {{ $t(headTitle) }}
+            </h3>
+            <div class="mdi mdi-filter-variant filter px-2">
+                <div class="filter-drop">
+                    <p
+                        v-for="item in headerTitle"
+                        :key="item.id"
+                        @click="selectionChanged(item)"
+                    >
+                        {{ $t(item.title) }}
+                    </p>
+                </div>
+            </div>
+        </div>
         <div class="toolbar">
             <div class="row align-center justify-start">
                 <div v-for="item in list" :key="item.id" :class="classProp">
@@ -14,23 +27,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="row align-center">
-                <div
-                    id="btn-new"
-                    v-for="item in dataNew"
-                    :key="item.id"
-                    style="cursor: pointer; padding: 4px 0"
-                    :class="classProp"
-                    @click="onItemClick(item)"
-                >
-                    <div class="row">
-                        <i class="mdi mdi-plus-circle mr-1" />
-                        <p class="font-14">
-                            {{ $t(item.title) }}
-                        </p>
-                    </div>
-                </div>
-            </div> -->
         </div>
         <div>
             <div class="row justify-end" v-show="tabData.length > 0">
@@ -73,8 +69,8 @@
                             :noDataText="$t('Không có dữ liệu')"
                             item-title-template="title"
                             item-template="itemTemplate"
-                            @titleClick="titleClick"
                         >
+                            <!-- @titleClick="titleClick" -->
                             <template #title="{ data: item }">
                                 <div>
                                     <span>{{ $t(item.title) }} </span
@@ -103,6 +99,7 @@
 <script>
 import DxTabPanel from 'devextreme-vue/tab-panel'
 import DxButton from 'devextreme-vue/button'
+import DxSelectBox from 'devextreme-vue/select-box'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
 import { mapState } from 'vuex'
 
@@ -114,10 +111,14 @@ Vue.use(VueFullscreen)
 export default {
     props: {
         headerTitle: {
+            type: Array,
+            default: () => [],
+        },
+        classProp: {
             type: String,
             default: '',
         },
-        classProp: {
+        headTitle: {
             type: String,
             default: '',
         },
@@ -129,15 +130,12 @@ export default {
             type: Array,
             default: [],
         },
-        // dataNew: {
-        //     type: Array,
-        //     default: [],
-        // },
     },
     components: {
         DxTabPanel,
         DxButton,
         DxScrollView,
+        DxSelectBox,
     },
     data() {
         return {
@@ -147,11 +145,15 @@ export default {
         }
     },
     computed: {
-        ...mapState(['isSelected']),
+        ...mapState(['isSelected', 'routeParams']),
     },
     methods: {
         toggle() {
             this.fullscreen = !this.fullscreen
+        },
+        selectionChanged(e) {
+            if (e == null) return
+            this.clickRouter(e.to, this.routeParams)
         },
         onItemClick(e) {
             if (!this.tabData.find((i) => i.listType === e.listType)) {
@@ -173,18 +175,22 @@ export default {
             let result = confirm('Do you want to close all tabs?')
             if (result) this.tabData.splice(0, this.tabData.length)
         },
-        titleClick(e) {
-            let check = e.itemData.listType
-            if (check == 'mhda') {
-                this.$store.dispatch('muahang/getData')
-            } else if (check == 'pd') {
-                this.$store.dispatch('pheduyet/getApprove')
-            } else if (check == 'mhnda') {
-                this.$store.dispatch('muahang/getDataNp')
-            } else if (check == 'pdnda') {
-                this.$store.dispatch('pheduyet/getApproveNp')
-            }
-        },
+        // titleClick(e) {
+        //     let check = e.itemData.listType
+        //     console.log(
+        //         '🚀 ~ file: common.vue ~ line 157 ~ e.itemData',
+        //         e.itemData
+        //     )
+        //     if (check === 'all') {
+        //         this.$store.dispatch('muahang/getData')
+        //     } else if (check === 'wait') {
+        //         this.$store.dispatch('pheduyet/getApprove')
+        //     } else if (check === 'approved') {
+        //         this.$store.dispatch('pheduyet/getApproved')
+        //     } else if (check === 'reject') {
+        //         this.$store.dispatch('pheduyet/getUnApprove')
+        //     }
+        // },
         addOption() {
             this.list.forEach((e) => {
                 if (!this.tabData.find((i) => i.id === e.id)) {
@@ -217,6 +223,28 @@ export default {
     overflow: hidden;
     margin-top: 100px;
     padding: 0 24px;
+}
+.filter:hover .filter-drop {
+    display: block;
+}
+.filter-drop {
+    display: none;
+    position: absolute;
+    min-width: 190px;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+.filter-drop p {
+    padding: 10px 14px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.2s linear 0s;
+    cursor: pointer;
+}
+.filter-drop p:hover {
+    background-color: #ddd;
+    transition: all 0.2s linear 0s;
 }
 .toolbar {
     border: 1px solid #e7e7e7;

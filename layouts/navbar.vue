@@ -99,11 +99,11 @@
                                 @click="clickRouter('user', routeParams)"
                             >
                                 <i class="mdi mdi-account" />
-                                {{ $t('Người dùng') }}
+                                {{ $t('Nhân viên') }}
                             </li>
                             <li
                                 v-if="
-                                    userInfo.username ==
+                                    userInfo.username ===
                                     'Admin                                             '
                                 "
                                 class="color-fff list-mobile px-4 py-2"
