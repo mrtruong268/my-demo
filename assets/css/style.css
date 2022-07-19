@@ -690,3 +690,7 @@ ul li {
 .fill-height {
     height: 100%;
 }
+
+.v-toast {
+    z-index: 2000 !important;
+}
