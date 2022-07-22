@@ -96,6 +96,12 @@
                         :hint="$t('Xem chi tiết')"
                         @click="viewDetail(data)"
                     />
+                    <DxButton
+                        v-if="data.data.trangThaiDuyet === 'MH đã duyệt'"
+                        icon="mdi mdi-check"
+                        :hint="$t('Đã mua hàng')"
+                        @click="checkComplete(data)"
+                    />
                 </div>
             </template>
         </DxDataGrid>
@@ -171,6 +177,13 @@ export default {
         viewDetail(e) {
             this.editItem = e.data
             this.popupVisible = !this.popupVisible
+        },
+        checkComplete(e) {
+            var result = confirm('Xác nhận đề nghị đã hoàn thành?')
+            if (result) {
+                this.$store.dispatch('muahang/checkComplete', e.data.id)
+                this.clickReload()
+            } else return
         },
         clickReload() {
             setTimeout(() => {

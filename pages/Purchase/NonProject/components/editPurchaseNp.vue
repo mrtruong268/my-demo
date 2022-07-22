@@ -259,7 +259,7 @@
                     <DxTotalItem
                         column="tenHangHoa_DichVu"
                         summary-type="count"
-                        display-format="Tổng tiền:"
+                        display-format="Tổng tiền ({0} bản ghi):"
                     />
                     <DxTotalItem
                         column="soTienTamTinh"

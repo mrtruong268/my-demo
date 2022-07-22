@@ -6,21 +6,31 @@ export const state = () => ({
             id: uuidv4(),
             title: 'Tất cả',
             listType: 'all',
+            length: 0,
         },
         {
             id: uuidv4(),
             title: 'Chờ duyệt',
             listType: 'wait',
+            length: 0,
         },
         {
             id: uuidv4(),
             title: 'Đã duyệt',
             listType: 'approved',
+            length: 0,
         },
         {
             id: uuidv4(),
             title: 'Không duyệt',
             listType: 'reject',
+            length: 0,
+        },
+        {
+            id: uuidv4(),
+            title: 'Đã mua hàng',
+            listType: 'complete',
+            length: 0,
         },
     ],
     headerList: [
@@ -82,6 +92,19 @@ export const mutations = {
     IS_APPROVE(state, item) {
         state.isApprove = item
     },
+    SET_LENGTH(state, item) {
+        state.danhSach.forEach((e) => {
+            e.listType === 'all'
+                ? (e.length = item.all)
+                : e.listType === 'wait'
+                ? (e.length = item.wait)
+                : e.listType === 'approved'
+                ? (e.length = item.approved)
+                : e.listType === 'reject'
+                ? (e.length = item.reject)
+                : (e.length = item.complete)
+        })
+    },
 
     // mua hang ngoai du an
     SET_ITEM_NP(state, item) {
@@ -98,6 +121,19 @@ export const mutations = {
     },
     IS_APPROVE_NP(state, item) {
         state.isApproveNp = item
+    },
+    SET_LENGTH_NP(state, item) {
+        state.danhSach.forEach((e) => {
+            e.listType === 'all'
+                ? (e.length = item.all)
+                : e.listType === 'wait'
+                ? (e.length = item.wait)
+                : e.listType === 'approved'
+                ? (e.length = item.approved)
+                : e.listType === 'reject'
+                ? (e.length = item.reject)
+                : (e.length = item.complete)
+        })
     },
 
     // Bao cao
@@ -177,6 +213,15 @@ export const actions = {
         }
     },
 
+    async checkComplete({ commit }, ycID) {
+        try {
+            let response = await this.$axios.get(
+                `/pr/purchased-pr?ycmhId=${ycID}`
+            )
+        } catch (err) {
+            console.log(err)
+        }
+    },
     // mua hang ngoai du an
 
     async getDataNp({ commit }) {
@@ -242,6 +287,16 @@ export const actions = {
                 `/ipr/is-approving-pr?ycmhId=${ycID}`
             )
             commit('IS_APPROVE_NP', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async checkCompleteNp({ commit }, ycID) {
+        try {
+            let response = await this.$axios.get(
+                `/ipr/purchased-pr?ycmhId=${ycID}`
+            )
         } catch (err) {
             console.log(err)
         }

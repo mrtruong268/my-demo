@@ -22,7 +22,7 @@
                     <div @click="onItemClick(item)" class="btn-list row mr-3">
                         <i class="mdi mdi-format-list-numbered mr-1" />
                         <p class="font-14">
-                            {{ $t(item.title) }}
+                            {{ $t(item.title) }} ({{ item.length }})
                         </p>
                     </div>
                 </div>

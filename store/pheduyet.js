@@ -5,6 +5,8 @@ export const state = () => ({
     danhSachDaDuyetNp: [],
     danhSachKhongDuyet: [],
     danhSachKhongDuyetNp: [],
+    danhSachHoanThanh: [],
+    danhSachHoanThanhNp: [],
 })
 export const getters = {}
 export const mutations = {
@@ -18,6 +20,9 @@ export const mutations = {
     SET_KHONG_DUYET(state, newData) {
         state.danhSachKhongDuyet = newData
     },
+    SET_HOAN_THANH(state, newData) {
+        state.danhSachHoanThanh = newData
+    },
     // phe duyet noi bo
 
     SET_ITEM_NP(state, newData) {
@@ -28,6 +33,9 @@ export const mutations = {
     },
     SET_KHONG_DUYET_NP(state, newData) {
         state.danhSachKhongDuyetNp = newData
+    },
+    SET_HOAN_THANH_NP(state, newData) {
+        state.danhSachHoanThanhNp = newData
     },
 }
 export const actions = {
@@ -57,6 +65,16 @@ export const actions = {
             console.log(err)
         }
     },
+
+    async getComplete({ commit }) {
+        try {
+            let response = await this.$axios.get('/pr/get-purchased-pr')
+            commit('SET_HOAN_THANH', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
     async submitApprove({ commit }, newItem) {
         try {
             let response = await this.$axios.get(`/pr/submit-pr?id=${newItem}`)
@@ -113,6 +131,15 @@ export const actions = {
         try {
             let response = await this.$axios.get('/ipr/get-reject-pr')
             commit('SET_KHONG_DUYET_NP', response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async getCompleteNp({ commit }) {
+        try {
+            let response = await this.$axios.get('/ipr/get-purchased-pr')
+            commit('SET_HOAN_THANH_NP', response.data)
         } catch (err) {
             console.log(err)
         }

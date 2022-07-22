@@ -21,10 +21,16 @@
                     @getData="getApproved"
                 />
                 <status
-                    v-else
+                    v-else-if="itemProp.listType === 'reject'"
                     :dataSource="danhSachKhongDuyet.data"
                     :isWait="checkStatus"
                     @getData="getUnApprove"
+                />
+                <status
+                    v-else
+                    :dataSource="danhSachHoanThanh.data"
+                    :isWait="checkStatus"
+                    @getData="getComplete"
                 />
             </template>
         </common>
@@ -57,14 +63,49 @@ export default {
         return {
             duLieuTab: [],
             checkStatus: false,
+            tmpObj: {
+                all: 0,
+                wait: 0,
+                approved: 0,
+                reject: 0,
+                complete: 0,
+            },
         }
     },
+    watch: {
+        muaHangDuAn() {
+            if (this.muaHangDuAn) this.tmpObj.all = this.muaHangDuAn.length
+        },
+        danhSachPheDuyet() {
+            if (this.danhSachPheDuyet.data)
+                this.tmpObj.wait = this.danhSachPheDuyet.data.length
+        },
+        danhSachDaDuyet() {
+            if (this.danhSachDaDuyet.data)
+                this.tmpObj.approved = this.danhSachDaDuyet.data.length
+        },
+        danhSachKhongDuyet() {
+            if (this.danhSachKhongDuyet.data)
+                this.tmpObj.reject = this.danhSachKhongDuyet.data.length
+        },
+        danhSachHoanThanh() {
+            if (this.danhSachHoanThanh.data)
+                this.tmpObj.complete = this.danhSachHoanThanh.data.length
+        },
+        tmpObj: {
+            handler(val) {
+                this.$store.commit('muahang/SET_LENGTH', val)
+            },
+            deep: true,
+        },
+    },
     computed: {
-        ...mapState('muahang', ['danhSach', 'headerList']),
+        ...mapState('muahang', ['danhSach', 'headerList', 'muaHangDuAn']),
         ...mapState('pheduyet', [
             'danhSachPheDuyet',
             'danhSachDaDuyet',
             'danhSachKhongDuyet',
+            'danhSachHoanThanh',
         ]),
     },
     methods: {
@@ -80,8 +121,16 @@ export default {
             this.$store.dispatch('pheduyet/getUnApprove')
             this.checkStatus = false
         },
+        getComplete() {
+            this.$store.dispatch('pheduyet/getComplete')
+            this.checkStatus = false
+        },
     },
     created() {
+        this.getApprove()
+        this.getApproved()
+        this.getUnApprove()
+        this.getComplete()
         this.$store.commit('IS_SELECTED', 'all')
     },
 }
