@@ -234,6 +234,7 @@
                 <DxColumn
                     data-field="tenHangHoa_DichVu"
                     :caption="$t('Hàng hóa, dịch vụ')"
+                    width="250"
                 />
                 <DxColumn data-field="model_MaHieu" :caption="$t('Mã hiệu')" />
                 <DxColumn data-field="xuatXu_Hang" :caption="$t('Xuất xứ')" />
@@ -424,14 +425,19 @@ export default {
                 e.editorName = 'dxAutocomplete'
                 e.editorOptions = {
                     items: this.listItemNp,
-                    valueExpr: 'name',
+                    valueExpr: 'keyName',
                     value: e.value,
+                    wrapItemText: true,
+                    itemTemplate: function (item) {
+                        return `${item.keyName} (${item.model}/${item.thongSo})`
+                    },
                     onValueChanged(ev) {
                         e.setValue(ev.value)
                     },
                     onSelectionChanged(x) {
                         let itemSelect = x.selectedItem
                         if (itemSelect === null) return
+                        e.row.data.tenHangHoa_DichVu = itemSelect.name
                         e.row.data.model_MaHieu = itemSelect.model
                         e.row.data.xuatXu_Hang = itemSelect.tenHangSanXuat
                         e.row.data.donVi = itemSelect.donViTinh
