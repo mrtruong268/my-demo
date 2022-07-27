@@ -174,7 +174,7 @@ export default {
             this.popupVisible = !this.popupVisible
         },
         checkComplete(e) {
-            var result = confirm('Xác nhận đề nghị đã hoàn thành?')
+            var result = confirm('Do you want to submit?')
             if (result) {
                 this.$store.dispatch('muahang/checkCompleteNp', e.data.id)
                 this.clickReload()

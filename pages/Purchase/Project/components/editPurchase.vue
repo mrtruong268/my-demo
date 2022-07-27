@@ -106,7 +106,17 @@
                                     :data-source="
                                         userInfo.listOfNhanVienPhongBan
                                     "
-                                    display-expr="tenPhongBan"
+                                    :display-expr="
+                                        (item) => {
+                                            return (
+                                                item &&
+                                                item.tenPhongBan +
+                                                    ' - ' +
+                                                    item.tenCongTy
+                                            )
+                                        }
+                                    "
+                                    :wrapItemText="true"
                                     styling-mode="underlined"
                                     @selectionChanged="selectPhongBan"
                                     :read-only="disable"
@@ -302,8 +312,8 @@
                 {{ YeuCauMuaHang.comment }}
             </div>
         </div>
-        <!-- <div
-            v-if="isApprove == true"
+        <div
+            v-if="isApprove === true"
             class="row align-center justify-space-between"
         >
             <div class="xs1" style="font-weight: bold">
@@ -334,7 +344,7 @@
                     />
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 

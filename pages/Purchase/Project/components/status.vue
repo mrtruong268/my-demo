@@ -179,7 +179,7 @@ export default {
             this.popupVisible = !this.popupVisible
         },
         checkComplete(e) {
-            var result = confirm('Xác nhận đề nghị đã hoàn thành?')
+            var result = confirm('Do you want to submit?')
             if (result) {
                 this.$store.dispatch('muahang/checkComplete', e.data.id)
                 this.clickReload()
@@ -188,7 +188,7 @@ export default {
         clickReload() {
             setTimeout(() => {
                 this.$emit('getData')
-            }, 200)
+            }, 100)
         },
         hidePopup() {
             this.popupVisible = !this.popupVisible

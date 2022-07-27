@@ -110,20 +110,20 @@ export default {
     },
     methods: {
         getApprove() {
+            this.checkStatus = true
             this.$store.dispatch('pheduyet/getApproveNp')
-            this.checkStatus = !this.checkStatus
         },
         getApproved() {
-            this.$store.dispatch('pheduyet/getApprovedNp')
             this.checkStatus = false
+            this.$store.dispatch('pheduyet/getApprovedNp')
         },
         getUnApprove() {
-            this.$store.dispatch('pheduyet/getUnApproveNp')
             this.checkStatus = false
+            this.$store.dispatch('pheduyet/getUnApproveNp')
         },
         getComplete() {
-            this.$store.dispatch('pheduyet/getCompleteNp')
             this.checkStatus = false
+            this.$store.dispatch('pheduyet/getCompleteNp')
         },
     },
     created() {

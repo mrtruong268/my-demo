@@ -261,17 +261,11 @@ export default {
                         'pheduyet/postApprove',
                         this.yeuCauMuaHang
                     )
-                    setTimeout(() => {
-                        this.$store.dispatch('pheduyet/getApprove')
-                    }, 100)
                 } else {
                     this.$store.dispatch(
                         'pheduyet/postApproveNp',
                         this.yeuCauMuaHang
                     )
-                    setTimeout(() => {
-                        this.$store.dispatch('pheduyet/getApproveNp')
-                    }, 100)
                 }
                 this.closePopup()
             }
@@ -283,17 +277,11 @@ export default {
                         'pheduyet/postRevise',
                         this.yeuCauMuaHang
                     )
-                    setTimeout(() => {
-                        this.$store.dispatch('pheduyet/getApprove')
-                    }, 100)
                 } else {
                     this.$store.dispatch(
                         'pheduyet/postReviseNp',
                         this.yeuCauMuaHang
                     )
-                    setTimeout(() => {
-                        this.$store.dispatch('pheduyet/getApproveNp')
-                    }, 100)
                 }
                 this.closePopup()
             }

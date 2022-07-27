@@ -106,7 +106,17 @@
                                     :data-source="
                                         userInfo.listOfNhanVienPhongBan
                                     "
-                                    display-expr="tenPhongBan"
+                                    :display-expr="
+                                        (item) => {
+                                            return (
+                                                item &&
+                                                item.tenPhongBan +
+                                                    ' - ' +
+                                                    item.tenCongTy
+                                            )
+                                        }
+                                    "
+                                    :wrapItemText="true"
                                     styling-mode="underlined"
                                     :read-only="disable"
                                     @selectionChanged="selectPhongBan"
@@ -283,7 +293,7 @@
         </div>
 
         <div
-            v-if="isApproveNp == true"
+            v-if="isApproveNp === true"
             class="row align-center justify-space-between"
         >
             <div class="xs1" style="font-weight: bold">

@@ -39,7 +39,14 @@
                 <DxSelectBox
                     v-if="userInfo.listOfNhanVienPhongBan.length > 1"
                     :data-source="userInfo.listOfNhanVienPhongBan"
-                    display-expr="tenPhongBan"
+                    :display-expr="
+                        (item) => {
+                            return (
+                                item && item.tenPhongBan + ' - ' + item.tenCongTy
+                            )
+                        }
+                    "
+                    :wrapItemText="true"
                     styling-mode="outlined"
                     :label="$t('Phòng ban')"
                     label-mode="floating"

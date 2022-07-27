@@ -176,6 +176,7 @@
                 <DxTextBox
                     v-model="yeuCauMuaHang.comment"
                     styling-mode="underlined"
+                    :read-only="true"
                 />
             </div>
         </div>
