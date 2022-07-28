@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row justify-end btn-fix">
+        <div class="row justify-end">
             <DxButton
                 icon="mdi mdi-plus"
                 @click="clickAdd"
@@ -20,6 +20,7 @@
             :show-borders="true"
             :row-alternation-enabled="true"
             :noDataText="$t('Không có dữ liệu')"
+            :height="fullscreen ? '100%' : 'calc(80vh - 90px)'"
             :remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
@@ -42,6 +43,7 @@
                 :caption="$t('Số')"
                 alignment="center"
                 :allow-header-filtering="false"
+                :width="50"
             />
             <DxColumn
                 :allow-header-filtering="false"
@@ -203,6 +205,7 @@ export default {
     },
     computed: {
         ...mapState('muahang', ['muaHangDuAn']),
+        ...mapState(['fullscreen']),
     },
     methods: {
         reload() {
@@ -252,13 +255,6 @@ export default {
 </script>
 
 <style scoped>
-#gridContainer {
-    padding-top: 36px;
-}
-.btn-fix {
-    position: fixed;
-    z-index: 1;
-}
 .submit {
     color: orange;
 }

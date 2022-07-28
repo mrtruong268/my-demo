@@ -1,45 +1,44 @@
 <template>
     <div>
-        <common
+        <commonNoTab
             :headTitle="'Mua hàng dự án'"
             :headerTitle="headerList"
             :list="danhSach"
-            :dataTab="duLieuTab"
         >
             <template slot-scope="{ itemProp }">
                 <listPurchase v-if="itemProp.listType === 'all'" />
                 <status
                     v-else-if="itemProp.listType === 'wait'"
                     :dataSource="danhSachPheDuyet.data"
-                    :isWait="checkStatus"
+                    :isStatus="itemProp"
                     @getData="getApprove"
                 />
                 <status
                     v-else-if="itemProp.listType === 'approved'"
                     :dataSource="danhSachDaDuyet.data"
-                    :isWait="checkStatus"
+                    :isStatus="itemProp"
                     @getData="getApproved"
                 />
                 <status
                     v-else-if="itemProp.listType === 'reject'"
                     :dataSource="danhSachKhongDuyet.data"
-                    :isWait="checkStatus"
+                    :isStatus="itemProp"
                     @getData="getUnApprove"
                 />
                 <status
                     v-else
                     :dataSource="danhSachHoanThanh.data"
-                    :isWait="checkStatus"
+                    :isStatus="itemProp"
                     @getData="getComplete"
                 />
             </template>
-        </common>
+        </commonNoTab>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import common from '~/components/common'
+import CommonNoTab from '~/components/commonNoTab.vue'
 import listPurchase from '../Project/components/listPurchase'
 import status from './components/status'
 
@@ -54,15 +53,12 @@ export default {
         },
     },
     components: {
-        common,
+        CommonNoTab,
         listPurchase,
         status,
     },
-
     data() {
         return {
-            duLieuTab: [],
-            checkStatus: false,
             tmpObj: {
                 all: 0,
                 wait: 0,
@@ -110,19 +106,15 @@ export default {
     },
     methods: {
         getApprove() {
-            this.checkStatus = true
             this.$store.dispatch('pheduyet/getApprove')
         },
         getApproved() {
-            this.checkStatus = false
             this.$store.dispatch('pheduyet/getApproved')
         },
         getUnApprove() {
-            this.checkStatus = false
             this.$store.dispatch('pheduyet/getUnApprove')
         },
         getComplete() {
-            this.checkStatus = false
             this.$store.dispatch('pheduyet/getComplete')
         },
     },

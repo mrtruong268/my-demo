@@ -15,6 +15,7 @@
             :show-borders="true"
             :row-alternation-enabled="true"
             :noDataText="$t('Không có dữ liệu')"
+            :height="fullscreen ? '100%' : 'calc(80vh - 90px)'"
             :remote-operations="true"
             :allow-column-resizing="true"
             :column-auto-width="true"
@@ -36,7 +37,7 @@
                 alignment="center"
                 :caption="$t('Số')"
                 :allow-header-filtering="false"
-                width="70"
+                :width="50"
             />
             <DxColumn
                 data-field="tenNhanVien"
@@ -114,7 +115,7 @@
         >
             <template #main>
                 <approve
-                    v-if="isWait === true"
+                    v-if="isStatus.listType === 'wait'"
                     :item="editItem"
                     @close="hidePopup"
                 />
@@ -140,6 +141,8 @@ import DxButton from 'devextreme-vue/button'
 import popup from '~/components/popup'
 import approve from '~/components/approve'
 import viewDetails from '~/components/viewDetails'
+import { mapState } from 'vuex'
+
 export default {
     layout: 'commonLayout',
     props: {
@@ -147,9 +150,9 @@ export default {
             type: Array,
             default: () => [],
         },
-        isWait: {
-            type: Boolean,
-            default: false,
+        isStatus: {
+            type: Object,
+            default: {},
         },
     },
     data() {
@@ -172,6 +175,9 @@ export default {
         popup,
         approve,
         viewDetails,
+    },
+    computed: {
+        ...mapState(['fullscreen']),
     },
     methods: {
         viewDetail(e) {

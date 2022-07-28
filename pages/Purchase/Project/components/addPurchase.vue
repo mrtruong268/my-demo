@@ -42,7 +42,8 @@
                     :display-expr="
                         (item) => {
                             return (
-                                item && item.tenPhongBan + ' - ' + item.tenCongTy
+                                item &&
+                                item.tenPhongBan + ' - ' + item.tenCongTy
                             )
                         }
                     "
@@ -465,7 +466,7 @@ export default {
                     value: e.value,
                     wrapItemText: true,
                     itemTemplate: function (item) {
-                        return `${item.keyName} (${item.model}/${item.thongSo})`
+                        return `${item.keyName} (${item.model}/${item.tenNhaCungCap}/${item.donGiaVNDString})`
                     },
                     onValueChanged(ev) {
                         e.setValue(ev.value)

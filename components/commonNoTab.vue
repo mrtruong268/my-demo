@@ -1,20 +1,23 @@
 <template>
-    <div class="purchase">
+    <div class="purchase container">
         <div class="mb-2 row align-center">
-            <h3>
-                {{ $t(headTitle) }}
-            </h3>
-            <div class="mdi mdi-filter-variant filter px-2">
-                <div class="filter-drop">
-                    <p
-                        v-for="item in headerTitle"
-                        :key="item.id"
-                        @click="selectionChanged(item)"
-                    >
-                        {{ $t(item.title) }}
-                    </p>
+            <div class="row align-center">
+                <h3>
+                    {{ $t(headTitle) }}
+                </h3>
+                <div class="mdi mdi-filter-variant filter px-2">
+                    <div class="filter-drop">
+                        <p
+                            v-for="item in headerTitle"
+                            :key="item.id"
+                            @click="selectionChanged(item)"
+                        >
+                            {{ $t(item.title) }}
+                        </p>
+                    </div>
                 </div>
             </div>
+            <div class="mdi mdi-overscan btn-full" @click="toggle"></div>
         </div>
         <div class="toolbar">
             <div class="row align-center justify-start">
@@ -29,20 +32,6 @@
             </div>
         </div>
         <div>
-            <div class="row justify-end" v-show="tabData.length > 0">
-                <DxButton
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-overscan"
-                    @click="toggle"
-                />
-                <DxButton
-                    type="normal"
-                    styling-mode="text"
-                    icon="mdi mdi-close"
-                    @click="clearTab"
-                />
-            </div>
             <div class="tabPanel">
                 <fullscreen
                     v-model="fullscreen"
@@ -59,35 +48,9 @@
                                 @click="toggle"
                             />
                         </div>
-                        <DxTabPanel
-                            :data-source="tabData"
-                            :height="fullscreen ? 'auto' : 'calc(78vh - 100px)'"
-                            :defer-rendering="false"
-                            :show-nav-buttons="true"
-                            :repaint-changes-only="true"
-                            :selectedItem="selectedItem"
-                            :noDataText="$t('Không có dữ liệu')"
-                            item-title-template="title"
-                            item-template="itemTemplate"
-                        >
-                            <template #title="{ data: item }">
-                                <div>
-                                    <span>{{ $t(item.title) }} </span
-                                    ><i
-                                        v-show="showCloseButton()"
-                                        class="mdi mdi-close-circle"
-                                        @click="closeButtonHandler(item)"
-                                    />
-                                </div>
-                            </template>
-                            <template #itemTemplate="{ data: item }">
-                                <DxScrollView>
-                                    <div :class="fullscreen ? 'item-temp' : ''">
-                                        <slot :itemProp="item" />
-                                    </div>
-                                </DxScrollView>
-                            </template>
-                        </DxTabPanel>
+                        <div :class="fullscreen ? 'item-temp' : ''">
+                            <slot :itemProp="selectedItem" />
+                        </div>
                     </div>
                 </fullscreen>
             </div>
@@ -121,10 +84,6 @@ export default {
             type: String,
             default: '',
         },
-        dataTab: {
-            type: Array,
-            default: [],
-        },
         list: {
             type: Array,
             default: [],
@@ -139,46 +98,25 @@ export default {
     data() {
         return {
             selectedItem: {},
-            fullscreen: false,
-            tabData: this.dataTab,
         }
     },
     computed: {
-        ...mapState(['isSelected', 'routeParams']),
+        ...mapState(['isSelected', 'routeParams', 'fullscreen']),
     },
     methods: {
         toggle() {
-            this.fullscreen = !this.fullscreen
+            this.$store.commit('SET_FULLSCREEN', !this.fullscreen)
         },
         selectionChanged(e) {
             if (e == null) return
             this.clickRouter(e.to, this.routeParams)
         },
         onItemClick(e) {
-            if (!this.tabData.find((i) => i.listType === e.listType)) {
-                if (!this.tabData.find((i) => i.id === e.id)) {
-                    this.tabData.push(e)
-                }
-            }
             this.selectedItem = e
-        },
-        closeButtonHandler(itemDel) {
-            let result = confirm('Do you want to close tab?')
-            if (result)
-                this.tabData = this.tabData.filter((e) => e.id !== itemDel.id)
-        },
-        showCloseButton() {
-            return this.tabData.length > 0
-        },
-        clearTab() {
-            let result = confirm('Do you want to close all tabs?')
-            if (result) this.tabData.splice(0, this.tabData.length)
         },
         addOption() {
             this.list.forEach((e) => {
-                if (!this.tabData.find((i) => i.id === e.id)) {
-                    if (e.listType === this.isSelected) this.tabData.push(e)
-                }
+                if (e.listType === this.isSelected) this.selectedItem = e
             })
         },
     },
@@ -199,13 +137,16 @@ export default {
 }
 .item-temp {
     overflow-y: auto;
-    height: 90vh;
+    height: 95vh;
 }
 .purchase {
     height: 100%;
     overflow: hidden;
-    margin-top: 100px;
-    padding: 0 24px;
+    margin-top: 80px;
+}
+.btn-full {
+    font-size: 18px;
+    cursor: pointer;
 }
 .filter:hover .filter-drop {
     display: block;

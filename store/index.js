@@ -53,6 +53,7 @@ export const state = () => ({
     hangMucTrienKhai: [],
     dataExcel: null,
     dataExcelNp: null,
+    fullscreen: false,
 })
 export const getters = {
     isLogin: (state) => (state.token !== '' ? true : false),
@@ -82,6 +83,9 @@ export const mutations = {
     },
     GET_DATA_EXCELNP(state, item) {
         state.dataExcelNp = item
+    },
+    SET_FULLSCREEN(state, item) {
+        state.fullscreen = item
     },
 }
 
