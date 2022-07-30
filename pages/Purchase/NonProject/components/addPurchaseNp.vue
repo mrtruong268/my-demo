@@ -398,10 +398,11 @@ export default {
             this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
             this.YeuCauMuaHang.phongBanId = e.selectedItem.phongBanId
             this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
-            this.$store.dispatch(
-                'muahang/getRefNumberNp',
-                e.selectedItem.phongBanId
-            )
+            let payloads = {
+                phongBanId: e.selectedItem.phongBanId,
+                ycmhId: 0,
+            }
+            this.$store.dispatch('muahang/getRefNumberNp', payloads)
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
@@ -432,9 +433,6 @@ export default {
                     valueExpr: 'keyName',
                     value: e.value,
                     wrapItemText: true,
-                    itemTemplate: function (item) {
-                        return `${item.keyName} (${item.model}/${item.tenNhaCungCap}/${item.donGiaVNDString})`
-                    },
                     onValueChanged(ev) {
                         e.setValue(ev.value)
                     },
@@ -510,11 +508,11 @@ export default {
         this.YeuCauMuaHang.phongBan = this.userInfo.phongBan
         this.YeuCauMuaHang.diaDiemLamViec = this.userInfo.diaDiemLamViec
         if (this.userInfo.listOfNhanVienPhongBan.length === 1) {
-            this.YeuCauMuaHang.phongBanId = this.userInfo.phongBanId
-            this.$store.dispatch(
-                'muahang/getRefNumberNp',
-                this.userInfo.phongBanId
-            )
+            let payloads = {
+                phongBanId: this.userInfo.phongBanId,
+                ycmhId: 0,
+            }
+            this.$store.dispatch('muahang/getRefNumberNp', payloads)
         }
     },
 }

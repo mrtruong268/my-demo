@@ -180,7 +180,7 @@
                             <DxTextBox
                                 v-model="YeuCauMuaHang.maChiPhi"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -192,7 +192,7 @@
                             <DxTextBox
                                 v-model="YeuCauMuaHang.soThamChieu"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
@@ -438,9 +438,6 @@ export default {
                     valueExpr: 'keyName',
                     value: e.value,
                     wrapItemText: true,
-                    itemTemplate: function (item) {
-                        return `${item.keyName} (${item.model}/${item.tenNhaCungCap}/${item.donGiaVNDString})`
-                    },
                     onValueChanged(ev) {
                         e.setValue(ev.value)
                     },
@@ -474,10 +471,11 @@ export default {
             if (e.selectedItem === null) return
             this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
             this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
-            this.$store.dispatch(
-                'muahang/getRefNumberNp',
-                e.selectedItem.phongBanId
-            )
+            let payloads = {
+                phongBanId: e.selectedItem.phongBanId,
+                ycmhId: this.YeuCauMuaHang.id,
+            }
+            this.$store.dispatch('muahang/getRefNumberNp', payloads)
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem

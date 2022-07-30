@@ -452,9 +452,6 @@ export default {
                     valueExpr: 'keyName',
                     value: e.value,
                     wrapItemText: true,
-                    itemTemplate: function (item) {
-                        return `${item.keyName} (${item.model}/${item.tenNhaCungCap}/${item.donGiaVNDString})`
-                    },
                     onValueChanged(ev) {
                         e.setValue(ev.value)
                     },
@@ -496,6 +493,7 @@ export default {
         selectDuAn(e) {
             if (e.selectedItem === null) return
             this.payloads.maDuAn = e.selectedItem
+            this.payloads.ycmhId = this.YeuCauMuaHang.id
             this.YeuCauMuaHang.maDuAn = e.selectedItem
             if (this.userInfo.listOfNhanVienPhongBan.length === 1) {
                 this.payloads.phongBanId = this.userInfo.phongBanId

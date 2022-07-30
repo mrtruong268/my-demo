@@ -441,6 +441,7 @@ export default {
         selectDuAn(e) {
             if (e.selectedItem === null) return
             this.payloads.maDuAn = e.selectedItem
+            this.payloads.ycmhId = 0
             this.YeuCauMuaHang.maDuAn = e.selectedItem
             this.$store.dispatch('muahang/getRefNumber', this.payloads)
             this.$store.dispatch('getHangMuc', e.selectedItem)
@@ -465,9 +466,6 @@ export default {
                     valueExpr: 'keyName',
                     value: e.value,
                     wrapItemText: true,
-                    itemTemplate: function (item) {
-                        return `${item.keyName} (${item.model}/${item.tenNhaCungCap}/${item.donGiaVNDString})`
-                    },
                     onValueChanged(ev) {
                         e.setValue(ev.value)
                     },

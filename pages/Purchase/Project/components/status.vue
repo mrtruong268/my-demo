@@ -103,6 +103,12 @@
                         :hint="$t('Đã mua hàng')"
                         @click="checkComplete(data)"
                     />
+                    <DxButton
+                        v-if="data.data.trangThaiDuyet === 'Đã mua hàng'"
+                        icon="mdi mdi-arrow-u-left-top"
+                        :hint="$t('Tích hoàn mua')"
+                        @click="checkUnDo(data)"
+                    />
                 </div>
             </template>
         </DxDataGrid>
@@ -188,6 +194,13 @@ export default {
             var result = confirm('Do you want to submit?')
             if (result) {
                 this.$store.dispatch('muahang/checkComplete', e.data.id)
+                this.clickReload()
+            } else return
+        },
+        checkUnDo(e) {
+            var result = confirm('Do you want to submit?')
+            if (result) {
+                this.$store.dispatch('muahang/checkUnDo', e.data.id)
                 this.clickReload()
             } else return
         },

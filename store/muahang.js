@@ -194,7 +194,7 @@ export const actions = {
     async getRefNumber({ commit }, payload) {
         try {
             let response = await this.$axios.get(
-                `/pr/get-ref-number?maDuAn=${payload.maDuAn}&phongBanId=${payload.phongBanId}`
+                `/pr/get-ref-number?maDuAn=${payload.maDuAn}&phongBanId=${payload.phongBanId}&ycmhId=${payload.ycmhId}`
             )
             commit('GET_REF_NUM', response.data.data)
         } catch (err) {
@@ -217,6 +217,16 @@ export const actions = {
         try {
             let response = await this.$axios.get(
                 `/pr/purchased-pr?ycmhId=${ycID}`
+            )
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async checkUnDo({ commit }, ycID) {
+        try {
+            let response = await this.$axios.get(
+                `/pr/undo-purchased-pr?ycmhId=${ycID}`
             )
         } catch (err) {
             console.log(err)
@@ -270,10 +280,10 @@ export const actions = {
             console.log(err)
         }
     },
-    async getRefNumberNp({ commit }, pbId) {
+    async getRefNumberNp({ commit }, payload) {
         try {
             let response = await this.$axios.get(
-                `/ipr/get-ref-number?phongBanId=${pbId}`
+                `/ipr/get-ref-number?phongBanId=${payload.phongBanId}&ycmhId=${payload.ycmhId}`
             )
             commit('GET_REF_NUM_NP', response.data.data)
         } catch (err) {
@@ -296,6 +306,16 @@ export const actions = {
         try {
             let response = await this.$axios.get(
                 `/ipr/purchased-pr?ycmhId=${ycID}`
+            )
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    async checkUnDoNp({ commit }, ycID) {
+        try {
+            let response = await this.$axios.get(
+                `/ipr/undo-purchased-pr?ycmhId=${ycID}`
             )
         } catch (err) {
             console.log(err)
