@@ -193,21 +193,38 @@
         </DxValidationGroup>
 
         <div>
-            <div class="row mb-2 justify-space-between align-center">
+            <div class="row mb-2">
                 <h3>{{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}</h3>
-                <div>
+            </div>
+            <div class="row mb-2 align-center">
+                <div class="xs5">
                     <input
                         type="file"
                         id="file"
                         ref="file"
                         @change="handleFileUpload()"
                     />
-                    <button class="mr-2" @click="submitFile()">
+                    <button class="mr-1" @click="submitFile()">
                         {{ $t('Nhập') }}
                     </button>
                     <button @click="$store.dispatch('downloadExcel')">
                         {{ $t('Tải mẫu Excel') }}
                     </button>
+                </div>
+                <div class="row align-center justify-end xs7">
+                    <input
+                        type="file"
+                        id="files"
+                        ref="files"
+                        multiple
+                        @change="handleFilesUpload()"
+                    />
+                    <div v-for="file in files" :key="file.name">
+                        ({{ file.name }})<span
+                            @click="removeFile(key)"
+                            class="mdi mdi-close btn-close"
+                        ></span>
+                    </div>
                 </div>
             </div>
             <DxDataGrid
@@ -343,10 +360,12 @@ export default {
                 maDuAn: '',
                 soThamChieu: '',
                 comment: '',
+                upCacBanVes: [],
                 yeuCauMuaHangChiTiets: [],
             },
             loaiPhuPhi: [this.$t('Phát sinh'), this.$t('Theo tính toán')],
             file: '',
+            files: [],
             payloads: {},
         }
     },
@@ -481,13 +500,22 @@ export default {
                 }
             }
         },
-        async submitFile() {
+        submitFile() {
             let formData = new FormData()
             formData.append('file', this.file)
             if (this.file !== '') this.$store.dispatch('uploadExcel', formData)
         },
+        removeFile(key) {
+            this.files.splice(key, 1)
+        },
         handleFileUpload() {
             this.file = this.$refs.file.files[0]
+        },
+        handleFilesUpload() {
+            let uploadedFiles = this.$refs.files.files
+            for (var i = 0; i < uploadedFiles.length; i++) {
+                this.files.push(uploadedFiles[i])
+            }
         },
         clickAdd() {
             var result = confirm('Do you want to submit?')
@@ -497,10 +525,24 @@ export default {
                 if (checkEmpty.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
                         if (this.checkArray()) {
-                            this.$store.dispatch(
-                                'muahang/postData',
-                                this.YeuCauMuaHang
-                            )
+                            for (var i = 0; i < this.files.length; i++) {
+                                let file = this.files[i]
+                                // formData.append('upCacBanVes', file)
+                                this.YeuCauMuaHang.upCacBanVes.push(file.name)
+                            }
+                            let formData = new FormData()
+                            for (var key in this.YeuCauMuaHang) {
+                                formData.append(
+                                    key,
+                                    JSON.stringify(this.YeuCauMuaHang[key])
+                                )
+                            }
+                            // for (var i = 0; i < this.files.length; i++) {
+                            //     let file = this.files[i]
+                            //     // formData.append('upCacBanVes', file)
+                            //     this.YeuCauMuaHang.upCacBanVes.push(file.name)
+                            // }
+                            this.$store.dispatch('muahang/postData', formData)
                             this.clickClose()
                         } else {
                             this.$toast.error(
@@ -537,6 +579,7 @@ export default {
                 comment: '',
                 yeuCauMuaHangChiTiets: [],
             }
+            this.files = []
         },
         clickClose() {
             this.resetData()
@@ -575,5 +618,8 @@ export default {
     transition: all 0.2s linear 0s;
     background-color: black;
     color: #ddd;
+}
+.btn-close {
+    cursor: pointer;
 }
 </style>

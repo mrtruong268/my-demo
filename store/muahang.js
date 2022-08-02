@@ -156,7 +156,11 @@ export const actions = {
 
     async postData({ commit }, newItem) {
         try {
-            await this.$axios.post('/pr/post-pr', newItem)
+            await this.$axios.post('/pr/post-pr', newItem, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
         } catch (err) {
             console.log(err)
         }
