@@ -180,9 +180,6 @@
                         ref="file"
                         @change="handleFileUpload()"
                     />
-                    <button class="mr-2" @click="submitFile()">
-                        {{ $t('Nhập') }}
-                    </button>
                     <button @click="$store.dispatch('downloadExcelNp')">
                         {{ $t('Tải mẫu Excel') }}
                     </button>
@@ -416,14 +413,12 @@ export default {
                 currency: 'VND',
             }).format(e)
         },
-        async submitFile() {
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0]
             let formData = new FormData()
             formData.append('file', this.file)
             if (this.file !== '')
                 this.$store.dispatch('uploadExcelNp', formData)
-        },
-        handleFileUpload() {
-            this.file = this.$refs.file.files[0]
         },
         editorPreparing(e) {
             if (e.dataField === 'tenHangHoa_DichVu') {

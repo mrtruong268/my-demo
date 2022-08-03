@@ -221,9 +221,17 @@
         </div>
         <div>
             <div class="row justify-space-between align-center">
-                <h3 class="my-2">
+                <h3 class="my-2 xs5">
                     {{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}
                 </h3>
+                <div class="row align-center justify-end">
+                    <p class="mr-1">{{ $t('Đính kèm') }}</p>
+                    <DxSelectBox
+                        :items="YeuCauMuaHang.tenFileBanVes"
+                        styling-mode="outlined"
+                        @selectionChanged="selectFile"
+                    />
+                </div>
                 <div v-if="disable == false && allowEdit == true">
                     <DxButton
                         icon="mdi mdi-plus"
@@ -505,6 +513,13 @@ export default {
         },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
+        },
+        selectFile(e) {
+            const payloads = {
+                linkThuMucBanVeFolder: this.YeuCauMuaHang.linkThuMucBanVe,
+                tenFileBanVe: e.selectedItem,
+            }
+            this.$store.dispatch('muahang/downloadFile', payloads)
         },
         clickSave() {
             let result2 = confirm('Do you want to submit?')

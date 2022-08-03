@@ -204,14 +204,12 @@
                         ref="file"
                         @change="handleFileUpload()"
                     />
-                    <button class="mr-1" @click="submitFile()">
-                        {{ $t('Nhập') }}
-                    </button>
                     <button @click="$store.dispatch('downloadExcel')">
                         {{ $t('Tải mẫu Excel') }}
                     </button>
                 </div>
                 <div class="row align-center justify-end xs7">
+                    <p class="mr-1">{{ $t('Đính kèm') }}</p>
                     <input
                         type="file"
                         id="files"
@@ -500,16 +498,14 @@ export default {
                 }
             }
         },
-        submitFile() {
-            let formData = new FormData()
-            formData.append('file', this.file)
-            if (this.file !== '') this.$store.dispatch('uploadExcel', formData)
-        },
         removeFile(key) {
             this.files.splice(key, 1)
         },
         handleFileUpload() {
             this.file = this.$refs.file.files[0]
+            let formData = new FormData()
+            formData.append('file', this.file)
+            if (this.file !== '') this.$store.dispatch('uploadExcel', formData)
         },
         handleFilesUpload() {
             let uploadedFiles = this.$refs.files.files
@@ -525,23 +521,45 @@ export default {
                 if (checkEmpty.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
                         if (this.checkArray()) {
+                            let formData = new FormData()
+
                             for (var i = 0; i < this.files.length; i++) {
                                 let file = this.files[i]
-                                // formData.append('upCacBanVes', file)
-                                this.YeuCauMuaHang.upCacBanVes.push(file.name)
+                                formData.append('upCacBanVes', file)
                             }
-                            let formData = new FormData()
+
                             for (var key in this.YeuCauMuaHang) {
-                                formData.append(
-                                    key,
-                                    JSON.stringify(this.YeuCauMuaHang[key])
-                                )
+                                if (
+                                    key.localeCompare(
+                                        'yeuCauMuaHangChiTiets'
+                                    ) != 0 &&
+                                    key.localeCompare('upCacBanVes') != 0
+                                ) {
+                                    formData.append(
+                                        key,
+                                        this.YeuCauMuaHang[key]
+                                    )
+                                }
                             }
-                            // for (var i = 0; i < this.files.length; i++) {
-                            //     let file = this.files[i]
-                            //     // formData.append('upCacBanVes', file)
-                            //     this.YeuCauMuaHang.upCacBanVes.push(file.name)
-                            // }
+
+                            for (
+                                var i = 0;
+                                i <
+                                this.YeuCauMuaHang.yeuCauMuaHangChiTiets.length;
+                                i++
+                            ) {
+                                var ct =
+                                    this.YeuCauMuaHang.yeuCauMuaHangChiTiets[i]
+                                for (var key in ct) {
+                                    formData.append(
+                                        'yeuCauMuaHangChiTiets[' +
+                                            i +
+                                            '].' +
+                                            key,
+                                        ct[key]
+                                    )
+                                }
+                            }
                             this.$store.dispatch('muahang/postData', formData)
                             this.clickClose()
                         } else {

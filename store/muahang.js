@@ -236,6 +236,25 @@ export const actions = {
             console.log(err)
         }
     },
+
+    async downloadFile({ commit }, payload) {
+        try {
+            let response = await this.$axios.get(
+                `/pr/download-ban-ve?linkThuMucBanVeFolder=${payload.linkThuMucBanVeFolder}&tenFileBanVe=${payload.tenFileBanVe}`,
+                {
+                    responseType: 'blob',
+                }
+            )
+            let url = window.URL.createObjectURL(new Blob([response.data]))
+            let link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', payload.tenFileBanVe)
+            document.body.appendChild(link)
+            link.click()
+        } catch (err) {
+            console.log(err)
+        }
+    },
     // mua hang ngoai du an
 
     async getDataNp({ commit }) {
