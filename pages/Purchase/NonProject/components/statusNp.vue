@@ -101,7 +101,7 @@
                     <DxButton
                         v-if="data.data.trangThaiDuyet === 'Đã mua hàng'"
                         icon="mdi mdi-arrow-u-left-top"
-                        :hint="$t('Tích hoàn mua')"
+                        :hint="$t('Hoàn tác')"
                         @click="checkUnDo(data)"
                     />
                 </div>
