@@ -226,12 +226,23 @@
                 </h3>
                 <div class="row align-center justify-end">
                     <p class="mr-1">{{ $t('Đính kèm') }}</p>
+                    <input
+                        type="file"
+                        id="files"
+                        ref="files"
+                        multiple
+                        @change="handleFilesUpload()"
+                    />
                     <DxSelectBox
                         :items="YeuCauMuaHang.tenFileBanVes"
                         styling-mode="outlined"
                         @selectionChanged="selectFile"
                         :useItemTextAsTitle="true"
                     />
+                    <span
+                        @click="removeFile(key)"
+                        class="mdi mdi-close btn-close ml-1"
+                    ></span>
                     <div v-if="Object.keys(objFileBanVe).length > 0">
                         <span
                             @click="downloadFile"
@@ -533,6 +544,15 @@ export default {
                 tenFileBanVe: e.selectedItem,
             }
         },
+        handleFilesUpload() {
+            let uploadedFiles = this.$refs.files.files
+            for (var i = 0; i < uploadedFiles.length; i++) {
+                this.$store.commit('muahang/PUSH_ITEM', uploadedFiles[i].name)
+            }
+        },
+        removeFile(key) {
+            this.$store.commit('muahang/CLEAR_ITEM', key)
+        },
         downloadFile() {
             if (
                 typeof this.objFileBanVe.linkThuMucBanVeFolder ===
@@ -566,10 +586,14 @@ export default {
                     setTimeout(() => {
                         if (this.checkArray()) {
                             let formData = new FormData()
-                            // for (var i = 0; i < this.files.length; i++) {
-                            //     let file = this.files[i]
-                            //     formData.append('upCacBanVes', file)
-                            // }
+                            for (
+                                var i = 0;
+                                i < this.YeuCauMuaHang.tenFileBanVes.length;
+                                i++
+                            ) {
+                                let file = this.YeuCauMuaHang.tenFileBanVes[i]
+                                formData.append('upCacBanVes', file)
+                            }
                             for (var key in this.YeuCauMuaHang) {
                                 if (
                                     key.localeCompare(
