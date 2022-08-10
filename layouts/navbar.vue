@@ -263,7 +263,8 @@ export default {
             typeof arrNp === 'undefined'
                 ? (countNp = 0)
                 : (countNp = arrNp.length)
-            return count + countNp || 0
+            let sum = count + countNp
+            return sum < 100 ? sum : 99 || 0
         },
     },
     methods: {

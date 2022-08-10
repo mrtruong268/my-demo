@@ -255,6 +255,16 @@ export const actions = {
             console.log(err)
         }
     },
+
+    async deleteFile({ commit }, payload) {
+        try {
+            await this.$axios.get(
+                `/pr/remove-ban-ve?linkThuMucBanVeFolder=${payload.linkThuMucBanVeFolder}&tenFileBanVe=${payload.tenFileBanVe}`
+            )
+        } catch (err) {
+            console.log(err)
+        }
+    },
     // mua hang ngoai du an
 
     async getDataNp({ commit }) {

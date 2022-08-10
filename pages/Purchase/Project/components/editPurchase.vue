@@ -230,7 +230,18 @@
                         :items="YeuCauMuaHang.tenFileBanVes"
                         styling-mode="outlined"
                         @selectionChanged="selectFile"
+                        :useItemTextAsTitle="true"
                     />
+                    <div v-if="Object.keys(objFileBanVe).length > 0">
+                        <span
+                            @click="downloadFile"
+                            class="mdi mdi-download tool-file"
+                        ></span>
+                        <span
+                            @click="deleteFile"
+                            class="mdi mdi-delete tool-file"
+                        ></span>
+                    </div>
                 </div>
                 <div v-if="disable == false && allowEdit == true">
                     <DxButton
@@ -408,6 +419,7 @@ export default {
             allowEdit: false,
             mnv: '',
             payloads: {},
+            objFileBanVe: {},
         }
     },
     watch: {
@@ -507,7 +519,8 @@ export default {
                 this.payloads.phongBanId = this.userInfo.phongBanId
                 this.$store.dispatch('muahang/getRefNumber', this.payloads)
             } else {
-                this.$store.dispatch('muahang/getRefNumber', this.payloads)
+                if (typeof this.payloads.phongBanId !== 'undefined')
+                    this.$store.dispatch('muahang/getRefNumber', this.payloads)
             }
             this.$store.dispatch('getHangMuc', e.selectedItem)
         },
@@ -515,11 +528,34 @@ export default {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
         },
         selectFile(e) {
-            const payloads = {
+            this.objFileBanVe = {
                 linkThuMucBanVeFolder: this.YeuCauMuaHang.linkThuMucBanVe,
                 tenFileBanVe: e.selectedItem,
             }
-            this.$store.dispatch('muahang/downloadFile', payloads)
+        },
+        downloadFile() {
+            if (
+                typeof this.objFileBanVe.linkThuMucBanVeFolder ===
+                    'undefined' &&
+                typeof this.objFileBanVe.tenFileBanVe === 'undefined'
+            )
+                return
+            this.$store.dispatch('muahang/downloadFile', this.objFileBanVe)
+        },
+        deleteFile() {
+            if (
+                typeof this.objFileBanVe.linkThuMucBanVeFolder ===
+                    'undefined' &&
+                typeof this.objFileBanVe.tenFileBanVe === 'undefined'
+            )
+                return
+            this.$store.dispatch('muahang/deleteFile', this.objFileBanVe)
+            setTimeout(() => {
+                this.$store.dispatch(
+                    'muahang/getEditData',
+                    this.YeuCauMuaHang.id
+                )
+            }, 200)
         },
         clickSave() {
             let result2 = confirm('Do you want to submit?')
@@ -529,10 +565,56 @@ export default {
                 if (result.isValid && isArrEmpty.length > 0) {
                     setTimeout(() => {
                         if (this.checkArray()) {
-                            this.$store.dispatch(
-                                'muahang/editData',
-                                this.YeuCauMuaHang
-                            )
+                            let formData = new FormData()
+                            // for (var i = 0; i < this.files.length; i++) {
+                            //     let file = this.files[i]
+                            //     formData.append('upCacBanVes', file)
+                            // }
+                            for (var key in this.YeuCauMuaHang) {
+                                if (
+                                    key.localeCompare(
+                                        'yeuCauMuaHangChiTiets'
+                                    ) != 0 &&
+                                    key.localeCompare('upCacBanVes') != 0
+                                ) {
+                                    formData.append(
+                                        key,
+                                        this.YeuCauMuaHang[key]
+                                    )
+                                }
+                            }
+                            for (
+                                var i = 0;
+                                i <
+                                this.YeuCauMuaHang.yeuCauMuaHangChiTiets.length;
+                                i++
+                            ) {
+                                var ct =
+                                    this.YeuCauMuaHang.yeuCauMuaHangChiTiets[i]
+                                for (var key in ct) {
+                                    formData.append(
+                                        'yeuCauMuaHangChiTiets[' +
+                                            i +
+                                            '].' +
+                                            key,
+                                        ct[key]
+                                    )
+                                }
+                            }
+                            // for (
+                            //     var i = 0;
+                            //     i < this.YeuCauMuaHang.duyetYCMHs.length;
+                            //     i++
+                            // ) {
+                            //     var ct = this.YeuCauMuaHang.duyetYCMHs[i]
+                            //     for (var key in ct) {
+                            //         formData.append(
+                            //             'duyetYCMHs[' + i + '].' + key,
+                            //             ct[key]
+                            //         )
+                            //     }
+                            // }
+                            this.$store.dispatch('muahang/editData', formData)
                             this.clickClose()
                         } else {
                             this.$toast.error(
@@ -561,6 +643,7 @@ export default {
             this.$store.dispatch('pheduyet/getApprove')
             this.disable = true
             this.allowEdit = false
+            this.objFileBanVe = {}
             this.$emit('invisible')
         },
         customFormat(e) {
@@ -602,5 +685,12 @@ export default {
 .box2 {
     width: 100%;
     padding-right: 16px;
+}
+.tool-file {
+    cursor: pointer;
+    font-size: 20px;
+    border: 1px solid #ddd;
+    padding: 0 4px;
+    border-radius: 4px;
 }
 </style>

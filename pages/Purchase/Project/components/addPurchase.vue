@@ -217,12 +217,16 @@
                         multiple
                         @change="handleFilesUpload()"
                     />
-                    <div v-for="file in files" :key="file.name">
-                        ({{ file.name }})<span
-                            @click="removeFile(key)"
-                            class="mdi mdi-close btn-close"
-                        ></span>
-                    </div>
+                    <DxSelectBox
+                        :data-source="files"
+                        display-expr="name"
+                        styling-mode="outlined"
+                        :useItemTextAsTitle="true"
+                    />
+                    <span
+                        @click="removeFile(key)"
+                        class="mdi mdi-close btn-close ml-1"
+                    ></span>
                 </div>
             </div>
             <DxDataGrid
@@ -500,6 +504,7 @@ export default {
         },
         removeFile(key) {
             this.files.splice(key, 1)
+            // this.files.splice(0, this.files.length)
         },
         handleFileUpload() {
             this.file = this.$refs.file.files[0]
@@ -522,12 +527,10 @@ export default {
                     setTimeout(() => {
                         if (this.checkArray()) {
                             let formData = new FormData()
-
                             for (var i = 0; i < this.files.length; i++) {
                                 let file = this.files[i]
                                 formData.append('upCacBanVes', file)
                             }
-
                             for (var key in this.YeuCauMuaHang) {
                                 if (
                                     key.localeCompare(
@@ -541,7 +544,6 @@ export default {
                                     )
                                 }
                             }
-
                             for (
                                 var i = 0;
                                 i <
@@ -567,7 +569,7 @@ export default {
                                 `Failed! Not enough information to save`
                             )
                         }
-                    }, 300)
+                    }, 200)
                 } else {
                     this.$toast.error(`Failed! Not enough information to save!`)
                 }
@@ -639,5 +641,8 @@ export default {
 }
 .btn-close {
     cursor: pointer;
+    background-color: #f2f2f2;
+    padding: 0 2px;
+    border-radius: 4px;
 }
 </style>
