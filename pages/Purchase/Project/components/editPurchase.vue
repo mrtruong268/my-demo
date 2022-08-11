@@ -97,7 +97,7 @@
                         </div>
                         <div class="row align-center justify-space-between">
                             <p>Phòng/Ban:</p>
-                            <div v-if="!disable">
+                            <!-- <div v-if="!disable">
                                 <DxSelectBox
                                     v-if="
                                         userInfo.listOfNhanVienPhongBan.length >
@@ -135,12 +135,11 @@
                                         <DxRequiredRule />
                                     </DxValidator>
                                 </DxTextBox>
-                            </div>
+                            </div> -->
                             <DxTextBox
-                                v-else
                                 v-model="YeuCauMuaHang.phongBan"
                                 styling-mode="underlined"
-                                :read-only="disable"
+                                :read-only="true"
                             >
                                 <DxValidator>
                                     <DxRequiredRule />
