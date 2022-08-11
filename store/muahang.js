@@ -106,13 +106,6 @@ export const mutations = {
         })
     },
 
-    PUSH_ITEM(state, item) {
-        state.suaYeuCau.tenFileBanVes.push(item)
-    },
-    CLEAR_ITEM(state, item) {
-        state.suaYeuCau.tenFileBanVes.splice(item, 1)
-    },
-
     // mua hang ngoai du an
     SET_ITEM_NP(state, item) {
         state.muaHangNgoaiDuAn = item

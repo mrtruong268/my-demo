@@ -221,38 +221,76 @@
         </div>
         <div>
             <div class="row justify-space-between align-center">
-                <h3 class="my-2 xs5">
+                <h3 class="my-2 xs4">
                     {{ $t('Danh sách hàng hóa, dịch vụ cần mua') }}
                 </h3>
                 <div class="row align-center justify-end">
-                    <p class="mr-1">{{ $t('Đính kèm') }}</p>
-                    <input
-                        type="file"
-                        id="files"
-                        ref="files"
-                        multiple
-                        @change="handleFilesUpload()"
-                    />
-                    <DxSelectBox
-                        :items="YeuCauMuaHang.tenFileBanVes"
-                        styling-mode="outlined"
-                        @selectionChanged="selectFile"
-                        :useItemTextAsTitle="true"
-                    />
-                    <span
-                        @click="removeFile(key)"
-                        class="mdi mdi-close btn-close ml-1"
-                    ></span>
-                    <div v-if="Object.keys(objFileBanVe).length > 0">
+                    <div
+                        v-if="allowEdit == true"
+                        class="row align-center justify-end"
+                    >
+                        <p class="mr-1">{{ $t('Đính kèm') }}</p>
+                        <input
+                            type="file"
+                            id="files"
+                            ref="files"
+                            multiple
+                            @change="handleFilesUpload()"
+                        />
+                        <DxSelectBox
+                            :data-source="files"
+                            display-expr="name"
+                            styling-mode="outlined"
+                            :useItemTextAsTitle="true"
+                        />
                         <span
-                            @click="downloadFile"
-                            class="mdi mdi-download tool-file"
-                        ></span>
-                        <span
-                            @click="deleteFile"
-                            class="mdi mdi-delete tool-file"
+                            @click="removeFile(key)"
+                            class="mdi mdi-close btn-close mx-1"
                         ></span>
                     </div>
+
+                    <button
+                        @click="popupVisible = !popupVisible"
+                        style="width: 12%"
+                    >
+                        {{ $t('Đính kèm') }} ({{
+                            typeof this.YeuCauMuaHang.tenFileBanVes ===
+                            'undefined'
+                                ? 0
+                                : this.YeuCauMuaHang.tenFileBanVes.length
+                        }})
+                    </button>
+                    <popup
+                        :showPopup="popupVisible"
+                        :showTitle="true"
+                        :closeOut="false"
+                        :title="$t('Đính kèm')"
+                        width="30%"
+                    >
+                        <template #main>
+                            <div>
+                                <DxSelectBox
+                                    :items="YeuCauMuaHang.tenFileBanVes"
+                                    styling-mode="outlined"
+                                    @selectionChanged="selectFile"
+                                    :useItemTextAsTitle="true"
+                                />
+                                <div
+                                    class="row justify-end"
+                                    v-if="Object.keys(objFileBanVe).length > 0"
+                                >
+                                    <span
+                                        @click="downloadFile"
+                                        class="mdi mdi-download tool-file"
+                                    ></span>
+                                    <span
+                                        @click="deleteFile"
+                                        class="mdi mdi-delete tool-file"
+                                    ></span>
+                                </div>
+                            </div>
+                        </template>
+                    </popup>
                 </div>
                 <div v-if="disable == false && allowEdit == true">
                     <DxButton
@@ -399,6 +437,7 @@ import { DxAutocomplete } from 'devextreme-vue/autocomplete'
 import moment from 'moment'
 import dnmh from '~/components/dnmh.vue'
 import lichSuDuyet from '~/components/lichSuDuyet.vue'
+import Popup from '~/components/popup.vue'
 
 export default {
     components: {
@@ -419,6 +458,7 @@ export default {
         DxAutocomplete,
         dnmh,
         lichSuDuyet,
+        Popup,
     },
     data() {
         return {
@@ -431,6 +471,8 @@ export default {
             mnv: '',
             payloads: {},
             objFileBanVe: {},
+            popupVisible: false,
+            files: [],
         }
     },
     watch: {
@@ -518,6 +560,7 @@ export default {
             if (e.selectedItem === null) return
             this.payloads.phongBanId = e.selectedItem.phongBanId
             this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+            this.YeuCauMuaHang.phongBanId = e.selectedItem.phongBanId
             this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
             this.$store.dispatch('muahang/getRefNumber', this.payloads)
         },
@@ -547,11 +590,11 @@ export default {
         handleFilesUpload() {
             let uploadedFiles = this.$refs.files.files
             for (var i = 0; i < uploadedFiles.length; i++) {
-                this.$store.commit('muahang/PUSH_ITEM', uploadedFiles[i].name)
+                this.files.push(uploadedFiles[i])
             }
         },
         removeFile(key) {
-            this.$store.commit('muahang/CLEAR_ITEM', key)
+            this.files.splice(key, 1)
         },
         downloadFile() {
             if (
@@ -586,12 +629,8 @@ export default {
                     setTimeout(() => {
                         if (this.checkArray()) {
                             let formData = new FormData()
-                            for (
-                                var i = 0;
-                                i < this.YeuCauMuaHang.tenFileBanVes.length;
-                                i++
-                            ) {
-                                let file = this.YeuCauMuaHang.tenFileBanVes[i]
+                            for (var i = 0; i < this.files.length; i++) {
+                                let file = this.files[i]
                                 formData.append('upCacBanVes', file)
                             }
                             for (var key in this.YeuCauMuaHang) {
@@ -715,6 +754,12 @@ export default {
     font-size: 20px;
     border: 1px solid #ddd;
     padding: 0 4px;
+    border-radius: 4px;
+}
+.btn-close {
+    cursor: pointer;
+    background-color: #f2f2f2;
+    padding: 0 2px;
     border-radius: 4px;
 }
 </style>
