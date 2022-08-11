@@ -466,16 +466,16 @@ export default {
             )
             return !conditionsArray.includes(false)
         },
-        selectPhongBan(e) {
-            if (e.selectedItem === null) return
-            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
-            this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
-            let payloads = {
-                phongBanId: e.selectedItem.phongBanId,
-                ycmhId: this.YeuCauMuaHang.id,
-            }
-            this.$store.dispatch('muahang/getRefNumberNp', payloads)
-        },
+        // selectPhongBan(e) {
+        //     if (e.selectedItem === null) return
+        //     this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+        //     this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
+        //     let payloads = {
+        //         phongBanId: e.selectedItem.phongBanId,
+        //         ycmhId: this.YeuCauMuaHang.id,
+        //     }
+        //     this.$store.dispatch('muahang/getRefNumberNp', payloads)
+        // },
         selectPhuPhi(e) {
             this.YeuCauMuaHang.phuPhi = e.selectedItem
         },

@@ -555,14 +555,14 @@ export default {
             )
             return !conditionsArray.includes(false)
         },
-        selectPhongBan(e) {
-            if (e.selectedItem === null) return
-            this.payloads.phongBanId = e.selectedItem.phongBanId
-            this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
-            this.YeuCauMuaHang.phongBanId = e.selectedItem.phongBanId
-            this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
-            this.$store.dispatch('muahang/getRefNumber', this.payloads)
-        },
+        // selectPhongBan(e) {
+        //     if (e.selectedItem === null) return
+        //     this.payloads.phongBanId = e.selectedItem.phongBanId
+        //     this.YeuCauMuaHang.phongBan = e.selectedItem.tenPhongBan
+        //     this.YeuCauMuaHang.phongBanId = e.selectedItem.phongBanId
+        //     this.YeuCauMuaHang.chucVu = e.selectedItem.tenChucVu
+        //     this.$store.dispatch('muahang/getRefNumber', this.payloads)
+        // },
         selectDuAn(e) {
             if (e.selectedItem === null) return
             this.payloads.maDuAn = e.selectedItem
