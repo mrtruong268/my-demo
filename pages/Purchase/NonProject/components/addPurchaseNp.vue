@@ -3,7 +3,7 @@
         <div class="row justify-end">
             <div>
                 <div
-                    @click="clickClose"
+                    @click="resetData"
                     class="font-24 btn-tool mdi mdi-close"
                 ></div>
             </div>
@@ -455,7 +455,7 @@ export default {
                                 'muahang/postDataNp',
                                 this.YeuCauMuaHang
                             )
-                            this.clickClose()
+                            this.resetData()
                         } else {
                             this.$toast.error(
                                 `Failed! Not enough information to save!`
@@ -489,9 +489,6 @@ export default {
                 comment: '',
                 yeuCauMuaHangNoiBoChiTiets: [],
             }
-        },
-        clickClose() {
-            this.resetData()
             this.$emit('invisible')
         },
     },

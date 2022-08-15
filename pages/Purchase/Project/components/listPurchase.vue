@@ -211,7 +211,7 @@ export default {
         reload() {
             setTimeout(() => {
                 this.$store.dispatch('muahang/getData')
-            }, 200)
+            }, 300)
         },
         clickAdd() {
             this.isAdd = true

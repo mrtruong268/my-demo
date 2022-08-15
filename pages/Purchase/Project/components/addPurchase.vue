@@ -3,7 +3,7 @@
         <div class="row justify-end">
             <div>
                 <div
-                    @click="clickClose"
+                    @click="resetData"
                     class="font-24 btn-tool mdi mdi-close"
                 ></div>
             </div>
@@ -563,7 +563,7 @@ export default {
                                 }
                             }
                             this.$store.dispatch('muahang/postData', formData)
-                            this.clickClose()
+                            this.resetData()
                         } else {
                             this.$toast.error(
                                 `Failed! Not enough information to save`
@@ -600,9 +600,6 @@ export default {
                 yeuCauMuaHangChiTiets: [],
             }
             this.files = []
-        },
-        clickClose() {
-            this.resetData()
             this.$emit('invisible')
         },
     },
