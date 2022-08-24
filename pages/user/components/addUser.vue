@@ -69,7 +69,7 @@
                 @editorPreparing="editorPreparing"
             >
                 <DxEditing
-                    :allow-updating="true"
+                    :allow-updating="allowUpdate"
                     :allow-deleting="true"
                     :useIcons="true"
                     :confirm-delete="false"
@@ -168,6 +168,7 @@ export default {
                 listOfNhanVienPhongBan: [],
             },
             phongBanCongTy: [],
+            allowUpdate: true,
         }
     },
     watch: {
@@ -178,6 +179,7 @@ export default {
                     if (!editCopy) return {}
                     this.NhanVien = editCopy
                     this.phongBanCongTy = editCopy.listOfNhanVienPhongBan
+                    this.allowUpdate = false
                 }
             },
             immediate: true,
@@ -283,6 +285,7 @@ export default {
         },
         clickClose() {
             this.phongBanCongTy = []
+            this.allowUpdate = true
             this.NhanVien = {
                 id: 0,
                 tenNhanVien: '',

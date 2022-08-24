@@ -149,14 +149,14 @@ export default {
         },
         hiddenPopup() {
             this.popupVisible = !this.popupVisible
+            setTimeout(() => {
+                this.$store.dispatch('pheduyet/getApprove')
+                this.$store.dispatch('pheduyet/getApproveNp')
+            }, 1500)
         },
         timestamp(date) {
             return moment(date).format('HH:mm DD/MM/YYYY')
         },
-    },
-    updated() {
-        this.$store.dispatch('pheduyet/getApprove')
-        this.$store.dispatch('pheduyet/getApproveNp')
     },
 }
 </script>
