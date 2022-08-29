@@ -1,9 +1,12 @@
+import Vue from 'vue'
 // import 'devextreme/dist/css/dx.material.blue.light.css'
 import 'devextreme/dist/css/dx.light.css'
-import Vue from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
+import moment from 'moment'
+import VueFullscreen from 'vue-fullscreen'
+
 // import 'vue-toast-notification/dist/theme-default.css';
 // import { UserManager } from 'oidc-client'
 
@@ -16,6 +19,9 @@ const mixin = {
         },
         idv4() {
             return uuidv4()
+        },
+        timestamp(date) {
+            return moment(date).format('HH:mm DD/MM/YYYY')
         },
         // userManage() {
         //     var userMng = new UserManager({
@@ -35,7 +41,7 @@ const mixin = {
     },
 }
 
-const pluginArr = [VueToast]
+const pluginArr = [VueToast, VueFullscreen]
 pluginArr.forEach((e) => {
     Vue.use(e)
 })

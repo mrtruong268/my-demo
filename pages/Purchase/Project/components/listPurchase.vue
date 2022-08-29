@@ -180,7 +180,6 @@ import Popup from '~/components/popup.vue'
 import editPurchase from './editPurchase.vue'
 import addPurchase from './addPurchase.vue'
 import { mapState } from 'vuex'
-import moment from 'moment'
 
 export default {
     components: {
@@ -243,9 +242,6 @@ export default {
         hiddenPopup() {
             this.popupVisible = !this.popupVisible
             this.reload()
-        },
-        timestamp(date) {
-            return moment(date).format('HH:mm DD/MM/YYYY')
         },
     },
     created() {

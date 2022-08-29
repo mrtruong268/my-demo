@@ -14,53 +14,41 @@
                 </div>
             </div>
 
-            <!-- duyetYCMHs -->
+            <!-- duyetYCMHsLast -->
 
-            <div v-if="ycmh.hasOwnProperty('duyetYCMHs')" class="row">
-                <div
-                    :class="
-                        yc.approvalStatus === 'MustRevise' ? 'hide xs3' : 'xs3'
-                    "
-                    v-for="yc in dataDuyet"
-                    :key="yc.id"
-                    :style="
-                        yc.approvalState === 'NVTC_DUYET'
-                            ? 'display:none'
-                            : yc.approvalState === 'MH_DUYET'
-                            ? 'display:none'
-                            : ''
-                    "
-                >
-                    <div
-                        v-if="
-                            yc.approvalState === 'TBP_DUYET' &&
-                            yc.approvalStatus === 'None'
-                        "
-                    >
-                        <div class="cho-duyet row justify-center align-center">
-                            <p>{{ yc.tenNhanVien }}...</p>
-                        </div>
+            <div v-if="ycmh.hasOwnProperty('duyetYCMHsLast')" class="row">
+                <div v-for="yc in ycmh.duyetYCMHsLast" :key="yc.id" class="xs3">
+                    <div v-if="yc.approvalStatus === 'None'" class="cho-duyet">
+                        <p
+                            style="
+                                text-decoration: underline;
+                                font-weight: bold;
+                            "
+                            class="text-xs-center"
+                        >
+                            {{ yc.vaiTroDuyet }}:
+                        </p>
+                        <p class="text-xs-center mt-2">
+                            Chờ
+                            {{ yc.tenNhanVien }} duyệt
+                        </p>
                     </div>
                     <div
                         v-else
                         class="footer-content column justify-space-between text-xs-center"
                     >
-                        <p style="text-decoration: underline">
-                            {{
-                                yc.approvalState == 'TBP_DUYET'
-                                    ? 'Trưởng bộ phận'
-                                    : yc.approvalState == 'GDTC_DUYET'
-                                    ? 'Bộ phận tài chính'
-                                    : yc.approvalState == 'TGD_DUYET'
-                                    ? 'Ban giám đốc'
-                                    : yc.approvalState == 'PMH_DUYET'
-                                    ? 'Bộ phận mua hàng'
-                                    : ''
-                            }}:
+                        <p
+                            style="
+                                text-decoration: underline;
+                                font-weight: bold;
+                            "
+                            class="text-xs-center"
+                        >
+                            {{ yc.vaiTroDuyet }}:
                         </p>
                         <p>
                             {{
-                                yc.approvalStatus == 'Approval'
+                                yc.approvalStatus === 'Approval'
                                     ? '(Approved by VNAS App)'
                                     : ''
                             }}
@@ -76,54 +64,45 @@
                 </div>
             </div>
 
-            <!-- duyetYCMHsNoiBo -->
+            <!-- duyetYCMHsNoiBoLast -->
 
-            <div v-else-if="ycmh.hasOwnProperty('duyetYCMHsNoiBo')" class="row">
+            <div v-if="ycmh.hasOwnProperty('duyetYCMHsNoiBoLast')" class="row">
                 <div
-                    :class="
-                        yc.approvalStatus === 'MustRevise' ? 'hide xs3' : 'xs3'
-                    "
-                    v-for="yc in dataDuyet"
+                    v-for="yc in ycmh.duyetYCMHsNoiBoLast"
                     :key="yc.id"
-                    :style="
-                        yc.approvalState === 'NVTC_DUYET'
-                            ? 'display:none'
-                            : yc.approvalState === 'MH_DUYET'
-                            ? 'display:none'
-                            : ''
-                    "
+                    class="xs3"
                 >
-                    <div
-                        v-if="
-                            yc.approvalState === 'TBP_DUYET' &&
-                            yc.approvalStatus === 'None'
-                        "
-                    >
-                        <div class="cho-duyet row justify-center align-center">
-                            <p>{{ yc.tenNhanVien }}...</p>
-                        </div>
+                    <div v-if="yc.approvalStatus === 'None'" class="cho-duyet">
+                        <p
+                            style="
+                                text-decoration: underline;
+                                font-weight: bold;
+                            "
+                            class="text-xs-center"
+                        >
+                            {{ yc.vaiTroDuyet }}:
+                        </p>
+                        <p class="text-xs-center mt-2">
+                            Chờ
+                            {{ yc.tenNhanVien }} duyệt
+                        </p>
                     </div>
-
                     <div
                         v-else
                         class="footer-content column justify-space-between text-xs-center"
                     >
-                        <p style="text-decoration: underline">
-                            {{
-                                yc.approvalState == 'TBP_DUYET'
-                                    ? 'Trưởng bộ phận'
-                                    : yc.approvalState == 'GDTC_DUYET'
-                                    ? 'Bộ phận tài chính'
-                                    : yc.approvalState == 'TGD_DUYET'
-                                    ? 'Ban giám đốc'
-                                    : yc.approvalState == 'PMH_DUYET'
-                                    ? 'Bộ phận mua hàng'
-                                    : ''
-                            }}:
+                        <p
+                            style="
+                                text-decoration: underline;
+                                font-weight: bold;
+                            "
+                            class="text-xs-center"
+                        >
+                            {{ yc.vaiTroDuyet }}:
                         </p>
                         <p>
                             {{
-                                yc.approvalStatus == 'Approval'
+                                yc.approvalStatus === 'Approval'
                                     ? '(Approved by VNAS App)'
                                     : ''
                             }}
@@ -143,38 +122,12 @@
 </template>
 
 <script>
-import moment from 'moment'
-
 export default {
     props: {
         ycmh: {
             type: Object,
             default: {},
         },
-    },
-    data() {
-        return {
-            dataDuyet: [],
-        }
-    },
-    methods: {
-        timestamp(date) {
-            return moment(date).format('HH:mm DD/MM/YYYY')
-        },
-    },
-    beforeUpdate() {
-        this.dataDuyet = []
-        const dataReverse = []
-        const arrTmp = this.ycmh.hasOwnProperty('duyetYCMHsNoiBo')
-            ? [...this.ycmh.duyetYCMHsNoiBo]
-            : [...this.ycmh.duyetYCMHs]
-        for (var i = arrTmp.length - 1; i >= 0; i--) {
-            const e = arrTmp[i]
-            if (e.approvalStatus === 'MustRevise') return
-            dataReverse.push(e)
-            if (e.approvalState === 'TBP_DUYET') break
-        }
-        return (this.dataDuyet = dataReverse.reverse())
     },
 }
 </script>
@@ -191,12 +144,9 @@ export default {
     border: 1px solid #1a1a1a;
     padding: 8px;
 }
-.hide {
-    display: none;
-}
 .cho-duyet {
     height: 90px;
     border: 1px solid #1a1a1a;
-    margin: 0 auto;
+    padding: 8px;
 }
 </style>

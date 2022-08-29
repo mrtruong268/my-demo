@@ -433,7 +433,6 @@ import { mapGetters, mapState } from 'vuex'
 import DxValidator, { DxRequiredRule } from 'devextreme-vue/validator'
 import DxValidationGroup from 'devextreme-vue/validation-group'
 import { DxAutocomplete } from 'devextreme-vue/autocomplete'
-import moment from 'moment'
 import dnmh from '~/components/dnmh.vue'
 import lichSuDuyet from '~/components/lichSuDuyet.vue'
 import Popup from '~/components/popup.vue'
@@ -717,9 +716,7 @@ export default {
         calculateAmount(e) {
             return e.soLuong * e.donGiaTamTinh
         },
-        timestamp(date) {
-            return moment(date).format('HH:mm DD/MM/YYYY')
-        },
+        
     },
     created() {
         this.$store.dispatch('muahang/getItems')

@@ -102,11 +102,6 @@ import DxSelectBox from 'devextreme-vue/select-box'
 import { DxScrollView } from 'devextreme-vue/scroll-view'
 import { mapState } from 'vuex'
 
-import Vue from 'vue'
-import VueFullscreen from 'vue-fullscreen'
-
-Vue.use(VueFullscreen)
-
 export default {
     props: {
         headerTitle: {

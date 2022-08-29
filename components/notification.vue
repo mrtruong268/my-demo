@@ -104,7 +104,6 @@
 <script>
 import { mapState } from 'vuex'
 import DxTabPanel from 'devextreme-vue/tab-panel'
-import moment from 'moment'
 import popup from './popup.vue'
 import approve from './approve.vue'
 export default {
@@ -153,9 +152,6 @@ export default {
                 this.$store.dispatch('pheduyet/getApprove')
                 this.$store.dispatch('pheduyet/getApproveNp')
             }, 1500)
-        },
-        timestamp(date) {
-            return moment(date).format('HH:mm DD/MM/YYYY')
         },
     },
 }

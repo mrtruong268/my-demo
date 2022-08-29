@@ -175,7 +175,6 @@ import DxButton from 'devextreme-vue/button'
 import Popup from '~/components/popup.vue'
 import editPurchaseNp from './editPurchaseNp.vue'
 import addPurchaseNp from './addPurchaseNp.vue'
-import moment from 'moment'
 
 export default {
     components: {
@@ -239,9 +238,7 @@ export default {
             this.popupVisible = !this.popupVisible
             this.reload()
         },
-        timestamp(date) {
-            return moment(date).format('HH:mm DD/MM/YYYY')
-        },
+       
     },
     created() {
         this.$store.dispatch('muahang/getDataNp')
