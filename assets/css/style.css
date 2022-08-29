@@ -694,3 +694,7 @@ ul li {
 .v-toast {
     z-index: 2000 !important;
 }
+
+.mt-80 {
+    margin-top: 80px;
+}

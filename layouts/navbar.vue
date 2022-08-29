@@ -101,7 +101,7 @@
                                 <i class="mdi mdi-account" />
                                 {{ $t('Nhân viên') }}
                             </li>
-                            <li
+                            <!-- <li
                                 v-if="
                                     userInfo.username ===
                                     'Admin                                             '
@@ -111,6 +111,17 @@
                             >
                                 <i class="mdi mdi-account-group" />
                                 {{ $t('Nhóm') }}
+                            </li> -->
+                            <li
+                                v-if="
+                                    userInfo.username ===
+                                    'Admin                                             '
+                                "
+                                class="color-fff list-mobile px-4 py-2"
+                                @click="clickRouter('procedure', routeParams)"
+                            >
+                                <i class="mdi mdi-text-account" />
+                                {{ $t('Quy trình') }}
                             </li>
                             <!-- <li
                                 class="color-fff list-mobile px-4 py-2"

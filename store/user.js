@@ -7,6 +7,7 @@ export const state = () => ({
     DanhSachCongTy: [],
     DanhSachPhongBan: [],
     DsPhongBanCongTy: [],
+    DsNhanVienPhongBan: [],
 })
 export const getters = {}
 export const mutations = {
@@ -27,6 +28,9 @@ export const mutations = {
     },
     GET_DIVISION_BY_COMPANY(state, item) {
         state.DsPhongBanCongTy = item
+    },
+    GET_STAFF_BY_DEPART(state, item) {
+        state.DsNhanVienPhongBan = item
     },
 }
 export const actions = {
@@ -92,6 +96,16 @@ export const actions = {
                 `/division/get-divisions-by-company?CompanyId=${comId}`
             )
             commit('GET_DIVISION_BY_COMPANY', response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async getStaffByDepartment({ commit }, depId) {
+        try {
+            let response = await this.$axios.get(
+                `/staff/get-all-staff-in-the-department?IdPhongBan=${depId}`
+            )
+            commit('GET_STAFF_BY_DEPART', response.data.data)
         } catch (err) {
             console.log(err)
         }
