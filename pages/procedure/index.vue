@@ -30,20 +30,24 @@
             <DxFilterRow :visible="true" />
             <DxGrouping :auto-expand-all="true" />
             <DxPaging :enabled="true" />
-            <DxColumn data-field="idQuyTrinh" :caption="$t('idQuyTrinh')" />
+            <DxColumn
+                data-field="idQuyTrinh"
+                :caption="$t('Mã quy trình')"
+                :group-index="0"
+            />
             <DxColumn
                 data-field="tenCongTyTaoDon"
-                :caption="$t('tenCongTyTaoDon')"
+                :caption="$t('Công ty tạo đơn')"
             />
             <DxColumn
                 data-field="tenCongTyDuyetDon"
-                :caption="$t('tenCongTyDuyetDon')"
+                :caption="$t('Công ty duyệt đơn')"
             />
             <DxColumn
                 data-field="tenPhongDuyetDon"
-                :caption="$t('tenPhongDuyetDon')"
+                :caption="$t('Phòng duyệt đơn')"
             />
-            <DxColumn data-field="vaiTroDuyet" :caption="$t('vaiTroDuyet')" />
+            <DxColumn data-field="vaiTroDuyet" :caption="$t('Vai trò duyệt')" />
             <DxColumn
                 :allow-header-filtering="false"
                 width="auto"
@@ -56,6 +60,11 @@
                         style="cursor: pointer"
                         @click="clickEdit(data)"
                     ></p>
+                    <p
+                        class="mdi mdi-delete font-24"
+                        style="cursor: pointer"
+                        @click="clickDelete(data)"
+                    ></p>
                 </div>
             </template>
             <DxSummary>
@@ -65,12 +74,10 @@
 
         <!-- popup tao moi -->
 
-        <popup
-            :showPopup="popupVisible"
-            :showTitle="true"
-            :width="'50%'"
-            :title="$t('Quy trình')"
-        >
+        <popup :showPopup="popupVisible" :showTitle="false" :width="'70%'">
+            <template #header>
+                <h2 class="mb-3">{{ $t('Quy trình') }}</h2>
+            </template>
             <template #main>
                 <addProcedure :edit="editData" @hiddenPopup="hidePopup" />
             </template>
@@ -114,6 +121,7 @@ export default {
     data() {
         return {
             popupVisible: false,
+            editData: null,
         }
     },
     computed: {
@@ -121,6 +129,22 @@ export default {
     },
     methods: {
         clickEdit(e) {
+            this.editData = e.data
+            this.popupVisible = !this.popupVisible
+        },
+        clickDelete(e) {
+            var result = confirm('Do you want to delete?')
+            if (result) {
+                this.$store.dispatch('quytrinh/deleteAps', e.data.id)
+                this.clickReload()
+            }
+        },
+        clickReload() {
+            setTimeout(() => {
+                this.$store.dispatch('quytrinh/getAllAps')
+            }, 200)
+        },
+        hidePopup() {
             this.popupVisible = !this.popupVisible
         },
     },

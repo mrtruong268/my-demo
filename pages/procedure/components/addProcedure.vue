@@ -1,8 +1,10 @@
 <template>
     <div>
+        <i class="mdi mdi-close font-24 close" @click="clickClose"></i>
         <div class="mb-2">
             <div class="row align-center mb-2">
                 <DxSelectBox
+                    :value="quyTrinh.idQuyTrinh"
                     :items="maQuyTrinh"
                     styling-mode="outlined"
                     :label="$t('Mã quy trình')"
@@ -12,8 +14,10 @@
                     @selectionChanged="selectMaQuyTrinh"
                 />
                 <DxSelectBox
+                    :value="quyTrinh.tenCongTyTaoDon"
                     :dataSource="DanhSachCongTy"
                     displayExpr="name"
+                    valueExpr="name"
                     styling-mode="outlined"
                     :label="$t('Công ty tạo đơn')"
                     label-mode="floating"
@@ -24,8 +28,10 @@
             </div>
             <div class="row align-center mb-2">
                 <DxSelectBox
+                    :value="quyTrinh.tenCongTyDuyetDon"
                     :dataSource="DanhSachCongTy"
                     displayExpr="name"
+                    valueExpr="name"
                     styling-mode="outlined"
                     :label="$t('Công ty duyệt đơn')"
                     label-mode="floating"
@@ -34,8 +40,10 @@
                     @selectionChanged="selectCongTyDuyetDon"
                 />
                 <DxSelectBox
+                    :value="quyTrinh.tenPhongDuyetDon"
                     :dataSource="DsPhongBanCongTy"
                     displayExpr="name"
+                    valueExpr="name"
                     styling-mode="outlined"
                     :label="$t('Phòng duyệt đơn')"
                     label-mode="floating"
@@ -90,7 +98,7 @@
                 />
                 <DxColumn
                     data-field="idProjectFilter"
-                    :caption="$t('idProjectFilter')"
+                    :caption="$t('Mã lọc dự án')"
                 />
             </DxDataGrid>
             <div class="row justify-space-between mt-1">
@@ -129,6 +137,12 @@ import DxButton from 'devextreme-vue/button'
 import { mapState } from 'vuex'
 
 export default {
+    props: {
+        edit: {
+            type: Object,
+            default: null,
+        },
+    },
     components: {
         DxSelectBox,
         DxTextBox,
@@ -142,6 +156,11 @@ export default {
     },
     data() {
         return {
+            dataGridRefKey: 'datagridValid',
+            refMaQuyTrinh: 'maQuyTrinh',
+            refCongTyTaoDon: 'congTyTaoDon',
+            refCongTyDuyetDon: 'congTyDuyetDon',
+            refPhongDuyetDon: 'phongDuyetDon',
             quyTrinh: [
                 {
                     id: 0,
@@ -160,9 +179,40 @@ export default {
             quyTrinhDuyetNoiBo: [],
         }
     },
+    watch: {
+        edit: {
+            handler(edit) {
+                if (edit) {
+                    let editCopy = JSON.parse(JSON.stringify(edit))
+                    if (!editCopy) return {}
+                    this.quyTrinh = editCopy
+                    this.quyTrinhDuyetNoiBo =
+                        editCopy.listOfQuyTrinhDuyetNoiBoPhong
+                }
+            },
+            immediate: true,
+            deep: true,
+        },
+    },
     computed: {
-        ...mapState('quytrinh', ['maQuyTrinh']),
-        ...mapState('user', ['DanhSachCongTy', 'DsPhongBanCongTy']),
+        ...mapState('quytrinh', ['maQuyTrinh', 'locDuAn']),
+        ...mapState('user', [
+            'DanhSachCongTy',
+            'DsPhongBanCongTy',
+            'DsNhanVienPhongBan',
+        ]),
+        maQuyTrinhRef() {
+            return this.$refs[this.refMaQuyTrinh].instance
+        },
+        congTyTaoDonRef() {
+            return this.$refs[this.refCongTyTaoDon].instance
+        },
+        congTyDuyetDonRef() {
+            return this.$refs[this.refCongTyDuyetDon].instance
+        },
+        phongDuyetDonRef() {
+            return this.$refs[this.refPhongDuyetDon].instance
+        },
     },
     methods: {
         addRow() {
@@ -194,12 +244,41 @@ export default {
                     onSelectionChanged(x) {
                         if (x.selectedItem === null) return {}
                         e.row.data.idPhongBanDuyetDon = x.selectedItem.id
+                        e.row.data.buocDuyetThuocPhong = x.selectedItem.id
                     },
                     onFocusOut() {
-                        // self.$store.dispatch(
-                        //     'user/getStaffByDepartment',
-                        //     e.row.data.idPhongBanDuyetDon
-                        // )
+                        self.$store.dispatch(
+                            'user/getStaffByDepartment',
+                            e.row.data.idPhongBanDuyetDon
+                        )
+                    },
+                }
+            }
+            if (e.dataField === 'tenNhanVienDuyetDon') {
+                e.editorName = 'dxSelectBox'
+                e.editorOptions = {
+                    items: self.DsNhanVienPhongBan,
+                    valueExpr: 'tenNhanVien',
+                    displayExpr: 'tenNhanVien',
+                    value: e.value,
+                    onValueChanged(ev) {
+                        e.setValue(ev.value)
+                    },
+                    onSelectionChanged(x) {
+                        if (x.selectedItem === null) return {}
+                        e.row.data.chucVuNhanVienDuyetDon =
+                            x.selectedItem.tenChucVu
+                        e.row.data.idNhanVien_PhongBanDuyet = x.selectedItem.id
+                    },
+                }
+            }
+            if (e.dataField === 'idProjectFilter') {
+                e.editorName = 'dxSelectBox'
+                e.editorOptions = {
+                    items: self.locDuAn,
+                    value: e.value,
+                    onValueChanged(ev) {
+                        e.setValue(ev.value)
                     },
                 }
             }
@@ -210,28 +289,70 @@ export default {
             this.quyTrinh.listOfQuyTrinhDuyetNoiBoPhong = tmpData
         },
         selectMaQuyTrinh(e) {
+            if (e.selectedItem === null) return
             this.quyTrinh.idQuyTrinh = e.selectedItem
         },
         selectCongTyTaoDon(e) {
+            if (e.selectedItem === null) return
             this.quyTrinh.idCongTyTaoDon = e.selectedItem.id
             this.quyTrinh.tenCongTyTaoDon = e.selectedItem.name
         },
         selectCongTyDuyetDon(e) {
+            if (e.selectedItem === null) return
             this.$store.dispatch('user/getDivisionByCom', e.selectedItem.id)
             this.quyTrinh.idCongTyDuyetDon = e.selectedItem.id
             this.quyTrinh.tenCongTyDuyetDon = e.selectedItem.name
             this.quyTrinh.buocDuyetThuocCongTy = e.selectedItem.id
         },
         selectPhongDuyetDon(e) {
+            if (e.selectedItem === null) return
             this.quyTrinh.idPhongBanDuyetDon = e.selectedItem.id
             this.quyTrinh.tenPhongDuyetDon = e.selectedItem.name
+        },
+        clickSave() {
+            var result = confirm('Do you want to submit?')
+            if (result) {
+                this.$store.dispatch('quytrinh/postAps', this.quyTrinh)
+                this.clickClose()
+            }
+        },
+        clickClose() {
+            this.maQuyTrinhRef.reset()
+            this.congTyTaoDonRef.reset()
+            this.congTyDuyetDonRef.reset()
+            this.phongDuyetDonRef.reset()
+            this.quyTrinh = [
+                {
+                    id: 0,
+                    idQuyTrinh: '',
+                    idCongTyTaoDon: 0,
+                    tenCongTyTaoDon: '',
+                    idCongTyDuyetDon: 0,
+                    tenCongTyDuyetDon: '',
+                    idPhongBanDuyetDon: 0,
+                    tenPhongDuyetDon: '',
+                    buocDuyetThuocCongTy: 0,
+                    vaiTroDuyet: '',
+                    listOfQuyTrinhDuyetNoiBoPhong: [],
+                },
+            ]
+            this.quyTrinhDuyetNoiBo = []
+            this.$emit('hiddenPopup')
         },
     },
     created() {
         this.$store.dispatch('quytrinh/getIdAps')
+        this.$store.dispatch('quytrinh/getProjectFilter')
         this.$store.dispatch('user/getAllCompany')
     },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.close {
+    position: absolute;
+    top: 10px;
+    right: 24px;
+    cursor: pointer;
+}
+</style>

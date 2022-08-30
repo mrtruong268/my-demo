@@ -140,8 +140,11 @@ export default {
             this.popupVisible = !this.popupVisible
         },
         clickDelete(e) {
-            this.$store.dispatch('user/deleteStaff', e.data.id)
-            this.clickReload()
+            var result = confirm('Do you want to delete?')
+            if (result) {
+                this.$store.dispatch('user/deleteStaff', e.data.id)
+                this.clickReload()
+            }
         },
         hidePopup() {
             this.clickAdd()
